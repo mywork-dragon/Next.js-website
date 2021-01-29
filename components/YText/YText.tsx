@@ -3,15 +3,15 @@ import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   tag?: string;
-  size?: FontSize;
+  size?: FontSize.XXS | FontSize.XS | FontSize.SM | FontSize.MD | FontSize.LG;
   weight?: FontWeight;
   lineHeight?: FontLineHeight;
 }
 
-export default function YHeading({
+export default function YText({
   tag = 'span',
-  size = FontSize['3XL'],
-  weight = FontWeight.Bold,
+  size = FontSize.MD,
+  weight = FontWeight.Regular,
   lineHeight = FontLineHeight.Tight,
   children,
   ...props

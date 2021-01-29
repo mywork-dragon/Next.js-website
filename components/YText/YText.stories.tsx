@@ -1,13 +1,13 @@
-import YHeading from '@/components/YHeading/YHeading';
+import YText from './YText';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 export default {
-  title: 'Heading',
-  component: YHeading,
+  title: 'Body Text',
+  component: YText,
 };
 
 export const Default = (): JSX.Element => (
-  <YHeading>Default Heading Styling</YHeading>
+  <YText>Default body text styling</YText>
 );
 
 export const Sizes = (): JSX.Element => formatEnum(FontSize, 'size');
@@ -33,14 +33,13 @@ const formatEnum = (
 
   const getProps = (value) => ({ [prop]: value });
 
+  console.log(resultTitles);
   return (
     <div>
       {resultValues.map((value: FontSize, index) => (
         <>
-          <div className="p-4" key={value}>
-            <YHeading {...getProps(value)}>
-              {resultTitles[index]} Heading
-            </YHeading>
+          <div className="p-3" key={value}>
+            <YText {...getProps(value)}>{resultTitles[index]} body text</YText>
           </div>
         </>
       ))}
