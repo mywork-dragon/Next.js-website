@@ -27,6 +27,34 @@ module.exports = {
       ],
     });
 
+    config.module.rules.find(
+      (rule) => rule.test.toString() === '/\\.css$/'
+    ).exclude = /\.module\.css$/;
+
+    config.module.rules.push({
+      test: /\.module\.css$/,
+      include: path.resolve(__dirname, '../components'),
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1,
+            modules: true,
+          },
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true,
+            config: {
+              path: './.storybook/',
+            },
+          },
+        },
+      ],
+    });
+
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, '../'),

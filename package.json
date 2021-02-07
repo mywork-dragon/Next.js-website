@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.4",
+    "@react-aria/button": "^3.3.0",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "^9",
     "axios": "^0.21.0",

@@ -10,38 +10,53 @@ export const Default = (): JSX.Element => (
   <YHeading>Default Heading Styling</YHeading>
 );
 
-export const Sizes = (): JSX.Element => formatEnum(FontSize, 'size');
-
-export const Weights = (): JSX.Element => formatEnum(FontWeight, 'weight');
-
-export const LineHeights = (): JSX.Element =>
-  formatEnum(FontLineHeight, 'lineHeight');
-
-const formatEnum = (
-  obj: { [s: number]: string | number },
-  prop: string
-): JSX.Element => {
-  const result = Object.values(obj);
-
-  const resultValues = result
-    .sort((a: number, b: number) => a - b)
-    .filter((value: FontSize) => typeof value === 'number');
-
-  const resultTitles = result
-    .sort((a: number, b: number) => a - b)
-    .filter((value: FontSize) => typeof value === 'string');
-
-  const getProps = (value) => ({ [prop]: value });
+export const Sizes = (): JSX.Element => {
+  const sizes = Object.values(FontSize);
+  const sizeTitles = Object.keys(FontSize);
 
   return (
     <div>
-      {resultValues.map((value: FontSize, index) => (
+      {sizes.map((size: FontSize, index: number) => (
         <>
-          <div className="p-4" key={value}>
-            <YHeading {...getProps(value)}>
-              {resultTitles[index]} Heading
-            </YHeading>
-          </div>
+          <YHeading size={size}>{sizeTitles[index]} Heading</YHeading>
+          <br />
+          <br />
+        </>
+      ))}
+    </div>
+  );
+};
+
+export const Weights = (): JSX.Element => {
+  const weights = Object.values(FontWeight);
+  const weightTitles = Object.keys(FontWeight);
+
+  return (
+    <div>
+      {weights.map((weight: FontWeight, index: number) => (
+        <>
+          <YHeading weight={weight}>{weightTitles[index]} Heading</YHeading>
+          <br />
+          <br />
+        </>
+      ))}
+    </div>
+  );
+};
+
+export const LineHeights = (): JSX.Element => {
+  const lineHeights = Object.values(FontLineHeight);
+  const lineHeightTitles = Object.keys(FontLineHeight);
+
+  return (
+    <div>
+      {lineHeights.map((lineHeight: FontLineHeight, index: number) => (
+        <>
+          <YHeading lineHeight={lineHeight}>
+            {lineHeightTitles[index]} Heading
+          </YHeading>
+          <br />
+          <br />
         </>
       ))}
     </div>

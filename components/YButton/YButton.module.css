@@ -1,0 +1,11 @@
+.base {
+  box-shadow: -0.25rem 0.25rem 0 theme('colors.green.400');
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.xs {
+  padding: 0.4375rem 1.1875rem;
+}

@@ -1,25 +1,25 @@
 export enum FontLineHeight {
-  Tight,
-  Relaxed,
-  Loose,
+  Tight = 'tight',
+  Relaxed = 'relaxed',
+  Loose = 'loose',
 }
 
 export enum FontSize {
-  XXS,
-  XS,
-  SM,
-  MD,
-  LG,
-  XL,
-  XXL,
-  '3XL',
-  '4XL',
+  XXS = 'xxs',
+  XS = 'xs',
+  SM = 'sm',
+  MD = 'md',
+  LG = 'lg',
+  XL = 'xl',
+  XXL = 'xxl',
+  '3XL' = '3xl',
+  '4XL' = '4xl',
 }
 
 export enum FontWeight {
-  Regular,
-  Medium,
-  SemiBold,
-  Bold,
-  ExtraBold,
+  Regular = 'regular',
+  Medium = 'medium',
+  SemiBold = 'semi-bold',
+  Bold = 'bold',
+  ExtraBold = 'extra-bold',
 }

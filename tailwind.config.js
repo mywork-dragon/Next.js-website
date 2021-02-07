@@ -1,3 +1,7 @@
+const rem = (value) => {
+  return `${value / 16}rem`;
+};
+
 const colors = {
   blue: {
     400: '#041925',
@@ -13,6 +17,7 @@ const colors = {
     100: '#F2F2F2',
   },
   green: {
+    400: '#2B9C57',
     300: '#53D084',
   },
   red: {
@@ -30,38 +35,46 @@ const fontFamily = {
 };
 
 const fontSize = {
-  xxs: '0.875rem',
-  xs: '1rem',
-  sm: '1.125rem',
-  md: '1.25rem',
-  base: '1.25rem',
-  lg: '1.5rem',
-  xl: '1.75rem',
-  xxl: '2.25rem',
-  '3xl': '2.75rem',
-  '4xl': '3.125rem',
+  xxs: rem(14),
+  xs: rem(16),
+  sm: rem(18),
+  md: rem(20),
+  base: rem(20),
+  lg: rem(24),
+  xl: rem(28),
+  xxl: rem(36),
+  '3xl': rem(44),
+  '4xl': rem(50),
 };
 
 const lineHeight = {
-  3: '0.75rem',
-  4: '1.125rem',
-  5: '1.25rem',
-  6: '1.375rem',
-  7: '1.5rem',
-  8: '1.625rem',
-  9: '1.75rem',
-  10: '1.875rem',
-  11: '2rem',
-  12: '2.25rem',
-  13: '2.5rem',
-  14: '2.625rem',
-  15: '2.75rem',
-  16: '2.875rem',
-  17: '3rem',
-  18: '3.25rem',
-  19: '3.5rem',
-  20: '3.75rem',
-  21: '4rem',
+  3: rem(12),
+  4: rem(18),
+  5: rem(20),
+  6: rem(22),
+  7: rem(24),
+  8: rem(26),
+  9: rem(28),
+  10: rem(30),
+  11: rem(32),
+  12: rem(36),
+  13: rem(40),
+  14: rem(42),
+  15: rem(44),
+  16: rem(46),
+  17: rem(48),
+  18: rem(52),
+  19: rem(56),
+  20: rem(60),
+  21: rem(64),
+};
+
+const padding = {
+  4.5: rem(18),
+};
+
+const borderRadius = {
+  '4xl': rem(28),
 };
 
 module.exports = {
@@ -72,10 +85,12 @@ module.exports = {
   darkMode: 'media',
   theme: {
     extend: {
+      borderRadius,
       colors,
       fontFamily,
       fontSize,
       lineHeight,
+      padding,
     },
   },
   variants: {},

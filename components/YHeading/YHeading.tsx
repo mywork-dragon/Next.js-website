@@ -2,7 +2,7 @@ import { createElement, HTMLAttributes } from 'react';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 interface Props extends HTMLAttributes<HTMLElement> {
-  tag?: string;
+  tag?: keyof JSX.IntrinsicElements;
   size?: FontSize;
   weight?: FontWeight;
   lineHeight?: FontLineHeight;
@@ -16,7 +16,7 @@ export default function YHeading({
   children,
   ...props
 }: Props): JSX.Element {
-  const CustomTag = tag as keyof JSX.IntrinsicElements;
+  const CustomTag = tag;
 
   const classes = getFontClasses({ size, lineHeight, weight });
   classes.push('font-serif');
