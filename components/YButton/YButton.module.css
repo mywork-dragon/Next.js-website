@@ -1,9 +1,11 @@
 .base {
-  box-shadow: -0.25rem 0.25rem 0 theme('colors.green.400');
-
   &:focus {
     outline: none;
   }
+}
+
+.shadow {
+  box-shadow: -0.25rem 0.25rem 0 theme('colors.green.400');
 }
 
 .xs {

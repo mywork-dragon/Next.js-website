@@ -8,12 +8,14 @@ type Props = AriaButtonProps & {
   tag?: keyof JSX.IntrinsicElements;
   size?: ButtonSize;
   shape?: ButtonShape;
+  shadow?: boolean;
 };
 
 export default function YButton({
   tag = 'button',
   size = ButtonSize.MD,
   shape = ButtonShape.Square,
+  shadow = false,
   children,
   ...props
 }: Props): JSX.Element {
@@ -31,10 +33,14 @@ export default function YButton({
   ];
 
   const shapeClass = shape === ButtonShape.Square ? '' : 'rounded-4xl';
+  const shadowClass = shadow ? styles.shadow : '';
 
-  const className = [...defaultClasses, ...sizeClasses[size], shapeClass].join(
-    ' '
-  );
+  const className = [
+    ...defaultClasses,
+    ...sizeClasses[size],
+    shapeClass,
+    shadowClass,
+  ].join(' ');
 
   return createElement(
     CustomTag,

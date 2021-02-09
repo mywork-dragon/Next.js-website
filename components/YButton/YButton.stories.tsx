@@ -8,6 +8,17 @@ export default {
 
 export const Default = (): JSX.Element => <YButton>Default YButton</YButton>;
 
+export const Shadow = (): JSX.Element => {
+  return (
+    <div>
+      <YButton>Without Shadow</YButton>
+      <br />
+      <br />
+      <YButton shadow>With Shadow</YButton>
+    </div>
+  );
+};
+
 export const Sizes = (): JSX.Element => {
   return (
     <div>
