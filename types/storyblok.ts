@@ -86,14 +86,14 @@ type Alternate = {
   slug: string;
 };
 
-type PageComponent = {
+export type PageComponent = {
   _editable: string;
   _uid: string;
   body: string;
   component: string;
 };
 
-type PostComponent = {
+export type PostComponent = {
   _editable: string;
   _uid: string;
   component: string;

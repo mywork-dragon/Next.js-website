@@ -70,7 +70,10 @@ const lineHeight = {
 };
 
 const padding = {
+  1.6: rem(7),
   4.5: rem(18),
+  4.6: rem(19),
+  19: rem(74),
 };
 
 const borderRadius = {
@@ -82,6 +85,9 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{vue,js,ts,jsx,tsx}',
   ],
+  corePlugins: {
+    container: false,
+  },
   darkMode: 'media',
   theme: {
     extend: {
@@ -94,5 +100,19 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    function ({ addComponents }) {
+      addComponents({
+        '.container': {
+          maxWidth: '100%',
+          padding: `0 ${rem(20)}`,
+
+          '@screen md': {
+            maxWidth: rem(1080),
+            margin: '0 auto',
+          },
+        },
+      });
+    },
+  ],
 };

@@ -60,7 +60,6 @@ export default async function preview(
   }
 
   const isHomepage = slug === `${locale}/home` || slug === 'home';
-  console.log(isHomepage);
   const Location = `/${isHomepage ? locale || 'en' : newSlug}`;
 
   // Redirect to the path from the fetched post

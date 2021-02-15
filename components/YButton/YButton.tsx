@@ -5,21 +5,23 @@ import { useButton } from '@react-aria/button';
 import { AriaButtonProps } from '@react-types/button';
 
 type Props = AriaButtonProps & {
-  tag?: keyof JSX.IntrinsicElements;
-  size?: ButtonSize;
+  as?: keyof JSX.IntrinsicElements;
+  buttonSize?: ButtonSize;
   shape?: ButtonShape;
   shadow?: boolean;
+  className?: string;
 };
 
 export default function YButton({
-  tag = 'button',
-  size = ButtonSize.MD,
+  as = 'button',
+  buttonSize = ButtonSize.MD,
   shape = ButtonShape.Square,
   shadow = false,
   children,
+  className: classes,
   ...props
 }: Props): JSX.Element {
-  const CustomTag = tag as keyof JSX.IntrinsicElements;
+  const CustomTag = as as keyof JSX.IntrinsicElements;
   const ref = useRef();
   const { buttonProps } = useButton(props as AriaButtonProps, ref);
 
@@ -35,11 +37,18 @@ export default function YButton({
   const shapeClass = shape === ButtonShape.Square ? '' : 'rounded-4xl';
   const shadowClass = shadow ? styles.shadow : '';
 
+  const filteredSizeClasses = filterSizeClasses(
+    ['px', 'py', 'text', 'leading'],
+    classes,
+    sizeClasses[buttonSize]
+  );
+
   const className = [
     ...defaultClasses,
-    ...sizeClasses[size],
+    ...filteredSizeClasses,
     shapeClass,
     shadowClass,
+    classes,
   ].join(' ');
 
   return createElement(
@@ -54,9 +63,23 @@ export default function YButton({
   );
 }
 
+const filterSizeClasses = (classType: string[], classes, sizeClasses) => {
+  if (!classes) return sizeClasses;
+
+  let result: string[] = [...sizeClasses];
+
+  classType.forEach((type) => {
+    result = classes.includes(type)
+      ? result.filter((value) => !value.includes(type))
+      : result;
+  });
+
+  return result;
+};
+
 const sizeClasses = {
-  [ButtonSize.XS]: [`ybutton--xs ${styles.xs}`],
-  [ButtonSize.SM]: ['px-4.5', 'py-2.5', 'text-xs'],
-  [ButtonSize.MD]: ['px-5', 'py-3', 'text-sm'],
-  [ButtonSize.LG]: ['px-5', 'py-3', 'text-md'],
+  [ButtonSize.XS]: ['px-4.6', 'py-1.6', 'text-xxs', 'leading-4'],
+  [ButtonSize.SM]: ['px-4.5', 'py-2.5', 'text-xs', 'leading-5'],
+  [ButtonSize.MD]: ['px-5', 'py-3', 'text-sm', 'leading-6'],
+  [ButtonSize.LG]: ['px-5', 'py-3', 'text-md', 'leading-7'],
 };

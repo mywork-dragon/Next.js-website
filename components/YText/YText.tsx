@@ -1,29 +1,35 @@
-import { createElement, HTMLAttributes } from 'react';
+import { AllHTMLAttributes, createElement } from 'react';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-interface Props extends HTMLAttributes<HTMLElement> {
-  tag?: string;
-  size?: FontSize.XXS | FontSize.XS | FontSize.SM | FontSize.MD | FontSize.LG;
-  weight?: FontWeight;
+interface Props extends AllHTMLAttributes<HTMLElement> {
+  as?: string;
+  fontSize?:
+    | FontSize.XXS
+    | FontSize.XS
+    | FontSize.SM
+    | FontSize.MD
+    | FontSize.LG;
+  fontWeight?: FontWeight;
   lineHeight?: FontLineHeight;
 }
 
 export default function YText({
-  tag = 'span',
-  size = FontSize.MD,
-  weight = FontWeight.Regular,
+  as = 'span',
+  fontSize = FontSize.MD,
+  fontWeight = FontWeight.Regular,
   lineHeight = FontLineHeight.Tight,
   children,
+  className,
   ...props
 }: Props): JSX.Element {
-  const CustomTag = tag as keyof JSX.IntrinsicElements;
+  const CustomTag = as as keyof JSX.IntrinsicElements;
 
-  const classes = getFontClasses({ size, lineHeight, weight });
-  classes.push('font-serif');
+  const classes = getFontClasses({ fontSize, lineHeight, fontWeight });
+  classes.push('font-sans');
 
   return createElement(
     CustomTag,
-    { className: classes.join(' '), ...props },
+    { className: `${classes.join(' ')} ${className}`, ...props },
     children
   );
 }
@@ -31,21 +37,21 @@ export default function YText({
 /**
  * Returns the font classes
  *
- * @param size
+ * @param fontSize
  * @param lineHeight
- * @param weight
+ * @param fontWeight
  */
-const getFontClasses = ({ size, lineHeight, weight }): string[] => {
+const getFontClasses = ({ fontSize, lineHeight, fontWeight }): string[] => {
   return [
-    fontSizeLookup[size]?.size,
-    fontSizeLookup[size].lineHeight[lineHeight],
-    fontWeightLookup[weight],
+    fontSizeLookup[fontSize]?.fontSize,
+    fontSizeLookup[fontSize].lineHeight[lineHeight],
+    fontWeightLookup[fontWeight],
   ];
 };
 
 const fontSizeLookup = {
   [FontSize.XXS]: {
-    size: 'text-xxs',
+    fontSize: 'text-xxs',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-4',
       [FontLineHeight.Relaxed]: 'leading-6',
@@ -53,7 +59,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize.XS]: {
-    size: 'text-xs',
+    fontSize: 'text-xs',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-5',
       [FontLineHeight.Relaxed]: 'leading-7',
@@ -61,7 +67,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize.SM]: {
-    size: 'text-sm',
+    fontSize: 'text-sm',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-6',
       [FontLineHeight.Relaxed]: 'leading-8',
@@ -69,7 +75,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize.MD]: {
-    size: 'text-md',
+    fontSize: 'text-md',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-7',
       [FontLineHeight.Relaxed]: 'leading-9',
@@ -77,7 +83,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize.LG]: {
-    size: 'text-lg',
+    fontSize: 'text-lg',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-9',
       [FontLineHeight.Relaxed]: 'leading-11',
@@ -85,7 +91,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize.XL]: {
-    size: 'text-xl',
+    fontSize: 'text-xl',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-11',
       [FontLineHeight.Relaxed]: 'leading-12',
@@ -93,7 +99,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize.XXL]: {
-    size: 'text-xxl',
+    fontSize: 'text-xxl',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-13',
       [FontLineHeight.Relaxed]: 'leading-15',
@@ -101,7 +107,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize['2XL']]: {
-    size: 'text-2xl',
+    fontSize: 'text-2xl',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-17',
       [FontLineHeight.Relaxed]: 'leading-18',
@@ -109,7 +115,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize['3XL']]: {
-    size: 'text-3xl',
+    fontSize: 'text-3xl',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-17',
       [FontLineHeight.Relaxed]: 'leading-18',
@@ -117,7 +123,7 @@ const fontSizeLookup = {
     },
   },
   [FontSize['4XL']]: {
-    size: 'text-4xl',
+    fontSize: 'text-4xl',
     lineHeight: {
       [FontLineHeight.Tight]: 'leading-19',
       [FontLineHeight.Relaxed]: 'leading-20',

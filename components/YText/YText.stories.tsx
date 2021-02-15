@@ -36,7 +36,7 @@ export const Sizes = (): JSX.Element => {
     <div>
       {sizes.map((size: BodyFontSize, index: number) => (
         <>
-          <YText size={size}>{sizeTitles[index]} Heading</YText>
+          <YText fontSize={size}>{sizeTitles[index]} Heading</YText>
           <br />
           <br />
         </>
@@ -53,7 +53,7 @@ export const Weights = (): JSX.Element => {
     <div>
       {weights.map((weight: FontWeight, index: number) => (
         <>
-          <YText weight={weight}>{weightTitles[index]} body text</YText>
+          <YText fontWeight={weight}>{weightTitles[index]} body text</YText>
           <br />
           <br />
         </>
