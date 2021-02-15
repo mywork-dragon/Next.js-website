@@ -22,16 +22,16 @@ export const Shadow = (): JSX.Element => {
 export const Sizes = (): JSX.Element => {
   return (
     <div>
-      <YButton size={ButtonSize.XS}>XS Button</YButton>
+      <YButton buttonSize={ButtonSize.XS}>XS Button</YButton>
       <br />
       <br />
-      <YButton size={ButtonSize.SM}>SM Button</YButton>
+      <YButton buttonSize={ButtonSize.SM}>SM Button</YButton>
       <br />
       <br />
-      <YButton size={ButtonSize.MD}>MD Button</YButton>
+      <YButton buttonSize={ButtonSize.MD}>MD Button</YButton>
       <br />
       <br />
-      <YButton size={ButtonSize.LG}>LG Button</YButton>
+      <YButton buttonSize={ButtonSize.LG}>LG Button</YButton>
     </div>
   );
 };
