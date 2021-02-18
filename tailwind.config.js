@@ -1,15 +1,23 @@
+const createDepths = require('./libs/tailwind/createDepths');
+
 const rem = (value) => {
   return `${value / 16}rem`;
 };
 
+const depths = {
+  2: 7,
+};
+
 const colors = {
   blue: {
+    500: '#143DB0',
     400: '#041925',
     300: '#062233',
     200: '#0E284F',
     100: '#305EED',
   },
   gray: {
+    600: '#D5DFE9',
     500: '#2A5D7D',
     400: '#4781A8',
     300: '#80B0C8',
@@ -17,6 +25,7 @@ const colors = {
     100: '#F2F2F2',
   },
   green: {
+    500: '#25A055',
     400: '#2B9C57',
     300: '#53D084',
   },
@@ -24,6 +33,10 @@ const colors = {
     300: '#E15454',
   },
   white: '#FFFFFF',
+  orange: {
+    300: '#F2A143',
+    100: '#CB7F27',
+  },
 };
 
 colors.primary = colors.green[300];
@@ -69,6 +82,22 @@ const lineHeight = {
   21: rem(64),
 };
 
+const spacing = {
+  1.75: rem(7),
+  3.75: rem(15),
+  6.5: rem(26),
+  8.75: rem(35),
+  13: rem(52),
+  14.5: rem(58),
+  15: rem(60),
+  31.75: rem(127),
+  41.75: rem(167),
+  43.75: rem(175),
+  50: rem(200),
+  51.75: rem(207),
+  53.75: rem(215),
+};
+
 const padding = {
   1.6: rem(7),
   4.5: rem(18),
@@ -77,6 +106,7 @@ const padding = {
 };
 
 const borderRadius = {
+  '2.5xl': rem(20),
   '4xl': rem(28),
 };
 
@@ -97,6 +127,8 @@ module.exports = {
       fontSize,
       lineHeight,
       padding,
+      spacing,
+      depths,
     },
   },
   variants: {},
@@ -114,5 +146,6 @@ module.exports = {
         },
       });
     },
+    createDepths,
   ],
 };
