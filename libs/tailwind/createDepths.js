@@ -1,3 +1,4 @@
+'use strict';
 var __assign =
   (this && this.__assign) ||
   function () {
@@ -23,6 +24,7 @@ var __spreadArrays =
         r[k] = a[j];
     return r;
   };
+exports.__esModule = true;
 var isObject = function (input) {
   return Boolean(input) && !(input instanceof Array) && input instanceof Object;
 };
@@ -92,7 +94,7 @@ var createDepths = function (depthTuple, color1, color2) {
   );
 };
 // export plugin function
-module.exports = function (_a) {
+exports['default'] = function (_a) {
   var addComponents = _a.addComponents,
     theme = _a.theme;
   var themeDepths = theme('depths');

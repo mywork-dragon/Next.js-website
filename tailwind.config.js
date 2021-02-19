@@ -1,4 +1,4 @@
-const createDepths = require('./libs/tailwind/createDepths');
+const { default: createDepths } = require('./libs/tailwind/createDepths');
 
 const rem = (value) => {
   return `${value / 16}rem`;
@@ -10,6 +10,7 @@ const depths = {
 
 const colors = {
   blue: {
+    600: '#062233',
     500: '#143DB0',
     400: '#041925',
     300: '#062233',
@@ -83,19 +84,25 @@ const lineHeight = {
 };
 
 const spacing = {
-  1.75: rem(7),
-  3.75: rem(15),
-  6.5: rem(26),
-  8.75: rem(35),
+  1.6: rem(7), //
+  3.6: rem(15), //
+  6.5: rem(26), //
+  8.6: rem(35), //
+  12.5: rem(52), //
   13: rem(52),
   14.5: rem(58),
   15: rem(60),
   31.75: rem(127),
   41.75: rem(167),
-  43.75: rem(175),
+  43.6: rem(175), //
   50: rem(200),
   51.75: rem(207),
-  53.75: rem(215),
+  53.6: rem(215), //
+};
+
+const boxShadow = {
+  'inset-light': 'inset 0px 2px 0px #233057',
+  'inset-dark': 'inset 0px 2px 0px #1C1C1C',
 };
 
 const padding = {
@@ -143,6 +150,9 @@ module.exports = {
             maxWidth: rem(1080),
             margin: '0 auto',
           },
+        },
+        '.drop-shadow': {
+          filter: 'drop-shadow(0px 20px 80px rgba(0, 0, 0, 0.8))',
         },
       });
     },
