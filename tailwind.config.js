@@ -10,24 +10,23 @@ const depths = {
 
 const colors = {
   blue: {
-    600: '#062233',
-    500: '#143DB0',
     400: '#041925',
     300: '#062233',
     200: '#0E284F',
+    150: '#143DB0',
     100: '#305EED',
   },
   gray: {
-    600: '#D5DFE9',
     500: '#2A5D7D',
     400: '#4781A8',
     300: '#80B0C8',
     200: '#BFD8E4',
+    150: '#D5DFE9',
     100: '#F2F2F2',
   },
   green: {
-    500: '#25A055',
     400: '#2B9C57',
+    350: '#25A055',
     300: '#53D084',
   },
   red: {
@@ -84,20 +83,16 @@ const lineHeight = {
 };
 
 const spacing = {
-  1.6: rem(7), //
-  3.6: rem(15), //
-  6.5: rem(26), //
-  8.6: rem(35), //
-  12.5: rem(52), //
+  3.6: rem(15),
+  4.6: rem(19),
+  6.5: rem(26),
+  8.6: rem(35),
   13: rem(52),
   14.5: rem(58),
   15: rem(60),
-  31.75: rem(127),
-  41.75: rem(167),
-  43.6: rem(175), //
+  43.6: rem(175),
   50: rem(200),
-  51.75: rem(207),
-  53.6: rem(215), //
+  53.6: rem(215),
 };
 
 const boxShadow = {
@@ -115,6 +110,10 @@ const padding = {
 const borderRadius = {
   '2.5xl': rem(20),
   '4xl': rem(28),
+};
+
+const opacity = {
+  15: '0.15',
 };
 
 module.exports = {
@@ -136,6 +135,8 @@ module.exports = {
       padding,
       spacing,
       depths,
+      boxShadow,
+      opacity,
     },
   },
   variants: {},

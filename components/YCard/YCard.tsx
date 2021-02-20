@@ -1,196 +1,260 @@
-import React, { AriaAttributes, createElement } from 'react';
+import React, {
+  AriaAttributes,
+  createElement,
+  Children,
+  cloneElement,
+} from 'react';
 
-import { CardType, CardSize, CardColor } from '@/enums/components';
+import { CardType, CardColor } from '@/enums/components';
+import IconPlaceholder from '../Icons/IconPlaceholder';
 
-import IconPlaceholder from '@/assets/icons/facebook.svg';
-
-type ChildrenProps = AriaAttributes & {
+interface CardProps extends AriaAttributes {
   title?: string;
   description?: string;
   type?: CardType;
-  icon?: SVGElement;
-  size?: CardSize;
+  Icon?: typeof IconPlaceholder;
   color?: CardColor;
-  className?: string;
-};
-
-type Props = ChildrenProps & {
-  as?: keyof JSX.IntrinsicElements;
-};
-
-enum Elements {
-  Container = 'container',
-  Shadow = 'shadow',
-  Topface = 'topface',
-  TextPlaceholder = 'textPlacehoder',
-  Title = 'title',
-  Description = 'description',
-  Icon = 'icon',
+  empty?: boolean;
 }
 
-const getClasses = (element: Elements, type: CardType, color: CardColor) => {
-  const variants = variantClasses[element][type];
-  return [
-    ...defaultClasses[element],
-    ...(variants.common || ''),
-    ...variants[color],
-  ]
-    .join(' ')
-    .replace('  ', ' ');
-};
+interface Props extends CardProps {
+  as?: keyof JSX.IntrinsicElements;
+  className?: string;
+  children?: React.ReactNode;
+}
 
-// main component
+enum TextPosition {
+  Title = 'title',
+  Subtitle = 'subtitle',
+}
+
+// wrapper component
 const YCard = ({
-  as,
-  className: classes = '',
+  as: CustomTag,
+  className: classes,
+  children,
   ...props
 }: Props): JSX.Element => {
-  const className = [...defaultClasses[Elements.Container], classes].join(' ');
-  const CustomTag = as || 'div';
+  const className = ['w-43.6 h-53.6 pl-2 pb-2', classes].join(' ');
 
   return createElement(
-    CustomTag,
+    CustomTag || 'div',
     {
       className,
     },
-    createChildren({ ...props })
+    Card({ ...props }),
+    children
   );
 };
 
-// create children of main component
-export const createChildren = ({
-  className,
-  icon,
+// main component function
+const Card = ({
+  Icon,
   title,
   description,
   color = CardColor.White,
   type = CardType.Fill,
-}: ChildrenProps): JSX.Element => {
-  const topfaceClasses = getClasses(Elements.Topface, type, color);
+  empty,
+  ...props
+}: CardProps): JSX.Element => {
+  // display text or placeholders
+  const displayText = !(
+    type === CardType.Transparent ||
+    !title ||
+    !description
+  );
 
-  // create text components
-  let textComponents = <></>;
+  // get classes for title or first placeholder
+  const titleClasses = [
+    displayText
+      ? getTextClasses(TextPosition.Title, color)
+      : getPlaceholderClasses(TextPosition.Title, color, type),
+  ].join(' ');
 
-  if (type === CardType.Transparent || !title || !description) {
-    const textClasses = getClasses(Elements.TextPlaceholder, type, color);
+  // get classes for description or second placeholder
+  const descriptionClasses = [
+    displayText
+      ? getTextClasses(TextPosition.Subtitle, color)
+      : getPlaceholderClasses(TextPosition.Subtitle, color, type),
+  ].join(' ');
 
-    textComponents = (
-      <>
-        <div className={[textClasses, 'right-6', 'bottom-14.5'].join(' ')} />
-        <div className={[textClasses, 'right-13', 'bottom-8.6'].join(' ')} />
-      </>
-    );
-  } else {
-    const titleClasses = getClasses(Elements.Title, type, color);
-    const descriptionClasses = getClasses(Elements.Description, type, color);
+  const titleTag = displayText ? 'h5' : 'div';
+  const descriptionTag = displayText ? 'p' : 'div';
 
-    textComponents = (
-      <>
-        <div className={[titleClasses, ''].join(' ')} />
-        <div className={[descriptionClasses, ''].join(' ')} />
-      </>
-    );
-  }
+  // create text components or corresponding placeholders
+  const titleComp = createElement(
+    titleTag,
+    {
+      className: titleClasses,
+    },
+    displayText ? title : null
+  );
+
+  const descriptionComp = createElement(
+    descriptionTag,
+    {
+      className: descriptionClasses,
+    },
+    displayText ? description : null
+  );
 
   // create icon component
-  const iconClasses = getClasses(Elements.Icon, type, color);
+  const displayIcon = type == CardType.Fill;
 
-  const iconComponent = createElement('img', {
-    className: iconClasses,
-    href: icon || IconPlaceholder,
-  });
+  const iconClasses = getIconClasses(color, type).concat(' z-30');
 
-  return (
-    <div className={[topfaceClasses, className].join(' ')}>
-      {iconComponent}
-      {textComponents}
-    </div>
+  const iconProps = { width: '100%', height: '100%' };
+  const icon = !displayIcon ? null : Icon ? (
+    <Icon {...iconProps} />
+  ) : (
+    <IconPlaceholder {...iconProps} />
+  );
+
+  const iconComponent = createElement(
+    'div',
+    {
+      className: iconClasses,
+    },
+    icon
+  );
+
+  // create classes for outermost component
+  const className = getTopfaceClasses(color, type);
+
+  const children = !empty ? [iconComponent, titleComp, descriptionComp] : null;
+
+  return createElement(
+    'div',
+    {
+      className,
+    },
+    children
   );
 };
 
-const defaultClasses = {
-  [Elements.Container]: ['w-43.6', 'h-53.6', 'border', 'border-primary'],
-  [Elements.Topface]: ['ml-2', 'rounded', 'z-10', 'w-40', 'h-50'],
-  [Elements.TextPlaceholder]: ['absolute', 'h-3.6', 'left-5', 'rounded-sm'],
-  [Elements.Title]: [],
-  [Elements.Description]: [],
-  [Elements.Icon]: ['absolute', 'w-15', 'h-15', 'top-6.5'],
+/** styling functions and className objects **/
+
+/* topface */
+const getTopfaceClasses = (color: CardColor, type: CardType) => {
+  const transparent = type == CardType.Transparent;
+  const { base } = topfaceClasses;
+
+  const baseColor = topfaceClasses.variants.color[color];
+
+  const background = `bg-${baseColor}`;
+  const depth = transparent
+    ? `depth-2-${baseColor}-secondary`
+    : topfaceClasses.variants.depth[color];
+  const additionalClasses =
+    type == CardType.Transparent ? 'bg-opacity-15 border-opacity-15' : '';
+
+  return [...base, background, depth, additionalClasses].join(' ');
 };
 
-const variantClasses = {
-  [Elements.Topface]: {
-    [CardType.Fill]: {
-      [CardColor.White]: ['bg-white', 'depth-2-gray-600'],
-      [CardColor.Gray]: ['bg-gray-600', 'depth-2-white'],
-      [CardColor.Blue]: ['bg-blue-100', 'depth-2-blue-500'],
-      [CardColor.Green]: ['bg-green-300', 'depth-2-green-500'],
-      [CardColor.Orange]: ['bg-orange-300', 'depth-2-orange-100'],
+const topfaceClasses = {
+  base: ['ml-2', 'rounded', 'z-10', 'w-40', 'h-50', 'pt-6.5'],
+  variants: {
+    color: {
+      [CardColor.White]: 'white',
+      [CardColor.Gray]: 'gray-150',
+      [CardColor.Blue]: 'blue-100',
+      [CardColor.Green]: 'green-300',
+      [CardColor.Orange]: 'orange-300',
     },
-    [CardType.Transparent]: {
-      [CardColor.Blue]: [],
-      [CardColor.Green]: [],
-      [CardColor.Orange]: [],
-    },
-  },
-
-  [Elements.TextPlaceholder]: {
-    [CardType.Fill]: {
-      [CardColor.White]: ['bg-blue-100', 'opacity-10', 'shadow-inset-light'],
-      [CardColor.Gray]: ['bg-white', 'opacaity-10', 'shadow-inset-dark'],
-      [CardColor.Blue]: ['bg-blue-600', 'opacity-30', 'shadow-inset-dark'],
-      [CardColor.Green]: ['bg-green-500', 'opacity-40', 'shadow-inset-dark'],
-      [CardColor.Orange]: ['bg-orange-100', 'opacity-40', 'shadow-inset-dark'],
-    },
-    [CardType.Transparent]: {
-      [CardColor.Blue]: [],
-      [CardColor.Green]: [],
-      [CardColor.Orange]: [],
+    depth: {
+      [CardColor.White]: 'depth-2-gray-150',
+      [CardColor.Gray]: 'depth-2-white',
+      [CardColor.Blue]: 'depth-2-blue-150',
+      [CardColor.Green]: 'depth-2-green-350',
+      [CardColor.Orange]: 'depth-2-orange-100',
     },
   },
+};
 
-  [Elements.Description]: {
-    [CardType.Fill]: {
-      [CardColor.White]: ['bg-blue-100', 'opacity-10', 'shadow-inset-light'],
-      [CardColor.Gray]: ['bg-white', 'opacaity-10', 'shadow-inset-dark'],
-      [CardColor.Blue]: ['bg-blue-600', 'opacity-30', 'shadow-inset-dark'],
-      [CardColor.Green]: ['bg-green-500', 'opacity-40', 'shadow-inset-dark'],
-      [CardColor.Orange]: ['bg-orange-100', 'opacity-40', 'shadow-inset-dark'],
+/* icons */
+const getIconClasses = (color: CardColor, type: CardType) => {
+  const variant = [CardColor.White].includes(color) ? 'light' : 'dark';
+
+  const { base, variants } = iconClasses;
+
+  const variantClasses =
+    type == CardType.Transparent
+      ? [...variants[type], `bg-${topfaceClasses.variants.color[color]}`]
+      : variants[variant];
+
+  return [...base, ...variantClasses].join(' ');
+};
+
+const iconClasses = {
+  base: ['w-15', 'h-15', 'top-6.5', 'mx-auto', 'mb-4.6'],
+  variants: {
+    [CardType.Transparent]: ['-translate-x-0.5', 'rounded-2.5xl', 'opacity-40'],
+    light: ['text-gray-200'],
+    dark: ['text-white'],
+  },
+};
+
+/* text */
+const getTextClasses = (position: TextPosition, color: CardColor) => {
+  const variant = [CardColor.White, CardColor.Gray].includes(color)
+    ? 'light'
+    : 'dark';
+
+  const { base } = textClasses;
+  const variants = textClasses.variants[position];
+
+  return [...base, ...variants.base, variants[variant]].join(' ');
+};
+
+const textClasses = {
+  base: ['mt-1', 'text-center', 'text-xs', 'leading-5'],
+  variants: {
+    [TextPosition.Title]: {
+      base: ['serif', 'font-bold'],
+      light: 'text-blue-100',
+      dark: 'text-white',
     },
-    [CardType.Transparent]: {
-      [CardColor.Blue]: [],
-      [CardColor.Green]: [],
-      [CardColor.Orange]: [],
+    [TextPosition.Subtitle]: {
+      base: ['sans', 'font-semibold'],
+      light: 'text-gray-300',
+      dark: 'text-white',
     },
   },
+};
 
-  [Elements.Title]: {
-    [CardType.Fill]: {
-      [CardColor.White]: ['bg-blue-100', 'opacity-10', 'shadow-inset-light'],
-      [CardColor.Gray]: ['bg-white', 'opacaity-10', 'shadow-inset-dark'],
-      [CardColor.Blue]: ['bg-blue-600', 'opacity-30', 'shadow-inset-dark'],
-      [CardColor.Green]: ['bg-green-500', 'opacity-40', 'shadow-inset-dark'],
-      [CardColor.Orange]: ['bg-orange-100', 'opacity-40', 'shadow-inset-dark'],
-    },
-    [CardType.Transparent]: {
-      [CardColor.Blue]: [],
-      [CardColor.Green]: [],
-      [CardColor.Orange]: [],
-    },
-  },
+/* text placeholder */
+const getPlaceholderClasses = (
+  position: TextPosition,
+  color: CardColor,
+  type: CardType
+) => {
+  const variant = [CardColor.White].includes(color) ? 'light' : 'dark';
 
-  [Elements.Icon]: {
-    [CardType.Fill]: {
-      common: ['left-12.5'],
-      [CardColor.White]: ['font-gray-200'],
-      [CardColor.Gray]: ['font-blue-100'],
-      [CardColor.Blue]: ['font-blue-100'],
-      [CardColor.Green]: ['font-blue-100'],
-      [CardColor.Orange]: ['font-blue-100'],
-    },
-    [CardType.Transparent]: {
-      [CardColor.Blue]: [],
-      [CardColor.Green]: [],
-      [CardColor.Orange]: [],
+  const { base, variants } = placeholderClasses;
+
+  const colorClasses =
+    type == CardType.Transparent
+      ? ['opacity-40', `bg-${topfaceClasses.variants.color[color]}`]
+      : [...variants.color[color], variants[variant]];
+
+  const positioningClasses = variants[position];
+
+  return [...base, ...colorClasses, ...positioningClasses].join(' ');
+};
+
+const placeholderClasses = {
+  base: ['absolute', 'h-3.6', 'left-5', 'rounded-sm'],
+  variants: {
+    [TextPosition.Title]: ['right-6', 'bottom-14.5'],
+    [TextPosition.Subtitle]: ['right-13', 'bottom-8.6'],
+    light: ['shadow-inset-light'],
+    dark: ['shadow-inset-dark'],
+    color: {
+      [CardColor.White]: ['bg-blue-100', 'opacity-10'],
+      [CardColor.Gray]: ['bg-white', 'opacaity-10'],
+      [CardColor.Blue]: ['bg-blue-300', 'opacity-30'],
+      [CardColor.Green]: ['bg-green-350', 'opacity-40'],
+      [CardColor.Orange]: ['bg-orange-100', 'opacity-40'],
     },
   },
 };

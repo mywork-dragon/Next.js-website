@@ -25,10 +25,4 @@ export enum CardColor {
   Green = 'green',
   Orange = 'orange',
 }
-
-export enum CardSize {
-  XS = 'xs',
-  SM = 'sm',
-  MD = 'md',
-}
 //endregion
