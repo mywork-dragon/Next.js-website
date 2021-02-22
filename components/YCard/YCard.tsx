@@ -21,6 +21,7 @@ interface Props extends CardProps {
   as?: keyof JSX.IntrinsicElements;
   className?: string;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 enum TextPosition {
@@ -33,6 +34,7 @@ const YCard = ({
   as: CustomTag,
   className: classes,
   children,
+  style,
   ...props
 }: Props): JSX.Element => {
   const className = ['w-43.6 h-53.6 pl-2 pb-2', classes].join(' ');
@@ -40,6 +42,7 @@ const YCard = ({
   return createElement(
     CustomTag || 'div',
     {
+      style,
       className,
     },
     Card({ ...props }),
@@ -152,7 +155,15 @@ const getTopfaceClasses = (color: CardColor, type: CardType) => {
 };
 
 const topfaceClasses = {
-  base: ['ml-2', 'rounded', 'z-10', 'w-40', 'h-50', 'pt-6.5'],
+  base: [
+    'ml-2',
+    'rounded',
+    'z-10',
+    'w-40',
+    'h-50',
+    'pt-6.5',
+    'card-blue-transparent',
+  ],
   variants: {
     color: {
       [CardColor.White]: 'white',

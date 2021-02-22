@@ -13,11 +13,11 @@ export default {
 };
 
 export const Default = (): JSX.Element => (
-  <YCard title={title} description={description} />
+  <YCard className="" title={title} description={description} />
 );
 
 export const FillWithoutText = (): JSX.Element => (
-  <div className="grid gap-8 grid-cols-10">
+  <div className="grid gap-8 grid-cols-10 skew">
     <YCard className="col-span-2" Icon={Cart} color={CardColor.White} />
     <YCard className="col-span-2" Icon={Carousel} color={CardColor.Gray} />
     <YCard className="col-span-2" Icon={Cart} color={CardColor.Blue} />
@@ -128,7 +128,7 @@ export const Transparent = (): JSX.Element => (
 
 const stack = 'absolute left-5 bottom-5 z-20';
 export const Stacks = (): JSX.Element => (
-  <div className="mt-8 grid grid-cols-10">
+  <div className="mt-8 grid grid-cols-10 skew">
     <YCard className="relative col-span-2 drop-shadow" color={CardColor.Gray}>
       <YCard className={stack} color={CardColor.Gray}>
         <YCard className={stack} color={CardColor.Green} />

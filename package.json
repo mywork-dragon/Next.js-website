@@ -9,7 +9,8 @@
     "export": "next export",
     "lint": "eslint --ext .ts,.tsx",
     "storybook": "start-storybook",
-    "watch-depths": "tsc libs/tailwind/createDepths.ts -w"
+    "watch-cards": "tsc libs/tailwind/cardsPlugin/testCards.ts -w",
+    "test-cards": "node libs/tailwind/cardsPlugin/testCards.js"
   },
   "husky": {
     "hooks": {
