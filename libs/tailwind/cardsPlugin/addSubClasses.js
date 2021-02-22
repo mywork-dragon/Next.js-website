@@ -42,13 +42,22 @@ var iconClasses =
     width: '60px',
     margin: '0 auto 19px auto',
   }),
-  (_b['.icon-transparent'] = {
-    opacity: '0.4',
-    transform: 'translateX(2px)',
-    border: 'none',
-    borderRadius: '20px',
-  }),
   _b);
+var textClasses =
+  ((_c = {}),
+  (_c['.text'] = {
+    marginTop: '4px',
+    textAlign: 'center',
+    fontSize: '16px',
+    lineHeight: '20px',
+  }),
+  (_c['.title'] = {
+    fontWeight: 700,
+  }),
+  (_c['.subtitle'] = {
+    fontWeight: 600,
+  }),
+  _c);
 // variants with respet to color
 var placeholder = {
   white: {
@@ -72,38 +81,36 @@ var placeholder = {
     opacity: 0.4,
   },
 };
-var textClasses =
-  ((_c = {}),
-  (_c['.text'] = {
-    marginTop: '4px',
-    textAlign: 'center',
-    fontSizs: '16px',
-    lineHeight: '20px',
-  }),
-  (_c['.title'] = {
-    fontWeight: 700,
-  }),
-  (_c['.subtitle'] = {
-    fontWeight: 600,
-  }),
-  _c);
 /**
  * Creates subclasses with base properties shared across all variants
+ * and nested variants with respect to theme colors
  *
  *
  */
 var addSubClasses = function (_a) {
-  var addComponents = _a.addComponents,
-    theme = _a.theme;
-  var variants = __assign(
-    {
-      white: {
-        base: '#FFFFFF',
-        shadow: '#D5DFE9',
-      },
+  var addUtilities = _a.addUtilities;
+  var variants = {
+    white: {
+      base: '#FFFFFF',
+      shadow: '#D5DFE9',
     },
-    theme('cards.variants')
-  );
+    gray: {
+      base: '#D5DFE9',
+      shadow: '#FFFFFF',
+    },
+    blue: {
+      base: '#305EED',
+      shadow: '#143DB0',
+    },
+    green: {
+      base: '#53D084',
+      shadow: '#25A055',
+    },
+    orange: {
+      base: '#F2A143',
+      shadow: '#CB7F27',
+    },
+  };
   // add variant subclasses
   var variantClasses = {};
   Object.keys(variants).forEach(function (color) {
@@ -142,7 +149,7 @@ var addSubClasses = function (_a) {
       color: ['white', 'gray'].includes(color) ? '#80B0C8' : '#FFFFFF',
     };
   });
-  addComponents(
+  addUtilities(
     __assign(
       __assign(
         __assign(__assign({}, placeholderClasses), iconClasses),

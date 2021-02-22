@@ -1,5 +1,10 @@
-import createDepths, { DepthTuple, ColorTuple } from './createDepths';
-import { TailwindOptionsPartial, Variant } from './createCards';
+import createDepths from './createDepths';
+import {
+  Variant,
+  DepthTuple,
+  ColorTuple,
+  TailwindOptionsPartial,
+} from './types';
 
 interface VariantWithDepths extends Variant {
   depths: {
@@ -21,8 +26,7 @@ interface VariantsWithDepths {
  * @returns updated variants object with added depths: {fill, transparent} for each entry
  */
 const addDepthClasses = ({
-  addComponents,
-  theme,
+  addUtilities,
 }: TailwindOptionsPartial & {
   variants: Record<string, Variant>;
 }): VariantsWithDepths => {
@@ -31,12 +35,27 @@ const addDepthClasses = ({
       base: '#FFFFFF',
       shadow: '#D5DFE9',
     },
-    ...theme('cards.variants'),
+    gray: {
+      base: '#D5DFE9',
+      shadow: '#FFFFFF',
+    },
+    blue: {
+      base: '#305EED',
+      shadow: '#143DB0',
+    },
+    green: {
+      base: '#53D084',
+      shadow: '#25A055',
+    },
+    orange: {
+      base: '#F2A143',
+      shadow: '#CB7F27',
+    },
   };
 
-  const depth = theme('cards.depth') || ([2, 7] as DepthTuple);
-  const background = theme('cards.background') || 'black';
-  const skew = theme('cards.skew') || 1;
+  const depth = [2, 7] as DepthTuple;
+  const background = '#062233';
+  const skew = 1;
 
   let components = {};
 
@@ -72,7 +91,7 @@ const addDepthClasses = ({
       depthTransparentClasses['under_skew'];
 
     // add newly created depth components to tailwind
-    addComponents(returnClasses);
+    addUtilities(returnClasses);
 
     // add classnames to return object under appropriate color name
     components = {

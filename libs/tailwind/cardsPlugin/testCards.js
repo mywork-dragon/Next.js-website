@@ -2,7 +2,7 @@
 exports.__esModule = true;
 var createCards_1 = require('./createCards');
 // a mock function which logs components to console
-var addComponents = function (components) {
+var addUtilities = function (components) {
   console.log(JSON.stringify(components, null, 2));
 };
 var theme = function (query) {
@@ -34,4 +34,4 @@ var variants = {
     shadow: '',
   },
 };
-createCards_1['default']({ addComponents: addComponents, theme: theme });
+createCards_1['default']({ addUtilities: addUtilities, theme: theme });

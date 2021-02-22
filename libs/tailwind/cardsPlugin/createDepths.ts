@@ -1,8 +1,6 @@
 import { CSSProperties } from 'react';
 
-export type DepthTuple = [string | number, number];
-export type ColorTuple = [string | number, string];
-export type TailwindComponents = Record<string, CSSProperties>;
+import { DepthTuple, ColorTuple, TailwindComponents } from './types';
 
 interface AddDepthArgs {
   depth: number;

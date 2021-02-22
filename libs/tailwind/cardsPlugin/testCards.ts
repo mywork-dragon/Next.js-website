@@ -1,8 +1,8 @@
 import createCards from './createCards';
-import { TailwindComponents } from './createDepths';
+import { TailwindComponents } from './types';
 
 // a mock function which logs components to console
-const addComponents = (components: TailwindComponents) => {
+const addUtilities = (components: TailwindComponents) => {
   console.log(JSON.stringify(components, null, 2));
 };
 
@@ -36,4 +36,4 @@ const variants = {
   },
 };
 
-createCards({ addComponents, theme });
+createCards({ addUtilities, theme });

@@ -6,32 +6,6 @@ const rem = (value) => {
   return `${value / 16}rem`;
 };
 
-const cards = {
-  variants: {
-    white: {
-      base: '#FFFFFF',
-      shadow: '#D5DFE9',
-    },
-    gray: {
-      base: '#D5DFE9',
-      shadow: '#FFFFFF',
-    },
-    blue: {
-      base: '#305EED',
-      shadow: '#143DB0',
-    },
-    green: {
-      base: '#53D084',
-      shadow: '#25A055',
-    },
-    orange: {
-      base: '#F2A143',
-      shadow: '#CB7F27',
-    },
-  },
-  background: colors.secondary,
-};
-
 const colors = {
   blue: {
     400: '#041925',
@@ -163,7 +137,6 @@ module.exports = {
       lineHeight,
       padding,
       spacing,
-      depths,
       boxShadow,
       opacity,
     },
@@ -183,10 +156,6 @@ module.exports = {
         },
         '.drop-shadow': {
           filter: 'drop-shadow(0px 20px 80px rgba(0, 0, 0, 0.8))',
-        },
-        '.skew': {
-          transform: 'matrix(0.73, -0.40, 0.8, 0.43, -5, -25)',
-          transformStyle: 'preserve-3d',
         },
       });
     },

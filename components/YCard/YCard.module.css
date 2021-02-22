@@ -1,0 +1,6 @@
+.cardWhite {
+  @apply card-white;
+  &:hover {
+    @apply card-blue;
+  }
+}

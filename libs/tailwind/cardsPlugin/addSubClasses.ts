@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react';
-
-import { TailwindOptionsPartial } from './createCards';
+import { TailwindOptionsPartial } from './types';
 
 // base classes for nested components
 const placeholderClasses = {
@@ -27,11 +26,20 @@ const iconClasses = {
     width: '60px',
     margin: '0 auto 19px auto',
   },
-  ['.icon-transparent']: {
-    opacity: '0.4',
-    transform: 'translateX(2px)',
-    border: 'none',
-    borderRadius: '20px',
+} as Record<string, CSSProperties>;
+
+const textClasses = {
+  ['.text']: {
+    marginTop: '4px',
+    textAlign: 'center',
+    fontSize: '16px',
+    lineHeight: '20px',
+  },
+  ['.title']: {
+    fontWeight: 700,
+  },
+  ['.subtitle']: {
+    fontWeight: 600,
   },
 } as Record<string, CSSProperties>;
 
@@ -59,34 +67,34 @@ const placeholder = {
   },
 };
 
-const textClasses = {
-  ['.text']: {
-    marginTop: '4px',
-    textAlign: 'center',
-    fontSizs: '16px',
-    lineHeight: '20px',
-  },
-  ['.title']: {
-    fontWeight: 700,
-  },
-  ['.subtitle']: {
-    fontWeight: 600,
-  },
-} as Record<string, CSSProperties>;
-
 /**
  * Creates subclasses with base properties shared across all variants
  * and nested variants with respect to theme colors
  *
  *
  */
-const addSubClasses = ({ addComponents, theme }: TailwindOptionsPartial) => {
+const addSubClasses = ({ addUtilities }: TailwindOptionsPartial) => {
   const variants = {
     white: {
       base: '#FFFFFF',
       shadow: '#D5DFE9',
     },
-    ...theme('cards.variants'),
+    gray: {
+      base: '#D5DFE9',
+      shadow: '#FFFFFF',
+    },
+    blue: {
+      base: '#305EED',
+      shadow: '#143DB0',
+    },
+    green: {
+      base: '#53D084',
+      shadow: '#25A055',
+    },
+    orange: {
+      base: '#F2A143',
+      shadow: '#CB7F27',
+    },
   };
 
   // add variant subclasses
@@ -128,7 +136,7 @@ const addSubClasses = ({ addComponents, theme }: TailwindOptionsPartial) => {
     };
   });
 
-  addComponents({
+  addUtilities({
     ...placeholderClasses,
     ...iconClasses,
     ...textClasses,
