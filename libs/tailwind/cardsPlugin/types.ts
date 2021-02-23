@@ -14,7 +14,8 @@ export type ColorTuple = [string | number, string];
 export type TailwindComponents = Record<string, CSSProperties>;
 
 export interface TailwindOptionsPartial {
-  addUtilities?: (components: TailwindComponents) => any;
+  e?: (str: string) => string;
+  addComponents?: (components: TailwindComponents) => any;
   theme?: <
     T extends
       | 'cards.variants'

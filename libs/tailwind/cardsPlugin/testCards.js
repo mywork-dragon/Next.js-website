@@ -1,6 +1,6 @@
 'use strict';
 exports.__esModule = true;
-var createCards_1 = require('./createCards');
+var addHoverClasses_1 = require('../utils/addHoverClasses');
 // a mock function which logs components to console
 var addUtilities = function (components) {
   console.log(JSON.stringify(components, null, 2));
@@ -34,4 +34,27 @@ var variants = {
     shadow: '',
   },
 };
-createCards_1['default']({ addUtilities: addUtilities, theme: theme });
+//createCards({ addUtilities, theme });
+// console.log(addOpacity(variants.gray.base, 0.5));
+var classes = {
+  '.card .icon': {
+    backgroundColor: 'blue',
+    opacity: 0.1,
+  },
+  '.card-blue .icon': {
+    backgroundColor: 'green',
+    opacity: 0.5,
+  },
+  '.card-blue-transparent .icon': {
+    backgroundColor: 'green',
+    opacity: 0.5,
+  },
+  '.card-blue': {
+    backgroundColor: 'green',
+    opacity: 0.5,
+  },
+};
+var e = function (str) {
+  return str;
+};
+console.log(JSON.stringify(addHoverClasses_1['default'](classes, e), null, 2));

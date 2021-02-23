@@ -26,7 +26,7 @@ interface VariantsWithDepths {
  * @returns updated variants object with added depths: {fill, transparent} for each entry
  */
 const addDepthClasses = ({
-  addUtilities,
+  addComponents,
 }: TailwindOptionsPartial & {
   variants: Record<string, Variant>;
 }): VariantsWithDepths => {
@@ -91,7 +91,7 @@ const addDepthClasses = ({
       depthTransparentClasses['under_skew'];
 
     // add newly created depth components to tailwind
-    addUtilities(returnClasses);
+    addComponents(returnClasses);
 
     // add classnames to return object under appropriate color name
     components = {

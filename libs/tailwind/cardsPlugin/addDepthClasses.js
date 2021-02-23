@@ -25,7 +25,7 @@ var createDepths_1 = require('./createDepths');
  * @returns updated variants object with added depths: {fill, transparent} for each entry
  */
 var addDepthClasses = function (_a) {
-  var addUtilities = _a.addUtilities;
+  var addComponents = _a.addComponents;
   var variants = {
     white: {
       base: '#FFFFFF',
@@ -84,7 +84,7 @@ var addDepthClasses = function (_a) {
     returnClasses['.skew .card-' + color + '-transparent'] =
       depthTransparentClasses['under_skew'];
     // add newly created depth components to tailwind
-    addUtilities(returnClasses);
+    addComponents(returnClasses);
     // add classnames to return object under appropriate color name
     components = __assign(
       __assign({}, components),

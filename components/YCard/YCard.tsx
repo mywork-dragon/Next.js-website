@@ -2,9 +2,7 @@ import React, { AriaAttributes, createElement, useRef } from 'react';
 import { AriaButtonProps } from '@react-types/button';
 import { useButton } from '@react-aria/button';
 
-import IconPlaceholder from '../Icons/IconPlaceholder';
-
-// import IconPlaceholder from '@/assets/icons/icon.svg';
+import IconPlaceholder from '@/assets/icons/icon.svg';
 
 interface CardProps extends AriaAttributes {
   title?: string;
@@ -20,6 +18,7 @@ interface Props extends CardProps {
   className?: string;
   children?: React.ReactNode;
   cardClasses?: string;
+  style?: React.CSSProperties;
 }
 
 // wrapper component
@@ -30,6 +29,7 @@ const YCard: React.FC<Props> = ({
   children,
   Icon,
   onClick,
+  style,
   title,
   empty,
   description,
@@ -58,12 +58,12 @@ const YCard: React.FC<Props> = ({
     );
 
   const icon = (
-    <div className="icon">
-      {isFill && <IconPlaceholder height="100%" width="100%" />}
+    <div className="icon flex items-stretch">
+      {isFill && <IconPlaceholder />}
     </div>
   );
 
-  const className = [...baseClasses, cardClasses].join(' ');
+  const className = filterDefaultCard(baseClasses, cardClasses);
 
   const Card = createElement(
     CustomTag,
@@ -85,6 +85,14 @@ const YCard: React.FC<Props> = ({
     </div>
   );
 };
+
+const filterDefaultCard = (baseClasses: string[], classes: string) =>
+  classes?.split(' ').includes('card')
+    ? [
+        ...baseClasses.filter((className) => className != 'card-white'),
+        classes,
+      ].join(' ')
+    : [...baseClasses, classes].join(' ') || baseClasses.join(' ');
 
 const baseClasses = [
   'rounded',

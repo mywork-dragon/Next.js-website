@@ -26,6 +26,10 @@ const iconClasses = {
     width: '60px',
     margin: '0 auto 19px auto',
   },
+  ['.icon svg']: {
+    height: '100%',
+    width: '100%',
+  },
 } as Record<string, CSSProperties>;
 
 const textClasses = {
@@ -73,28 +77,13 @@ const placeholder = {
  *
  *
  */
-const addSubClasses = ({ addUtilities }: TailwindOptionsPartial) => {
+const addSubClasses = ({ theme }: TailwindOptionsPartial) => {
   const variants = {
     white: {
       base: '#FFFFFF',
       shadow: '#D5DFE9',
     },
-    gray: {
-      base: '#D5DFE9',
-      shadow: '#FFFFFF',
-    },
-    blue: {
-      base: '#305EED',
-      shadow: '#143DB0',
-    },
-    green: {
-      base: '#53D084',
-      shadow: '#25A055',
-    },
-    orange: {
-      base: '#F2A143',
-      shadow: '#CB7F27',
-    },
+    ...theme('cards.variants'),
   };
 
   // add variant subclasses
@@ -111,15 +100,16 @@ const addSubClasses = ({ addUtilities }: TailwindOptionsPartial) => {
 
     variantClasses[`.card-${color}-transparent .placeholder`] = {
       backgroundColor: variants[color].base,
-      [`@apply bg-opacity-40`]: {},
+      opacity: 0.4,
     } as CSSProperties;
 
     // add icon variants
     variantClasses[`.card-${color} .icon`] = {
-      color: ['white', 'gray'].includes(color) ? '#BFD8E4' : '#FFFFFF',
+      color: color == 'white' ? '#BFD8E4' : '#FFFFFF',
     };
 
     variantClasses[`.card-${color}-transparent .icon`] = {
+      backgroundColor: variants[color].base,
       opacity: '0.4',
       transform: 'translateX(2px)',
       border: 'none',
@@ -136,12 +126,12 @@ const addSubClasses = ({ addUtilities }: TailwindOptionsPartial) => {
     };
   });
 
-  addUtilities({
+  return {
     ...placeholderClasses,
     ...iconClasses,
     ...textClasses,
     ...variantClasses,
-  });
+  };
 };
 
 export default addSubClasses;

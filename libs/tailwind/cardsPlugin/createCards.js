@@ -17,41 +17,35 @@ var __assign =
 exports.__esModule = true;
 var addDepthClasses_1 = require('./addDepthClasses');
 var addSubClasses_1 = require('./addSubClasses');
+var addOpacity_1 = require('../utils/addOpacity');
+var addHoverClasses_1 = require('../utils/addHoverClasses');
 /**
  * Creates somewhat opinionated 3d card components
  * @param param0 object containing Tailwind plugin function parameters
  *
  */
 var createCards = function (_a) {
-  var addUtilities = _a.addUtilities;
-  var variants = {
-    white: {
-      base: '#FFFFFF',
-      shadow: '#D5DFE9',
+  var addComponents = _a.addComponents,
+    e = _a.e,
+    theme = _a.theme;
+  // get config data
+  var transformMatrix =
+    theme('cards.transformMatrix') || 'matrix(1, 0, 0, 1, 0, 0)';
+  var variants = __assign(
+    {
+      white: {
+        base: '#FFFFFF',
+        shadow: '#D5DFE9',
+      },
     },
-    gray: {
-      base: '#D5DFE9',
-      shadow: '#FFFFFF',
-    },
-    blue: {
-      base: '#305EED',
-      shadow: '#143DB0',
-    },
-    green: {
-      base: '#53D084',
-      shadow: '#25A055',
-    },
-    orange: {
-      base: '#F2A143',
-      shadow: '#CB7F27',
-    },
-  };
-  var transformMatrix = 'matrix(0.73, -0.40, 0.8, 0.43, -5, -25)';
+    theme('cards.variants')
+  );
   // creates base subclasses as well as color variants
-  addSubClasses_1['default']({ addUtilities: addUtilities });
+  var subClasses = addSubClasses_1['default']({ theme: theme });
+  // adds depth effect using shadow
   var componentsWithDepth = addDepthClasses_1['default']({
     variants: variants,
-    addUtilities: addUtilities,
+    addComponents: addComponents,
   });
   // create components
   var cardComponents = {
@@ -70,15 +64,21 @@ var createCards = function (_a) {
       _a);
     cardComponents['.card-' + variant + '-transparent'] =
       ((_b = {
-        backgroundColor: componentsWithDepth[variant].base,
+        backgroundColor: addOpacity_1['default'](
+          componentsWithDepth[variant].base,
+          0.15
+        ),
       }),
       (_b[
-        '@apply ' +
-          componentsWithDepth[variant].depths.transparent.slice(1) +
-          '\n      bg-opacity-15'
+        '@apply ' + componentsWithDepth[variant].depths.transparent.slice(1)
       ] = {}),
       _b);
   });
-  addUtilities(__assign({}, cardComponents));
+  addComponents(
+    addHoverClasses_1['default'](
+      __assign(__assign({}, cardComponents), subClasses),
+      e
+    )
+  );
 };
 exports['default'] = createCards;

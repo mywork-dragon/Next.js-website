@@ -1,5 +1,7 @@
 import createCards from './createCards';
 import { TailwindComponents } from './types';
+import addOpacity from '../utils/addOpacity';
+import addHoverClasses from '../utils/addHoverClasses';
 
 // a mock function which logs components to console
 const addUtilities = (components: TailwindComponents) => {
@@ -36,4 +38,27 @@ const variants = {
   },
 };
 
-createCards({ addUtilities, theme });
+//createCards({ addUtilities, theme });
+
+// console.log(addOpacity(variants.gray.base, 0.5));
+const classes = {
+  '.card .icon': {
+    backgroundColor: 'blue',
+    opacity: 0.1,
+  },
+  '.card-blue .icon': {
+    backgroundColor: 'green',
+    opacity: 0.5,
+  },
+  '.card-blue-transparent .icon': {
+    backgroundColor: 'green',
+    opacity: 0.5,
+  },
+  '.card-blue': {
+    backgroundColor: 'green',
+    opacity: 0.5,
+  },
+};
+const e = (str: string) => str;
+
+console.log(JSON.stringify(addHoverClasses(classes, e), null, 2));

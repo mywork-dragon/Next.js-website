@@ -42,6 +42,10 @@ var iconClasses =
     width: '60px',
     margin: '0 auto 19px auto',
   }),
+  (_b['.icon svg'] = {
+    height: '100%',
+    width: '100%',
+  }),
   _b);
 var textClasses =
   ((_c = {}),
@@ -88,33 +92,19 @@ var placeholder = {
  *
  */
 var addSubClasses = function (_a) {
-  var addUtilities = _a.addUtilities;
-  var variants = {
-    white: {
-      base: '#FFFFFF',
-      shadow: '#D5DFE9',
+  var theme = _a.theme;
+  var variants = __assign(
+    {
+      white: {
+        base: '#FFFFFF',
+        shadow: '#D5DFE9',
+      },
     },
-    gray: {
-      base: '#D5DFE9',
-      shadow: '#FFFFFF',
-    },
-    blue: {
-      base: '#305EED',
-      shadow: '#143DB0',
-    },
-    green: {
-      base: '#53D084',
-      shadow: '#25A055',
-    },
-    orange: {
-      base: '#F2A143',
-      shadow: '#CB7F27',
-    },
-  };
+    theme('cards.variants')
+  );
   // add variant subclasses
   var variantClasses = {};
   Object.keys(variants).forEach(function (color) {
-    var _a;
     // add placeholder variants
     variantClasses['.card-' + color + ' .placeholder'] = __assign(
       __assign({}, placeholder[color] || placeholder.white),
@@ -125,17 +115,16 @@ var addSubClasses = function (_a) {
             : 'inset 0px 2px 0px #1C1C1C',
       }
     );
-    variantClasses['.card-' + color + '-transparent .placeholder'] =
-      ((_a = {
-        backgroundColor: variants[color].base,
-      }),
-      (_a['@apply bg-opacity-40'] = {}),
-      _a);
+    variantClasses['.card-' + color + '-transparent .placeholder'] = {
+      backgroundColor: variants[color].base,
+      opacity: 0.4,
+    };
     // add icon variants
     variantClasses['.card-' + color + ' .icon'] = {
-      color: ['white', 'gray'].includes(color) ? '#BFD8E4' : '#FFFFFF',
+      color: color == 'white' ? '#BFD8E4' : '#FFFFFF',
     };
     variantClasses['.card-' + color + '-transparent .icon'] = {
+      backgroundColor: variants[color].base,
       opacity: '0.4',
       transform: 'translateX(2px)',
       border: 'none',
@@ -149,14 +138,12 @@ var addSubClasses = function (_a) {
       color: ['white', 'gray'].includes(color) ? '#80B0C8' : '#FFFFFF',
     };
   });
-  addUtilities(
+  return __assign(
     __assign(
-      __assign(
-        __assign(__assign({}, placeholderClasses), iconClasses),
-        textClasses
-      ),
-      variantClasses
-    )
+      __assign(__assign({}, placeholderClasses), iconClasses),
+      textClasses
+    ),
+    variantClasses
   );
 };
 exports['default'] = addSubClasses;

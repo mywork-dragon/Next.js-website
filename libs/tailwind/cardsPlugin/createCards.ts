@@ -3,44 +3,33 @@ import { CSSProperties } from 'react';
 import addDepthClasses from './addDepthClasses';
 import addSubClasses from './addSubClasses';
 import { TailwindOptionsPartial } from './types';
+import addOpacity from '../utils/addOpacity';
+import addHoverClasses from '../utils/addHoverClasses';
 
 /**
  * Creates somewhat opinionated 3d card components
  * @param param0 object containing Tailwind plugin function parameters
  *
  */
-const createCards = ({ addUtilities }: TailwindOptionsPartial) => {
+const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
+  // get config data
+  const transformMatrix =
+    theme('cards.transformMatrix') || 'matrix(1, 0, 0, 1, 0, 0)';
   const variants = {
     white: {
       base: '#FFFFFF',
       shadow: '#D5DFE9',
     },
-    gray: {
-      base: '#D5DFE9',
-      shadow: '#FFFFFF',
-    },
-    blue: {
-      base: '#305EED',
-      shadow: '#143DB0',
-    },
-    green: {
-      base: '#53D084',
-      shadow: '#25A055',
-    },
-    orange: {
-      base: '#F2A143',
-      shadow: '#CB7F27',
-    },
+    ...theme('cards.variants'),
   };
 
-  const transformMatrix = 'matrix(0.73, -0.40, 0.8, 0.43, -5, -25)';
-
   // creates base subclasses as well as color variants
-  addSubClasses({ addUtilities });
+  const subClasses = addSubClasses({ theme });
 
+  // adds depth effect using shadow
   const componentsWithDepth = addDepthClasses({
     variants,
-    addUtilities,
+    addComponents,
   });
 
   // create components
@@ -58,14 +47,14 @@ const createCards = ({ addUtilities }: TailwindOptionsPartial) => {
     } as CSSProperties;
 
     cardComponents[`.card-${variant}-transparent`] = {
-      backgroundColor: componentsWithDepth[variant].base,
-
-      [`@apply ${componentsWithDepth[variant].depths.transparent.slice(1)}
-      bg-opacity-15`]: {},
+      backgroundColor: addOpacity(componentsWithDepth[variant].base, 0.15),
+      [`@apply ${componentsWithDepth[variant].depths.transparent.slice(
+        1
+      )}`]: {},
     } as CSSProperties;
   });
 
-  addUtilities({ ...cardComponents });
+  addComponents(addHoverClasses({ ...cardComponents, ...subClasses }, e));
 };
 
 export default createCards;
