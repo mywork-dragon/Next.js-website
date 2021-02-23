@@ -43,18 +43,3 @@ export const Transparent = (): JSX.Element => (
     <YCard className="col-span-2" cardClasses="card-orange-transparent" />
   </div>
 );
-
-const stack = 'absolute left-5 bottom-5 z-20';
-
-export const Stacks = (): JSX.Element => (
-  <div className="mt-8 grid grid-cols-10 skew drop-shadow">
-    <YCard className="absolute" cardClasses="card-gray">
-      <YCard
-        className="absolute left-6.5 -top-6.5 z-20"
-        cardClasses="card-orange"
-      >
-        <YCard className="absolute left-6.5 -top-6.5 z-20" {...dummyProps} />
-      </YCard>
-    </YCard>
-  </div>
-);

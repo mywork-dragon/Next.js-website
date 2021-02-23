@@ -1,9 +1,0 @@
-export { default as Carousel } from './Carousel';
-export { default as Cart } from './Cart';
-export { default as Facebook } from './Facebook';
-export { default as IconPlaceholder } from './IconPlaceholder';
-export { default as Instagram } from './Instagram';
-export { default as Linkedin } from './Linkedin';
-export { default as LogoMain } from './LogoMain';
-export { default as Twitter } from './Twitter';
-export { default as Youtube } from './Youtube';
