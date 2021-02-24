@@ -105,6 +105,14 @@ const padding = {
   19: rem(74),
 };
 
+const spacing = {
+  6.5: rem(26),
+  7.5: rem(30),
+  45.5: rem(182),
+  50: rem(200),
+  100: rem(400),
+};
+
 const borderRadius = {
   '2.5xl': rem(20),
   '4xl': rem(28),
@@ -155,6 +163,7 @@ module.exports = {
       padding,
       spacing,
       boxShadow,
+      development,
     },
     cards,
   },
@@ -170,6 +179,9 @@ module.exports = {
             maxWidth: rem(1080),
             margin: '0 auto',
           },
+        },
+        '.fill-current path': {
+          fill: 'currentColor',
         },
         '.drop-shadow': {
           filter: 'drop-shadow(0px 20px 80px rgba(0, 0, 0, 0.8))',
