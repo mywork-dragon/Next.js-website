@@ -72,13 +72,12 @@ var createDepths = function (depthTuple, color1, color2, skew) {
   };
   var depthClasses = {};
   if (!color2) {
-    depthClasses['.depth-' + depthKey + '-' + colorOuterKey] = __assign(
-      __assign({}, componentStyles),
-      {
-        left: depth,
-        boxShadow: addDepth({ depth: depth, colorOuter: colorOuter }),
-      }
-    );
+    depthClasses[
+      '.depth-' + depthKey + '-' + colorOuterKey
+    ] = __assign(__assign({}, componentStyles), {
+      left: depth,
+      boxShadow: addDepth({ depth: depth, colorOuter: colorOuter }),
+    });
   } else {
     depthClasses[
       '.depth-' + depthKey + '-' + colorOuterKey + '-' + colorInnerKey
