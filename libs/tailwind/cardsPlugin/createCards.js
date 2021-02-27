@@ -29,6 +29,8 @@ var createCards = function (_a) {
     e = _a.e,
     theme = _a.theme;
   // get config data
+  var transformMatrix =
+    theme('cards.transformMatrix') || 'matrix(1, 0, 0, 1, 0, 0)';
   var variants = __assign(
     {
       white: {
@@ -46,12 +48,17 @@ var createCards = function (_a) {
     addComponents: addComponents,
   });
   // create components
-  var cardComponents = {};
+  var cardComponents = {
+    '.skew': {
+      transformStyle: 'preserve-3d',
+    },
+  };
   Object.keys(componentsWithDepth).forEach(function (variant) {
     var _a, _b;
     cardComponents['.card-' + variant] =
       ((_a = {
         backgroundColor: componentsWithDepth[variant].base,
+        transition: 'all .3s ease',
       }),
       (_a['@apply ' + componentsWithDepth[variant].depths.fill.slice(1)] = {}),
       _a);
@@ -61,6 +68,7 @@ var createCards = function (_a) {
           componentsWithDepth[variant].base,
           0.15
         ),
+        transition: 'all .3s ease',
       }),
       (_b[
         '@apply ' + componentsWithDepth[variant].depths.transparent.slice(1)

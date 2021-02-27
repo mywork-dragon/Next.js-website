@@ -54,7 +54,6 @@ const fontSize = {
   base: rem(20),
   lg: rem(24),
   xl: rem(28),
-  xll: rem(32), // add new
   xxl: rem(36),
   '3xl': rem(44),
   '4xl': rem(50),
@@ -71,7 +70,6 @@ const lineHeight = {
   10: rem(30),
   11: rem(32),
   12: rem(36),
-  12.5: rem(38), // add new
   13: rem(40),
   14: rem(42),
   15: rem(44),
@@ -84,25 +82,15 @@ const lineHeight = {
 };
 
 const spacing = {
-  1.9: rem(7),
   6.5: rem(26),
-  7.5: rem(30),
-  13: rem(60),
-  13: rem(52),
   43.6: rem(175),
-  45.5: rem(182),
-  48.5: rem(194),
   50: rem(200),
   53.6: rem(215),
-  81.1: rem(325),
-  100: rem(400),
   //
   16.1: rem(65),
   21.1: rem(85),
   37.5: rem(150),
   68.6: rem(275),
-  83.6: rem(335),
-  88.1: rem(353),
 };
 
 const boxShadow = {
@@ -148,10 +136,6 @@ const cards = {
   transformMatrix: 'matrix(0.73, -0.40, 0.8, 0.43, -5, -25)',
 };
 
-const opacity = {
-  15: '0.15',
-};
-
 module.exports = {
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -171,15 +155,10 @@ module.exports = {
       padding,
       spacing,
       boxShadow,
-      opacity,
     },
     cards,
   },
-  variants: {
-    extend: {
-      margin: ['first', 'last'],
-    },
-  },
+  variants: {},
   plugins: [
     function ({ addComponents }) {
       addComponents({

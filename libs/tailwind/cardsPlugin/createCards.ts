@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 import addDepthClasses from './addDepthClasses';
 import addSubClasses from './addSubClasses';
-import { TailwindOptionsPartial } from './types';
+import { TailwindOptionsPartial, TailwindComponents } from './types';
 import addOpacity from '../utils/addOpacity';
 import addHoverClasses from '../utils/addHoverClasses';
 
@@ -13,6 +13,8 @@ import addHoverClasses from '../utils/addHoverClasses';
  */
 const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
   // get config data
+  const transformMatrix =
+    theme('cards.transformMatrix') || 'matrix(1, 0, 0, 1, 0, 0)';
   const variants = {
     white: {
       base: '#FFFFFF',
@@ -31,16 +33,22 @@ const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
   });
 
   // create components
-  let cardComponents = {} as Record<string, CSSProperties>;
+  let cardComponents = {
+    '.skew': {
+      transformStyle: 'preserve-3d',
+    },
+  } as TailwindComponents;
 
   Object.keys(componentsWithDepth).forEach((variant) => {
     cardComponents[`.card-${variant}`] = {
       backgroundColor: componentsWithDepth[variant].base,
+      transition: 'all .3s ease',
       [`@apply ${componentsWithDepth[variant].depths.fill.slice(1)}`]: {},
     } as CSSProperties;
 
     cardComponents[`.card-${variant}-transparent`] = {
       backgroundColor: addOpacity(componentsWithDepth[variant].base, 0.15),
+      transition: 'all .3s ease',
       [`@apply ${componentsWithDepth[variant].depths.transparent.slice(
         1
       )}`]: {},

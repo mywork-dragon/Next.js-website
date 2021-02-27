@@ -93,29 +93,20 @@ const fontSizeLookup = {
       [FontLineHeight.Loose]: 'leading-13',
     },
   },
-  [FontSize.XLL]: {
-    // add new
-    fontSize: 'text-xll',
+  [FontSize.XXL]: {
+    fontSize: 'text-xxl',
     lineHeight: {
-      [FontLineHeight.Tight]: 'leading-12.5',
+      [FontLineHeight.Tight]: 'leading-13',
+      [FontLineHeight.Relaxed]: 'leading-15',
+      [FontLineHeight.Loose]: 'leading-17',
+    },
+  },
+  [FontSize['2XL']]: {
+    fontSize: 'text-2xl',
+    lineHeight: {
+      [FontLineHeight.Tight]: 'leading-17',
       [FontLineHeight.Relaxed]: 'leading-18',
       [FontLineHeight.Loose]: 'leading-19',
-    },
-    [FontSize.XXL]: {
-      fontSize: 'text-xxl',
-      lineHeight: {
-        [FontLineHeight.Tight]: 'leading-13',
-        [FontLineHeight.Relaxed]: 'leading-15',
-        [FontLineHeight.Loose]: 'leading-17',
-      },
-    },
-    [FontSize['2XL']]: {
-      fontSize: 'text-2xl',
-      lineHeight: {
-        [FontLineHeight.Tight]: 'leading-17',
-        [FontLineHeight.Relaxed]: 'leading-18',
-        [FontLineHeight.Loose]: 'leading-19',
-      },
     },
   },
   [FontSize['3XL']]: {

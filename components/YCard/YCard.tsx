@@ -7,7 +7,7 @@ import IconPlaceholder from '@/assets/icons/icon.svg';
 interface CardProps extends AriaAttributes {
   title?: string;
   description?: string;
-  Icon?: typeof IconPlaceholder;
+  Icon?: any;
   empty?: boolean;
   className?: string;
   onClick?: (e: React.SyntheticEvent) => unknown;
@@ -18,7 +18,6 @@ interface Props extends CardProps {
   className?: string;
   children?: React.ReactNode;
   cardClasses?: string;
-  style?: React.CSSProperties;
 }
 
 // wrapper component
@@ -29,7 +28,6 @@ const YCard: React.FC<Props> = ({
   children,
   Icon,
   onClick,
-  style,
   title,
   empty,
   description,
@@ -58,8 +56,8 @@ const YCard: React.FC<Props> = ({
     );
 
   const icon = (
-    <div className="icon flex items-stretch">
-      {isFill && <IconPlaceholder />}
+    <div className="icon fill-current flex items-stretch">
+      {isFill && (Icon || <IconPlaceholder />)}
     </div>
   );
 
@@ -73,11 +71,10 @@ const YCard: React.FC<Props> = ({
       onClick,
       ...buttonProps,
     },
-    icon,
-    text
+    !empty && [icon, text]
   );
 
-  const containerClasses = ['w-43.6 h-53.6 pl-2 pb-2', classes].join(' ');
+  const containerClasses = ['w-43.6 h-53.6', classes].join(' ');
   return (
     <div className={containerClasses}>
       {Card}
@@ -94,14 +91,6 @@ const filterDefaultCard = (baseClasses: string[], classes: string) =>
       ].join(' ')
     : [...baseClasses, classes].join(' ') || baseClasses.join(' ');
 
-const baseClasses = [
-  'rounded',
-  'ml-2',
-  'z-10',
-  'w-40',
-  'h-50',
-  'pt-6.5',
-  'card-white',
-];
+const baseClasses = ['rounded', 'z-10', 'w-40', 'h-50', 'pt-6.5', 'card-white'];
 
 export default YCard;

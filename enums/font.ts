@@ -11,9 +11,7 @@ export enum FontSize {
   MD = 'md',
   LG = 'lg',
   XL = 'xl',
-  XLL = 'xll', // add new
   XXL = 'xxl',
-  '2XL' = '2xl',
   '3XL' = '3xl',
   '4XL' = '4xl',
 }
