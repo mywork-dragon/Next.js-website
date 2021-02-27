@@ -91,6 +91,14 @@ const filterDefaultCard = (baseClasses: string[], classes: string) =>
       ].join(' ')
     : [...baseClasses, classes].join(' ') || baseClasses.join(' ');
 
-const baseClasses = ['rounded', 'z-10', 'w-40', 'h-50', 'pt-6.5', 'card-white'];
+const baseClasses = [
+  'rounded',
+  'px-2.5',
+  'z-10',
+  'w-40',
+  'h-50',
+  'pt-6.5',
+  'card-white',
+];
 
 export default YCard;

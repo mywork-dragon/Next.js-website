@@ -13,8 +13,6 @@ import addHoverClasses from '../utils/addHoverClasses';
  */
 const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
   // get config data
-  const transformMatrix =
-    theme('cards.transformMatrix') || 'matrix(1, 0, 0, 1, 0, 0)';
   const variants = {
     white: {
       base: '#FFFFFF',
@@ -33,11 +31,7 @@ const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
   });
 
   // create components
-  let cardComponents = {
-    '.skew': {
-      transformStyle: 'preserve-3d',
-    },
-  } as TailwindComponents;
+  let cardComponents = {} as Record<string, CSSProperties>;
 
   Object.keys(componentsWithDepth).forEach((variant) => {
     cardComponents[`.card-${variant}`] = {

@@ -75,7 +75,6 @@ var createDepths = function (depthTuple, color1, color2, skew) {
     depthClasses[
       '.depth-' + depthKey + '-' + colorOuterKey
     ] = __assign(__assign({}, componentStyles), {
-      left: depth,
       boxShadow: addDepth({ depth: depth, colorOuter: colorOuter }),
     });
   } else {
@@ -83,7 +82,6 @@ var createDepths = function (depthTuple, color1, color2, skew) {
       '.depth-' + depthKey + '-' + colorOuterKey + '-' + colorInnerKey
     ] = __assign(__assign({}, componentStyles), {
       border: '1px solid ' + colorOuter,
-      left: depth,
       boxShadow: addDepth({
         depth: depth,
         colorOuter: colorOuter,
@@ -94,7 +92,6 @@ var createDepths = function (depthTuple, color1, color2, skew) {
   // adds CSS with class for element nested under '.skew' class
   if (skew) {
     depthClasses['under_skew'] = {
-      left: depth + skew,
       boxShadow: addDepth({
         depth: depth,
         colorOuter: colorOuter,

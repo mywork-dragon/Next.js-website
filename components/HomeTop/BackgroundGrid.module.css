@@ -1,0 +1,36 @@
+.bgGrid {
+  display: grid;
+  grid-template-rows: repeat(6, 246px);
+  grid-template-columns: repeat(9, 206px);
+  /* transform: matrix(0.54, -0.29, 0.5, 0.37, -350, -308); */
+
+  @screen md {
+    grid-template-rows: repeat(6, 246px);
+    grid-template-columns: repeat(7, 206px);
+  }
+}
+
+.card1 {
+  grid-area: card-1;
+}
+.card2 {
+  grid-area: card-2;
+}
+.card3 {
+  grid-area: card-3;
+}
+.card4 {
+  grid-area: card-4;
+}
+.card5 {
+  grid-area: card-5;
+}
+.card6 {
+  grid-area: card-6;
+}
+.card7 {
+  grid-area: card-7;
+}
+.card8 {
+  grid-area: card-8;
+}
