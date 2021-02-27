@@ -10,7 +10,9 @@
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error",
+    "prettier/prettier": {
+      "endOfLine": "auto"
+    },
     "react/prop-types": "off"
   },
   "globals": {
