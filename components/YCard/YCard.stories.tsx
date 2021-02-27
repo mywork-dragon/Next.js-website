@@ -1,4 +1,5 @@
 import YCard from './YCard';
+import CartIcon from '@/assets/icons/cart.svg';
 
 const dummyProps = {
   description: 'Personalized suggestion',
@@ -15,6 +16,7 @@ export const Default = (): JSX.Element => (
       {...dummyProps}
       className="inline-block mx-8"
       cardClasses="hover:card-blue"
+      Icon={<CartIcon />}
     />
     <YCard
       {...dummyProps}

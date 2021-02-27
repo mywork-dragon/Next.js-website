@@ -171,6 +171,9 @@ module.exports = {
             margin: '0 auto',
           },
         },
+        '.fill-current path': {
+          fill: 'currentColor',
+        },
         '.drop-shadow': {
           filter: 'drop-shadow(0px 20px 80px rgba(0, 0, 0, 0.8))',
         },

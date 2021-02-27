@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 import addDepthClasses from './addDepthClasses';
 import addSubClasses from './addSubClasses';
-import { TailwindOptionsPartial } from './types';
+import { TailwindOptionsPartial, TailwindComponents } from './types';
 import addOpacity from '../utils/addOpacity';
 import addHoverClasses from '../utils/addHoverClasses';
 
@@ -36,18 +36,19 @@ const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
   let cardComponents = {
     '.skew': {
       transformStyle: 'preserve-3d',
-      transform: transformMatrix,
     },
-  } as Record<string, CSSProperties>;
+  } as TailwindComponents;
 
   Object.keys(componentsWithDepth).forEach((variant) => {
     cardComponents[`.card-${variant}`] = {
       backgroundColor: componentsWithDepth[variant].base,
+      transition: 'all .3s ease',
       [`@apply ${componentsWithDepth[variant].depths.fill.slice(1)}`]: {},
     } as CSSProperties;
 
     cardComponents[`.card-${variant}-transparent`] = {
       backgroundColor: addOpacity(componentsWithDepth[variant].base, 0.15),
+      transition: 'all .3s ease',
       [`@apply ${componentsWithDepth[variant].depths.transparent.slice(
         1
       )}`]: {},

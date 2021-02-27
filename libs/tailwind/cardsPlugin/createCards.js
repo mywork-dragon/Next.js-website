@@ -51,7 +51,6 @@ var createCards = function (_a) {
   var cardComponents = {
     '.skew': {
       transformStyle: 'preserve-3d',
-      transform: transformMatrix,
     },
   };
   Object.keys(componentsWithDepth).forEach(function (variant) {
@@ -59,6 +58,7 @@ var createCards = function (_a) {
     cardComponents['.card-' + variant] =
       ((_a = {
         backgroundColor: componentsWithDepth[variant].base,
+        transition: 'all .3s ease',
       }),
       (_a['@apply ' + componentsWithDepth[variant].depths.fill.slice(1)] = {}),
       _a);
@@ -68,6 +68,7 @@ var createCards = function (_a) {
           componentsWithDepth[variant].base,
           0.15
         ),
+        transition: 'all .3s ease',
       }),
       (_b[
         '@apply ' + componentsWithDepth[variant].depths.transparent.slice(1)
