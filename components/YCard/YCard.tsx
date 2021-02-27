@@ -93,6 +93,8 @@ const filterDefaultCard = (baseClasses: string[], classes: string) =>
 
 const baseClasses = [
   'rounded',
+  'mt-2',
+  'ml-3',
   'px-2.5',
   'z-10',
   'w-40',

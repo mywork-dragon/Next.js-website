@@ -87,24 +87,17 @@ const spacing = {
   1.9: rem(7),
   2.5: rem(10),
   6.5: rem(26),
-  7.5: rem(30),
-  13: rem(60),
   13: rem(52),
+  15: rem(60),
+  20.1: rem(81),
   43.6: rem(175),
-  45.5: rem(182),
   48.5: rem(194),
   50: rem(200),
   53.6: rem(215),
   65: rem(260),
   81.1: rem(325),
-  100: rem(400),
-  //
-  16.1: rem(65),
-  21.1: rem(85),
-  37.5: rem(150),
-  68.6: rem(275),
-  83.6: rem(335),
   88.1: rem(353),
+  100: rem(400),
 };
 
 const boxShadow = {
@@ -209,6 +202,9 @@ module.exports = {
         },
         '.drop-shadow': {
           filter: 'drop-shadow(0px 20px 80px rgba(0, 0, 0, 0.8))',
+        },
+        '.no-x-gridline': {
+          boxShadow: '2px 0 #062233, -2px 0 #062233',
         },
       });
     },

@@ -15,7 +15,6 @@ export interface Card {
 
 interface Props {
   cards: Card[];
-  gridStyle: React.CSSProperties; // temp
 }
 
 const gridDimensions = {
@@ -43,11 +42,21 @@ const createGridArr = (
   return returnArray;
 };
 
+// adds no-x-gridline class to appropriate elements which creates shadows in both ways to cover grid spacing
+const fadeGridline = (index: number, screenSize: ScreenSize) =>
+  (screenSize == ScreenSize.MD && (index < 7 || index % 7 == 0)) ||
+  (screenSize == ScreenSize.SM && (index < 9 || index % 9 < 3))
+    ? 'no-x-gridline'
+    : '';
+
+const baseGridClasses = 'relative bg-secondary';
+
+// populates grid with element appearances and appropriate interactive cards from props
 const populateGrid = (screenSize: ScreenSize, cards: Card[]) => {
   let currentCard = 0; // the index of current interactive card to be rendered
 
-  return createGridArr(screenSize).map((gridElement) => (
-    <div className="relative">
+  return createGridArr(screenSize).map((gridElement, i) => (
+    <div className={[baseGridClasses, fadeGridline(i, screenSize)].join(' ')}>
       {gridElement == 'interactiveCard' ? (
         <YCard className={cardBaseClasses} {...cards[currentCard++]} />
       ) : (
@@ -66,11 +75,11 @@ const rearrangeForDesktop = (cards: Card[]) => {
   return safeCards.concat([...middle, first]);
 };
 
-// adds mirrored first three cards to the end of cards
+// adds mirrored first three cards to the end of cards for mobile display
 const mirrorForMobile = (cards: Card[]) =>
   [...cards].concat([...cards].splice(0, 3).reverse());
 
-const BackgroundGrid: React.FC<Props> = ({ cards, gridStyle }) => {
+const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   const screenSize = useWindowWidth() < 768 ? ScreenSize.SM : ScreenSize.MD;
 
   const cardsForDisplay = {
@@ -80,11 +89,7 @@ const BackgroundGrid: React.FC<Props> = ({ cards, gridStyle }) => {
 
   const grid = (
     <div
-      style={gridStyle}
-      className={[
-        'absolute inline top-0 z-10 skew divide-x divide-y divide-blue-100',
-        style.bgGrid,
-      ].join(' ')}
+      className={['absolute top-0 skew bg-blue-100', style.bgGrid].join(' ')}
     >
       {populateGrid(screenSize, cardsForDisplay[screenSize])}
     </div>

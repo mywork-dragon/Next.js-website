@@ -4,17 +4,14 @@ import { useWindowWidth } from '@react-hook/window-size';
 import { FontSize, FontWeight, FontLineHeight } from '@/enums/font';
 import { ButtonSize } from '@/enums/components';
 
+import style from './HomeTop.module.css';
+
 import YHeading from '../YHeading';
 import YText from '../YText';
 import YButton from '../YButton';
 import YLink from '../YLink';
-import YCard from '../YCard';
 import BackgroundGrid, { Card } from './BackgroundGrid';
 import YInputButton from '../YInputButton';
-
-/**
- * @TODO some sort of lazy loading logic, icons passed as Elements for now
- */
 
 type ButtonProps = AriaAttributes & {
   text: string;
@@ -22,15 +19,9 @@ type ButtonProps = AriaAttributes & {
 };
 
 interface Company {
-  logo: any; // temp
+  logo: any;
   link: string;
 }
-
-// interface Card {
-//   icon?: string;
-//   title: string;
-//   description: string;
-// }
 
 interface Props extends HTMLAttributes<HTMLElement> {
   title: string;
@@ -39,7 +30,6 @@ interface Props extends HTMLAttributes<HTMLElement> {
   showCompanies?: boolean;
   companies?: Company[];
   cards?: Card[];
-  gridStyle?: React.CSSProperties; // temp
 }
 
 const HomeTop: React.FC<Props> = ({
@@ -49,47 +39,22 @@ const HomeTop: React.FC<Props> = ({
   showCompanies = false,
   companies,
   cards,
-  gridStyle, // temp
   ...props
 }) => {
   const smallScreen = useWindowWidth() < 768;
-  const xSmallScreen = useWindowWidth() < 414;
-
-  const generateGrid = () => {
-    let grid = [];
-    let cardIndex = 0;
-    for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < 5; j++) {
-        const sum = i + j;
-        grid.push(
-          <div className="border border-primary p-auto">
-            {i > 0 && j > 0 && sum > 1 && sum < 5 && (
-              <YCard {...cards[cardIndex++]} />
-            )}
-          </div>
-        );
-      }
-    }
-    return grid;
-  };
-
-  const grid = (
-    <div style={gridStyle} className="absolute top-0 skew grid grid-cols-5">
-      {generateGrid()}
-    </div>
-  );
 
   const renderCompanies = showCompanies && companies && (
-    <div className="mb-15 flex w-auto justify-between md:justify-center">
-      {companies.map(
-        (company, index) =>
-          (!xSmallScreen || index < 2) &&
-          (!smallScreen || index < 3) && (
-            <a href={company.link} className="md:mx-7.5">
-              <div className="w-full">{company.logo}</div>
-            </a>
-          )
-      )}
+    <div
+      className={[
+        'relative z-20 w-full h-6.5 md:flex md:justify-center md:mx-auto mb-20.1',
+        style.scrollIcons,
+      ].join(' ')}
+    >
+      {companies.map((company) => (
+        <a href={company.link} className="mr-15 inline-block">
+          {company.logo}
+        </a>
+      ))}
     </div>
   );
 
@@ -104,34 +69,36 @@ const HomeTop: React.FC<Props> = ({
   );
 
   return (
-    <section {...props} className="container pt-88.1 md:px-0 md:pt-48.5">
-      {/* {grid} */}
-      <BackgroundGrid gridStyle={gridStyle} cards={cards} />
-      <div className="relative w-65 z-20 md:w-100">
-        <YHeading
-          fontSize={smallScreen ? FontSize.XLL : FontSize['4XL']}
-          fontWeight={FontWeight.ExtraBold}
-          lineHeight={
-            smallScreen ? FontLineHeight.Tight : FontLineHeight.Relaxed
-          }
-          className="mb-2 md:mb-5"
-          as="h1"
-        >
-          {title} <br />
-        </YHeading>
-        <YText
-          fontSize={smallScreen ? FontSize.SM : FontSize.MD}
-          lineHeight={
-            smallScreen ? FontLineHeight.Relaxed : FontLineHeight.Loose
-          }
-          className="text-gray-300 mb-5 md:mb-8"
-          as="p"
-        >
-          {description} <br />
-        </YText>
-        {renderButton}
+    <section {...props} className="overflow-hidden">
+      <div className="container relative pt-88.1 md:px-0 md:pt-48.5">
+        <BackgroundGrid cards={cards} />
+
+        <div className="relative z-20 md:w-100">
+          <YHeading
+            fontSize={smallScreen ? FontSize.XLL : FontSize['4XL']}
+            fontWeight={FontWeight.ExtraBold}
+            lineHeight={
+              smallScreen ? FontLineHeight.Tight : FontLineHeight.Relaxed
+            }
+            className="mb-2 w-65 md:mb-5 md:w-full"
+            as="h1"
+          >
+            {title} <br />
+          </YHeading>
+          <YText
+            fontSize={smallScreen ? FontSize.SM : FontSize.MD}
+            lineHeight={
+              smallScreen ? FontLineHeight.Relaxed : FontLineHeight.Loose
+            }
+            className="text-gray-300 mb-5 md:mb-8"
+            as="p"
+          >
+            {description} <br />
+          </YText>
+          {renderButton}
+        </div>
+        {renderCompanies}
       </div>
-      {renderCompanies}
       <br />
     </section>
   );

@@ -1,9 +1,11 @@
-import React, { AriaAttributes, useState } from 'react';
+import React, { DetailedHTMLProps, useRef, useState } from 'react';
+import { useTextField } from '@react-aria/textfield';
+import { AriaTextFieldProps } from '@react-types/textfield';
 
 import YButton from '../YButton/YButton';
 import { ButtonSize } from '@/enums/components';
 
-interface Props extends AriaAttributes {
+interface Props extends AriaTextFieldProps {
   buttonText?: string;
   placeholder?: string;
   className?: string;
@@ -19,8 +21,13 @@ const YInputButton: React.FC<Props> = ({
   placeholder,
   className,
   onSubmit,
+  ...props
 }) => {
   const [inputText, setInputText] = useState('');
+
+  const ref = useRef();
+
+  const { inputProps } = useTextField(props as AriaTextFieldProps, ref);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -34,6 +41,9 @@ const YInputButton: React.FC<Props> = ({
       onSubmit={handleSubmit}
     >
       <input
+        ref={ref}
+        {...inputProps}
+        type="text"
         onChange={(e) => setInputText(e.target.value)}
         value={inputText}
         placeholder={placeholder || 'your email'}

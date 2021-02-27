@@ -1,0 +1,8 @@
+.scrollIcons {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.scrollIcons::-webkit-scrollbar {
+  height: 0;
+}

@@ -4,6 +4,12 @@ import Boldking from '@/assets/icons/temp/boldking.svg';
 import Nike from '@/assets/icons/temp/nike.svg';
 import Deloitte from '@/assets/icons/temp/deloitte.svg';
 
+import Cart from '@/assets/icons/cart.svg';
+import Carousel from '@/assets/icons/carousel.svg';
+import Content from '@/assets/icons/content.svg';
+import Email from '@/assets/icons/email.svg';
+import Directions from '@/assets/icons/directions.svg';
+
 // default data from spec, to be used with stories
 const companies = [
   {
@@ -29,12 +35,45 @@ const companies = [
 ];
 
 export const defaultProps = {
-  title: 'Let your marketing work for you',
+  title: 'The leading Customer Data Platform',
   description:
-    'With personalized brand experiences. Automated strategies. Well-targeted communication. And little effort from your end. So you can become greater at what you do best',
+    "Join 20000+ businesses that use Segment's software and APIs to collect, clean, and control their customer data.",
   buttonProps: {
     text: 'Learn More',
     link: '#',
   },
   companies,
 };
+
+export const cards = [
+  {
+    title: 'Structure',
+    description: 'Another client - another story',
+    cardClasses: 'hover:card-blue',
+    Icon: <Content />,
+  },
+  {
+    title: 'Cart Upsell',
+    description: 'Personalized Suggestion',
+    cardClasses: 'hover:card-blue',
+    Icon: <Cart />,
+  },
+  {
+    title: 'Navigation',
+    description: 'Custom navigation patterns',
+    cardClasses: 'hover:card-blue',
+    Icon: <Directions />,
+  },
+  {
+    title: 'Email',
+    description: 'Personalized follow up email',
+    cardClasses: 'hover:card-blue',
+    Icon: <Email />,
+  },
+  {
+    title: 'Content',
+    description: 'Adaptive content per user',
+    cardClasses: 'card-blue hover:card-white',
+    Icon: <Carousel />,
+  },
+];
