@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, useRef, useState } from 'react';
+import React, { InputHTMLAttributes, useRef, useState } from 'react';
 import { useTextField } from '@react-aria/textfield';
 import { AriaTextFieldProps } from '@react-types/textfield';
 
@@ -27,7 +27,9 @@ const YInputButton: React.FC<Props> = ({
 
   const ref = useRef();
 
-  const { inputProps } = useTextField(props as AriaTextFieldProps, ref);
+  const { inputProps } = useTextField(props as AriaTextFieldProps, ref) as {
+    inputProps: InputHTMLAttributes<HTMLInputElement>;
+  };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -48,7 +50,7 @@ const YInputButton: React.FC<Props> = ({
         value={inputText}
         placeholder={placeholder || 'your email'}
         className="h-full w-full rounded pl-5 text-white bg-white bg-opacity-15"
-      ></input>
+      />
       <YButton
         type="submit"
         className="absolute right-1.9 top-1.9 bottom-1.9 py-auto"
