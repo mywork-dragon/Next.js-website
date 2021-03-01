@@ -4,14 +4,13 @@ import addDepthClasses from './addDepthClasses';
 import addSubClasses from './addSubClasses';
 import { TailwindOptionsPartial, TailwindComponents } from './types';
 import addOpacity from '../utils/addOpacity';
-import addHoverClasses from '../utils/addHoverClasses';
 
 /**
  * Creates somewhat opinionated 3d card components
  * @param param0 object containing Tailwind plugin function parameters
  *
  */
-const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
+const createCards = ({ addComponents, theme }: TailwindOptionsPartial) => {
   // get config data
   const transformMatrix =
     theme('cards.transformMatrix') || 'matrix(1, 0, 0, 1, 0, 0)';
@@ -55,7 +54,7 @@ const createCards = ({ addComponents, e, theme }: TailwindOptionsPartial) => {
     } as CSSProperties;
   });
 
-  addComponents(addHoverClasses({ ...cardComponents, ...subClasses }, e));
+  addComponents({ ...cardComponents, ...subClasses });
 };
 
 export default createCards;
