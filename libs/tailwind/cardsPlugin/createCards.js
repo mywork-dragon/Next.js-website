@@ -18,7 +18,6 @@ exports.__esModule = true;
 var addDepthClasses_1 = require('./addDepthClasses');
 var addSubClasses_1 = require('./addSubClasses');
 var addOpacity_1 = require('../utils/addOpacity');
-var addHoverClasses_1 = require('../utils/addHoverClasses');
 /**
  * Creates somewhat opinionated 3d card components
  * @param param0 object containing Tailwind plugin function parameters
@@ -26,7 +25,6 @@ var addHoverClasses_1 = require('../utils/addHoverClasses');
  */
 var createCards = function (_a) {
   var addComponents = _a.addComponents,
-    e = _a.e,
     theme = _a.theme;
   // get config data
   var variants = __assign(
@@ -69,11 +67,6 @@ var createCards = function (_a) {
       ] = {}),
       _b);
   });
-  addComponents(
-    addHoverClasses_1['default'](
-      __assign(__assign({}, cardComponents), subClasses),
-      e
-    )
-  );
+  addComponents(__assign(__assign({}, cardComponents), subClasses));
 };
 exports['default'] = createCards;
