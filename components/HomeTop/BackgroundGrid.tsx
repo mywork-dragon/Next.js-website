@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import YCard from '../YCard/YCard';
+import YCard from '@/components/YCard';
 import style from './BackgroundGrid.module.css';
 import { useWindowWidth } from '@react-hook/window-size';
 
-import { ScreenSize } from '@/enums/screenSize';
+import { ScreenSize, BreakPoint } from '@/enums/screenSize';
 import { cardAppearances, cardBaseClasses } from './gridElements';
 
 export interface Card {
@@ -19,7 +19,8 @@ interface Props {
 
 const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   // screen size section
-  const screenSize = useWindowWidth() < 768 ? ScreenSize.SM : ScreenSize.MD;
+  const screenSize =
+    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const cardsForDisplay = {
     [ScreenSize.SM]: mirrorForMobile(cards),
@@ -45,7 +46,7 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
         >
           {gridElement == 'interactiveCard' ? (
             <YCard
-              className={cardBaseClasses}
+              className={[cardBaseClasses, 'drop-shadow'].join(' ')}
               hovered={hoveredCard == currentCardIndex}
               onHover={() => setHoveredCard(currentCardIndex)}
               {...cards[currentCardIndex]}

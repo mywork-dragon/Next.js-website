@@ -12,6 +12,7 @@ import YButton from '../YButton';
 import YLink from '../YLink';
 import BackgroundGrid, { Card } from './BackgroundGrid';
 import YInputButton from '../YInputButton';
+import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 
 type ButtonProps = AriaAttributes & {
   text: string;
@@ -41,12 +42,23 @@ const HomeTop: React.FC<Props> = ({
   cards,
   ...props
 }) => {
-  const smallScreen = useWindowWidth() < 768;
+  const screenSize =
+    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const renderCompanies = showCompanies && companies && (
     <div
       className={[
-        'relative z-20 w-full h-6.5 md:flex md:justify-center md:mx-auto mb-20.1',
+        'relative',
+        'z-20',
+        'w-full',
+        'h-6.5',
+        'md:mx-auto mb-20.1',
+        'overflow-y-hidden',
+        'overflow-x-auto',
+        'whitespace-nowrap',
+        'md:flex',
+        'md:justify-center',
+        'md:overflow-hidden',
         style.scrollIcons,
       ].join(' ')}
     >
@@ -58,15 +70,16 @@ const HomeTop: React.FC<Props> = ({
     </div>
   );
 
-  const renderButton = smallScreen ? (
-    <YLink href={buttonProps.link}>
-      <YButton className="mb-10" buttonSize={ButtonSize.LG} shadow>
-        {buttonProps.text}
-      </YButton>
-    </YLink>
-  ) : (
-    <YInputButton className="mb-36" />
-  );
+  const renderButton =
+    screenSize == ScreenSize.SM ? (
+      <YLink href={buttonProps.link}>
+        <YButton className="mb-10" buttonSize={ButtonSize.LG} shadow>
+          {buttonProps.text}
+        </YButton>
+      </YLink>
+    ) : (
+      <YInputButton className="mb-36" />
+    );
 
   return (
     <section {...props} className="overflow-hidden">
@@ -75,10 +88,14 @@ const HomeTop: React.FC<Props> = ({
 
         <div className="relative z-20 md:w-100">
           <YHeading
-            fontSize={smallScreen ? FontSize.XLL : FontSize['4XL']}
+            fontSize={
+              screenSize == ScreenSize.SM ? FontSize.XLL : FontSize['4XL']
+            }
             fontWeight={FontWeight.ExtraBold}
             lineHeight={
-              smallScreen ? FontLineHeight.Tight : FontLineHeight.Relaxed
+              screenSize == ScreenSize.SM
+                ? FontLineHeight.Tight
+                : FontLineHeight.Relaxed
             }
             className="mb-2 w-65 md:mb-5 md:w-full"
             as="h1"
@@ -86,11 +103,13 @@ const HomeTop: React.FC<Props> = ({
             {title} <br />
           </YHeading>
           <YText
-            fontSize={smallScreen ? FontSize.SM : FontSize.MD}
+            fontSize={screenSize == ScreenSize.SM ? FontSize.SM : FontSize.MD}
             lineHeight={
-              smallScreen ? FontLineHeight.Relaxed : FontLineHeight.Loose
+              screenSize == ScreenSize.SM
+                ? FontLineHeight.Relaxed
+                : FontLineHeight.Loose
             }
-            className={['text-gray-300 mb-5 md:mb-8', style.bgShadow].join(' ')}
+            className="text-gray-300 mb-5 md:mb-8 bg-secondary bg-opacity-80 text-shadow rounded-20"
             as="p"
           >
             {description} <br />

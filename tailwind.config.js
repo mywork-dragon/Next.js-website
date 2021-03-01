@@ -115,6 +115,7 @@ const padding = {
 const borderRadius = {
   '2.5xl': rem(20),
   '4xl': rem(28),
+  20: rem(80),
 };
 
 const cards = {
@@ -201,10 +202,14 @@ module.exports = {
           fill: 'currentColor',
         },
         '.drop-shadow': {
-          filter: 'drop-shadow(0px 20px 80px rgba(0, 0, 0, 0.8))',
+          filter: 'drop-shadow(0 1.25rem 5rem rgba(0, 0, 0, 0.8))',
         },
         '.no-x-gridline': {
           boxShadow: '2px 0 #062233, -2px 0 #062233',
+        },
+        '.text-shadow': {
+          boxShadow:
+            '-12.5rem -8.125rem 2.5rem 1.25rem rgba(6, 34, 51, 0.8), -1.25rem -0.625rem 1.25rem 2.5rem rgba(6, 34, 51, 0.8)',
         },
       });
     },
