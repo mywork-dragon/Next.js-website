@@ -6,3 +6,10 @@
 .scrollIcons::-webkit-scrollbar {
   height: 0;
 }
+.bgShadow {
+  border: none;
+  border-top-right-radius: 80px;
+  background-color: rgba(6, 34, 51, 0.9);
+  box-shadow: -125px -130px 40px 20px rgba(6, 34, 51, 0.8),
+    0px -40px 20px 40px rgba(6, 34, 51, 0.8);
+}

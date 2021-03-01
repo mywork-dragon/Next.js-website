@@ -90,7 +90,7 @@ const HomeTop: React.FC<Props> = ({
             lineHeight={
               smallScreen ? FontLineHeight.Relaxed : FontLineHeight.Loose
             }
-            className="text-gray-300 mb-5 md:mb-8"
+            className={['text-gray-300 mb-5 md:mb-8', style.bgShadow].join(' ')}
             as="p"
           >
             {description} <br />

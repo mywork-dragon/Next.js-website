@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import YCard from '../YCard/YCard';
 import style from './BackgroundGrid.module.css';
@@ -16,6 +16,58 @@ export interface Card {
 interface Props {
   cards: Card[];
 }
+
+const BackgroundGrid: React.FC<Props> = ({ cards }) => {
+  // screen size section
+  const screenSize = useWindowWidth() < 768 ? ScreenSize.SM : ScreenSize.MD;
+
+  const cardsForDisplay = {
+    [ScreenSize.SM]: mirrorForMobile(cards),
+    [ScreenSize.MD]: rearrangeForDesktop(cards),
+  };
+
+  // shared hover control section
+  const [hoveredCard, setHoveredCard] = useState(
+    screenSize == ScreenSize.SM ? 4 : 2
+  );
+
+  // populates grid with element appearances and appropriate interactive cards from props
+  const populateGrid = (screenSize: ScreenSize, cards: Card[]) => {
+    let currentCard = 0; // the index of current interactive card to be rendered
+
+    return createGridArr(screenSize).map((gridElement, i) => {
+      const currentCardIndex = currentCard;
+      if (gridElement == 'interactiveCard') currentCard++;
+
+      return (
+        <div
+          className={[baseGridClasses, fadeGridline(i, screenSize)].join(' ')}
+        >
+          {gridElement == 'interactiveCard' ? (
+            <YCard
+              className={cardBaseClasses}
+              hovered={hoveredCard == currentCardIndex}
+              onHover={() => setHoveredCard(currentCardIndex)}
+              {...cards[currentCardIndex]}
+            />
+          ) : (
+            gridElement
+          )}
+        </div>
+      );
+    });
+  };
+
+  // return grid
+  return (
+    <div className={['absolute top-0 bg-blue-100', style.bgGrid].join(' ')}>
+      {populateGrid(screenSize, cardsForDisplay[screenSize])}
+    </div>
+  );
+};
+
+/** utils and helper constants */
+const baseGridClasses = 'relative bg-secondary';
 
 const gridDimensions = {
   // rows, columns dimensions for grids
@@ -49,23 +101,6 @@ const fadeGridline = (index: number, screenSize: ScreenSize) =>
     ? 'no-x-gridline'
     : '';
 
-const baseGridClasses = 'relative bg-secondary';
-
-// populates grid with element appearances and appropriate interactive cards from props
-const populateGrid = (screenSize: ScreenSize, cards: Card[]) => {
-  let currentCard = 0; // the index of current interactive card to be rendered
-
-  return createGridArr(screenSize).map((gridElement, i) => (
-    <div className={[baseGridClasses, fadeGridline(i, screenSize)].join(' ')}>
-      {gridElement == 'interactiveCard' ? (
-        <YCard className={cardBaseClasses} {...cards[currentCard++]} />
-      ) : (
-        gridElement
-      )}
-    </div>
-  ));
-};
-
 // rearenge cards from props for desktop size display
 // 0, 1, 2, 3, 4 => 1, 3, 4, 2, 0
 const rearrangeForDesktop = (cards: Card[]) => {
@@ -78,24 +113,5 @@ const rearrangeForDesktop = (cards: Card[]) => {
 // adds mirrored first three cards to the end of cards for mobile display
 const mirrorForMobile = (cards: Card[]) =>
   [...cards].concat([...cards].splice(0, 3).reverse());
-
-const BackgroundGrid: React.FC<Props> = ({ cards }) => {
-  const screenSize = useWindowWidth() < 768 ? ScreenSize.SM : ScreenSize.MD;
-
-  const cardsForDisplay = {
-    [ScreenSize.SM]: mirrorForMobile(cards),
-    [ScreenSize.MD]: rearrangeForDesktop(cards),
-  };
-
-  const grid = (
-    <div
-      className={['absolute top-0 skew bg-blue-100', style.bgGrid].join(' ')}
-    >
-      {populateGrid(screenSize, cardsForDisplay[screenSize])}
-    </div>
-  );
-
-  return grid;
-};
 
 export default BackgroundGrid;

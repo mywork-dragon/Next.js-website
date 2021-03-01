@@ -1728,6 +1728,15 @@
     "@react-aria/utils" "^3.4.1"
     "@react-types/shared" "^3.3.0"
 
+"@react-aria/interactions@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@react-aria/interactions/-/interactions-3.3.3.tgz#02852a11530f73d1ae4525cdef7c2595acde2fdc"
+  integrity sha512-wq6YwVFMzT7jdpVGqGoqXPCANHl6BvOOL1Lrg3vb+df5pvoCFNWBytqv/yQVpT4PKOSUbxSBdOTubvtZlu0l+g==
+  dependencies:
+    "@babel/runtime" "^7.6.2"
+    "@react-aria/utils" "^3.6.0"
+    "@react-types/shared" "^3.4.0"
+
 "@react-aria/label@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@react-aria/label/-/label-3.1.1.tgz#03dc5c4813cd1f51760ba48783c186c2eeda1189"
@@ -1737,14 +1746,6 @@
     "@react-aria/utils" "^3.3.0"
     "@react-types/label" "^3.2.1"
     "@react-types/shared" "^3.2.1"
-"@react-aria/interactions@^3.3.3":
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/@react-aria/interactions/-/interactions-3.3.3.tgz#02852a11530f73d1ae4525cdef7c2595acde2fdc"
-  integrity sha512-wq6YwVFMzT7jdpVGqGoqXPCANHl6BvOOL1Lrg3vb+df5pvoCFNWBytqv/yQVpT4PKOSUbxSBdOTubvtZlu0l+g==
-  dependencies:
-    "@babel/runtime" "^7.6.2"
-    "@react-aria/utils" "^3.6.0"
-    "@react-types/shared" "^3.4.0"
 
 "@react-aria/ssr@^3.0.1":
   version "3.0.1"
@@ -1765,7 +1766,7 @@
     "@react-types/shared" "^3.2.1"
     "@react-types/textfield" "^3.2.2"
 
-"@react-aria/utils@^3.3.0":
+"@react-aria/utils@^3.3.0", "@react-aria/utils@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.6.0.tgz#b7446f202469015713af8bf2812b748e694eca12"
   integrity sha512-DO5F00T5NQ7j3GGWvruV8HrEd3YcN7KfbbvKvNZ3JWHETHNJxIc2xBz4Af6FSQzAjHkOrapd++SNoNLutRSz9Q==
@@ -1786,7 +1787,6 @@
     "@react-types/shared" "^3.3.0"
     clsx "^1.1.1"
 
-<<<<<<< HEAD
 "@react-hook/debounce@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-hook/debounce/-/debounce-3.0.0.tgz#9eea8b5d81d4cb67cd72dd8657b3ff724afc7cad"
@@ -1826,18 +1826,6 @@
     "@react-hook/debounce" "^3.0.0"
     "@react-hook/event" "^1.2.1"
     "@react-hook/throttle" "^2.2.0"
-=======
-"@react-aria/utils@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.6.0.tgz#b7446f202469015713af8bf2812b748e694eca12"
-  integrity sha512-DO5F00T5NQ7j3GGWvruV8HrEd3YcN7KfbbvKvNZ3JWHETHNJxIc2xBz4Af6FSQzAjHkOrapd++SNoNLutRSz9Q==
-  dependencies:
-    "@babel/runtime" "^7.6.2"
-    "@react-aria/ssr" "^3.0.1"
-    "@react-stately/utils" "^3.2.0"
-    "@react-types/shared" "^3.4.0"
-    clsx "^1.1.1"
->>>>>>> feature/YCard
 
 "@react-stately/toggle@^3.2.1":
   version "3.2.1"
@@ -1894,7 +1882,6 @@
   resolved "https://registry.yarnpkg.com/@react-types/shared/-/shared-3.4.0.tgz#a7cbf8c676b4b3b7b687bcdc8e44828c34d115f4"
   integrity sha512-qYuL9JdIVC5JQmUgmurtm4JZQrg6IUy8wrMbaqNbt1e85Zg7A6ff1ffFrZ5IIgc1LDxYC7BB9KtL/bCgnjqrng==
 
-<<<<<<< HEAD
 "@react-types/textfield@^3.2.2":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@react-types/textfield/-/textfield-3.2.2.tgz#2f310c125df7c4a64a19d7c5064537218f909d38"
@@ -1902,8 +1889,6 @@
   dependencies:
     "@react-types/shared" "^3.2.1"
 
-=======
->>>>>>> feature/YCard
 "@storybook/addon-a11y@^6.1.11":
   version "6.1.11"
   resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-6.1.11.tgz#13f1cbe02a6c6ab08cebe1851183e1813d86eb16"

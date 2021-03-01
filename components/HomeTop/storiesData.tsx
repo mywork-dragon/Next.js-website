@@ -49,31 +49,26 @@ export const cards = [
   {
     title: 'Structure',
     description: 'Another client - another story',
-    cardClasses: 'hover:card-blue',
     Icon: <Content />,
   },
   {
     title: 'Cart Upsell',
     description: 'Personalized Suggestion',
-    cardClasses: 'hover:card-blue',
     Icon: <Cart />,
   },
   {
     title: 'Navigation',
     description: 'Custom navigation patterns',
-    cardClasses: 'hover:card-blue',
     Icon: <Directions />,
   },
   {
     title: 'Email',
     description: 'Personalized follow up email',
-    cardClasses: 'hover:card-blue',
     Icon: <Email />,
   },
   {
     title: 'Content',
     description: 'Adaptive content per user',
-    cardClasses: 'card-blue hover:card-white',
     Icon: <Carousel />,
   },
 ];

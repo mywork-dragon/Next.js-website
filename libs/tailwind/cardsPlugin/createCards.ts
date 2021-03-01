@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 import addDepthClasses from './addDepthClasses';
 import addSubClasses from './addSubClasses';
-import { TailwindOptionsPartial, TailwindComponents } from './types';
+import { TailwindOptionsPartial } from './types';
 import addOpacity from '../utils/addOpacity';
 
 /**
@@ -10,7 +10,10 @@ import addOpacity from '../utils/addOpacity';
  * @param param0 object containing Tailwind plugin function parameters
  *
  */
-const createCards = ({ addComponents, theme }: TailwindOptionsPartial) => {
+const createCards = ({
+  addComponents,
+  theme,
+}: TailwindOptionsPartial): void => {
   // get config data
   const variants = {
     white: {
@@ -30,7 +33,7 @@ const createCards = ({ addComponents, theme }: TailwindOptionsPartial) => {
   });
 
   // create components
-  let cardComponents = {} as Record<string, CSSProperties>;
+  const cardComponents = {} as Record<string, CSSProperties>;
 
   Object.keys(componentsWithDepth).forEach((variant) => {
     cardComponents[`.card-${variant}`] = {
