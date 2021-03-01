@@ -11,3 +11,18 @@ export enum ButtonShape {
   Round = 'round',
 }
 //endregion
+
+//region Card
+export enum CardType {
+  Fill = 'fill',
+  Transparent = 'transparent',
+}
+
+export enum CardColor {
+  White = 'white',
+  Gray = 'gray',
+  Blue = 'blue',
+  Green = 'green',
+  Orange = 'orange',
+}
+//endregion

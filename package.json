@@ -8,7 +8,9 @@
     "start": "next start",
     "export": "next export",
     "lint": "eslint --ext .ts,.tsx",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "watch-cards": "tsc libs/tailwind/cardsPlugin/testCards.ts -w",
+    "test-cards": "node libs/tailwind/cardsPlugin/testCards.js"
   },
   "husky": {
     "hooks": {
@@ -18,9 +20,11 @@
   "dependencies": {
     "@apollo/client": "^3.3.4",
     "@react-aria/button": "^3.3.0",
+    "@react-aria/interactions": "^3.3.3",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "^9",
     "axios": "^0.21.0",
+    "framer-motion": "^3.7.0",
     "graphql": "^15.4.0",
     "next": "10.0.3",
     "postcss": "^7",
