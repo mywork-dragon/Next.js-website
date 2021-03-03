@@ -12,6 +12,8 @@ import {
 
 import Toggle from './MenuToggle';
 import NavItem, { NavItemInterface } from './NavItem';
+import SubItem, { SubItemInterface } from './SubItem';
+import { ExpandableRegion } from './ExpandableComponents';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 import YHeading from '@/components/YHeading';
@@ -19,6 +21,7 @@ import YButton from '@/components/YButton';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
+import { FontLineHeight, FontWeight, FontSize } from '@/enums/font';
 
 interface Logo {
   Icon: JSX.Element;
@@ -37,84 +40,122 @@ interface Props {
 }
 
 enum Region {
-  Header = 'header',
-  Items = 'items',
+  Item = 'item',
+  SubItem = 'sub-item',
 }
 
 const Header: React.FC<Props> = ({ logo, navItems, button }) => {
   const [showItems, setShowItems] = useState(false);
-  const [showSubItems, setShowSubItems] = useState(false);
+  const [subItems, setSubItems] = useState<SubItemInterface[] | null>(null);
 
   const screenSize =
     useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
-  const open = showSubItems || (screenSize == ScreenSize.SM && showItems);
+  const open = Boolean(subItems) || (screenSize == ScreenSize.SM && showItems);
 
   // animation
-  const getMotionProps = (region: Region, screenSize?: ScreenSize) => {
+  const getHeaderMotionProps = () => {
     const animate = open ? 'open' : 'closed';
-    const motionProps =
-      region == Region.Header
-        ? headerAnimationProps
-        : itemsAnimationProps[screenSize];
+    const motionProps = headerAnimationProps;
+
     return { animate, ...motionProps };
   };
+
+  // top bar region
+  const additionalComponents =
+    screenSize == ScreenSize.SM ? (
+      <Toggle
+        className={[...menuItemClasses, 'left-4'].join(' ')}
+        onClick={() => setShowItems(!showItems)}
+        open={open}
+      />
+    ) : (
+      <div className="h-full mx-auto inline-block whitespace-nowrap">
+        {navItems.map((item) => (
+          <NavItem
+            key={item.text}
+            textProps={getTextProps(screenSize)}
+            {...item}
+            onClick={() => setSubItems(item.subItems)}
+          />
+        ))}
+      </div>
+    );
+
+  // expandable region
+  const hiddenRegion =
+    screenSize == ScreenSize.SM
+      ? navItems.map((item, index) => (
+          <NavItem
+            key={item.text}
+            textProps={getTextProps(screenSize)}
+            {...item}
+            className={index != 0 ? 'border-t' : ''}
+          >
+            {item.subItems?.map((subItem, index) => (
+              <SubItem
+                {...subItem}
+                key={subItem.text}
+                className={index == 0 ? 'pt-1 pb-5' : 'py-5'}
+                textProps={getTextProps(screenSize)}
+              />
+            ))}
+          </NavItem>
+        ))
+      : subItems?.map((subItem) => (
+          <SubItem
+            {...subItem}
+            key={subItem.text}
+            className={null}
+            textProps={getTextProps(screenSize, Region.SubItem)}
+          />
+        ));
 
   return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
       <motion.section
-        {...getMotionProps(Region.Header)}
+        {...getHeaderMotionProps()}
         className="fixed w-full left-0 top-0"
       >
-        <div className="relative h-15.5 w-full">
-          {screenSize == ScreenSize.SM && (
-            <Toggle
-              className={[...menuItemClasses, 'left-4'].join(' ')}
-              onClick={() => setShowItems(!showItems)}
-              open={open}
-            />
-          )}
-          <div
-            className={[...menuItemClasses, 'left-1/2 -translate-x-1/2'].join(
-              ' '
-            )}
-          >
-            <YLink href={logo.link}>{logo.Icon}</YLink>
-          </div>
+        <div className="relative h-15.5 w-full md:h-8.5 md:container md:whitespace-nowrap">
+          <YLink href={logo.link}>
+            <div
+              className={[
+                ...menuItemClasses,
+                'left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 md:inline-block',
+              ].join(' ')}
+            >
+              {logo.Icon}
+            </div>
+          </YLink>
+          {additionalComponents}
           <YLink href={button.link}>
             <YButton
               buttonSize={ButtonSize.XS}
               shape={ButtonShape.Round}
-              className={[...menuItemClasses, 'right-4'].join(' ')}
+              className={[
+                ...menuItemClasses,
+                'right-4',
+                'md:right-0',
+                'md:ml-auto',
+                'md:inline-block',
+              ].join(' ')}
             >
-              {button.text.split(' ')[0]}
+              {screenSize == ScreenSize.SM
+                ? button.text.split(' ')[0]
+                : button.text}
             </YButton>
           </YLink>
         </div>
         <AnimateSharedLayout>
-          <motion.div
-            layout
-            {...getMotionProps(Region.Items, screenSize)}
-            className="flex flex-col items-stretch overflow-hidden container"
+          <ExpandableRegion
+            className="flex flex-col items-stretch container"
+            open={open}
           >
-            <AnimatePresence>
-              {screenSize == ScreenSize.MD ||
-                (showItems &&
-                  navItems.map((item, index) => (
-                    <NavItem
-                      key={item.text}
-                      {...item}
-                      motionProps={itemsAnimationProps[screenSize]}
-                      className={[
-                        'relative min-h-14.1 border-blue-300',
-                        index != 0 ? 'border-t' : ' ',
-                      ].join(' ')}
-                    />
-                  )))}
-            </AnimatePresence>
-          </motion.div>
+            {hiddenRegion}
+          </ExpandableRegion>
         </AnimateSharedLayout>
       </motion.section>
     </MotionConfig>
@@ -126,6 +167,7 @@ const menuItemClasses = [
   'top-1/2',
   'transform',
   '-translate-y-1/2',
+  'md:relative',
 ];
 
 // animation variants
@@ -145,22 +187,27 @@ const headerAnimationProps = {
   },
 };
 
-const itemsAnimationProps = {
-  [ScreenSize.SM]: {
-    initial: { height: 0 },
-    variants: {
-      open: {
-        height: 'auto',
-      },
-      closed: {
-        height: 0,
-      },
-    },
-    transition: {
-      type: 'tween',
-      duration: 0.3,
-    },
+// text props for components
+const getTextProps = (screenSize: ScreenSize, region?: Region) =>
+  screenSize == ScreenSize.SM ? mobileTextProps : desktopTextProps[region];
+
+const mobileTextProps = {
+  fontSize: FontSize.XS,
+  lineHeight: FontLineHeight.Relaxed,
+  fontWeight: FontWeight.SemiBold,
+} as Parameters<typeof YText>[0];
+
+const desktopTextProps = {
+  [Region.Item]: {
+    fontSize: FontSize.XS,
+    lineHeight: FontLineHeight.Tight,
+    fontWeight: FontWeight.SemiBold,
   },
-};
+  [Region.SubItem]: {
+    fontSize: FontSize.XXS,
+    fontWeight: FontWeight.SemiBold,
+    lineHeight: FontLineHeight.Tight,
+  },
+} as Record<Region, Parameters<typeof YText>[0]>;
 
 export default Header;
