@@ -9,6 +9,7 @@ const rem = (value) => {
 
 const colors = {
   blue: {
+    500: '#0A1536',
     400: '#041925',
     300: '#062233',
     200: '#0E284F',
@@ -36,6 +37,7 @@ const colors = {
     300: '#F2A143',
     100: '#CB7F27',
   },
+  soft: 'rgba(99, 152, 255, 0.9)', // header soft white border
 };
 
 colors.primary = colors.green[300];
@@ -99,6 +101,7 @@ const spacing = {
   88.1: rem(353),
   100: rem(400),
   //
+  12.5: rem(50),
   16.1: rem(65),
   6.1: rem(25),
   21.1: rem(85),
@@ -111,6 +114,10 @@ const spacing = {
   15.5: rem(62),
   7: rem(28),
   8.5: rem(34),
+  23.5: rem(94),
+  25: rem(100),
+  32.5: rem(130),
+  5.5: rem(22),
 };
 
 const minHeight = {

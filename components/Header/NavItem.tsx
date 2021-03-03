@@ -3,21 +3,27 @@ import React, { useState } from 'react';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 
-import Toggle from './MenuToggle';
-import { ExpandableRegion, ExpandableItem } from './ExpandableComponents';
+import { Toggle } from './MenuButtons';
+import { ExpandableRegion, ExpandableItem } from './AnimatedComponents';
 import { SubItemInterface } from './SubItem';
 
 import { ToggleType } from '@/enums/components';
+
+import DownArrow from '@/assets/icons/chevron-down.svg';
 
 export interface NavItemInterface {
   text: string;
   link: string;
   subItems?: SubItemInterface[];
-  textProps: Parameters<typeof YText>[0];
-  onClick?: () => void;
 }
 
-const NavItem: React.FC<NavItemInterface & { className?: string }> = ({
+interface Props extends NavItemInterface {
+  textProps: Parameters<typeof YText>[0];
+  onClick?: () => void;
+  className?: string;
+}
+
+const NavItem: React.FC<Props> = ({
   className,
   link,
   text,
@@ -36,7 +42,7 @@ const NavItem: React.FC<NavItemInterface & { className?: string }> = ({
       >
         <YLink href={link}>
           <YText
-            className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200"
+            className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:inline-block"
             {...textProps}
             as="p"
           >
@@ -44,12 +50,17 @@ const NavItem: React.FC<NavItemInterface & { className?: string }> = ({
           </YText>
         </YLink>
         {subItems && (
-          <Toggle
-            type={ToggleType.Plus}
-            open={openItems}
-            className="absolute right-1 top-1/2 transform -translate-y-1/2"
-            onClick={() => setOpenItems(!openItems)}
-          />
+          <>
+            <Toggle
+              type={ToggleType.Plus}
+              open={openItems}
+              className="absolute right-1 top-1/2 transform -translate-y-1/2 md:hidden"
+              onClick={() => setOpenItems(!openItems)}
+            />
+            {/* <div className="hidden relative top-1/2 transform -translate-y-1/2 md:inline-block">
+              <DownArrow />
+            </div> */}
+          </>
         )}
       </ExpandableItem>
       <ExpandableRegion open={openItems}>

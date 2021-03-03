@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import Header from './Header';
-import Toggle from './MenuToggle';
-import { ToggleType } from '@/enums/components';
+import { Toggle, Arrow } from './MenuButtons';
+import { ArrowType, ToggleType } from '@/enums/components';
 
 import { props } from './StoriesData';
 
@@ -17,25 +17,27 @@ export const Default = (): JSX.Element => (
   </div>
 );
 
-export const ToggleVariants = (): JSX.Element => {
+export const WithIcons = (): JSX.Element => (
+  <div className="absolute top-0 right-0 left-0">
+    <Header showIcons {...props} />
+  </div>
+);
+
+export const MenuButons = (): JSX.Element => {
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
 
-  const classNames = 'absolute top-1/2 transform -translate-y-1/2';
-
   return (
-    <div className="relative w-16 h-6">
+    <div className="relative flex items-center h-6">
+      <Toggle open={open1} className="mr-5" onClick={() => setOpen1(!open1)} />
       <Toggle
-        className={[classNames, 'left-0'].join(' ')}
-        open={open1}
-        onClick={() => setOpen1(!open1)}
-      />
-      <Toggle
-        className={[classNames, 'right-0'].join(' ')}
+        className="mr-5"
         type={ToggleType.Plus}
         open={open2}
         onClick={() => setOpen2(!open2)}
       />
+      <Arrow className="mr-5" />
+      <Arrow type={ArrowType.Left} className="mr-5" />
     </div>
   );
 };

@@ -1,7 +1,9 @@
 import React from 'react';
 import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
 
-import { ToggleType } from '@/enums/components';
+import { ToggleType, ArrowType } from '@/enums/components';
+
+import ArrowSvg from '@/assets/icons/arrow-left.svg';
 
 interface Props {
   open?: boolean;
@@ -16,7 +18,7 @@ enum Line {
   Bottom = 'bottom',
 }
 
-const MenuHamburger: React.FC<Props> = ({
+export const Toggle: React.FC<Props> = ({
   className,
   onClick,
   open = true,
@@ -59,22 +61,9 @@ const MenuHamburger: React.FC<Props> = ({
     [ToggleType.Plus]: ['h-3.5', 'w-3.5'],
   };
 
-  const getContainerClasses = (
-    containerClasses: string[],
-    classes: string | undefined
-  ) => {
-    const positionClasses = ['relative', 'absolute', 'fixed'];
-
-    const position = positionClasses.reduce((prev, curr) =>
-      prev == '' ? prev : classes.includes(curr) ? '' : 'relative'
-    );
-
-    return [...containerClasses, classes, position].join(' ').trim();
-  };
-
   return (
     <div
-      className={getContainerClasses(containerClasses[type], className)}
+      className={filterPosition(containerClasses[type], className)}
       onClick={onClick || null}
     >
       <MotionConfig features={[AnimationFeature]}>{lines}</MotionConfig>
@@ -82,7 +71,54 @@ const MenuHamburger: React.FC<Props> = ({
   );
 };
 
+interface ArrowProps {
+  type?: ArrowType;
+  className?: string;
+  onClick?: () => void;
+}
+
+export const Arrow: React.FC<ArrowProps> = ({
+  type = ArrowType.Right,
+  className,
+  onClick,
+}) => {
+  const baseClasses = [
+    'h-7',
+    'w-7',
+    'rounded-full',
+    'bg-white',
+    'bg-opacity-10',
+    'flex',
+    'justify-center',
+    'items-center',
+  ];
+
+  return (
+    <div
+      onClick={onClick}
+      className={[
+        ...baseClasses,
+        className,
+        type == ArrowType.Left ? 'transform rotate-180' : '',
+      ].join(' ')}
+    >
+      <ArrowSvg />
+    </div>
+  );
+};
+
 // options and utils
+const filterPosition = (containerClasses: string[], classes?: string) => {
+  classes = Boolean(classes) ? classes : '';
+  const positionClasses = ['.', 'relative', 'absolute', 'fixed'];
+
+  const position = positionClasses.reduce((prev, curr) =>
+    prev == '' ? prev : classes.includes(curr) ? '' : 'relative'
+  );
+
+  return [...containerClasses, classes, position].join(' ').trim();
+};
+
 const lineClassesForType = {
   [ToggleType.Hamburger]: ['left-1', 'right-1'],
   [ToggleType.Plus]: [
@@ -144,5 +180,3 @@ const lineProps = {
     initial: { y: 16 },
   },
 };
-
-export default MenuHamburger;
