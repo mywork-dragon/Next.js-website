@@ -51,11 +51,6 @@ const subItems = [
     link: '',
     icon: '',
   },
-  {
-    text: '',
-    link: '',
-    icon: '',
-  },
 ];
 
 const navItems = [

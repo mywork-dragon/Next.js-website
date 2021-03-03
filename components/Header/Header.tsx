@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import YLink from '../YLink';
-import YButton from '../YButton';
-import YText from '../YText';
+import { useWindowWidth } from '@react-hook/window-size';
+import {
+  m as motion,
+  MotionConfig,
+  AnimationFeature,
+  ExitFeature,
+  AnimateSharedLayout,
+  AnimatePresence,
+  AnimateLayoutFeature,
+} from 'framer-motion';
+
+import Toggle from './MenuToggle';
+import NavItem, { NavItemInterface } from './NavItem';
+import YLink from '@/components/YLink';
+import YText from '@/components/YText';
+import YHeading from '@/components/YHeading';
+import YButton from '@/components/YButton';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
-import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+import { ScreenSize, BreakPoint } from '@/enums/screenSize';
 
-// Main Props
 interface Logo {
   Icon: JSX.Element;
   link: string;
-}
-
-interface SubItem {
-  Icon: any; // string if .png
-  text: string;
-  link: string;
-}
-
-interface NavItem {
-  text: string;
-  link: string;
-  subItems?: SubItem[];
 }
 
 interface Button {
@@ -31,16 +32,94 @@ interface Button {
 
 interface Props {
   logo: Logo;
-  navItems: NavItem[];
+  navItems: NavItemInterface[];
   button: Button;
 }
 
-// HamburgerProps
-interface HamburgerProps {
-  open: boolean;
-  onClick: () => void;
-  className?: string;
+enum Region {
+  Header = 'header',
+  Items = 'items',
 }
+
+const Header: React.FC<Props> = ({ logo, navItems, button }) => {
+  const [showItems, setShowItems] = useState(false);
+  const [showSubItems, setShowSubItems] = useState(false);
+
+  const screenSize =
+    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+
+  const open = showSubItems || (screenSize == ScreenSize.SM && showItems);
+
+  // animation
+  const getMotionProps = (region: Region, screenSize?: ScreenSize) => {
+    const animate = open ? 'open' : 'closed';
+    const motionProps =
+      region == Region.Header
+        ? headerAnimationProps
+        : itemsAnimationProps[screenSize];
+    return { animate, ...motionProps };
+  };
+
+  return (
+    <MotionConfig
+      features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
+    >
+      <motion.section
+        {...getMotionProps(Region.Header)}
+        className="fixed w-full left-0 top-0"
+      >
+        <div className="relative h-15.5 w-full">
+          {screenSize == ScreenSize.SM && (
+            <Toggle
+              className={[...menuItemClasses, 'left-4'].join(' ')}
+              onClick={() => setShowItems(!showItems)}
+              open={open}
+            />
+          )}
+          <div
+            className={[...menuItemClasses, 'left-1/2 -translate-x-1/2'].join(
+              ' '
+            )}
+          >
+            <YLink href={logo.link}>{logo.Icon}</YLink>
+          </div>
+          <YLink href={button.link}>
+            <YButton
+              buttonSize={ButtonSize.XS}
+              shape={ButtonShape.Round}
+              className={[...menuItemClasses, 'right-4'].join(' ')}
+            >
+              {button.text.split(' ')[0]}
+            </YButton>
+          </YLink>
+        </div>
+        <AnimateSharedLayout>
+          <motion.div
+            layout
+            {...getMotionProps(Region.Items, screenSize)}
+            className="flex flex-col items-stretch overflow-hidden container"
+          >
+            <AnimatePresence>
+              {screenSize == ScreenSize.MD ||
+                (showItems &&
+                  navItems.map((item, index) => (
+                    <NavItem
+                      key={item.text}
+                      {...item}
+                      motionProps={itemsAnimationProps[screenSize]}
+                      className={[
+                        'relative min-h-14.1 border-blue-300',
+                        index != 0 ? 'border-t' : ' ',
+                      ].join(' ')}
+                    />
+                  )))}
+            </AnimatePresence>
+          </motion.div>
+        </AnimateSharedLayout>
+      </motion.section>
+    </MotionConfig>
+  );
+};
 
 const menuItemClasses = [
   'absolute',
@@ -49,95 +128,39 @@ const menuItemClasses = [
   '-translate-y-1/2',
 ];
 
-const menuTextProps = {
-  fontSize: FontSize.XS,
-  lineHeight: FontLineHeight.Relaxed,
-  fontWeight: FontWeight.SemiBold,
-} as Parameters<typeof YText>[0];
-
-const Header: React.FC<Props> = ({ logo, navItems, button }) => {
-  const [open, setOpen] = useState(false);
-
-  const navItemsContainer = (
-    <div className="container">
-      {navItems.map((item, index) => (
-        <div
-          key={item.text}
-          className={[
-            'relative h-14.1 border-gray-300',
-            index < navItems.length - 1 ? 'border-b' : ' ',
-          ].join(' ')}
-        >
-          <YLink href={item.link}>
-            <YText
-              className="relative top-1/2 transform -translate-y-1/2 text-gray-300"
-              {...menuTextProps}
-            >
-              {item.text}
-            </YText>
-          </YLink>
-          <div className="overflow-hidden h-0">
-            {item.subItems?.map((subItem) => (
-              <YLink href={subItem.link}>
-                <YText {...menuTextProps} className="my-5 text-gray-300">
-                  {subItem.text}
-                </YText>
-              </YLink>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-
-  return (
-    <section className="fixed top-0 left-0 right-0 h-15.5">
-      <div className="relative h-15.5 w-full">
-        <MenuHamburger
-          className={[...menuItemClasses, 'left-4'].join(' ')}
-          onClick={() => setOpen(!open)}
-          open={open}
-        />
-        <div
-          className={[...menuItemClasses, 'left-1/2 -translate-x-1/2'].join(
-            ' '
-          )}
-        >
-          <YLink href={logo.link}>{logo.Icon}</YLink>
-        </div>
-        <YLink href={button.link}>
-          <YButton
-            buttonSize={ButtonSize.XS}
-            shape={ButtonShape.Round}
-            className={[...menuItemClasses, 'right-4'].join(' ')}
-          >
-            {button.text.split(' ')[0]}
-          </YButton>
-        </YLink>
-      </div>
-      {navItemsContainer}
-    </section>
-  );
+// animation variants
+const headerAnimationProps = {
+  initial: {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+  },
+  variants: {
+    open: {
+      backgroundColor: '#041925',
+      transition: { duration: 0.4 },
+    },
+    closed: {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      transition: { duration: 0.2 },
+    },
+  },
 };
 
-const MenuHamburger: React.FC<HamburgerProps> = ({
-  className: classes,
-  onClick,
-  open,
-}) => {
-  const lineClasses = ['absolute', 'h-0.5', 'bg-white', 'left-1', 'right-1'];
-
-  return (
-    <div className={['h-7.5 w-7.5 p-1', classes].join(' ')} onClick={onClick}>
-      <div className={[...lineClasses, 'top-2'].join(' ')} />
-      <div
-        className={[...lineClasses, 'top-1/2 transform -translate-y-1/2'].join(
-          ' '
-        )}
-      />
-      <div className={[...lineClasses, 'bottom-2'].join(' ')} />
-    </div>
-  );
+const itemsAnimationProps = {
+  [ScreenSize.SM]: {
+    initial: { height: 0 },
+    variants: {
+      open: {
+        height: 'auto',
+      },
+      closed: {
+        height: 0,
+      },
+    },
+    transition: {
+      type: 'tween',
+      duration: 0.3,
+    },
+  },
 };
 
 export default Header;

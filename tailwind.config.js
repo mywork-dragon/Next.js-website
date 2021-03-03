@@ -100,13 +100,20 @@ const spacing = {
   100: rem(400),
   //
   16.1: rem(65),
+  6.1: rem(25),
   21.1: rem(85),
   37.5: rem(150),
   68.6: rem(275),
   0.5: rem(2),
+  3.5: rem(14),
   7.5: rem(30),
   14.1: rem(57),
   15.5: rem(62),
+  7: rem(28),
+};
+
+const minHeight = {
+  14.1: rem(57),
 };
 
 const boxShadow = {
@@ -166,32 +173,6 @@ const scale = {
   94: '0.94',
 };
 
-const cards = {
-  variants: {
-    white: {
-      base: '#FFFFFF',
-      shadow: '#D5DFE9',
-    },
-    gray: {
-      base: '#D5DFE9',
-      shadow: '#FFFFFF',
-    },
-    blue: {
-      base: '#305EED',
-      shadow: '#143DB0',
-    },
-    green: {
-      base: '#53D084',
-      shadow: '#25A055',
-    },
-    orange: {
-      base: '#F2A143',
-      shadow: '#CB7F27',
-    },
-  },
-  transformMatrix: 'matrix(0.73, -0.40, 0.8, 0.43, -5, -25)',
-};
-
 module.exports = {
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -213,6 +194,7 @@ module.exports = {
       boxShadow,
       opacity,
       scale,
+      minHeight,
     },
     cards,
   },
@@ -220,7 +202,6 @@ module.exports = {
     extend: {
       margin: ['first', 'last'],
     },
-    cards,
   },
   plugins: [
     function ({ addComponents }) {
