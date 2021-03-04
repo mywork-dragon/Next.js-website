@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { Toggle } from './MenuButtons';
-import { ExpandableItem } from './AnimatedComponents';
+
+import AnimateItem from '@/components/AnimateComponents/AnimateItem';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 
@@ -38,7 +39,7 @@ const SubItem: React.FC<Props> = ({
 
   return (
     <YLink href={link}>
-      <ExpandableItem
+      <AnimateItem
         onClick={() => console.log('clicked')}
         className={[...containerClasses, className].join(' ')}
       >
@@ -53,7 +54,7 @@ const SubItem: React.FC<Props> = ({
         <YText className={textClasses.join(' ')} {...textProps} as="p">
           {text}
         </YText>
-      </ExpandableItem>
+      </AnimateItem>
     </YLink>
   );
 };

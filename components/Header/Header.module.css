@@ -1,9 +1,0 @@
-.shadowRight {
-  box-shadow: inset -200px 0 100px -50px rgba(6, 34, 51, 0.7),
-    inset -200px 0 100px -50px rgba(32, 56, 118, 0.68);
-}
-
-.shadowLeft {
-  box-shadow: inset 200px 0 100px -50px rgba(6, 34, 51, 0.7),
-    inset 200px 0 100px -50px rgba(32, 56, 118, 0.68);
-}

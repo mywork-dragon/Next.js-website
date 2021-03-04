@@ -1,9 +1,7 @@
 import React from 'react';
 import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
 
-import { ToggleType, ArrowType } from '@/enums/components';
-
-import ArrowSvg from '@/assets/icons/arrow-left.svg';
+import { ToggleType } from '@/enums/components';
 
 interface Props {
   open?: boolean;
@@ -67,42 +65,6 @@ export const Toggle: React.FC<Props> = ({
       onClick={onClick || null}
     >
       <MotionConfig features={[AnimationFeature]}>{lines}</MotionConfig>
-    </div>
-  );
-};
-
-interface ArrowProps {
-  type?: ArrowType;
-  className?: string;
-  onClick?: () => void;
-}
-
-export const Arrow: React.FC<ArrowProps> = ({
-  type = ArrowType.Right,
-  className,
-  onClick,
-}) => {
-  const baseClasses = [
-    'h-7',
-    'w-7',
-    'rounded-full',
-    'bg-white',
-    'bg-opacity-10',
-    'flex',
-    'justify-center',
-    'items-center',
-  ];
-
-  return (
-    <div
-      onClick={onClick}
-      className={[
-        ...baseClasses,
-        className,
-        type == ArrowType.Left ? 'transform rotate-180' : '',
-      ].join(' ')}
-    >
-      <ArrowSvg />
     </div>
   );
 };

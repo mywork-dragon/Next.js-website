@@ -37,7 +37,7 @@ const colors = {
     300: '#F2A143',
     100: '#CB7F27',
   },
-  soft: 'rgba(99, 152, 255, 0.9)', // header soft white border
+  soft: 'rgba(99, 152, 255, 0.1)', // header "soft white" border
 };
 
 colors.primary = colors.green[300];
@@ -109,6 +109,7 @@ const spacing = {
   68.6: rem(275),
   0.5: rem(2),
   3.5: rem(14),
+  4.5: rem(18),
   7.5: rem(30),
   14.1: rem(57),
   15.5: rem(62),
@@ -235,6 +236,10 @@ module.exports = {
         '.text-shadow': {
           boxShadow:
             '-12.5rem -8.125rem 2.5rem 1.25rem rgba(6, 34, 51, 0.8), -1.25rem -0.625rem 1.25rem 2.5rem rgba(6, 34, 51, 0.8)',
+        },
+        '.scroll-shadow': {
+          boxShadow:
+            '3.5rem 0 50px 125px rgba(6, 34, 51, 0.3), 3.5rem 0 50px 125px rgba(32, 56, 118, 1)',
         },
       });
     },

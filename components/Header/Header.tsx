@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import {
-  m as motion,
   MotionConfig,
   AnimationFeature,
   ExitFeature,
@@ -12,14 +11,19 @@ import {
 import { Toggle } from './MenuButtons';
 import NavItem, { NavItemInterface } from './NavItem';
 import SubItem, { SubItemInterface } from './SubItem';
-import { ExpandableRegion, AnimateScroll } from './AnimatedComponents';
+
+import ExpandableRegion from '@/components/AnimateComponents/ExpandableRegion';
+import AnimateBackground from '@/components/AnimateComponents/AnimateBackground';
+import Scroll from '@/components/AnimateComponents/Scroll';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 import YButton from '@/components/YButton';
+import OSelect from '@/components/OSelect';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
 import { FontLineHeight, FontWeight, FontSize } from '@/enums/font';
+import { Language } from '@/enums/language';
 
 interface Logo {
   Icon: JSX.Element;
@@ -36,6 +40,7 @@ interface Props {
   navItems: NavItemInterface[];
   button: Button;
   showIcons?: boolean; // temp
+  onLangChange?: (lang: Language) => any;
 }
 
 enum Region {
@@ -43,7 +48,13 @@ enum Region {
   SubItem = 'sub-item',
 }
 
-const Header: React.FC<Props> = ({ logo, navItems, button, showIcons }) => {
+const Header: React.FC<Props> = ({
+  logo,
+  navItems,
+  button,
+  showIcons,
+  onLangChange,
+}) => {
   const [showItems, setShowItems] = useState(false);
   const [subItems, setSubItems] = useState<SubItemInterface[] | null>(null);
 
@@ -51,32 +62,6 @@ const Header: React.FC<Props> = ({ logo, navItems, button, showIcons }) => {
     useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const open = Boolean(subItems) || (screenSize == ScreenSize.SM && showItems);
-
-  // animation variants
-  const openVariant =
-    screenSize == ScreenSize.SM
-      ? {
-          backgroundColor: '#041925',
-        }
-      : {
-          backgroundColor: 'rgba(32, 56, 118, 0.68)',
-          backdropFilter: 'blur(60px)',
-          boxShadow: '0px 0px 120px rgba(6, 29, 51, 0.7)',
-        };
-
-  const headerMotionProps = {
-    animate: open ? 'open' : 'closed',
-    initial: {
-      backgroundColor: 'rgba(0, 0, 0, 0)',
-    },
-    variants: {
-      open: openVariant,
-      closed: {
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        transition: { duration: 0.2 },
-      },
-    },
-  };
 
   // top bar region
   const additionalComponents =
@@ -90,16 +75,21 @@ const Header: React.FC<Props> = ({ logo, navItems, button, showIcons }) => {
         open={open}
       />
     ) : (
-      <div className="w-full flex justify-center">
-        {navItems.map((item) => (
-          <NavItem
-            key={item.text}
-            textProps={getTextProps(screenSize, Region.Item)}
-            {...item}
-            onClick={() => setSubItems(subItems ? null : item.subItems)}
-          />
-        ))}
-      </div>
+      <>
+        <div className="w-full flex items-center justify-center">
+          {navItems.map((item) => (
+            <NavItem
+              key={item.text}
+              textProps={getTextProps(screenSize, Region.Item)}
+              {...item}
+              onClick={() => setSubItems(subItems ? null : item.subItems)}
+              screenSize={screenSize}
+              disableMount
+            />
+          ))}
+        </div>
+        <OSelect className="mr-6" onChange={onLangChange} />
+      </>
     );
 
   // expandable region
@@ -111,6 +101,7 @@ const Header: React.FC<Props> = ({ logo, navItems, button, showIcons }) => {
           textProps={getTextProps(screenSize)}
           {...item}
           className={index != 0 ? 'border-t' : ''}
+          screenSize={screenSize}
         >
           {item.subItems?.map((subItem, index) => (
             <SubItem
@@ -118,34 +109,44 @@ const Header: React.FC<Props> = ({ logo, navItems, button, showIcons }) => {
               key={subItem.text}
               className={index == 0 ? 'pt-1 pb-5' : 'py-5'}
               textProps={getTextProps(screenSize)}
+              screenSize={screenSize}
             />
           ))}
         </NavItem>
       ))
     ) : (
-      <AnimateScroll className="relative whitespace-nowrap overflow-hidden">
-        {subItems?.map((subItem, index) => (
-          <SubItem
-            {...subItem}
-            key={subItem.text}
-            className={index < subItems.length - 1 ? 'mr-5' : ''}
-            textProps={getTextProps(screenSize, Region.SubItem)}
-            showIcon={showIcons}
-          />
-        ))}
-      </AnimateScroll>
+      <>
+        <Scroll className="relative whitespace-nowrap overflow-hidden">
+          {subItems?.map((subItem, index) => (
+            <SubItem
+              {...subItem}
+              key={subItem.text}
+              className={index < subItems.length - 1 ? 'mr-5' : ''}
+              textProps={getTextProps(screenSize, Region.SubItem)}
+              showIcon={showIcons}
+            />
+          ))}
+        </Scroll>
+        <div className="absolute top-full width-full h-0 border-soft border-b"></div>
+      </>
     );
 
   return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
-      <motion.section
-        {...headerMotionProps}
-        className="fixed w-full left-0 top-0 border-soft md:border-b-1"
+      <AnimateBackground
+        screenSize={screenSize}
+        className="fixed w-full left-0 top-0"
+        open={open}
       >
-        <div className="h-15.5 container px-0 md:h-23.5 border-soft md:border-b-1">
-          <div className="relative w-full h-full md:h-8.5 md:top-1/2 md:flex">
+        <div
+          className={[
+            'h-15.5 container px-0 md:h-23.5 border-soft',
+            open ? 'md:border-b' : '',
+          ].join(' ')}
+        >
+          <div className="relative w-full h-full md:h-8.5 md:top-1/2 md:flex md:items-center">
             <div
               className={[
                 ...menuItemClasses,
@@ -181,7 +182,7 @@ const Header: React.FC<Props> = ({ logo, navItems, button, showIcons }) => {
             {hiddenRegion}
           </ExpandableRegion>
         </AnimateSharedLayout>
-      </motion.section>
+      </AnimateBackground>
     </MotionConfig>
   );
 };
@@ -202,6 +203,7 @@ const mobileTextProps = {
   fontSize: FontSize.XS,
   lineHeight: FontLineHeight.Relaxed,
   fontWeight: FontWeight.SemiBold,
+  as: 'p',
 } as Parameters<typeof YText>[0];
 
 const desktopTextProps = {
@@ -209,11 +211,13 @@ const desktopTextProps = {
     fontSize: FontSize.XS,
     lineHeight: FontLineHeight.Tight,
     fontWeight: FontWeight.SemiBold,
+    as: 'p',
   },
   [Region.SubItem]: {
     fontSize: FontSize.XXS,
-    fontWeight: FontWeight.SemiBold,
     lineHeight: FontLineHeight.Tight,
+    fontWeight: FontWeight.SemiBold,
+    as: 'p',
   },
 } as Record<Region, Parameters<typeof YText>[0]>;
 

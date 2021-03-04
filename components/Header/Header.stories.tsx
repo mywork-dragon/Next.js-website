@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import Header from './Header';
-import { Toggle, Arrow } from './MenuButtons';
-import { ArrowType, ToggleType } from '@/enums/components';
+import { Toggle } from './MenuButtons';
+import { ToggleType } from '@/enums/components';
 
 import { props } from './StoriesData';
 
@@ -36,8 +36,6 @@ export const MenuButons = (): JSX.Element => {
         open={open2}
         onClick={() => setOpen2(!open2)}
       />
-      <Arrow className="mr-5" />
-      <Arrow type={ArrowType.Left} className="mr-5" />
     </div>
   );
 };
