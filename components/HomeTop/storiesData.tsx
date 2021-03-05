@@ -15,22 +15,27 @@ const companies = [
   {
     logo: <Google />,
     link: 'https://google.com',
+    title: 'google',
   },
   {
     logo: <Segment />,
     link: 'https://segment.com',
+    title: 'segment',
   },
   {
     logo: <Boldking />,
     link: 'https://boldking.com',
+    title: 'boldking',
   },
   {
     logo: <Nike />,
     link: 'https://nike.com',
+    title: 'nike',
   },
   {
     logo: <Deloitte />,
     link: 'https://deloitte.com',
+    title: 'deloitte',
   },
 ];
 

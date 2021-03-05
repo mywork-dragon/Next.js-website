@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import YCard from './YCard';
+import YCardBasic from './YCardBasic';
 import CartIcon from '@/assets/icons/cart.svg';
 
 const dummyProps = {
@@ -55,10 +56,10 @@ export const Colors = (): JSX.Element => (
 
 export const Transparent = (): JSX.Element => (
   <div className="grid gap-8 grid-cols-10">
-    <YCard className="col-span-2" cardClasses="card-white-transparent" />
-    <YCard className="col-span-2" cardClasses="card-gray-transparent" />
-    <YCard className="col-span-2" cardClasses="card-blue-transparent" />
-    <YCard className="col-span-2" cardClasses="card-green-transparent" />
-    <YCard className="col-span-2" cardClasses="card-orange-transparent" />
+    <YCardBasic className="col-span-2" cardClasses="card-white-transparent" />
+    <YCardBasic className="col-span-2" cardClasses="card-gray-transparent" />
+    <YCardBasic className="col-span-2" cardClasses="card-blue-transparent" />
+    <YCardBasic className="col-span-2" cardClasses="card-green-transparent" />
+    <YCardBasic className="col-span-2" cardClasses="card-orange-transparent" />
   </div>
 );
