@@ -1,7 +1,6 @@
 const {
   default: createCards,
 } = require('./libs/tailwind/cardsPlugin/createCards');
-const plugin = require('tailwindcss/plugin');
 
 const rem = (value) => {
   return `${value / 16}rem`;
@@ -82,27 +81,26 @@ const lineHeight = {
 };
 
 const spacing = {
+  1.6: rem(7),
+  4.5: rem(18),
+  4.6: rem(19),
+  5.5: rem(22),
   6.5: rem(26),
+  16.1: rem(65),
+  19: rem(74),
+  21.1: rem(85),
+  24.5: rem(100),
+  37.5: rem(150),
+  43.5: rem(172),
   43.6: rem(175),
   50: rem(200),
   53.6: rem(215),
-  //
-  16.1: rem(65),
-  21.1: rem(85),
-  37.5: rem(150),
   68.6: rem(275),
 };
 
 const boxShadow = {
   'inset-light': 'inset 0px 2px 0px #233057',
   'inset-dark': 'inset 0px 2px 0px #1C1C1C',
-};
-
-const padding = {
-  1.6: rem(7),
-  4.5: rem(18),
-  4.6: rem(19),
-  19: rem(74),
 };
 
 const borderRadius = {
@@ -152,7 +150,6 @@ module.exports = {
       fontFamily,
       fontSize,
       lineHeight,
-      padding,
       spacing,
       boxShadow,
     },

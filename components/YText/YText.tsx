@@ -9,7 +9,11 @@ interface Props extends AllHTMLAttributes<HTMLElement> {
     | FontSize.SM
     | FontSize.MD
     | FontSize.LG;
-  fontWeight?: FontWeight;
+  fontWeight?:
+    | FontWeight.Regular
+    | FontWeight.SemiBold
+    | FontWeight.Bold
+    | FontWeight.ExtraBold;
   lineHeight?: FontLineHeight;
 }
 
@@ -134,7 +138,6 @@ const fontSizeLookup = {
 
 const fontWeightLookup = {
   [FontWeight.Regular]: 'font-normal',
-  [FontWeight.Medium]: 'font-medium',
   [FontWeight.SemiBold]: 'font-semibold',
   [FontWeight.Bold]: 'font-bold',
   [FontWeight.ExtraBold]: 'font-extrabold',
