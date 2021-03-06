@@ -102,6 +102,7 @@ const Arrow: React.FC<ArrowProps> = ({
     'justify-center',
     'scroll-shadow',
     'items-center',
+    'cursor-pointer',
   ];
 
   const more = showMore || 'More';

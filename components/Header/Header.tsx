@@ -26,7 +26,6 @@ import { ButtonSize, ButtonShape } from '@/enums/components';
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
 import { FontLineHeight, FontWeight, FontSize } from '@/enums/font';
 import { Language } from '@/enums/language';
-import { separateOperations } from 'graphql';
 
 interface Logo {
   Icon: JSX.Element;
@@ -119,7 +118,7 @@ const Header: React.FC<Props> = ({
             <SubItem
               {...subItem}
               key={subItem.text}
-              className={index == 0 ? 'pt-1 pb-5' : 'py-5'}
+              className={index == 0 ? 'pt-1' : ''}
               textProps={getTextProps(screenSize)}
               screenSize={screenSize}
             />
@@ -153,7 +152,7 @@ const Header: React.FC<Props> = ({
       <AnimateBackground
         ref={headerRef}
         screenSize={screenSize}
-        className="fixed w-full left-0 top-0"
+        className="fixed w-full left-0 top-0 md:absolute"
         open={open}
       >
         <div
@@ -169,7 +168,9 @@ const Header: React.FC<Props> = ({
                 'left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 md:inline-block',
               ].join(' ')}
             >
-              <YLink href={logo.link}>{logo.Icon}</YLink>
+              <YLink href={logo.link}>
+                <div className="cursor-pointer">{logo.Icon}</div>
+              </YLink>
             </div>
             {additionalComponents}
             <YLink href={button.link}>
