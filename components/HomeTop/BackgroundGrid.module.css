@@ -1,0 +1,16 @@
+.bgGrid {
+  display: grid;
+  grid-template-rows: repeat(6, 15.375rem);
+  grid-template-columns: repeat(9, 12.875rem);
+  grid-gap: 2px;
+  box-shadow: inset 12.5rem 0 12.5rem 25rem #062233, 0 0 12.5rem 6.25rem #062233;
+  transform: matrix(0.59, -0.32, 0.59, 0.3, -673, -553);
+
+  @screen md {
+    grid-template-rows: repeat(6, 15.375rem);
+    grid-template-columns: repeat(7, 12.875rem);
+    box-shadow: inset 6.25rem 0 12.5rem 18.75rem #062233,
+      0 0 12.5rem 6.25rem #062233;
+    transform: matrix(0.64, -0.37, 0.62, 0.39, 44, -476);
+  }
+}
