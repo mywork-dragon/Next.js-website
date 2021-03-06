@@ -11,7 +11,13 @@ const YOutLink: React.FC<Props> = ({ href, className, ...props }) => {
   const { linkProps } = useLink(props, ref);
 
   return (
-    <a {...linkProps} target="_blank" className={className} href={href}>
+    <a
+      {...linkProps}
+      rel="noopener noreferrer"
+      target="_blank"
+      className={className}
+      href={href}
+    >
       {props.children}
     </a>
   );

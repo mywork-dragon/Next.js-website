@@ -22,7 +22,7 @@ type ButtonProps = AriaAttributes & {
 };
 
 interface Company {
-  logo: any;
+  logo: JSX.Element;
   link: string;
   title: string;
 }
@@ -67,6 +67,7 @@ const HomeTop: React.FC<Props> = ({
     >
       {companies.map((company) => (
         <YOutLink
+          key={company.title}
           href={company.link}
           className="outline-none mr-15 inline-block"
           aria-label={`${company.title} website`}
@@ -96,7 +97,7 @@ const HomeTop: React.FC<Props> = ({
         <div className="relative z-20 md:w-100">
           <YHeading
             fontSize={
-              screenSize == ScreenSize.SM ? FontSize.XLL : FontSize['4XL']
+              screenSize == ScreenSize.SM ? FontSize.XXL : FontSize['4XL']
             }
             fontWeight={FontWeight.ExtraBold}
             lineHeight={
