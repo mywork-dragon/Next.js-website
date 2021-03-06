@@ -39,7 +39,10 @@ const YInputButton: React.FC<Props> = ({
 
   return (
     <form
-      className={[className, 'relative h-13 w-81.1'].join(' ')}
+      className={[
+        className,
+        'flex items-center h-13 w-81.1 bg-white rounded bg-opacity-15 overflow-hidden',
+      ].join(' ')}
       onSubmit={handleSubmit}
     >
       <input
@@ -49,11 +52,11 @@ const YInputButton: React.FC<Props> = ({
         onChange={(e) => setInputText(e.target.value)}
         value={inputText}
         placeholder={placeholder || 'your email'}
-        className="h-full w-full rounded pl-5 text-white bg-white bg-opacity-15"
+        className="h-full w-full pl-5 text-white bg-transparent focus:outline-none"
       />
       <YButton
         type="submit"
-        className="absolute right-1.9 top-1.9 bottom-1.9 py-auto"
+        className="m-1.9 whitespace-nowrap py-2.5"
         buttonSize={ButtonSize.XS}
       >
         {buttonText || 'Sign Up'}

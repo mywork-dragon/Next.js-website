@@ -2,17 +2,19 @@ import React, { AriaAttributes, HTMLAttributes } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 
 import { FontSize, FontWeight, FontLineHeight } from '@/enums/font';
+import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { ButtonSize } from '@/enums/components';
 
 import style from './HomeTop.module.css';
 
-import YHeading from '../YHeading';
-import YText from '../YText';
-import YButton from '../YButton';
-import YLink from '../YLink';
 import BackgroundGrid, { Card } from './BackgroundGrid';
-import YInputButton from '../YInputButton';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+
+import YHeading from '@/components/YHeading';
+import YText from '@/components/YText';
+import YLink from '@/components/YLink';
+import YButton from '@/components/YButton';
+import YInputButton from '@/components/YInputButton';
+import YOutLink from '@/components/YOutLink';
 
 type ButtonProps = AriaAttributes & {
   text: string;
@@ -22,6 +24,7 @@ type ButtonProps = AriaAttributes & {
 interface Company {
   logo: any;
   link: string;
+  title: string;
 }
 
 interface Props extends HTMLAttributes<HTMLElement> {
@@ -63,9 +66,13 @@ const HomeTop: React.FC<Props> = ({
       ].join(' ')}
     >
       {companies.map((company) => (
-        <a href={company.link} className="mr-15 inline-block">
+        <YOutLink
+          href={company.link}
+          className="outline-none mr-15 inline-block"
+          aria-label={`${company.title} website`}
+        >
           {company.logo}
-        </a>
+        </YOutLink>
       ))}
     </div>
   );

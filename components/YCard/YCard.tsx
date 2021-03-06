@@ -2,20 +2,18 @@ import React, { createElement, useRef } from 'react';
 import { AriaButtonProps } from '@react-types/button';
 import { useButton } from '@react-aria/button';
 import { useHover, HoverProps } from '@react-aria/interactions';
+import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
 
 import IconPlaceholder from '@/assets/icons/icon.svg';
 
-import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
+import YLink from '@/components/YLink';
 
 type CardProps = AriaButtonProps &
   HoverProps & {
     title?: string;
     description?: string;
     Icon?: JSX.Element;
-    empty?: boolean;
     className?: string;
-    onClick?: (e: React.SyntheticEvent) => void;
-    // for outside controlled hover effect
     onHover?: () => void;
     hovered?: boolean;
   };
@@ -25,6 +23,7 @@ interface Props extends CardProps {
   className?: string;
   children?: React.ReactNode;
   cardClasses?: string;
+  link?: string;
 }
 
 enum AnimateSection {
@@ -42,10 +41,10 @@ const YCard: React.FC<Props> = ({
   children,
   Icon,
   title,
-  empty,
   description,
   hovered,
   onHover,
+  link,
   ...props
 }) => {
   const assignedCustomTag = as ? as : 'div';
@@ -63,8 +62,6 @@ const YCard: React.FC<Props> = ({
 
   // text section
 
-  const isFill = !cardClasses?.includes('transparent');
-
   const titleTag = Boolean(onHover) ? motion.h6 : 'h6';
   const subtitleTag = Boolean(onHover) ? motion.p : 'p';
 
@@ -76,7 +73,7 @@ const YCard: React.FC<Props> = ({
     : {};
 
   const text =
-    title && description && isFill ? (
+    title && description ? (
       [
         createElement(
           titleTag,
@@ -110,7 +107,7 @@ const YCard: React.FC<Props> = ({
       className: 'icon fill-current flex items-stretch',
       ...iconHoverProps,
     },
-    isFill && (Icon || <IconPlaceholder />)
+    Icon || <IconPlaceholder />
   );
 
   // topface section
@@ -134,16 +131,18 @@ const YCard: React.FC<Props> = ({
       ...buttonProps,
       ...cardHoverProps,
     },
-    !empty && [icon, text]
+    [icon, text]
   );
 
   // container element section
   const containerClasses = ['w-43.6 h-53.6', classes].join(' ');
   return (
-    <div className={containerClasses}>
-      <MotionConfig features={[AnimationFeature]}>{Card}</MotionConfig>
-      {children}
-    </div>
+    <YLink href={link || ''}>
+      <div className={containerClasses}>
+        <MotionConfig features={[AnimationFeature]}>{Card}</MotionConfig>
+        {children}
+      </div>
+    </YLink>
   );
 };
 

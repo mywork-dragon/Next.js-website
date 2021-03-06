@@ -1,7 +1,7 @@
 import YInputButton from './YInputButton';
 
 export default {
-  title: 'YInputButton',
+  title: 'Input Button',
   component: YInputButton,
 };
 

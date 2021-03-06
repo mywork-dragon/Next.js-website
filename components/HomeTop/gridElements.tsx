@@ -1,5 +1,5 @@
-import YCard from '../YCard';
-import { ScreenSize } from '../../enums/screenSize';
+import Card from '@/components/YCard/YCardBasic';
+import { ScreenSize } from '@/enums/screenSize';
 
 export const cardBaseClasses =
   'relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
@@ -9,7 +9,7 @@ const transparentCardClasses = [cardBaseClasses, 'opacity-40'].join(' ');
 export const cardAppearances = [
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-86'].join(' ')}
         cardClasses="card-blue-transparent"
       />
@@ -21,7 +21,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-92'].join(' ')}
         cardClasses="card-blue-transparent"
       />
@@ -32,7 +32,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-94'].join(' ')}
         cardClasses="card-blue-transparent"
         empty
@@ -45,7 +45,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-92'].join(' ')}
         cardClasses="card-blue-transparent"
         empty
@@ -58,7 +58,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-85'].join(' ')}
         cardClasses="card-blue-transparent"
         empty
@@ -71,7 +71,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-86'].join(' ')}
         cardClasses="card-green-transparent"
       />
@@ -83,7 +83,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-92'].join(' ')}
         cardClasses="card-green-transparent"
       />
@@ -95,7 +95,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-79'].join(' ')}
         cardClasses="card-green-transparent"
       />
@@ -107,7 +107,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-93'].join(' ')}
         cardClasses="card-green-transparent"
       />
@@ -119,7 +119,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-86'].join(' ')}
         cardClasses="card-green-transparent"
         empty
@@ -132,7 +132,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-86'].join(' ')}
         cardClasses="card-white-transparent"
       />
@@ -144,7 +144,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-79'].join(' ')}
         cardClasses="card-white-transparent"
       />
@@ -156,7 +156,7 @@ export const cardAppearances = [
   },
   {
     component: (
-      <YCard
+      <Card
         className={[transparentCardClasses, 'scale-85'].join(' ')}
         cardClasses="card-white-transparent"
         empty
