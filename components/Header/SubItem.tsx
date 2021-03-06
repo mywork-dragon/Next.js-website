@@ -32,7 +32,7 @@ const SubItem: React.FC<Props> = ({
   screenSize,
 }) => {
   const iconBox = (
-    <div className="h-25 w-full bg-blue-500 bg-opacity-40 rounded-lg flex items-center justify-center">
+    <div className="h-25 w-full bg-blue-250 bg-opacity-40 rounded-lg flex items-center justify-center">
       {showIcon && icon}
     </div>
   );

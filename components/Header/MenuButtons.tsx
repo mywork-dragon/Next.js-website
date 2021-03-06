@@ -3,6 +3,8 @@ import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
 
 import { ToggleType } from '@/enums/components';
 
+import filterPosition from '@/libs/utils/filterPosition';
+
 interface Props {
   open?: boolean;
   onClick?: () => void;
@@ -68,19 +70,6 @@ export const Toggle: React.FC<Props> = ({
     </div>
   );
 };
-
-// options and utils
-const filterPosition = (containerClasses: string[], classes?: string) => {
-  classes = Boolean(classes) ? classes : '';
-  const positionClasses = ['.', 'relative', 'absolute', 'fixed'];
-
-  const position = positionClasses.reduce((prev, curr) =>
-    prev == '' ? prev : classes.includes(curr) ? '' : 'relative'
-  );
-
-  return [...containerClasses, classes, position].join(' ').trim();
-};
-
 const lineClassesForType = {
   [ToggleType.Hamburger]: ['left-1', 'right-1'],
   [ToggleType.Plus]: [

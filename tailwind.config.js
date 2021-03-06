@@ -1,7 +1,6 @@
 const {
   default: createCards,
 } = require('./libs/tailwind/cardsPlugin/createCards');
-const plugin = require('tailwindcss/plugin');
 
 const rem = (value) => {
   return `${value / 16}rem`;
@@ -9,12 +8,13 @@ const rem = (value) => {
 
 const colors = {
   blue: {
-    500: '#0A1536',
     400: '#041925',
     300: '#062233',
+    250: '#0A1536',
     200: '#0E284F',
     150: '#143DB0',
     100: '#305EED',
+    50: '#2f4571',
   },
   gray: {
     500: '#2A5D7D',

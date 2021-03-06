@@ -4,14 +4,24 @@ import { AnimatePresence, m as motion, MotionProps } from 'framer-motion';
 import AnimateItem from './AnimateItem';
 
 import { ArrowType } from '@/enums/components';
+import { FontSize, FontWeight } from '@/enums/font';
+
+import filterPosition from '@/libs/utils/filterPosition';
+
+import YText from '@/components/YText';
 
 import ArrowSvg from '@/assets/icons/arrow-right.svg';
 
 interface ScrollProps {
   className?: string;
+  showMoreLabel?: string;
 }
 
-export const Scroll: React.FC<ScrollProps> = ({ className, children }) => {
+export const Scroll: React.FC<ScrollProps> = ({
+  className,
+  children,
+  showMoreLabel,
+}) => {
   const [position, setPosition] = useState<'left' | 'right'>('left');
 
   const scrollContainer = useRef<HTMLDivElement>(null);
@@ -34,17 +44,11 @@ export const Scroll: React.FC<ScrollProps> = ({ className, children }) => {
     },
   } as MotionProps;
 
-  const arrowClasses = [
-    'absolute',
-    'transform',
-    'top-1/2',
-    '-translate-y-full',
-    'scroll-shadow',
-  ];
+  const arrowClasses = ['absolute', 'transform', 'top-1/2', '-translate-y-1/2'];
 
   return (
     <AnimatePresence>
-      <AnimateItem className={filterPosition(className)}>
+      <AnimateItem className={filterPosition([], className)}>
         <motion.div {...motionProps} ref={scrollContainer}>
           {children}
         </motion.div>
@@ -73,46 +77,65 @@ interface ArrowProps {
   type?: ArrowType;
   className?: string;
   onClick?: () => void;
+  showMore?: string;
 }
 
 const Arrow: React.FC<ArrowProps> = ({
   type = ArrowType.Right,
   className,
   onClick,
+  showMore,
 }) => {
-  const baseClasses = [
+  const containerClasses = ['w-8', 'h-12.5'];
+
+  const arrowBoxClasses = [
     'h-7',
     'w-7',
+    'absolute',
+    'top-0',
+    'left-1/2',
+    'transform',
+    '-translate-x-1/2',
     'rounded-full',
-    'bg-white',
-    'bg-opacity-10',
+    'bg-blue-50',
     'flex',
     'justify-center',
+    'scroll-shadow',
     'items-center',
   ];
+
+  const more = showMore || 'More';
 
   return (
     <AnimateItem
       onClick={onClick}
-      className={[
-        ...baseClasses,
-        className,
-        type == ArrowType.Left ? 'transform rotate-180' : '',
-      ].join(' ')}
+      className={filterPosition(containerClasses, className)}
     >
-      <ArrowSvg />
+      <div
+        className={[
+          ...arrowBoxClasses,
+          type == ArrowType.Left ? 'transform rotate-180' : '',
+        ].join(' ')}
+      >
+        <ArrowSvg />
+      </div>
+      <YText
+        fontWeight={FontWeight.SemiBold}
+        className={[
+          'absolute',
+          'bottom-0',
+          'left-1/2',
+          'transform',
+          '-translate-x-1/2',
+          type == ArrowType.Left ? 'hidden' : '',
+        ].join(' ')}
+        fontSize={FontSize.XXS}
+        as="p"
+      >
+        {more}
+      </YText>
     </AnimateItem>
   );
-};
-
-const filterPosition = (classes: string | undefined) => {
-  const positionClasses = ['relative', 'absolute', 'fixed'];
-
-  const position = positionClasses.reduce((prev, curr) =>
-    prev == '' ? prev : classes.includes(curr) ? '' : 'relative'
-  );
-
-  return [classes, position].join(' ').trim();
 };
 
 export default Scroll;

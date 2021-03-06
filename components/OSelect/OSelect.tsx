@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { Language } from '@/enums/language';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -6,6 +6,8 @@ import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import YText from '@/components/YText';
 import ExpandableRegion from '@/components/AnimateComponents/ExpandableRegion';
 import AnimateItem from '@/components/AnimateComponents/AnimateItem';
+
+import useClickOutside from '@/hooks/useClickOutside';
 
 import ArrowDown from '@/assets/icons/chevron-down.svg';
 
@@ -23,16 +25,19 @@ const OSelect: React.FC<Props> = ({
   current = Language.UK,
 }) => {
   const [open, setOpen] = useState(false);
-
-  const keysToShow = Object.keys(flags).filter((lang) => lang != current);
+  const ref = useRef();
+  useClickOutside(ref, () => setOpen(false));
 
   const onLangClick = (lang: Language) => {
     setOpen(!open);
     onChange(lang);
   };
 
+  const keysToShow = Object.keys(flags).filter((lang) => lang != current);
+
   return (
     <div
+      ref={ref}
       className={[...containerClasses, className].join(' ')}
       onClick={() => {
         setOpen(!open);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 import {
   MotionConfig,
@@ -20,10 +20,13 @@ import YText from '@/components/YText';
 import YButton from '@/components/YButton';
 import OSelect from '@/components/OSelect';
 
+import useClickOutside from '@/hooks/useClickOutside';
+
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
 import { FontLineHeight, FontWeight, FontSize } from '@/enums/font';
 import { Language } from '@/enums/language';
+import { separateOperations } from 'graphql';
 
 interface Logo {
   Icon: JSX.Element;
@@ -41,6 +44,7 @@ interface Props {
   button: Button;
   showIcons?: boolean; // temp
   onLangChange?: (lang: Language) => any;
+  showMoreLabel?: string;
 }
 
 enum Region {
@@ -54,14 +58,22 @@ const Header: React.FC<Props> = ({
   button,
   showIcons,
   onLangChange,
+  showMoreLabel,
 }) => {
-  const [showItems, setShowItems] = useState(false);
-  const [subItems, setSubItems] = useState<SubItemInterface[] | null>(null);
-
   const screenSize =
     useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
+  // control opening and closing of header
+  const [showItems, setShowItems] = useState(false);
+  const [subItems, setSubItems] = useState<SubItemInterface[] | null>(null);
+
   const open = Boolean(subItems) || (screenSize == ScreenSize.SM && showItems);
+
+  const headerRef = useRef(null);
+  useClickOutside(headerRef, () => {
+    setSubItems(null);
+    setShowItems(false);
+  });
 
   // top bar region
   const additionalComponents =
@@ -116,7 +128,10 @@ const Header: React.FC<Props> = ({
       ))
     ) : (
       <>
-        <Scroll className="relative whitespace-nowrap overflow-hidden">
+        <Scroll
+          className="relative whitespace-nowrap overflow-hidden"
+          showMoreLabel={showMoreLabel}
+        >
           {subItems?.map((subItem, index) => (
             <SubItem
               {...subItem}
@@ -136,6 +151,7 @@ const Header: React.FC<Props> = ({
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
       <AnimateBackground
+        ref={headerRef}
         screenSize={screenSize}
         className="fixed w-full left-0 top-0"
         open={open}
