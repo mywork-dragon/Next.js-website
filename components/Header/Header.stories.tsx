@@ -4,7 +4,7 @@ import Header from './Header';
 import { Toggle } from './MenuButtons';
 import { ToggleType } from '@/enums/components';
 
-import { props } from './StoriesData';
+import { props } from './storiesData';
 
 export default {
   title: 'Header',

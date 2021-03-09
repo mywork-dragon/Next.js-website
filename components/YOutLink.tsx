@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { AriaLinkOptions, useLink } from '@react-aria/link';
 
 interface Props extends AriaLinkOptions {
-  className: string;
+  className?: string;
   href: string;
 }
 

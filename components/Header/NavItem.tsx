@@ -40,17 +40,6 @@ const NavItem: React.FC<Props> = ({
 }) => {
   const [openItems, setOpenItems] = useState(false);
 
-  const itemText = (
-    <YText
-      onClick={() => (subItems ? setOpenItems(!openItems) : null)}
-      {...textProps}
-      className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:transform-none md:top-0"
-      as="p"
-    >
-      {text}
-    </YText>
-  );
-
   return (
     <>
       <AnimateItem
@@ -58,24 +47,26 @@ const NavItem: React.FC<Props> = ({
         onClick={onClick}
         disableMount={disableMount}
       >
-        {!subItems ? (
-          <YLink href={link}>{itemText}</YLink>
+        <YLink href={link}>
+          <YText
+            {...textProps}
+            className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:transform-none md:top-0"
+            as="p"
+          >
+            {text}
+          </YText>
+        </YLink>
+        {!subItems ? null : screenSize == ScreenSize.SM ? (
+          <Toggle
+            type={ToggleType.Plus}
+            open={openItems}
+            className="absolute right-1 top-1/2 transform -translate-y-1/2"
+            onClick={() => setOpenItems(!openItems)}
+          />
         ) : (
-          <>
-            {itemText}
-            {screenSize == ScreenSize.SM ? (
-              <Toggle
-                type={ToggleType.Plus}
-                open={openItems}
-                className="absolute right-1 top-1/2 transform -translate-y-1/2"
-                onClick={() => setOpenItems(!openItems)}
-              />
-            ) : (
-              <div className="fill-current text-gray-200 h-3 w-3 ml-1 flex items-center">
-                <DownArrow />
-              </div>
-            )}
-          </>
+          <div className="fill-current text-gray-200 h-3 w-3 ml-1 flex items-center">
+            <DownArrow />
+          </div>
         )}
       </AnimateItem>
       {children && (
@@ -91,7 +82,6 @@ const itemClasses = [
   'relative',
   'h-14.1',
   'border-blue-300',
-  'cursor-pointer',
   'md:mr-11',
   'md:flex',
   'md:items-center',

@@ -76,7 +76,6 @@ const containerClasses = [
   'items-center',
   'justify-flex-start',
   'h-7',
-  'cursor-pointer',
 ];
 
 const textProps = {
