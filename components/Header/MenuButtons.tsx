@@ -73,7 +73,7 @@ export const Toggle: React.FC<Props> = ({
 const lineClassesForType = {
   [ToggleType.Hamburger]: ['left-1', 'right-1'],
   [ToggleType.Plus]: [
-    'bg-opacity-30',
+    'bg-gray-600',
     'w-3.5',
     'transform',
     '-translate-y-1/2',
