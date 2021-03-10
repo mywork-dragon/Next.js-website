@@ -18,7 +18,7 @@ enum Line {
   Bottom = 'bottom',
 }
 
-export const Toggle: React.FC<Props> = ({
+const YMenuToggle: React.FC<Props> = ({
   className,
   onClick,
   open = true,
@@ -70,6 +70,7 @@ export const Toggle: React.FC<Props> = ({
     </div>
   );
 };
+
 const lineClassesForType = {
   [ToggleType.Hamburger]: ['left-1', 'right-1'],
   [ToggleType.Plus]: [
@@ -131,3 +132,5 @@ const lineProps = {
     initial: { y: 16 },
   },
 };
+
+export default YMenuToggle;

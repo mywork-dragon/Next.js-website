@@ -5,8 +5,6 @@ import { FontSize, FontWeight, FontLineHeight } from '@/enums/font';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { ButtonSize } from '@/enums/components';
 
-import style from './HomeTop.module.css';
-
 import BackgroundGrid, { Card } from './BackgroundGrid';
 
 import YHeading from '@/components/YHeading';

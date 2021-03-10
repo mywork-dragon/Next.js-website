@@ -8,17 +8,20 @@ import {
   AnimateLayoutFeature,
 } from 'framer-motion';
 
-import { Toggle } from './MenuButtons';
-import NavItem, { NavItemInterface } from './NavItem';
-import SubItem, { SubItemInterface } from './SubItem';
-
-import ExpandableRegion from '@/components/AnimateComponents/ExpandableRegion';
-import AnimateBackground from '@/components/AnimateComponents/AnimateBackground';
-import Scroll from '@/components/AnimateComponents/Scroll';
+import YHeaderItem, {
+  NavItemInterface,
+} from '@/components/YHeaderItem/YHeaderItem';
+import YHeaderSubItem, {
+  SubItemInterface,
+} from '@/components/YHeaderSubItem/YHeaderSubItem';
+import YMenuToggle from '@/components/YMenuToggle';
+import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
+import YAnimateBackground from '@/components/AnimateComponents/YAnimateBackground';
+import YSlider from '@/components/YSlider';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 import YButton from '@/components/YButton';
-import OSelect from '@/components/OSelect';
+import YSelect from '@/components/YSelect';
 
 import useClickOutside from '@/hooks/useClickOutside';
 
@@ -77,7 +80,7 @@ const Header: React.FC<Props> = ({
   // top bar region
   const additionalComponents =
     screenSize == ScreenSize.SM ? (
-      <Toggle
+      <YMenuToggle
         className={[...menuItemClasses, 'left-4'].join(' ')}
         onClick={() => {
           setShowItems(!showItems);
@@ -89,7 +92,7 @@ const Header: React.FC<Props> = ({
       <>
         <div className="w-full flex items-center justify-center">
           {navItems.map((item) => (
-            <NavItem
+            <YHeaderItem
               key={item.text}
               textProps={getTextProps(screenSize, Region.Item)}
               {...item}
@@ -99,7 +102,7 @@ const Header: React.FC<Props> = ({
             />
           ))}
         </div>
-        <OSelect className="mr-6" onChange={onLangChange} />
+        <YSelect className="mr-6" onChange={onLangChange} />
       </>
     );
 
@@ -107,7 +110,7 @@ const Header: React.FC<Props> = ({
   const hiddenRegion =
     screenSize == ScreenSize.SM ? (
       navItems.map((item, index) => (
-        <NavItem
+        <YHeaderItem
           key={item.text}
           textProps={getTextProps(screenSize)}
           {...item}
@@ -115,7 +118,7 @@ const Header: React.FC<Props> = ({
           screenSize={screenSize}
         >
           {item.subItems?.map((subItem, index) => (
-            <SubItem
+            <YHeaderSubItem
               {...subItem}
               key={subItem.text}
               className={index == 0 ? 'pt-1' : ''}
@@ -123,16 +126,16 @@ const Header: React.FC<Props> = ({
               screenSize={screenSize}
             />
           ))}
-        </NavItem>
+        </YHeaderItem>
       ))
     ) : (
       <>
-        <Scroll
+        <YSlider
           className="relative whitespace-nowrap overflow-hidden"
           showMoreLabel={showMoreLabel}
         >
           {subItems?.map((subItem, index) => (
-            <SubItem
+            <YHeaderSubItem
               {...subItem}
               key={subItem.text}
               className={index < subItems.length - 1 ? 'mr-5' : ''}
@@ -140,7 +143,7 @@ const Header: React.FC<Props> = ({
               showIcon={showIcons}
             />
           ))}
-        </Scroll>
+        </YSlider>
         <div className="absolute top-full width-full h-0 border-soft border-b"></div>
       </>
     );
@@ -149,7 +152,7 @@ const Header: React.FC<Props> = ({
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
-      <AnimateBackground
+      <YAnimateBackground
         ref={headerRef}
         screenSize={screenSize}
         className="fixed w-full left-0 top-0 md:absolute"
@@ -192,14 +195,14 @@ const Header: React.FC<Props> = ({
           </div>
         </div>
         <AnimateSharedLayout>
-          <ExpandableRegion
+          <YExpandableRegion
             className="flex flex-col items-stretch container"
             open={open}
           >
             {hiddenRegion}
-          </ExpandableRegion>
+          </YExpandableRegion>
         </AnimateSharedLayout>
-      </AnimateBackground>
+      </YAnimateBackground>
     </MotionConfig>
   );
 };

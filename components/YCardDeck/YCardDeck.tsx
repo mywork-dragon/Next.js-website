@@ -14,7 +14,7 @@ import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 
 import rotate from '@/libs/utils/rotate';
 
-import ServiceCard, { Service } from './ServiceCard';
+import YServiceCard, { Service } from '@/components/YServiceCard/YServiceCard';
 
 interface Props {
   services: Service[];
@@ -106,7 +106,7 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
       <div className={className}>
         <AnimatePresence>
           {cardsToShow.map((card, index) => (
-            <ServiceCard
+            <YServiceCard
               {...getMotionProps(index, screenSize)}
               className={[...baseClasses, cardClasses[index]].join(' ')}
               key={`${card.title}-${screenSize}`}

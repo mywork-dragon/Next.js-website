@@ -4,10 +4,10 @@ import { useWindowWidth } from '@react-hook/window-size';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import CardDeck from './CardDeck';
-import { Service } from './ServiceCard';
-import ServiceButton from './ServiceButton';
+import { Service } from '@/components/YServiceCard/YServiceCard';
 
+import YCardDeck from '@/components/YCardDeck';
+import YServiceButton from '@/components/YServiceButton';
 import YText from '@/components/YText';
 import YHeading from '@/components/YHeading';
 import YOutLink from '@/components/YOutLink';
@@ -29,8 +29,7 @@ const OurServices: React.FC<Props> = ({
   partners,
   partnersLabel = 'Proud to be official partners with',
 }) => {
-  const [hovered, setHovered] = useState(0);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState(services[0].title);
 
   const screenSize =
     useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
@@ -38,13 +37,11 @@ const OurServices: React.FC<Props> = ({
   // section title, description + services
   const servicesButtons = (
     <div className="w-full mt-8 grid grid-cols-2 grid-rows-4 gap-8">
-      {services.map((service, index) => (
-        <ServiceButton
-          hovered={hovered == index}
+      {services.map((service) => (
+        <YServiceButton
           {...service}
+          active={active == service.title}
           onClick={() => setActive(service.title)}
-          onHover={() => setHovered(index)}
-          className="rounded-lg h-15 flex items-center cursor-pointer"
         />
       ))}
     </div>
@@ -75,7 +72,7 @@ const OurServices: React.FC<Props> = ({
   // card deck and partners
   const rightSection = (
     <div className="relative w-full px-4 md:w-101.5 md:h-full md:px-0">
-      <CardDeck
+      <YCardDeck
         className="relative h-103.1 md:h-100"
         services={rotate([...services].reverse())}
         active={active}
