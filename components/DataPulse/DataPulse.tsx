@@ -1,14 +1,21 @@
 import React, { useMemo, useState } from 'react';
+import { useWindowWidth } from '@react-hook/window-size';
+
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+import { ScreenSize, BreakPoint } from '@/enums/screenSize';
 
 import PulseBackground from './PulseBackground';
 import YCardStack from '@/components/YCardStack';
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
+import YLink from '@/components/YLink';
+import YButton from '@/components/YButton';
 
 import PhonePerspective from '@/assets/other/phone-perspective.svg';
+import PhonePerspectiveSM from '@/assets/other/phone-perspective-sm.svg';
 
 import style from './DataPulse.module.css';
-import { FontLineHeight } from '@/enums/font';
+import { ButtonShape, ButtonSize } from '@/enums/components';
 
 interface ButtonProps {
   text: string;
@@ -34,49 +41,94 @@ const DataPulse: React.FC<Props> = ({
   buttonProps,
   cards,
 }) => {
+  const screenSize =
+    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+
   return (
-    <div className="relative border border-primary h-210 w-420 rounded-2.5xl overflow-hidden mx-auto">
-      <div className="absolute top-0 right-0">
-        <PhonePerspective />
+    <>
+      <div className="relative w-full overflow-hidden md:h-210">
+        <div className="absolute overflow-hidden -z-10 top-0 bottom-0 w-full md:left-1/2 md:transform md:-translate-x-1/2 md:w-420 md:rounded-2.5xl">
+          <div className="absolute top-0 z-10 right-0">
+            {screenSize == ScreenSize.SM ? (
+              <PhonePerspectiveSM />
+            ) : (
+              <PhonePerspective />
+            )}
+          </div>
+          <Background cards={cards} />
+        </div>
+        <div className="container relative h-full mb-10">
+          <div className="relative z-10 mt-111.1 w-full text-center md:mt-0 md:text-left md:top-45 md:w-97.5">
+            <YHeading className="mb-3" as="p" {...titleProps[screenSize]}>
+              {title}
+            </YHeading>
+            <YText
+              {...textProps[screenSize]}
+              className="text-gray-300 mb-4 md:mb-5"
+              lineHeight={FontLineHeight.Loose}
+              as="p"
+            >
+              {description}
+            </YText>
+            <YLink href={buttonProps.link}>
+              <YButton
+                shape={ButtonShape.Round}
+                shadow
+                buttonSize={buttonSize[screenSize]}
+              >
+                {buttonProps.text}
+              </YButton>
+            </YLink>
+          </div>
+        </div>
       </div>
-      <div className="absolute left-75 top-45 w-97.5 z-10">
-        <YHeading className="mb-3" as="p" lineHeight={FontLineHeight.Relaxed}>
-          {title}
-        </YHeading>
-        <YText
-          className="text-gray-300 mb-5"
-          lineHeight={FontLineHeight.Loose}
-          as="p"
-        >
-          {description}
-        </YText>
-      </div>
-      <Background cards={cards} />
-    </div>
+    </>
   );
 };
+
+const buttonSize = {
+  [ScreenSize.SM]: ButtonSize.SM,
+  [ScreenSize.MD]: ButtonSize.MD,
+};
+
+const titleProps = {
+  [ScreenSize.SM]: {
+    fontSize: FontSize.XL,
+    fontWeight: FontWeight.ExtraBold,
+  },
+  [ScreenSize.MD]: {
+    lineHeight: FontLineHeight.Relaxed,
+  },
+};
+const textProps = {
+  [ScreenSize.SM]: {
+    fontSize: FontSize.SM,
+    lineHeight: FontLineHeight.Relaxed,
+  },
+  [ScreenSize.MD]: {
+    lineHeight: FontLineHeight.Loose,
+  },
+} as Record<ScreenSize, Parameters<typeof YText>[0]>;
 
 export const Background: React.FC<{
   cards: Props['cards'];
   className?: string;
-}> = ({ cards, className }) => {
+}> = ({ cards }) => {
   return (
     <>
       <div
-        style={{
-          transform: `matrix(0.75, -0.46, 0.79, 0.46, 124, -480)`,
-        }}
         className={[
           'absolute',
           '-z-10',
-          'h-500',
-          'pl-40',
+          'h-500 md:h-535',
+          'pl-124.1 md:pl-40',
+          'whitespace-nowrap',
           style.bgGradient,
-          // className,
+          style.skew,
         ].join(' ')}
       >
         <div className="relative h-full w-224.1 inline-block">
-          <div className="absolute bottom-65 h-223.6 w-224.1">
+          <div className="absolute bottom-200 h-223.6 w-224.1 whitespace-normal md:bottom-72">
             {useMemo(
               () =>
                 cards.map((card, index) => (
@@ -89,17 +141,23 @@ export const Background: React.FC<{
         </div>
         <div
           style={{
-            width: 175,
-            transform: 'translateY(12.5%) skewY(-45deg)',
+            width: 210,
+            transform: `skewY(-45deg)`,
             background: `linear-gradient(
               97deg,
               rgba(14, 52, 75, 0.15) 50%,
               rgba(8, 32, 46, 1) 74%,
-    rgba(6, 34, 51, 0.88) 122%
-    )`,
+              rgba(6, 34, 51, 0.88) 122%
+              )`,
           }}
-          className={['relative inline-block h-500'].join(' ')}
+          className={['relative inline-block h-500 md:h-535'].join(' ')}
         />
+        <div
+          className={[
+            'relative inline-block h-full w-185.5 md:w-156',
+            style.bgGradient,
+          ].join(' ')}
+        ></div>
       </div>
     </>
   );

@@ -11,11 +11,11 @@ export default {
 
 export const Default = (): JSX.Element => <DataPulse {...props} />;
 
-export const SectionBackground = (): JSX.Element => (
-  <div className="relative h-screen w-screen">
-    <Background
-      cards={props.cards}
-      className={['absolute top-20 left-10', style.skew].join(' ')}
-    />
-  </div>
-);
+// export const SectionBackground = (): JSX.Element => (
+//   <div className="relative h-screen w-screen">
+//     <Background
+//       cards={props.cards}
+//       className={['absolute top-20 left-10', style.skew].join(' ')}
+//     />
+//   </div>
+// );

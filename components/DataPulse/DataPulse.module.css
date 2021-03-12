@@ -1,5 +1,9 @@
 .skew {
-  transform: matrix(0.64, -0.37, 0.62, 0.39, 0, 0);
+  transform: matrix(0.43, -0.25, 0.42, 0.24, -919, -653);
+
+  @screen md {
+    transform: matrix(0.74, -0.42, 0.72, 0.41, 12, -700);
+  }
 }
 
 .bgGradient {
