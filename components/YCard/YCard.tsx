@@ -147,7 +147,7 @@ const YCard: React.FC<Props> = ({
 };
 
 // local utils
-const filterDefaultCard = (baseClasses: string[], classes: string) =>
+export const filterDefaultCard = (baseClasses: string[], classes: string) =>
   classes?.split(' ').includes('card')
     ? [
         ...baseClasses.filter((className) => className != 'card-white'),

@@ -1,0 +1,51 @@
+.pulse1 path:nth-of-type(n + 2) {
+  fill: none;
+  stroke-dasharray: 40% 60%;
+  stroke-dashoffset: 0;
+  animation: stroke 0.5s infinite linear;
+}
+
+.pulse1 path:nth-of-type(3) {
+  stroke-width: 20px;
+  stroke: aqua;
+  stroke-opacity: 0;
+}
+
+.pulse2 path:nth-of-type(3) {
+  stroke-width: 20px;
+  stroke: aqua;
+  stroke-opacity: 0;
+}
+
+.pulse2 path:nth-of-type(n + 2) {
+  fill: none;
+  stroke-dasharray: 40% 60%;
+  stroke-dashoffset: 100%;
+  animation: stroke-reverse 0.5s infinite linear;
+}
+
+@keyframes stroke {
+  50% {
+    stroke-dasharray: 100% 0;
+    stroke-dashoffset: 50%;
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 0 100%;
+    stroke-dashoffset: 100%;
+    stroke-opacity: 0;
+  }
+}
+
+@keyframes stroke-reverse {
+  50% {
+    stroke-dasharray: 100% 0;
+    stroke-dashoffset: 50%;
+    stroke-opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 0 100%;
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
+  }
+}

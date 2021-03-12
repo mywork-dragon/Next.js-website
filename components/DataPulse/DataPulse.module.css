@@ -1,0 +1,23 @@
+.skew {
+  transform: matrix(0.64, -0.37, 0.62, 0.39, 0, 0);
+}
+
+.bgGradient {
+  background: radial-gradient(
+      22.65% 27.39% at 63.15% 42.49%,
+      #061b28 0%,
+      rgba(6, 34, 51, 0) 100%
+    ),
+    linear-gradient(68.04deg, #0e344b 29.03%, #062131 62.49%);
+}
+
+.sideWall {
+  width: 120px;
+  transform: translateY(12.5%) skewY(-45deg);
+  background: linear-gradient(
+    90deg,
+    #0e344b 17.75%,
+    rgba(8, 32, 46, 0.74) 80.1%,
+    rgba(6, 34, 51, 0.42) 115.34%
+  );
+}
