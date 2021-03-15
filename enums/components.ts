@@ -38,3 +38,15 @@ export enum ArrowType {
   Right = 'right',
 }
 //endregion
+
+//region input
+export enum InputStyle {
+  Light = 'light',
+  Dark = 'dark',
+}
+
+export enum InputType {
+  Input = 'input',
+  TextArea = 'textarea',
+}
+//endregion

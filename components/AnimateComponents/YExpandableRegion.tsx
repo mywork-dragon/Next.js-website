@@ -4,17 +4,18 @@ import { m as motion, AnimatePresence } from 'framer-motion';
 interface Props {
   className?: string;
   open?: boolean;
-  onClick?: () => void;
+  disableMount?: boolean;
 }
 
 const ExpandableRegion: React.FC<Props> = ({
   children,
   className,
   open = true,
+  disableMount = false,
 }) => {
   const motionProps = {
     animate: open ? 'open' : 'closed',
-    initial: { height: 0 },
+    initial: disableMount ? false : { height: 0 },
     variants: {
       open: {
         height: 'auto',
