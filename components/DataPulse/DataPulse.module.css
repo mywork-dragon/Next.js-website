@@ -1,8 +1,12 @@
 .skew {
-  transform: matrix(0.43, -0.25, 0.42, 0.24, -919, -653);
+  transform: matrix(0.43, -0.25, 0.42, 0.24, -1000, -653);
+
+  @screen sm {
+    transform: matrix(0.43, -0.25, 0.42, 0.24, -900, -660);
+  }
 
   @screen md {
-    transform: matrix(0.74, -0.42, 0.72, 0.41, 12, -700);
+    transform: matrix(0.74, -0.42, 0.72, 0.41, 42, -700);
   }
 }
 
@@ -16,12 +20,11 @@
 }
 
 .sideWall {
-  width: 120px;
-  transform: translateY(12.5%) skewY(-45deg);
+  transform: skewY(-45deg);
   background: linear-gradient(
-    90deg,
-    #0e344b 17.75%,
-    rgba(8, 32, 46, 0.74) 80.1%,
-    rgba(6, 34, 51, 0.42) 115.34%
+    97deg,
+    rgba(14, 52, 75, 0.15) 50%,
+    rgba(8, 32, 46, 1) 74%,
+    rgba(6, 34, 51, 0.88) 122%
   );
 }

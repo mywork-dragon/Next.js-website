@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useWindowWidth } from '@react-hook/window-size';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -13,6 +13,8 @@ import YButton from '@/components/YButton';
 
 import PhonePerspective from '@/assets/other/phone-perspective.svg';
 import PhonePerspectiveSM from '@/assets/other/phone-perspective-sm.svg';
+import Pulse7 from '@/assets/pulse/pulse-7.svg';
+import Pulse3 from '@/assets/pulse/pulse-3.svg';
 
 import style from './DataPulse.module.css';
 import { ButtonShape, ButtonSize } from '@/enums/components';
@@ -112,7 +114,6 @@ const textProps = {
 
 export const Background: React.FC<{
   cards: Props['cards'];
-  className?: string;
 }> = ({ cards }) => {
   return (
     <>
@@ -132,7 +133,10 @@ export const Background: React.FC<{
             {useMemo(
               () =>
                 cards.map((card, index) => (
-                  <YCardStack {...getStackProps(card, index)} />
+                  <YCardStack
+                    className="drop-shadow"
+                    {...getStackProps(card, index)}
+                  />
                 )),
               [cards]
             )}
@@ -140,24 +144,25 @@ export const Background: React.FC<{
           </div>
         </div>
         <div
-          style={{
-            width: 210,
-            transform: `skewY(-45deg)`,
-            background: `linear-gradient(
-              97deg,
-              rgba(14, 52, 75, 0.15) 50%,
-              rgba(8, 32, 46, 1) 74%,
-              rgba(6, 34, 51, 0.88) 122%
-              )`,
-          }}
-          className={['relative inline-block h-500 md:h-535'].join(' ')}
-        />
+          className={[
+            'relative inline-block h-500 w-52.5 md:h-535',
+            style.sideWall,
+          ].join(' ')}
+        >
+          <div className="relative top-70 md:top-233">
+            <Pulse7 />
+          </div>
+        </div>
         <div
           className={[
             'relative inline-block h-full w-185.5 md:w-156',
             style.bgGradient,
           ].join(' ')}
-        ></div>
+        >
+          <div className="relative h-5 w-34 top-128.5 md:top-291.5">
+            <Pulse3 />
+          </div>
+        </div>
       </div>
     </>
   );
