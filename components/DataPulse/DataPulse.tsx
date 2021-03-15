@@ -132,7 +132,10 @@ export const Background: React.FC<{
             {useMemo(
               () =>
                 cards.map((card, index) => (
-                  <YCardStack {...getStackProps(card, index)} />
+                  <YCardStack
+                    className="drop-shadow"
+                    {...getStackProps(card, index)}
+                  />
                 )),
               [cards]
             )}
@@ -140,17 +143,10 @@ export const Background: React.FC<{
           </div>
         </div>
         <div
-          style={{
-            width: 210,
-            transform: `skewY(-45deg)`,
-            background: `linear-gradient(
-              97deg,
-              rgba(14, 52, 75, 0.15) 50%,
-              rgba(8, 32, 46, 1) 74%,
-              rgba(6, 34, 51, 0.88) 122%
-              )`,
-          }}
-          className={['relative inline-block h-500 md:h-535'].join(' ')}
+          className={[
+            'relative inline-block h-500 w-52.5 md:h-535',
+            style.sideWall,
+          ].join(' ')}
         />
         <div
           className={[

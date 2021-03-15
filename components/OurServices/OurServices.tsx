@@ -81,7 +81,7 @@ const OurServices: React.FC<Props> = ({
         <YText fontSize={FontSize.XS} className="text-white opacity-40" as="p">
           {partnersLabel}
         </YText>
-        <div className="relative h-7 w-full overflow-x-auto scroll-icons mt-3 md:mt-4">
+        <div className="relative h-7 w-full overflow-x-auto no-scrollbar mt-3 md:mt-4">
           <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex md:transform-none">
             {partners.map((partner) => (
               <YOutLink

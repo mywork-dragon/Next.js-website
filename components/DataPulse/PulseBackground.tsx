@@ -8,7 +8,6 @@ import Pulse3 from '@/assets/pulse/pulse-3.svg';
 import Pulse4 from '@/assets/pulse/pulse-4.svg';
 import Pulse5 from '@/assets/pulse/pulse-5.svg';
 import Pulse6 from '@/assets/pulse/pulse-6.svg';
-import Pulse7 from '@/assets/pulse/pulse-7.svg';
 
 const PulseBackground: React.FC = () => (
   <>
