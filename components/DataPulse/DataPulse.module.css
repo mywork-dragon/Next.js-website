@@ -1,8 +1,12 @@
 .skew {
-  transform: matrix(0.43, -0.25, 0.42, 0.24, -919, -653);
+  transform: matrix(0.43, -0.25, 0.42, 0.24, -1000, -653);
+
+  @screen sm {
+    transform: matrix(0.43, -0.25, 0.42, 0.24, -900, -660);
+  }
 
   @screen md {
-    transform: matrix(0.74, -0.42, 0.72, 0.41, 12, -700);
+    transform: matrix(0.74, -0.42, 0.72, 0.41, 42, -700);
   }
 }
 
