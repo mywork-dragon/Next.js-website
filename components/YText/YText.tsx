@@ -2,7 +2,7 @@ import { AllHTMLAttributes, createElement } from 'react';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 interface Props extends AllHTMLAttributes<HTMLElement> {
-  as?: string;
+  as?: keyof JSX.IntrinsicElements;
   fontSize?:
     | FontSize.XXS
     | FontSize.XS

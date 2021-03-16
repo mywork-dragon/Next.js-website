@@ -1,23 +1,17 @@
 import React, { createElement } from 'react';
-import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
 
 import { FontSize, FontWeight } from '@/enums/font';
 
 import YText from '@/components/YText';
 
-enum Region {
-  Text = 'text',
-  Icon = 'icon',
-  Container = 'container',
-}
-
 interface Props {
   as?: keyof JSX.IntrinsicElements;
   active?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   icon: JSX.Element;
   title: string;
   className?: string;
+  interactive?: boolean;
 }
 
 const ServiceButton: React.FC<Props> = ({
@@ -27,6 +21,7 @@ const ServiceButton: React.FC<Props> = ({
   className,
   active,
   as = 'div',
+  interactive = true,
 }) => {
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -58,25 +53,20 @@ const ServiceButton: React.FC<Props> = ({
     </>
   );
 
-  const baseClasses = [
-    'border',
-    'rounded-lg',
-    'flex',
-    'items-center',
-    'cursor-pointer',
-    'h-15',
-    'transition',
-    'ease',
-    'duration-200',
-    active
-      ? 'border-primary text-primary'
-      : 'border-soft text-white opacity-50 hover:border-primary hover:text-primary',
-  ];
+  const baseClasses = ['border', 'rounded-lg', 'flex', 'items-center', 'h-15'];
+
+  const activeClasses = active
+    ? 'border-primary text-primary'
+    : 'border-soft text-white opacity-50 hover:border-primary hover:text-primary';
+
+  const interactiveClasses = !interactive
+    ? ''
+    : `cursor-pointer transition ease duration-200 ${activeClasses}`;
 
   return createElement(
     as,
     {
-      className: [...baseClasses, className].join(' '),
+      className: [...baseClasses, interactiveClasses, className].join(' '),
       onClick: handleClick,
     },
     children
