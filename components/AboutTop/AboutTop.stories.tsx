@@ -13,6 +13,6 @@ const props = {
 
 export const Default = (): JSX.Element => (
   <div className="border-b border-primary">
-    <AboutTop {...props} />;
+    <AboutTop {...props} />
   </div>
 );

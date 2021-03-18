@@ -61,7 +61,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
         'absolute rounded-full overflow-hidden',
         open
           ? 'top-5 left-5 w-20 h-20'
-          : 'w-55 h-55 top-10 left-13.6 md:top-13.6 md:left-16.1',
+          : 'h-50 w-50 left-6.5 top-13.6 sm:w-55 sm:h-55 sm:left-13.6 md:top-13.6 md:left-16.1',
       ].join(' ')}
     >
       <Image src={image} layout="fill" className="object-cover" />

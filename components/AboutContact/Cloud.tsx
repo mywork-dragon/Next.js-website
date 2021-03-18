@@ -120,6 +120,8 @@ const Cloud: React.FC<{ className?: string }> = ({ className }) => {
 const containerClasses = [
   'absolute',
   'text-white-40',
+  'select-none',
+  'cursor-normal',
   'top-0',
   '-left-7.5',
   'h-130.1',

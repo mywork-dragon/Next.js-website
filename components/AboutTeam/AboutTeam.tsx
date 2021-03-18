@@ -20,11 +20,11 @@ const AboutTeam: React.FC<Props> = ({ title, team }) => {
     <section className="container relative md:mb-26 text-left">
       <YHeading
         {...titleProps[screenSize]}
-        className="text-blue-100 mb-7 w-36 md:absolute md:top-0 md:left-0 md:w-56.1"
+        className="text-blue-100 mb-7 w-36 lg:absolute lg:top-0 lg:left-0 lg:w-56.1"
       >
         {title}
       </YHeading>
-      <div className="grid grid-cols-1 gap-5 md:ml-80 md:grid-cols-2 md:gap-x-15 md:gap-y-13">
+      <div className="grid grid-cols-1 gap-5 lg:ml-80 md:grid-cols-2 md:gap-x-15 md:gap-y-13">
         {team.map((member) => (
           <YTeamCard className="w-full h-82.5 md:h-90" {...member} />
         ))}
