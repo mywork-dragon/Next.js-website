@@ -1,4 +1,5 @@
 export enum ScreenSize {
+  XS = 'xs',
   SM = 'sm',
   MD = 'md',
   LG = 'lg',
@@ -7,7 +8,7 @@ export enum ScreenSize {
 }
 
 export enum BreakPoint {
-  SM = 640,
+  SM = 414,
   MD = 768,
   LG = 1024,
   XL = 1280,

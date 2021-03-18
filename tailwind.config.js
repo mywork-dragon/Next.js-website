@@ -187,6 +187,10 @@ const inset = {
   '1/8': '12.5%',
 };
 
+const screens = {
+  sm: '414px',
+};
+
 module.exports = {
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -210,6 +214,7 @@ module.exports = {
       scale,
       minHeight,
       inset,
+      screens,
     },
     cards,
   },

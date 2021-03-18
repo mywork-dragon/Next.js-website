@@ -7,6 +7,13 @@ import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 import YButton from '@/components/YButton';
 import YLink from '@/components/YLink';
+import { useWindowWidth } from '@react-hook/window-size';
+import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+
+enum TextSection {
+  Heading = 'heading',
+  Text = 'text',
+}
 
 interface Button {
   text: string;
@@ -35,35 +42,38 @@ const ServiceCard: React.FC<Props> = ({
   className,
   ...props
 }) => {
+  const windowWidth = useWindowWidth();
+  const screenSize =
+    windowWidth < BreakPoint.SM
+      ? ScreenSize.XS
+      : windowWidth < BreakPoint.MD
+      ? ScreenSize.SM
+      : ScreenSize.MD;
+
   // title, subtitle, logo
   const topSection = (
-    <div className="flex w-full justify-between items-center pb-5 px-7.5 border-soft-white border-b md:px-8 md:pb-6">
+    <div className="flex w-full justify-between items-center border-soft-white border-b pb-3 px-4 sm:pb-5 sm:px-7.5 md:px-8 md:pb-6">
       <div>
-        <YHeading fontSize={FontSize.MD} as="h2">
+        <YHeading {...getTextProps(TextSection.Heading, screenSize)} as="h2">
           {title}
         </YHeading>
-        <YText fontSize={FontSize.XS} as="p">
+        <YText {...getTextProps(TextSection.Text, screenSize)} as="p">
           {subtitle}
         </YText>
       </div>
-      <div className="w-10 h-10 flex flex-shrink-0 items-center justify-center">
+      <div className="w-8 h-8 sm:w-10 sm:h-10 flex flex-shrink-0 items-center justify-center">
         {icon}
       </div>
     </div>
   );
 
-  // splits description and creates bullet points
-  /**
-   * @TODO review this in case it will be passed differently,
-   * or needs to be shortened for smaller breakpoints */
-  const createPoints = (string: string) =>
-    string.split(',').map((subStr) => `- ${subStr.trim()}`);
+  const points = createPoints(description, screenSize);
 
   const descriptionPoints = (
-    <ul className="px-7.5 pt-5 md:px-8 md:pt-6">
-      {createPoints(description).map((line) => (
+    <ul className="px-4 pt-3 sm:px-7.5 sm:pt-5 md:px-8 md:pt-6">
+      {points.map((line) => (
         <YText
-          fontSize={FontSize.XS}
+          {...getTextProps(TextSection.Text, screenSize)}
           className="py-1 text-white opacity-50"
           as="li"
         >
@@ -99,11 +109,52 @@ const ServiceCard: React.FC<Props> = ({
   );
 };
 
+const getTextProps = (textSection: TextSection, screenSize: ScreenSize) => {
+  // filter small screen since props for SM and MD are the same
+  const size = screenSize == ScreenSize.XS ? ScreenSize.XS : ScreenSize.MD;
+
+  return textProps[textSection][size];
+};
+
+const textProps = {
+  [TextSection.Heading]: {
+    [ScreenSize.MD]: {
+      fontSize: FontSize.MD,
+    },
+    [ScreenSize.XS]: {
+      fontSize: FontSize.XS,
+    },
+  },
+  [TextSection.Text]: {
+    [ScreenSize.MD]: {
+      fontSize: FontSize.XS,
+    },
+    [ScreenSize.XS]: {
+      fontSize: FontSize.XXS,
+    },
+  },
+} as Record<TextSection, Record<ScreenSize, Parameters<typeof YText>[0]>>;
+
+// splits description and creates bullet points
+/**
+ * @TODO review this in case it will be passed differently,
+ * or needs to be shortened for smaller breakpoints */
+const createPoints = (string: string, screenSize: ScreenSize) => {
+  // split points
+  const points = string.split(',').map((subStr) => `- ${subStr.trim()}`);
+
+  // filter according to size
+  const displayItems = screenSize == ScreenSize.XS ? 4 : 6;
+  return points.slice(0, displayItems);
+};
+
 const containerClasses = [
-  'py-6',
   'flex',
   'flex-col',
   'items-stretch',
+  'overflow-hidden',
+  'py-5',
+  'sm:py-6',
   'md:py-8',
 ];
 
