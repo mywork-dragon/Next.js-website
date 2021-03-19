@@ -62,4 +62,9 @@ export enum Service {
   MarketingAutomation = 'marketing_automation',
   EmailMarketing = 'eamil_marketing',
 }
+
+export enum TextPosition {
+  Left = 'left',
+  Right = 'right',
+}
 //endregion
