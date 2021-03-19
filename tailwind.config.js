@@ -1,7 +1,6 @@
 const {
   default: createCards,
 } = require('./libs/tailwind/cardsPlugin/createCards');
-const plugin = require('tailwindcss/plugin');
 
 const rem = (value) => {
   return `${value / 16}rem`;
@@ -11,11 +10,14 @@ const colors = {
   blue: {
     400: '#041925',
     300: '#062233',
+    250: '#0A1536',
     200: '#0E284F',
     150: '#143DB0',
     100: '#305EED',
+    50: '#2f4571',
   },
   gray: {
+    600: '#4f5e66',
     500: '#2A5D7D',
     400: '#4781A8',
     300: '#80B0C8',
@@ -36,6 +38,7 @@ const colors = {
     300: '#F2A143',
     100: '#CB7F27',
   },
+  soft: 'rgba(99, 152, 255, 0.1)', // header "soft white" border
 };
 
 colors.primary = colors.green[300];
@@ -98,6 +101,29 @@ const spacing = {
   81.1: rem(325),
   88.1: rem(353),
   100: rem(400),
+  //
+  12.5: rem(50),
+  16.1: rem(65),
+  6.1: rem(25),
+  21.1: rem(85),
+  37.5: rem(150),
+  68.6: rem(275),
+  0.5: rem(2),
+  3.5: rem(14),
+  4.5: rem(18),
+  7.5: rem(30),
+  14.1: rem(57),
+  15.5: rem(62),
+  7: rem(28),
+  8.5: rem(34),
+  23.5: rem(94),
+  25: rem(100),
+  32.5: rem(130),
+  5.5: rem(22),
+};
+
+const minHeight = {
+  14.1: rem(57),
 };
 
 const boxShadow = {
@@ -178,6 +204,7 @@ module.exports = {
       boxShadow,
       opacity,
       scale,
+      minHeight,
     },
     cards,
   },
@@ -210,6 +237,10 @@ module.exports = {
         '.text-shadow': {
           boxShadow:
             '-12.5rem -8.125rem 2.5rem 1.25rem rgba(6, 34, 51, 0.8), -1.25rem -0.625rem 1.25rem 2.5rem rgba(6, 34, 51, 0.8)',
+        },
+        '.scroll-shadow': {
+          boxShadow:
+            '3.5rem 0 50px 125px rgba(6, 34, 51, 0.3), 3.5rem 0 50px 125px rgba(32, 56, 118, 1)',
         },
       });
     },

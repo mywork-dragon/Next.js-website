@@ -26,3 +26,15 @@ export enum CardColor {
   Orange = 'orange',
 }
 //endregion
+
+//region MenuButtons
+export enum ToggleType {
+  Hamburger = 'hamburger',
+  Plus = 'plus',
+}
+
+export enum ArrowType {
+  Left = 'left',
+  Right = 'right',
+}
+//endregion
