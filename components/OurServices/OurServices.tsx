@@ -40,6 +40,7 @@ const OurServices: React.FC<Props> = ({
       {services.map((service) => (
         <YServiceButton
           {...service}
+          key={service.title}
           active={active == service.title}
           onClick={() => setActive(service.title)}
         />
@@ -85,6 +86,7 @@ const OurServices: React.FC<Props> = ({
           <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex md:transform-none">
             {partners.map((partner) => (
               <YOutLink
+                key={partner.link}
                 className="outline-none mr-7.5 inline-block"
                 href={partner.link}
               >
