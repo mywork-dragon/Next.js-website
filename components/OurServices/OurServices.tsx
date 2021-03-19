@@ -74,7 +74,7 @@ const OurServices: React.FC<Props> = ({
   const rightSection = (
     <div className="relative w-full px-4 md:w-101.5 md:h-full md:px-0">
       <YCardDeck
-        className="relative h-80 sm:h-103.1 md:h-100"
+        className="relative h-96 sm:h-103.1 md:h-100"
         services={rotate([...services].reverse())}
         active={active}
       />

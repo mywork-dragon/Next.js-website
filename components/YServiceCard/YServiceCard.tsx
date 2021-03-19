@@ -67,13 +67,14 @@ const ServiceCard: React.FC<Props> = ({
     </div>
   );
 
-  const points = createPoints(description, screenSize);
+  const points = createPoints(description);
 
   const descriptionPoints = (
     <ul className="px-4 pt-3 sm:px-7.5 sm:pt-5 md:px-8 md:pt-6">
       {points.map((line) => (
         <YText
           {...getTextProps(TextSection.Text, screenSize)}
+          key={line}
           className="py-1 text-white opacity-50"
           as="li"
         >
@@ -139,13 +140,8 @@ const textProps = {
 /**
  * @TODO review this in case it will be passed differently,
  * or needs to be shortened for smaller breakpoints */
-const createPoints = (string: string, screenSize: ScreenSize) => {
-  // split points
-  const points = string.split(',').map((subStr) => `- ${subStr.trim()}`);
-
-  // filter according to size
-  const displayItems = screenSize == ScreenSize.XS ? 4 : 6;
-  return points.slice(0, displayItems);
+const createPoints = (string: string) => {
+  return string.split(',').map((subStr) => `- ${subStr.trim()}`);
 };
 
 const containerClasses = [
