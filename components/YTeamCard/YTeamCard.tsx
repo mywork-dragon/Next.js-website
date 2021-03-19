@@ -118,11 +118,21 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
     </motion.div>
   );
 
+  const handleCardClick = (e: React.SyntheticEvent) => {
+    // e.stopPropagation();
+    if (!open) setOpen(true);
+  };
+
+  const containerClassName = [
+    filterPosition(containerClasses, className),
+    open ? 'cursor-default' : 'cursor-pointer',
+  ].join(' ');
+
   return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
-      <div className={filterPosition(containerClasses, className)}>
+      <div onClick={handleCardClick} className={containerClassName}>
         <AnimateSharedLayout>
           <AnimatePresence>
             {imageElement}
@@ -146,7 +156,6 @@ const containerClasses = [
   'text-gray-400',
   'duration-200',
   'transition',
-  'cursor-pointer',
   'rounded-sm',
   'md:rounded',
   'border',
