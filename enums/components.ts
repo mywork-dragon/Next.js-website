@@ -50,3 +50,16 @@ export enum InputType {
   TextArea = 'textarea',
 }
 //endregion
+
+//region services
+export enum Service {
+  IntegrationImplementation = 'integration_implementation',
+  OnlineAdvertising = 'online_advertising',
+  AffiliateMarketing = 'affiliate_marketing',
+  Personalization = 'personalization',
+  ConversionOptimization = 'conversion_optimization',
+  DataAnalytics = 'data_and_analytics',
+  MarketingAutomation = 'marketing_automation',
+  EmailMarketing = 'eamil_marketing',
+}
+//endregion
