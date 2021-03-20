@@ -209,6 +209,20 @@ const spacing = {
   54.5: rem(218),
   190: rem(760),
   145: rem(580),
+  162: rem(648),
+  119: rem(476),
+  67.5: rem(270),
+  47.5: rem(190),
+  103: rem(412),
+  72.5: rem(290),
+  153: rem(612),
+  112.5: rem(450),
+  47: rem(188),
+  126.5: rem(506),
+  237: rem(948),
+  173.6: rem(695),
+  142.5: rem(570),
+  115: rem(460),
 };
 
 const minHeight = {
@@ -363,6 +377,15 @@ module.exports = {
         },
         '.blur-5': {
           filter: 'blur(5px)',
+        },
+        '.text-shadow-blue': {
+          textShadow: '-4px -4px 0px #305EED',
+        },
+        '.text-shadow-green': {
+          textShadow: '-4px -4px 0px #1F7E44',
+        },
+        '.text-shadow-red': {
+          textShadow: '-4px -4px 0px #7E1F1F',
         },
       });
     },

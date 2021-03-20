@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { TextPosition } from '@/enums/components';
-import { ScreenSize } from '@/enums/screenSize';
+import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import YHeading from '../YHeading';
 import YText from '../YText';
+import { useWindowWidth } from '@react-hook/window-size';
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 interface Props {
   title: string;
@@ -18,32 +20,47 @@ const ServiceSimpleImage: React.FC<Props> = ({
   subtitle,
   text,
   image,
-  textPosition = TextPosition.Left,
+  textPosition = TextPosition.Right,
 }) => {
+  const screenSize =
+    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+
   return (
-    <section className="w-full pt-12.5 pb-10 md:py-30">
-      <div
-        className={[
-          'container relative',
-          ...containerClasses[textPosition],
-        ].join(' ')}
-      >
-        <div className="w-full h-224 mb-10 md:h-full md:mb-0 md:w- md:px-auto">
-          {image}
-        </div>
+    <section className="w-full pt-12.5 pb-10 md:py-30 border-b border-soft">
+      <div className="container md:px-0">
         <div
           className={[
-            'md:absolute',
-            'md:w-100',
-            'md:top-1/2',
+            'relative',
+            'md:h-119',
+            'md:w-162',
             'md:transform',
-            'md"-translate-y-1/2',
-            ...textBoxClasses[textPosition],
+            ...containerClasses[textPosition],
           ].join(' ')}
         >
-          <YHeading className="hidden md:block">{title}</YHeading>
-          <YHeading>{subtitle}</YHeading>
-          <YText>{text}</YText>
+          <div className="w-full h-224 mb-10 md:mb-0 md:px-auto">{image}</div>
+          <div
+            className={[
+              'md:absolute',
+              'md:w-100',
+              'md:top-1/2',
+              'md:transform',
+              'md:-translate-y-1/2',
+              ...textBoxClasses[textPosition],
+            ].join(' ')}
+          >
+            <YHeading
+              {...titleProps}
+              className="text-gray-400 hidden md:block mb-3"
+            >
+              {title}
+            </YHeading>
+            <YHeading className="mb-2 md:mb-4" {...subtitleProps[screenSize]}>
+              {subtitle}
+            </YHeading>
+            <YText className="text-gray-400" {...textProps[screenSize]}>
+              {text}
+            </YText>
+          </div>
         </div>
       </div>
     </section>
@@ -56,8 +73,38 @@ const textBoxClasses = {
 };
 
 const containerClasses = {
-  [TextPosition.Left]: ['md:mr-0', 'md:ml-auto'],
-  [TextPosition.Right]: ['md:ml-0', 'md:mr-auto'],
+  [TextPosition.Left]: ['md:mr-0', 'md:ml-auto', 'md:translate-x-16.6'],
+  [TextPosition.Right]: ['md:ml-0', 'md:mr-auto', 'md:-translate-x-16.6'],
 };
+
+const titleProps = {
+  fontSize: FontSize.LG,
+  fontWeight: FontWeight.SemiBold,
+  lineHeight: FontLineHeight.Relaxed,
+  as: 'h1',
+} as Parameters<typeof YHeading>[0];
+
+const subtitleProps = {
+  [ScreenSize.SM]: {
+    fontSize: FontSize.LG,
+    as: 'h2',
+  },
+  [ScreenSize.MD]: {
+    fontSize: FontSize.XXL,
+    as: 'h2',
+  },
+} as Record<ScreenSize, Parameters<typeof YHeading>[0]>;
+
+const textProps = {
+  [ScreenSize.SM]: {
+    fontSize: FontSize.SM,
+    lineHeight: FontLineHeight.Relaxed,
+    as: 'p',
+  },
+  [ScreenSize.MD]: {
+    lineHeight: FontLineHeight.Relaxed,
+    as: 'p',
+  },
+} as Record<ScreenSize, Parameters<typeof YText>[0]>;
 
 export default ServiceSimpleImage;

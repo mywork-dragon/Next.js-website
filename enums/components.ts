@@ -67,4 +67,14 @@ export enum TextPosition {
   Left = 'left',
   Right = 'right',
 }
+
+export enum ThreePoints {
+  Articles = 'articles',
+  OrderedList = 'ordered_list',
+}
+
+export enum FourPoints {
+  Stats = 'stats',
+  OrderedList = 'ordered_list',
+}
 //endregion
