@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import YCard from '@/components/YCard';
 import style from './BackgroundGrid.module.css';
@@ -33,36 +33,95 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   );
 
   // populates grid with element appearances and appropriate interactive cards from props
-  const populateGrid = (screenSize: ScreenSize, cards: Card[]) => {
-    let currentCard = 0; // the index of current interactive card to be rendered
+  const populateGrid = useMemo(() => {
+    const grid = createGridArr(screenSize);
 
-    return createGridArr(screenSize).map((gridElement, i) => {
-      const currentCardIndex = currentCard;
-      if (gridElement == 'interactiveCard') currentCard++;
+    return grid.map((gridElement, i) => (
+      <div
+        key={`trans-card-${i}`}
+        className={[
+          baseGridClasses,
+          fadeGridline(i, screenSize),
+          grid[i - 1] == 'interactiveCard' ? 'drop-shadow' : '',
+        ].join(' ')}
+      >
+        {gridElement == 'interactiveCard' ? null : gridElement}
+      </div>
+    ));
+  }, [screenSize]);
 
-      return (
-        <div
-          className={[baseGridClasses, fadeGridline(i, screenSize)].join(' ')}
-        >
-          {gridElement == 'interactiveCard' ? (
-            <YCard
-              className={[cardBaseClasses, 'drop-shadow'].join(' ')}
-              hovered={hoveredCard == currentCardIndex}
-              onHover={() => setHoveredCard(currentCardIndex)}
-              {...cards[currentCardIndex]}
-            />
-          ) : (
-            gridElement
-          )}
-        </div>
+  // calculates absolute coordinates for interactive cards
+  const cardCoordinates = useMemo(() => {
+    const baseStyles = {
+      height: 246,
+      width: 206,
+    };
+    // top increment for each row
+    const topIncrement = baseStyles.height;
+    // left increment for each card (column)
+    const leftIncrement = baseStyles.width;
+    if (screenSize == ScreenSize.SM) {
+      // top left of the box, the cards appear in
+      const startingPoint = {
+        top: baseStyles.height * 2,
+        left: baseStyles.width * 3,
+      };
+
+      return cardsForDisplay[screenSize].map((_, index) => ({
+        ...baseStyles,
+        top: startingPoint.top + Math.floor(index / 3) * topIncrement,
+        left: startingPoint.left + Math.floor(index % 3) * leftIncrement,
+      }));
+    } else {
+      // top left of the box, the cards appear in
+      const startingPoint = {
+        top: baseStyles.height * 2,
+        left: baseStyles.width,
+      };
+
+      return cardsForDisplay[screenSize].map((_, index) =>
+        [0, 4].includes(index)
+          ? {
+              ...baseStyles,
+              // first and last card, positioned in middle column
+              top: startingPoint.top + (index == 4 && topIncrement * 2),
+              left: startingPoint.left + leftIncrement,
+            }
+          : {
+              ...baseStyles,
+              // middle row cards, positioned throught the row in order they appear in
+              top: startingPoint.top + topIncrement,
+              left:
+                startingPoint.left +
+                Math.floor((index - 1) % 3) * leftIncrement,
+            }
       );
-    });
-  };
+    }
+  }, [screenSize]);
+
+  // add interactive cards to the grid
+  const interactiveCards = cardsForDisplay[screenSize].map((card, index) => (
+    <div
+      key={`card-${index}`}
+      className="absolute"
+      style={cardCoordinates[index]}
+    >
+      <YCard
+        className={cardBaseClasses}
+        cardClasses="ml-4"
+        {...card}
+        hovered={hoveredCard == index}
+        onHover={() => setHoveredCard(index)}
+        // onHover={() => {}}
+      />
+    </div>
+  ));
 
   // return grid
   return (
     <div className={['absolute top-0 bg-blue-100', style.bgGrid].join(' ')}>
-      {populateGrid(screenSize, cardsForDisplay[screenSize])}
+      {populateGrid}
+      {interactiveCards}
     </div>
   );
 };
@@ -113,6 +172,6 @@ const rearrangeForDesktop = (cards: Card[]) => {
 
 // adds mirrored first three cards to the end of cards for mobile display
 const mirrorForMobile = (cards: Card[]) =>
-  [...cards].concat([...cards].splice(0, 3).reverse());
+  [...cards].concat(cards.slice(0, 3).reverse());
 
 export default BackgroundGrid;

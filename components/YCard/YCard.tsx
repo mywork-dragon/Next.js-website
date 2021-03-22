@@ -24,6 +24,7 @@ interface Props extends CardProps {
   children?: React.ReactNode;
   cardClasses?: string;
   link?: string;
+  style?: React.CSSProperties;
 }
 
 enum AnimateSection {
@@ -45,6 +46,7 @@ const YCard: React.FC<Props> = ({
   hovered,
   onHover,
   link,
+  style,
   ...props
 }) => {
   const assignedCustomTag = as ? as : 'div';
@@ -62,8 +64,8 @@ const YCard: React.FC<Props> = ({
 
   // text section
 
-  const titleTag = Boolean(onHover) ? motion.h6 : 'h6';
-  const subtitleTag = Boolean(onHover) ? motion.p : 'p';
+  const titleTag = motion.h6;
+  const subtitleTag = motion.p;
 
   const titleHoverProps = Boolean(onHover)
     ? getHoverProps(hovered, AnimateSection.Title)
@@ -77,12 +79,20 @@ const YCard: React.FC<Props> = ({
       [
         createElement(
           titleTag,
-          { className: 'text title serif', ...titleHoverProps },
+          {
+            key: 'title',
+            className: 'text title serif',
+            ...titleHoverProps,
+          },
           title
         ),
         createElement(
           subtitleTag,
-          { className: 'text subtitle sans', ...subtitleHoverProps },
+          {
+            key: 'subtitle',
+            className: 'text subtitle sans',
+            ...subtitleHoverProps,
+          },
           description
         ),
       ]
@@ -94,7 +104,7 @@ const YCard: React.FC<Props> = ({
     );
 
   // icon section
-  const iconTag = Boolean(onHover) ? motion.div : 'div';
+  const iconTag = motion.div;
 
   const iconHoverProps = Boolean(onHover)
     ? getHoverProps(hovered, AnimateSection.Icon)
@@ -125,7 +135,6 @@ const YCard: React.FC<Props> = ({
     CustomTag,
     {
       ref,
-      key: 'card',
       className,
       ...hoverProps,
       ...buttonProps,
@@ -138,7 +147,7 @@ const YCard: React.FC<Props> = ({
   const containerClasses = ['w-43.6 h-53.6', classes].join(' ');
   return (
     <YLink href={link || ''}>
-      <div className={containerClasses}>
+      <div style={style} className={containerClasses}>
         <MotionConfig features={[AnimationFeature]}>{Card}</MotionConfig>
         {children}
       </div>
@@ -171,7 +180,7 @@ const baseClasses = [
 const getHoverProps = (isHovered: boolean, section: AnimateSection) => ({
   animate: isHovered ? 'hovered' : 'initial',
   variants: animateVariants[section],
-  transition: { duration: 0.03, delay: 0 },
+  transition: { duration: 0.1, type: 'tween' },
 });
 
 const animateVariants = {

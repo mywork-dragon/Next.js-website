@@ -65,6 +65,7 @@ const HomeTop: React.FC<Props> = ({
     >
       {companies.map((company) => (
         <YOutLink
+          key={company.title}
           href={company.link}
           className="outline-none mr-15 inline-block"
           aria-label={`${company.title} website`}
