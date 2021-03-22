@@ -1,13 +1,13 @@
 import LogoMain from '@/assets/icons/logo-main.svg';
 
-import Personalization from '@/assets/icons/services/personalization.svg';
-import AffiliateMarketing from '@/assets/icons/services/affiliate-marketing.svg';
-import ConversionOptimization from '@/assets/icons/services/conversion-optimization.svg';
-import DataAnalitics from '@/assets/icons/services/data-analytics.svg';
-import EmailMarketing from '@/assets/icons/services/email-marketing.svg';
-import IntegrationImplementation from '@/assets/icons/services/integration-implementation.svg';
-import MarketingAutomation from '@/assets/icons/services/marketing-automation.svg';
-import OnlineAdvertising from '@/assets/icons/services/online-advertising.svg';
+import Personalization from '@/assets/header-icons/personalization.svg';
+import AffiliateMarketing from '@/assets/header-icons/affiliate-marketing.svg';
+import ConversionOptimization from '@/assets/header-icons/conversion-optimization.svg';
+import DataAnalitics from '@/assets/header-icons/data-analytics.svg';
+import EmailMarketing from '@/assets/header-icons/email-marketing.svg';
+import IntegrationImplementation from '@/assets/header-icons/integration-implementation.svg';
+import MarketingAutomation from '@/assets/header-icons/marketing-automation.svg';
+import OnlineAdvertising from '@/assets/header-icons/online-advertising.svg';
 
 const logo = {
   Icon: <LogoMain />,
