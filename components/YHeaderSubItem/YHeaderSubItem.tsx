@@ -9,7 +9,7 @@ import { ToggleType } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
 
 export interface SubItemInterface {
-  icon: JSX.Element;
+  icon: string;
   text: string;
   link: string;
 }
@@ -17,7 +17,6 @@ export interface SubItemInterface {
 interface Props extends SubItemInterface {
   textProps?: Parameters<typeof YText>[0];
   className?: string;
-  showIcon?: boolean; // temp
   screenSize?: ScreenSize;
 }
 
@@ -27,12 +26,11 @@ const SubItem: React.FC<Props> = ({
   link,
   textProps,
   className,
-  showIcon,
   screenSize,
 }) => {
   const iconBox = (
     <div className="h-25 w-full bg-blue-250 bg-opacity-40 rounded-lg flex items-center justify-center">
-      {showIcon && icon}
+      <img src={icon} className="object-cover" />
     </div>
   );
 

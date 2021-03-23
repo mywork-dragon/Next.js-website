@@ -33,7 +33,7 @@ const OSelect: React.FC<Props> = ({
     onChange(lang);
   };
 
-  const keysToShow = Object.keys(flags).filter((lang) => lang != current);
+  const flagsToShow = Object.keys(flags).filter((lang) => lang != current);
 
   return (
     <div
@@ -41,10 +41,11 @@ const OSelect: React.FC<Props> = ({
       className={[...containerClasses, className].join(' ')}
       onClick={() => {
         setOpen(!open);
-        console.log('click');
       }}
     >
-      <div className="w-7 mx-1">{flags[current]}</div>
+      <div className="w-7 mx-1">
+        <img src={flags[current]} />
+      </div>
       <YText {...textProps}>{current}</YText>
       <div className="h-3 w-3 mx-1 flex items-center">
         <ArrowDown />
@@ -53,13 +54,15 @@ const OSelect: React.FC<Props> = ({
         className="absolute top-full z-50 bg-blue-400 border-blue-300"
         open={open}
       >
-        {keysToShow.map((lang) => (
+        {flagsToShow.map((lang) => (
           <YAnimateItem
             key={lang}
             onClick={() => onLangClick(lang as Language)}
             className={[...containerClasses, 'm-1'].join(' ')}
           >
-            <div className="w-7 m-1">{flags[lang]}</div>
+            <div className="w-7 m-1">
+              <img src={flags[lang]} />
+            </div>
             <YText {...textProps} className="m-1">
               {lang}
             </YText>
