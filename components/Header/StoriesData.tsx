@@ -3,7 +3,7 @@ import LogoMain from '@/assets/icons/logo-main.svg';
 import Personalization from '@/assets/icons/services/personalization.svg';
 import AffiliateMarketing from '@/assets/icons/services/affiliate-marketing.svg';
 import ConversionOptimization from '@/assets/icons/services/conversion-optimization.svg';
-import DataAnalitics from '@/assets/icons/services/data-analytics.svg';
+import DataAnalytics from '@/assets/icons/services/data-analytics.svg';
 import EmailMarketing from '@/assets/icons/services/email-marketing.svg';
 import IntegrationImplementation from '@/assets/icons/services/integration-implementation.svg';
 import MarketingAutomation from '@/assets/icons/services/marketing-automation.svg';
@@ -28,7 +28,7 @@ const subItems = [
   {
     text: 'Data & Analitics',
     link: '',
-    icon: <DataAnalitics />,
+    icon: <DataAnalytics />,
   },
   {
     text: 'Email Marketing',

@@ -102,7 +102,7 @@ const fadeGridline = (index: number, screenSize: ScreenSize) =>
     ? 'no-x-gridline'
     : '';
 
-// rearenge cards from props for desktop size display
+// rearrange cards from props for desktop size display
 // 0, 1, 2, 3, 4 => 1, 3, 4, 2, 0
 const rearrangeForDesktop = (cards: Card[]) => {
   const safeCards = [...cards];

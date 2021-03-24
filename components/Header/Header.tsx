@@ -45,7 +45,7 @@ interface Props {
   navItems: NavItemInterface[];
   button: Button;
   showIcons?: boolean; // temp
-  onLangChange?: (lang: Language) => any;
+  onLangChange?: (lang: Language) => void;
   showMoreLabel?: string;
 }
 
