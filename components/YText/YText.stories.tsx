@@ -13,6 +13,12 @@ type BodyFontSize =
   | FontSize.MD
   | FontSize.LG;
 
+type BodyFontWeight =
+  | FontWeight.Regular
+  | FontWeight.SemiBold
+  | FontWeight.Bold
+  | FontWeight.ExtraBold;
+
 export const Default = (): JSX.Element => (
   <YText>Default body text styling</YText>
 );
@@ -46,12 +52,13 @@ export const Sizes = (): JSX.Element => {
 };
 
 export const Weights = (): JSX.Element => {
-  const weights = Object.values(FontWeight);
-  const weightTitles = Object.keys(FontWeight);
+  const filterMedium = (weight) => weight !== FontWeight.Medium;
+  const weights = Object.values(FontWeight).filter(filterMedium);
+  const weightTitles = Object.keys(FontWeight).filter(filterMedium);
 
   return (
     <div>
-      {weights.map((weight: FontWeight, index: number) => (
+      {weights.map((weight: BodyFontWeight, index: number) => (
         <>
           <YText fontWeight={weight}>{weightTitles[index]} body text</YText>
           <br />

@@ -95,6 +95,8 @@ const spacing = {
   1.9: rem(7),
   2.5: rem(10),
   3.5: rem(14),
+  4.5: rem(18),
+  4.6: rem(19),
   5.5: rem(22),
   6.5: rem(26),
   7: rem(28),
@@ -110,8 +112,10 @@ const spacing = {
   15.5: rem(62),
   16.1: rem(65),
   16.6: rem(67),
+  18: rem(74),
   20.1: rem(81),
   21: rem(84),
+  21.1: rem(85),
   21.6: rem(87),
   22: rem(88),
   22.5: rem(90),
@@ -149,6 +153,7 @@ const spacing = {
   61.6: rem(247),
   65: rem(260),
   68.5: rem(274),
+  68.6: rem(275),
   70: rem(280),
   72: rem(288),
   73.6: rem(295),
@@ -234,13 +239,6 @@ const boxShadow = {
   'inset-dark': 'inset 0px 2px 0px #1C1C1C',
 };
 
-const padding = {
-  1.6: rem(7),
-  4.5: rem(18),
-  4.6: rem(19),
-  19: rem(74),
-};
-
 const borderRadius = {
   '2.5xl': rem(20),
   '4xl': rem(28),
@@ -310,7 +308,6 @@ module.exports = {
       fontFamily,
       fontSize,
       lineHeight,
-      padding,
       spacing,
       boxShadow,
       opacity,
