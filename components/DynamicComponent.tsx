@@ -28,7 +28,7 @@ interface Props {
 const DynamicComponent = ({ blok }: Props): JSX.Element => {
   if (typeof Components[blok.component] !== 'undefined') {
     const Component = Components[blok.component];
-    return <Component blok={blok} {...mapStoryblokProps(blok)} />;
+    return <Component {...mapStoryblokProps(blok)} />;
   }
   return <Placeholder componentName={blok.component} />;
 };
