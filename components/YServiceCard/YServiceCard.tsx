@@ -2,13 +2,14 @@ import { m as motion, MotionProps } from 'framer-motion';
 
 import { FontSize } from '@/enums/font';
 import { ButtonShape, ButtonSize } from '@/enums/components';
+import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 import YButton from '@/components/YButton';
 import YLink from '@/components/YLink';
-import { useWindowWidth } from '@react-hook/window-size';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 
 enum TextSection {
   Heading = 'heading',
@@ -42,7 +43,7 @@ const ServiceCard: React.FC<Props> = ({
   className,
   ...props
 }) => {
-  const windowWidth = useWindowWidth();
+  const windowWidth = useClientWidth();
   const screenSize =
     windowWidth < BreakPoint.SM
       ? ScreenSize.XS

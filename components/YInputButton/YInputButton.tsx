@@ -2,8 +2,9 @@ import React, { InputHTMLAttributes, useRef, useState } from 'react';
 import { useTextField } from '@react-aria/textfield';
 import { AriaTextFieldProps } from '@react-types/textfield';
 
-import YButton from '../YButton/YButton';
 import { ButtonSize } from '@/enums/components';
+
+import YButton from '@/components/YButton';
 
 interface Props extends AriaTextFieldProps {
   buttonText?: string;
@@ -11,10 +12,6 @@ interface Props extends AriaTextFieldProps {
   className?: string;
   onSubmit?: (text: string) => unknown;
 }
-
-/**
- * @TODO add aria labels
- */
 
 const YInputButton: React.FC<Props> = ({
   buttonText,

@@ -8,9 +8,6 @@ import {
 
 import filterPosition from '@/libs/utils/filterPosition';
 
-import YMenuToggle from '@/components/YMenuToggle';
-import { ToggleType } from '@/enums/components';
-
 interface Props {
   open?: boolean;
   onClick?: () => void;

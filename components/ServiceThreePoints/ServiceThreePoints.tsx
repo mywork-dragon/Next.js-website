@@ -1,9 +1,10 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { ThreePoints } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -42,7 +43,7 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
   ...props
 }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   if (type == ThreePoints.Articles) {
     /**
@@ -84,7 +85,7 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
      */
     const { description, cover, points } = props as OrderedProps;
 
-    return (
+    return screenSize ? (
       <section className={sectionClasses.join(' ')}>
         <div className={containerClasses.join(' ')}>
           <div className="relative left-1/2 transform -translate-x-1/2 w-103 h-72.5 mb-7.5 md:w-153 md:h-112.5 md:mb-15">
@@ -120,7 +121,7 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
           </ol>
         </div>
       </section>
-    );
+    ) : null;
   }
 };
 

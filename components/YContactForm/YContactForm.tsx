@@ -1,9 +1,11 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { InputStyle, InputType, ToggleType } from '@/enums/components';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize } from '@/enums/font';
+
+import useClientWidth from '@/hooks/useClientWidth';
+import useValidate from '@/hooks/useValidate';
 
 import YFormElement from '@/components/YFormElement';
 import YButton from '@/components/YButton';
@@ -13,8 +15,6 @@ import YMenuToggle from '@/components/YMenuToggle';
 import styles from './YContactForm.module.css';
 
 import filterPosition from '@/libs/utils/filterPosition';
-
-import useValidate from '@/hooks/useValidate';
 
 enum Field {
   Name = 'name',
@@ -51,7 +51,7 @@ const YContactForm: React.FC<Props> = ({
   onClose,
 }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const fieldNames = Object.keys(fields);
 

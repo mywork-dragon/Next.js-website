@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import { Service } from '@/components/YServiceCard/YServiceCard';
+import useClientWidth from '@/hooks/useClientWidth';
 
+import { Service } from '@/components/YServiceCard/YServiceCard';
 import YCardDeck from '@/components/YCardDeck';
 import YServiceButton from '@/components/YServiceButton';
 import YText from '@/components/YText';
@@ -32,7 +32,7 @@ const OurServices: React.FC<Props> = ({
   const [active, setActive] = useState(services[0].title);
 
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   // section title, description + services
   const servicesButtons = (
@@ -97,14 +97,14 @@ const OurServices: React.FC<Props> = ({
     </div>
   );
 
-  return (
+  return screenSize ? (
     <section className="container md:px-0 md:py-35">
       <div className="pb-10 md:px-0 md:h-124.1 md:w-full md:flex md:justify-between md:pb-0">
         {leftSection}
         {rightSection}
       </div>
     </section>
-  );
+  ) : null;
 };
 
 // text props

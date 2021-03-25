@@ -8,9 +8,10 @@ import {
   DragFeature,
   MotionProps,
 } from 'framer-motion';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import rotate from '@/libs/utils/rotate';
 
@@ -28,7 +29,7 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
   // const [firstRender, setFirstRender] = useState(true);
 
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   // controls card being selected outside the component i.e. from buttons
   useEffect(() => {
@@ -69,21 +70,12 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
     },
   };
 
-  // // prevent mount animation on first render
-  // useEffect(() => {
-  //   setFirstRender(false);
-  // }, []);
-
   // gets motion props
   const getMotionProps = (index: number, screenSize: ScreenSize) => ({
-    initial:
-      // firstRender
-      //   ? false
-      //   :
-      {
-        ...motionProps[screenSize].initial,
-        backgroundColor: index == 0 ? colors[0] : colors[index - 1],
-      },
+    initial: {
+      ...motionProps[screenSize].initial,
+      backgroundColor: index == 0 ? colors[0] : colors[index - 1],
+    },
     animate: {
       ...motionProps[screenSize].animate,
       backgroundColor: colors[index],

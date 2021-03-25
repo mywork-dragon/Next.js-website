@@ -1,9 +1,10 @@
 import React, { AriaAttributes, HTMLAttributes } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { FontSize, FontWeight, FontLineHeight } from '@/enums/font';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { ButtonSize } from '@/enums/components';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import BackgroundGrid, { Card } from './BackgroundGrid';
 
@@ -44,7 +45,7 @@ const HomeTop: React.FC<Props> = ({
   ...props
 }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const renderCompanies = showCompanies && companies && (
     <div
@@ -86,6 +87,8 @@ const HomeTop: React.FC<Props> = ({
     ) : (
       <YInputButton className="mb-36" />
     );
+
+  console.log('screen size: ', screenSize);
 
   return (
     <section {...props} className="overflow-hidden">

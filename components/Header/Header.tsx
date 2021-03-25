@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 import {
   MotionConfig,
   AnimationFeature,
@@ -24,6 +23,7 @@ import YButton from '@/components/YButton';
 import YSelect from '@/components/YSelect';
 
 import useClickOutside from '@/hooks/useClickOutside';
+import useClientWidth from '@/hooks/useClientWidth';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
@@ -63,7 +63,7 @@ const Header: React.FC<Props> = ({
   showMoreLabel,
 }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   // control opening and closing of header
   const [showItems, setShowItems] = useState(false);
@@ -148,7 +148,7 @@ const Header: React.FC<Props> = ({
       </>
     );
 
-  return (
+  return screenSize ? (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
@@ -204,7 +204,7 @@ const Header: React.FC<Props> = ({
         </AnimateSharedLayout>
       </YAnimateBackground>
     </MotionConfig>
-  );
+  ) : null;
 };
 
 const menuItemClasses = [

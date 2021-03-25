@@ -5,7 +5,6 @@ import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
-
 import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
 
 import { ToggleType } from '@/enums/components';

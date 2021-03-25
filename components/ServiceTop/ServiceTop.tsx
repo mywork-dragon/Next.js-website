@@ -1,9 +1,10 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { ButtonSize, Service } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
@@ -33,13 +34,13 @@ const ServiceTop: React.FC<Props> = ({
   service,
 }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const hero = heroImages[service];
 
   const illustration = hero[screenSize] || hero;
 
-  return (
+  return screenSize ? (
     <section className="relative overflow-hidden w-full border-b border-soft">
       <div className="container md:px-0">
         <div className="relative w-full mb-10 pt-80 md:pt-0 md:my-37.5 md:w-150 md:h-125 md:ml-auto md:mr-0">
@@ -79,7 +80,7 @@ const ServiceTop: React.FC<Props> = ({
         </div>
       </div>
     </section>
-  );
+  ) : null;
 };
 
 const serviceLabelProps = {

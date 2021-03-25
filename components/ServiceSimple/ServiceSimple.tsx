@@ -1,10 +1,11 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import YHeading from '@/components/YHeading';
-import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 interface Props {
   heading: string;
@@ -13,9 +14,9 @@ interface Props {
 
 const ServiceSimple: React.FC<Props> = ({ heading, description }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
-  return (
+  return screenSize ? (
     <section className="w-full border-soft border-b py-15 md:py-40">
       <div className="container md:flex md:justify-between">
         <YHeading
@@ -32,7 +33,7 @@ const ServiceSimple: React.FC<Props> = ({ heading, description }) => {
         </YHeading>
       </div>
     </section>
-  );
+  ) : null;
 };
 
 const headingProps = {

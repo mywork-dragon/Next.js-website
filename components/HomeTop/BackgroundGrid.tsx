@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-import YCard from '@/components/YCard';
-import style from './BackgroundGrid.module.css';
-import { useWindowWidth } from '@react-hook/window-size';
-
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
+
+import style from './BackgroundGrid.module.css';
+
+import useClientWidth from '@/hooks/useClientWidth';
+
 import { cardAppearances, cardBaseClasses } from './gridElements';
+
+import YCard from '@/components/YCard';
 
 export interface Card {
   icon?: string;
@@ -20,7 +23,7 @@ interface Props {
 const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   // screen size section
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const cardsForDisplay = {
     [ScreenSize.SM]: mirrorForMobile(cards),

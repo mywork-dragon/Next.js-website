@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
+import { ButtonShape, ButtonSize } from '@/enums/components';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import PulseBackground from './PulseBackground';
 import YCardStack from '@/components/YCardStack';
@@ -17,7 +19,6 @@ import Pulse7 from '@/assets/pulse/pulse-7.svg';
 import Pulse3 from '@/assets/pulse/pulse-3.svg';
 
 import style from './DataPulse.module.css';
-import { ButtonShape, ButtonSize } from '@/enums/components';
 
 interface ButtonProps {
   text: string;
@@ -44,9 +45,9 @@ const DataPulse: React.FC<Props> = ({
   cards,
 }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
-  return (
+  return screenSize ? (
     <>
       <div className="relative w-full overflow-hidden md:h-210">
         <div className="absolute overflow-hidden -z-10 top-0 bottom-0 w-full md:left-1/2 md:transform md:-translate-x-1/2 md:w-420 md:rounded-2.5xl">
@@ -85,7 +86,7 @@ const DataPulse: React.FC<Props> = ({
         </div>
       </div>
     </>
-  );
+  ) : null;
 };
 
 const buttonSize = {

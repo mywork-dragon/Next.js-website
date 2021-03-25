@@ -1,8 +1,9 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import YTeamCard, { TeamMember } from '@/components/YTeamCard/YTeamCard';
 import YHeading from '@/components/YHeading';
@@ -14,9 +15,9 @@ interface Props {
 
 const AboutTeam: React.FC<Props> = ({ title, team }) => {
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
-  return (
+  return screenSize ? (
     <section className="container relative md:mb-26 text-left">
       <YHeading
         {...titleProps[screenSize]}
@@ -30,7 +31,7 @@ const AboutTeam: React.FC<Props> = ({ title, team }) => {
         ))}
       </div>
     </section>
-  );
+  ) : null;
 };
 
 const titleProps = {

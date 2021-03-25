@@ -9,9 +9,10 @@ import {
   AnimateSharedLayout,
   AnimateLayoutFeature,
 } from 'framer-motion';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import filterPosition from '@/libs/utils/filterPosition';
+
+import useClientWidth from '@/hooks/useClientWidth';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontSize, FontWeight } from '@/enums/font';
@@ -50,7 +51,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
   }, []);
 
   const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const imageElement = (screenSize == ScreenSize.MD || !open) && (
     <motion.div
