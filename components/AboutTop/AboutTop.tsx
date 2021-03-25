@@ -19,7 +19,7 @@ const AboutTop: React.FC<Props> = ({ title, description }) => {
     <section className="container">
       <YHeading
         {...titleProps[screenSize]}
-        className="text-primary mt-21 md:mt-68.5"
+        className="text-primary pt-21 md:pt-68.5"
       >
         {title}
       </YHeading>

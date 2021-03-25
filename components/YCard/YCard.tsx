@@ -100,6 +100,8 @@ const YCard: React.FC<Props> = ({
     ? getHoverProps(hovered, AnimateSection.Icon)
     : {};
 
+  const NewIcon = require(`@/assets/icons/${Icon}.svg`).default;
+
   const icon = createElement(
     iconTag,
     {
@@ -107,7 +109,7 @@ const YCard: React.FC<Props> = ({
       className: 'icon fill-current flex items-stretch',
       ...iconHoverProps,
     },
-    Icon || <IconPlaceholder />
+    <NewIcon /> || <IconPlaceholder />
   );
 
   // topface section

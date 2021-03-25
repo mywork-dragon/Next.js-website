@@ -144,7 +144,7 @@ const Header: React.FC<Props> = ({
             />
           ))}
         </YSlider>
-        <div className="absolute top-full width-full h-0 border-soft border-b"></div>
+        <div className="absolute top-full width-full h-0 border-soft border-b" />
       </>
     );
 

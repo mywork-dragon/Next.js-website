@@ -45,11 +45,21 @@ const YHeaderItem: React.FC<Props> = ({
       onClick={() => (subItems ? setOpenItems(!openItems) : null)}
       {...textProps}
       className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:transform-none md:top-0"
-      as="p"
+      as="span"
     >
       {text}
     </YText>
   );
+
+  const itemClasses = [
+    'relative',
+    'h-14.1',
+    'border-blue-300',
+    'cursor-pointer',
+    'md:mr-11',
+    'md:flex',
+    'md:items-center',
+  ];
 
   return (
     <>
@@ -86,15 +96,5 @@ const YHeaderItem: React.FC<Props> = ({
     </>
   );
 };
-
-const itemClasses = [
-  'relative',
-  'h-14.1',
-  'border-blue-300',
-  'cursor-pointer',
-  'md:mr-11',
-  'md:flex',
-  'md:items-center',
-];
 
 export default YHeaderItem;

@@ -84,7 +84,7 @@ const createGridArr = (
     (curr, prev) => curr * prev
   );
 
-  let returnArray = Array(numItemsInGrid).fill(null);
+  const returnArray = Array(numItemsInGrid).fill(null);
 
   cardAppearances.forEach((card) => {
     card.appearances[screenSize]?.forEach(

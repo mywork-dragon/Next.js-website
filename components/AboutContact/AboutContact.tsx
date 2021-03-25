@@ -31,26 +31,22 @@ const AboutContact: React.FC<Props> = ({
     useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
   const content = (
-    <div className="w-full text-center mt-111.1 mb-15 md:text-left md:mt-60 md:w-100 md:mb-75">
-      <YHeading className="mb-3 w-full" {...titleProps[screenSize]}>
+    <div className="w-full text-center pt-111.1 pb-15 md:text-left md:pt-60 md:w-100 md:pb-75 text-white">
+      <YHeading className="pb-3 w-full" {...titleProps[screenSize]}>
         {title}
       </YHeading>
       <YText
-        className="mb-5 w-full text-gray-300 md:text-gray-200"
+        className="pb-5 w-full text-gray-300 md:text-gray-200"
         {...descriptionProps[screenSize]}
       >
         {description}
       </YText>
-      <YLink href={link}>
-        <YButton
-          shadow
-          buttonSize={
-            screenSize == ScreenSize.SM ? ButtonSize.MD : ButtonSize.LG
-          }
-        >
-          {buttonText}
-        </YButton>
-      </YLink>
+      <YButton
+        shadow
+        buttonSize={screenSize == ScreenSize.SM ? ButtonSize.MD : ButtonSize.LG}
+      >
+        {buttonText}
+      </YButton>
     </div>
   );
 

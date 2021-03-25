@@ -15,7 +15,7 @@ interface Props {
 }
 
 const ServiceButton: React.FC<Props> = ({
-  onClick,
+  onClick = () => {},
   icon,
   title,
   className,

@@ -78,7 +78,7 @@ const filterSizeClasses = (classType: string[], classes, sizeClasses) => {
 };
 
 const sizeClasses = {
-  [ButtonSize.XS]: ['px-4.6', 'py-1.6', 'text-xxs', 'leading-4'],
+  [ButtonSize.XS]: ['px-4.6', 'py-1.9', 'text-xxs', 'leading-4'],
   [ButtonSize.SM]: ['px-4.5', 'py-2.5', 'text-xs', 'leading-5'],
   [ButtonSize.MD]: ['px-5', 'py-3', 'text-sm', 'leading-6'],
   [ButtonSize.LG]: ['px-5', 'py-3', 'text-md', 'leading-7'],

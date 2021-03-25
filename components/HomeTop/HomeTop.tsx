@@ -19,8 +19,8 @@ type ButtonProps = AriaAttributes & {
   link: string;
 };
 
-interface Company {
-  logo: JSX.Element;
+export interface Company {
+  logo: string;
   link: string;
   title: string;
 }

@@ -71,7 +71,7 @@ function Footer({
   );
 
   return (
-    <footer className="py-20 pb-19" {...props}>
+    <footer className="py-20 pb-18" {...props}>
       <div className="container flex flex-wrap">
         <div className="w-full mb-4 md:hidden">
           <MainLogo />
@@ -100,20 +100,20 @@ function Footer({
             {contactButton}
           </YButton>
         </div>
-        <div className="flex-1 md:flex-none md:ml-43.5">
+        <div className="flex-1 md:flex-none md:ml-43">
           <ul>{firstLinks.map((link: Link) => renderListItem(link))}</ul>
         </div>
-        <div className="flex-1 md:flex md:flex-wrap md:ml-24.5">
+        <div className="flex-1 md:flex md:flex-wrap md:ml-25">
           <ul className="block mb-5.5 md:flex-1">
             {secondLinks.map((link: Link) => renderListItem(link))}
           </ul>
-          <div className="md:flex-1 md:ml-24.5">
+          <div className="md:flex-1 md:ml-25">
             <YText
               as="div"
               fontSize={FontSize.XXS}
               fontWeight={FontWeight.SemiBold}
               lineHeight={FontLineHeight.Relaxed}
-              className="text-gray-300 mb-4 mt-2.5"
+              className="text-gray-300 mb-4 mt-2.5 md:mt-0"
             >
               {contactDetails.street}
               <br />

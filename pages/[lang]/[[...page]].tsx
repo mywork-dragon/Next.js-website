@@ -48,7 +48,7 @@ interface StaticPropsResult {
 }
 
 export const getStaticProps = async ({
-  preview = false,
+  preview = true,
   params,
 }: {
   preview: boolean;
@@ -81,7 +81,7 @@ interface StaticPathResults {
 }
 
 export const getStaticPaths = async ({
-  preview = false,
+  preview = true,
 }: NextApiRequest): Promise<StaticPathResults> => {
   const result: {
     paths: string[];
