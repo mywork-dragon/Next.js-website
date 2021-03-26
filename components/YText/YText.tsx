@@ -19,7 +19,7 @@ export default function YText({
   fontWeight = FontWeight.Regular,
   lineHeight = FontLineHeight.Tight,
   children,
-  className,
+  className = '',
   ...props
 }: Props): JSX.Element {
   const CustomTag = as as keyof JSX.IntrinsicElements;
@@ -29,7 +29,7 @@ export default function YText({
 
   return createElement(
     CustomTag,
-    { className: `${classes.join(' ')} ${className}`, ...props },
+    { className: `${classes.join(' ')} ${className}`.trim(), ...props },
     children
   );
 }

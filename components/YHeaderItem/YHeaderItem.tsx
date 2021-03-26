@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
+import YMenuToggle from '@/components/YMenuToggle';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
-import ExpandableRegion from '@/components/AnimateComponents/ExpandableRegion';
-import AnimateItem from '@/components/AnimateComponents/AnimateItem';
+import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
+import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 
-import { Toggle } from './MenuButtons';
-import { SubItemInterface } from './SubItem';
+import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
 
 import { ToggleType } from '@/enums/components';
+import { ScreenSize } from '@/enums/screenSize';
 
 import DownArrow from '@/assets/icons/chevron-down.svg';
-import { ScreenSize } from '@/enums/screenSize';
 
 export interface NavItemInterface {
   text: string;
@@ -27,7 +27,7 @@ interface Props extends NavItemInterface {
   disableMount?: boolean;
 }
 
-const NavItem: React.FC<Props> = ({
+const YHeaderItem: React.FC<Props> = ({
   className,
   link,
   text,
@@ -53,7 +53,7 @@ const NavItem: React.FC<Props> = ({
 
   return (
     <>
-      <AnimateItem
+      <YAnimateItem
         className={[...itemClasses, className].join(' ')}
         onClick={onClick}
         disableMount={disableMount}
@@ -64,7 +64,7 @@ const NavItem: React.FC<Props> = ({
           <>
             {itemText}
             {screenSize == ScreenSize.SM ? (
-              <Toggle
+              <YMenuToggle
                 type={ToggleType.Plus}
                 open={openItems}
                 className="absolute right-1 top-1/2 transform -translate-y-1/2"
@@ -77,11 +77,11 @@ const NavItem: React.FC<Props> = ({
             )}
           </>
         )}
-      </AnimateItem>
+      </YAnimateItem>
       {children && (
-        <ExpandableRegion open={openItems}>
+        <YExpandableRegion open={openItems}>
           {openItems && children}
-        </ExpandableRegion>
+        </YExpandableRegion>
       )}
     </>
   );
@@ -97,4 +97,4 @@ const itemClasses = [
   'md:items-center',
 ];
 
-export default NavItem;
+export default YHeaderItem;

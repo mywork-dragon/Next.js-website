@@ -14,7 +14,7 @@ export default function YHeading({
   fontWeight = FontWeight.Bold,
   lineHeight = FontLineHeight.Tight,
   children,
-  className,
+  className = '',
   ...props
 }: Props): JSX.Element {
   const CustomTag = as;

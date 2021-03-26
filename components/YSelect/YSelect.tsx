@@ -4,8 +4,8 @@ import { Language } from '@/enums/language';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 import YText from '@/components/YText';
-import ExpandableRegion from '@/components/AnimateComponents/ExpandableRegion';
-import AnimateItem from '@/components/AnimateComponents/AnimateItem';
+import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
+import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 
 import useClickOutside from '@/hooks/useClickOutside';
 
@@ -49,12 +49,12 @@ const OSelect: React.FC<Props> = ({
       <div className="h-3 w-3 mx-1 flex items-center">
         <ArrowDown />
       </div>
-      <ExpandableRegion
+      <YExpandableRegion
         className="absolute top-full z-50 bg-blue-400 border-blue-300"
         open={open}
       >
         {keysToShow.map((lang) => (
-          <AnimateItem
+          <YAnimateItem
             key={lang}
             onClick={() => onLangClick(lang as Language)}
             className={[...containerClasses, 'm-1'].join(' ')}
@@ -63,9 +63,9 @@ const OSelect: React.FC<Props> = ({
             <YText {...textProps} className="m-1">
               {lang}
             </YText>
-          </AnimateItem>
+          </YAnimateItem>
         ))}
-      </ExpandableRegion>
+      </YExpandableRegion>
     </div>
   );
 };

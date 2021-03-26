@@ -3,11 +3,11 @@ import { MotionConfig, AnimationFeature, ExitFeature } from 'framer-motion';
 
 import { Language } from '@/enums/language';
 
-import OSelect from './OSelect';
+import YSelect from './YSelect';
 
 export default {
   title: 'Language Select',
-  component: OSelect,
+  component: YSelect,
 };
 
 export const Default = (): JSX.Element => {
@@ -16,7 +16,7 @@ export const Default = (): JSX.Element => {
   return (
     <div className="h-10 w-auto relative">
       <MotionConfig features={[AnimationFeature, ExitFeature]}>
-        <OSelect
+        <YSelect
           current={current}
           onChange={(lang) => setCurrent(lang)}
           className="top-1/2 transform -translate-y-1/2"

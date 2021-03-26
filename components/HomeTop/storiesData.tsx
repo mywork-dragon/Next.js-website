@@ -1,8 +1,8 @@
-import Google from '@/assets/icons/temp/google.svg';
-import Segment from '@/assets/icons/temp/segment.svg';
-import Boldking from '@/assets/icons/temp/boldking.svg';
-import Nike from '@/assets/icons/temp/nike.svg';
-import Deloitte from '@/assets/icons/temp/deloitte.svg';
+import Google from '@/assets/icons/companies/google.svg';
+import Segment from '@/assets/icons/companies/segment.svg';
+import Boldking from '@/assets/icons/companies/boldking.svg';
+import Nike from '@/assets/icons/companies/nike.svg';
+import Deloitte from '@/assets/icons/companies/deloitte.svg';
 
 import Cart from '@/assets/icons/cart.svg';
 import Carousel from '@/assets/icons/carousel.svg';

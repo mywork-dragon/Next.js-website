@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Toggle } from './MenuButtons';
-
-import AnimateItem from '@/components/AnimateComponents/AnimateItem';
+import YMenuToggle from '@/components/YMenuToggle';
+import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 
@@ -39,12 +38,12 @@ const SubItem: React.FC<Props> = ({
 
   return (
     <YLink href={link}>
-      <AnimateItem
+      <YAnimateItem
         onClick={() => console.log('clicked')}
         className={[...containerClasses, className].join(' ')}
       >
         {screenSize == ScreenSize.SM ? (
-          <Toggle
+          <YMenuToggle
             type={ToggleType.Plus}
             className="inline-block transform translate-y-0.5"
           />
@@ -54,7 +53,7 @@ const SubItem: React.FC<Props> = ({
         <YText className={textClasses.join(' ')} {...textProps} as="p">
           {text}
         </YText>
-      </AnimateItem>
+      </YAnimateItem>
     </YLink>
   );
 };

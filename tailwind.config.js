@@ -39,6 +39,7 @@ const colors = {
     100: '#CB7F27',
   },
   soft: 'rgba(99, 152, 255, 0.1)', // header "soft white" border
+  'soft-white': 'rgba(255, 255, 255, 0.1)', // our services card "soft white" border
 };
 
 colors.primary = colors.green[300];
@@ -87,12 +88,26 @@ const lineHeight = {
 };
 
 const spacing = {
+  0.5: rem(2),
   1.9: rem(7),
   2.5: rem(10),
+  3.5: rem(14),
+  5.5: rem(22),
   6.5: rem(26),
+  7: rem(28),
+  7.5: rem(30),
+  8.5: rem(34),
+  12.5: rem(50),
   13: rem(52),
+  14.1: rem(57),
   15: rem(60),
+  15.5: rem(62),
   20.1: rem(81),
+  23.5: rem(94),
+  25: rem(100),
+  26: rem(104),
+  32.5: rem(130),
+  35: rem(140),
   43.6: rem(175),
   48.5: rem(194),
   50: rem(200),
@@ -101,25 +116,11 @@ const spacing = {
   81.1: rem(325),
   88.1: rem(353),
   100: rem(400),
+  101.5: rem(406),
+  103.1: rem(413),
+  124.1: rem(497),
+  148: rem(592),
   //
-  12.5: rem(50),
-  16.1: rem(65),
-  6.1: rem(25),
-  21.1: rem(85),
-  37.5: rem(150),
-  68.6: rem(275),
-  0.5: rem(2),
-  3.5: rem(14),
-  4.5: rem(18),
-  7.5: rem(30),
-  14.1: rem(57),
-  15.5: rem(62),
-  7: rem(28),
-  8.5: rem(34),
-  23.5: rem(94),
-  25: rem(100),
-  32.5: rem(130),
-  5.5: rem(22),
 };
 
 const minHeight = {
@@ -167,7 +168,6 @@ const cards = {
       shadow: '#CB7F27',
     },
   },
-  transformMatrix: 'matrix(0.73, -0.40, 0.8, 0.43, -5, -25)',
 };
 
 const opacity = {
@@ -181,6 +181,14 @@ const scale = {
   92: '0.92',
   93: '0.93',
   94: '0.94',
+};
+
+const inset = {
+  '1/8': '12.5%',
+};
+
+const screens = {
+  sm: '414px',
 };
 
 module.exports = {
@@ -205,6 +213,8 @@ module.exports = {
       opacity,
       scale,
       minHeight,
+      inset,
+      screens,
     },
     cards,
   },
@@ -241,6 +251,12 @@ module.exports = {
         '.scroll-shadow': {
           boxShadow:
             '3.5rem 0 50px 125px rgba(6, 34, 51, 0.3), 3.5rem 0 50px 125px rgba(32, 56, 118, 1)',
+        },
+        '.scale-left-75': {
+          transform: 'translateX(-12.5%) scale(0.75)',
+        },
+        '.scroll-icons::-webkit-scrollbar': {
+          height: 0,
         },
       });
     },
