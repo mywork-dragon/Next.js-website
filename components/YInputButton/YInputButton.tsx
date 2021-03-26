@@ -47,7 +47,7 @@ const YInputButton: React.FC<Props> = ({
     >
       <input
         ref={ref}
-        {...(inputProps as React.InputHTMLAttributes<HTMLInputElement>)}
+        {...(inputProps as InputHTMLAttributes<HTMLInputElement>)}
         type="text"
         onChange={(e) => setInputText(e.target.value)}
         value={inputText}

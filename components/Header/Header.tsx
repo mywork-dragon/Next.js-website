@@ -155,7 +155,7 @@ const Header: React.FC<Props> = ({
       <YAnimateBackground
         ref={headerRef}
         screenSize={screenSize}
-        className="fixed w-full left-0 top-0 md:absolute"
+        className="fixed w-full left-0 top-0 z-40 md:absolute"
         open={open}
       >
         <div

@@ -1,0 +1,30 @@
+.skew {
+  transform: matrix(0.43, -0.25, 0.42, 0.24, -1000, -653);
+
+  @screen sm {
+    transform: matrix(0.43, -0.25, 0.42, 0.24, -900, -660);
+  }
+
+  @screen md {
+    transform: matrix(0.74, -0.42, 0.72, 0.41, 42, -700);
+  }
+}
+
+.bgGradient {
+  background: radial-gradient(
+      22.65% 27.39% at 63.15% 42.49%,
+      #061b28 0%,
+      rgba(6, 34, 51, 0) 100%
+    ),
+    linear-gradient(68.04deg, #0e344b 29.03%, #062131 62.49%);
+}
+
+.sideWall {
+  transform: skewY(-45deg);
+  background: linear-gradient(
+    97deg,
+    rgba(14, 52, 75, 0.15) 50%,
+    rgba(8, 32, 46, 1) 74%,
+    rgba(6, 34, 51, 0.88) 122%
+  );
+}

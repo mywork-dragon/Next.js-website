@@ -60,7 +60,7 @@ const HomeTop: React.FC<Props> = ({
         'md:flex',
         'md:justify-center',
         'md:overflow-hidden',
-        'scroll-icons',
+        'no-scrollbar',
       ].join(' ')}
     >
       {companies.map((company) => (

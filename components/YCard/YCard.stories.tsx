@@ -15,8 +15,16 @@ export default {
 
 export const Default = (): JSX.Element => (
   <>
-    <YCard {...dummyProps} className="inline-block mx-8" Icon={<CartIcon />} />
-    <YCard {...dummyProps} className="inline-block" cardClasses="card-blue" />
+    <YCardBasic
+      {...dummyProps}
+      className="inline-block mx-8"
+      Icon={<CartIcon />}
+    />
+    <YCardBasic
+      {...dummyProps}
+      className="inline-block"
+      cardClasses="card-blue"
+    />
   </>
 );
 
@@ -46,11 +54,11 @@ export const HoverEffect = (): JSX.Element => {
 
 export const Colors = (): JSX.Element => (
   <div className="grid gap-8 grid-cols-10">
-    <YCard className="col-span-2" />
-    <YCard className="col-span-2" cardClasses="card-gray" />
-    <YCard className="col-span-2" cardClasses="card-blue" />
-    <YCard className="col-span-2" cardClasses="card-green" />
-    <YCard className="col-span-2" cardClasses="card-orange" />
+    <YCardBasic className="col-span-2" />
+    <YCardBasic className="col-span-2" cardClasses="card-gray" />
+    <YCardBasic className="col-span-2" cardClasses="card-blue" />
+    <YCardBasic className="col-span-2" cardClasses="card-green" />
+    <YCardBasic className="col-span-2" cardClasses="card-orange" />
   </div>
 );
 
