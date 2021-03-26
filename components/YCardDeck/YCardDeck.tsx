@@ -25,8 +25,6 @@ interface Props {
 
 const CardDeck: React.FC<Props> = ({ services, className, active }) => {
   const [deck, setDeck] = useState(services);
-  // const [firstRender, setFirstRender] = useState(true);
-
   const screenSize =
     useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
@@ -69,17 +67,8 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
     },
   };
 
-  // // prevent mount animation on first render
-  // useEffect(() => {
-  //   setFirstRender(false);
-  // }, []);
-
-  // gets motion props
   const getMotionProps = (index: number, screenSize: ScreenSize) => ({
     initial:
-      // firstRender
-      //   ? false
-      //   :
       {
         ...motionProps[screenSize].initial,
         backgroundColor: index == 0 ? colors[0] : colors[index - 1],

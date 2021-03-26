@@ -74,6 +74,7 @@ const ServiceCard: React.FC<Props> = ({
       {points.map((line) => (
         <YText
           {...getTextProps(TextSection.Text, screenSize)}
+          key={line}
           className="py-1 text-white opacity-50"
           as="li"
         >
