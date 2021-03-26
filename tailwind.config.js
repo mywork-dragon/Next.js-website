@@ -9,6 +9,7 @@ const rem = (value) => {
 const colors = {
   blue: {
     400: '#041925',
+    350: '#11305A',
     300: '#062233',
     250: '#0A1536',
     200: '#0E284F',
@@ -40,6 +41,7 @@ const colors = {
   },
   soft: 'rgba(99, 152, 255, 0.1)', // header "soft white" border
   'soft-white': 'rgba(255, 255, 255, 0.1)', // our services card "soft white" border
+  'white-40': 'rgba(255, 255, 255, 0.4)', // our services card "soft white" border
 };
 
 colors.primary = colors.green[300];
@@ -102,10 +104,16 @@ const spacing = {
   10.5: rem(42),
   12.5: rem(50),
   13: rem(52),
+  13.6: rem(55),
   14.1: rem(57),
   15: rem(60),
   15.5: rem(62),
+  16.1: rem(65),
+  16.6: rem(67),
   20.1: rem(81),
+  21: rem(84),
+  21.6: rem(87),
+  22: rem(88),
   22.5: rem(90),
   23: rem(92),
   23.5: rem(94),
@@ -113,33 +121,48 @@ const spacing = {
   25: rem(100),
   26: rem(104),
   27: rem(108),
+  28.5: rem(114),
+  30: rem(120),
   30.5: rem(122),
+  31: rem(124),
+  31.1: rem(125),
   31.5: rem(126),
   32.5: rem(130),
   33: rem(132),
   34: rem(136),
   35: rem(140),
+  37.5: rem(150),
   42: rem(168),
+  42.1: rem(169),
+  43: rem(172),
   43.6: rem(175),
   45: rem(180),
   48.5: rem(194),
+  49: rem(196),
   50: rem(200),
   52.5: rem(210),
   53.5: rem(214),
   53.6: rem(215),
   55: rem(220),
+  56.1: rem(225),
+  58.5: rem(234),
   61.6: rem(247),
   65: rem(260),
+  68.5: rem(274),
   70: rem(280),
   72: rem(288),
   73.6: rem(295),
   74.6: rem(299),
-  80: rem(240),
+  75: rem(300),
+  76.6: rem(307),
   81.1: rem(325),
   81.6: rem(327),
+  82.5: rem(330),
   83.1: rem(333),
   88.1: rem(353),
+  90: rem(360),
   91.6: rem(367),
+  93.6: rem(375),
   94.6: rem(379),
   97.5: rem(390),
   99.1: rem(397),
@@ -151,11 +174,13 @@ const spacing = {
   110: rem(440),
   111.1: rem(445),
   114.1: rem(457),
-  119.5: rem(478),
   124.1: rem(497),
   128.5: rem(514),
+  130.1: rem(521),
+  130.5: rem(522),
   148: rem(592),
   156: rem(624),
+  185.1: rem(741),
   185.5: rem(742),
   200: rem(800),
   210: rem(840),
@@ -166,6 +191,38 @@ const spacing = {
   420: rem(1680),
   500: rem(2000),
   535: rem(2140),
+  //
+  113.1: rem(453),
+  150: rem(600),
+  125: rem(500),
+  120: rem(480),
+  11.5: rem(46),
+  31.6: rem(127),
+  19: rem(76),
+  196.6: rem(787),
+  138.6: rem(555),
+  218.6: rem(875),
+  42.5: rem(170),
+  20.5: rem(82),
+  86.6: rem(347),
+  //
+  54.5: rem(218),
+  190: rem(760),
+  145: rem(580),
+  162: rem(648),
+  119: rem(476),
+  67.5: rem(270),
+  47.5: rem(190),
+  103: rem(412),
+  72.5: rem(290),
+  153: rem(612),
+  112.5: rem(450),
+  47: rem(188),
+  126.5: rem(506),
+  237: rem(948),
+  173.6: rem(695),
+  142.5: rem(570),
+  115: rem(460),
 };
 
 const minHeight = {
@@ -220,6 +277,7 @@ const opacity = {
 };
 
 const scale = {
+  65: '0.65',
   79: '0.79',
   85: '0.85',
   86: '0.86',
@@ -266,7 +324,7 @@ module.exports = {
   variants: {
     extend: {
       margin: ['first', 'last'],
-      borderStyle: ['focus'],
+      borderStyle: ['focus', 'hover'],
     },
   },
   plugins: [
@@ -301,12 +359,33 @@ module.exports = {
         '.scale-left-75': {
           transform: 'translateX(-12.5%) scale(0.75)',
         },
+        '.scale-left-65': {
+          transform: 'translate(-17.5%, -17.5%) scale(0.65)',
+        },
         '.no-scrollbar::-webkit-scrollbar': {
           height: 0,
           width: 0,
         },
         '.button-shadow': {
           boxShadow: '0 -30px 10px 15px #0E284F',
+        },
+        '.blur-1': {
+          filter: 'blur(1px)',
+        },
+        '.blur-3': {
+          filter: 'blur(3px)',
+        },
+        '.blur-5': {
+          filter: 'blur(5px)',
+        },
+        '.text-shadow-blue': {
+          textShadow: '-4px -4px 0px #305EED',
+        },
+        '.text-shadow-green': {
+          textShadow: '-4px -4px 0px #1F7E44',
+        },
+        '.text-shadow-red': {
+          textShadow: '-4px -4px 0px #7E1F1F',
         },
       });
     },

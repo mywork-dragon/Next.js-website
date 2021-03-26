@@ -25,8 +25,6 @@ interface Props {
 
 const CardDeck: React.FC<Props> = ({ services, className, active }) => {
   const [deck, setDeck] = useState(services);
-  const [firstRender, setFirstRender] = useState(true);
-
   const screenSize =
     useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
 
@@ -51,9 +49,9 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
   // utilize drag and drop control
   const handleDragEnd: MotionProps['onDragEnd'] = (_, info) => {
     const offsetX = info.offset.x;
-    if (offsetX > 120) {
+    if (offsetX > 200) {
       setDeck(rotate(deck));
-    } else if (offsetX < -120) {
+    } else if (offsetX < -200) {
       setDeck(rotate(deck, true));
     }
   };
@@ -69,19 +67,12 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
     },
   };
 
-  // prevent mount animation on first render
-  useEffect(() => {
-    setFirstRender(false);
-  }, []);
-
-  // gets motion props
   const getMotionProps = (index: number, screenSize: ScreenSize) => ({
-    initial: firstRender
-      ? false
-      : {
-          ...motionProps[screenSize].initial,
-          backgroundColor: index == 0 ? colors[0] : colors[index - 1],
-        },
+    initial:
+      {
+        ...motionProps[screenSize].initial,
+        backgroundColor: index == 0 ? colors[0] : colors[index - 1],
+      },
     animate: {
       ...motionProps[screenSize].animate,
       backgroundColor: colors[index],

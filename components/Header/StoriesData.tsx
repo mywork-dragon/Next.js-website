@@ -1,14 +1,5 @@
 import LogoMain from '@/assets/icons/logo-main.svg';
 
-import Personalization from '@/assets/icons/services/personalization.svg';
-import AffiliateMarketing from '@/assets/icons/services/affiliate-marketing.svg';
-import ConversionOptimization from '@/assets/icons/services/conversion-optimization.svg';
-import DataAnalytics from '@/assets/icons/services/data-analytics.svg';
-import EmailMarketing from '@/assets/icons/services/email-marketing.svg';
-import IntegrationImplementation from '@/assets/icons/services/integration-implementation.svg';
-import MarketingAutomation from '@/assets/icons/services/marketing-automation.svg';
-import OnlineAdvertising from '@/assets/icons/services/online-advertising.svg';
-
 const logo = {
   Icon: <LogoMain />,
   link: '#',
@@ -23,42 +14,47 @@ const subItems = [
   {
     text: 'Personalization',
     link: '#',
-    icon: <Personalization />,
+    icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/personalization.png',
   },
   {
     text: 'Data & Analitics',
     link: '',
-    icon: <DataAnalytics />,
+    icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/data-analytics.png',
   },
   {
     text: 'Email Marketing',
     link: '',
-    icon: <EmailMarketing />,
+    icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/email-marketing.png',
   },
   {
     text: 'Affiliate Marketing',
     link: '',
-    icon: <AffiliateMarketing />,
+    icon:
+      'https://yeaimages.s3.eu-central-1.amazonaws.com/affiliate-marketing.png',
   },
   {
     text: 'Conversion Optimization',
     link: '',
-    icon: <ConversionOptimization />,
+    icon:
+      'https://yeaimages.s3.eu-central-1.amazonaws.com/conversion-optimization.png',
   },
   {
     text: 'Marketing Automatization',
     link: '',
-    icon: <MarketingAutomation />,
+    icon:
+      'https://yeaimages.s3.eu-central-1.amazonaws.com/marketing-automation.png',
   },
   {
     text: 'Online Advertising',
     link: '',
-    icon: <OnlineAdvertising />,
+    icon:
+      'https://yeaimages.s3.eu-central-1.amazonaws.com/online-advertising.png',
   },
   {
     text: 'Integration/Implementation',
     link: '',
-    icon: <IntegrationImplementation />,
+    icon:
+      'https://yeaimages.s3.eu-central-1.amazonaws.com/integration-implementation.png',
   },
 ];
 

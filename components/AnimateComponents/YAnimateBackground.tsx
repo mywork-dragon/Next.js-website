@@ -16,6 +16,7 @@ const AnimateBackground = React.forwardRef<HTMLElement, BackgroundProps>(
       screenSize == ScreenSize.SM
         ? {
             backgroundColor: '#041925',
+            backdropFilter: 'blur(20px)',
           }
         : {
             backgroundColor: 'rgba(32, 56, 118, 0.68)',
@@ -27,11 +28,16 @@ const AnimateBackground = React.forwardRef<HTMLElement, BackgroundProps>(
       animate: open ? 'open' : 'closed',
       initial: {
         backgroundColor: 'rgba(0, 0, 0, 0)',
+        backdropFilter: 'blur(60px)',
       },
       variants: {
         open: openVariant,
         closed: {
-          backgroundColor: 'rgba(0, 0, 0, 0)',
+          backgroundColor:
+            screenSize == ScreenSize.SM
+              ? `rgba(6, 34, 51, 0.8)`
+              : 'rgba(0, 0, 0, 0)',
+          backdropFilter: screenSize == ScreenSize.SM ? 'blur(20px)' : '',
           transition: { duration: 0.4 },
         },
       },

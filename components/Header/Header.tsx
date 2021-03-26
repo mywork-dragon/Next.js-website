@@ -44,8 +44,7 @@ interface Props {
   logo: Logo;
   navItems: NavItemInterface[];
   button: Button;
-  showIcons?: boolean; // temp
-  onLangChange?: (lang: Language) => void;
+  onLangChange?: (lang: Language) => any;
   showMoreLabel?: string;
 }
 
@@ -58,7 +57,6 @@ const Header: React.FC<Props> = ({
   logo,
   navItems,
   button,
-  showIcons,
   onLangChange,
   showMoreLabel,
 }) => {
@@ -140,7 +138,6 @@ const Header: React.FC<Props> = ({
               key={subItem.text}
               className={index < subItems.length - 1 ? 'mr-5' : ''}
               textProps={getTextProps(screenSize, Region.SubItem)}
-              showIcon={showIcons}
             />
           ))}
         </YSlider>
