@@ -226,6 +226,9 @@ const spacing = {
   115: rem(460),
   17.6: rem(71),
   23: rem(92),
+  78.6: rem(315),
+  72.6: rem(291),
+  157.6: rem(631),
 };
 
 const minHeight = {
