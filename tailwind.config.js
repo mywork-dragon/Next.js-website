@@ -104,6 +104,7 @@ const spacing = {
   10.5: rem(42),
   12.5: rem(50),
   13: rem(52),
+  13.1: rem(53),
   13.6: rem(55),
   14.1: rem(57),
   15: rem(60),
@@ -223,6 +224,8 @@ const spacing = {
   173.6: rem(695),
   142.5: rem(570),
   115: rem(460),
+  17.6: rem(71),
+  23: rem(92),
 };
 
 const minHeight = {
@@ -232,6 +235,7 @@ const minHeight = {
 const boxShadow = {
   'inset-light': 'inset 0px 2px 0px #233057',
   'inset-dark': 'inset 0px 2px 0px #1C1C1C',
+  blue: '-4px 4px 0px 0px #1638A2',
 };
 
 const padding = {
