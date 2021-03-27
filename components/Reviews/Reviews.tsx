@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AnimatePresence,
   m as motion,
@@ -52,6 +52,11 @@ const Reviews: React.FC<Props> = ({
   reviews,
 }) => {
   const [currentReview, setCurrentReview] = useState(0);
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    setFirstRender(false);
+  }, []);
 
   const review = reviews[currentReview];
 
@@ -91,7 +96,7 @@ const Reviews: React.FC<Props> = ({
           fontSize={FontSize.XL}
           fontWeight={FontWeight.ExtraBold}
           as="h1"
-          className="order-1 mr-5.5 md:text-3xl md:leading-18 md:font-bold"
+          className="order-1 mx-1 sm:mx-5.5 md:mx-0 md:text-3xl md:leading-18 md:font-bold"
         >
           {title}
         </YHeading>
@@ -120,18 +125,18 @@ const Reviews: React.FC<Props> = ({
    * Body of review with review text and stats
    */
   const reviewBody = (
-    <div className="relative w-78.6 h-72.6 mx-auto md:w-157.6 md:h-80 md:mx-0">
+    <div className="relative left-1/2 transform -translate-x-1/2 w-100 sm:w-78.6 sm:h-72.6 md:left-0 md:transform-none md:w-157.6 md:h-80">
       <DialogBox />
       <div
         onClick={setNextReview}
-        className="absolute cursor-pointer top-1/2 right-0 transform translate-x-1/4 -translate-y-full w-15 h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 md:w-20 md:h-20 md:p-6 md:-translate-y-1/2"
+        className="absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 sm:-translate-y-full sm:translate-x-1/4 sm:w-15 sm:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 md:w-20 md:h-20 md:p-6 md:-translate-y-1/2"
       >
         <Arrow />
       </div>
-      <article className="w-full h-full p-5 pr-10 pb-15 mt-8 md:mt-0 md:pt-10 md:pl-13 md:pr-15 md:pb-21 overflow-hidden">
+      <article className="w-full h-full mt-8 p-20 pt-5 pb-15 pr-20 sm:p-5 sm:pr-10 md:mt-0 md:pt-10 md:pl-13 md:pr-15 md:pb-21 overflow-hidden">
         <AnimatePresence exitBeforeEnter>
           <motion.div
-            {...getMotionProps(ReviewSection.Body)}
+            {...getMotionProps(ReviewSection.Body, firstRender)}
             className="overflow-hidden"
             key={review.name}
           >
@@ -166,7 +171,7 @@ const Reviews: React.FC<Props> = ({
     <AnimatePresence exitBeforeEnter>
       <motion.div
         className="flex justify-center items-center w-full md:justify-start md:mt-2 md:transform"
-        {...getMotionProps(ReviewSection.Credentials)}
+        {...getMotionProps(ReviewSection.Credentials, firstRender)}
         key={review.name}
       >
         <div className="mr-6 md:ml-13.6">{review.logo}</div>
@@ -208,14 +213,18 @@ const Reviews: React.FC<Props> = ({
   );
 };
 
-const getMotionProps = (section: ReviewSection) =>
-  section == ReviewSection.Body
-    ? motionProps
-    : {
-        ...motionProps,
-        initial: { ...motionProps.initial, x: motionProps.exit.x },
-        exit: { ...motionProps.exit, x: motionProps.initial.x },
-      };
+const getMotionProps = (section: ReviewSection, firstRender: boolean) => {
+  const props =
+    section == ReviewSection.Body
+      ? { ...motionProps }
+      : {
+          ...motionProps,
+          initial: { ...motionProps.initial, x: motionProps.exit.x },
+          exit: { ...motionProps.exit, x: motionProps.initial.x },
+        };
+
+  return firstRender ? { ...props, initial: false } : props;
+};
 
 const motionProps = {
   initial: { x: -200, opacity: 0 },
