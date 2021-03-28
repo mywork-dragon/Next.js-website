@@ -18,6 +18,7 @@ const colors = {
     50: '#2f4571',
   },
   gray: {
+    700: '#1F3847',
     600: '#4f5e66',
     500: '#2A5D7D',
     400: '#4781A8',
@@ -101,6 +102,7 @@ const spacing = {
   7.5: rem(30),
   8.5: rem(34),
   11: rem(44),
+  11.5: rem(46),
   10.5: rem(42),
   12.5: rem(50),
   13: rem(52),
@@ -138,6 +140,7 @@ const spacing = {
   43: rem(172),
   43.6: rem(175),
   45: rem(180),
+  45.6: rem(183),
   48.5: rem(194),
   49: rem(196),
   50: rem(200),
@@ -145,6 +148,7 @@ const spacing = {
   53.5: rem(214),
   53.6: rem(215),
   55: rem(220),
+  55.5: rem(222),
   56.1: rem(225),
   58.5: rem(234),
   61.6: rem(247),
@@ -233,6 +237,7 @@ const spacing = {
 
 const minHeight = {
   14.1: rem(57),
+  15: rem(60),
 };
 
 const boxShadow = {
