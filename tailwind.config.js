@@ -8,6 +8,7 @@ const rem = (value) => {
 
 const colors = {
   blue: {
+    500: '#193751',
     400: '#041925',
     350: '#11305A',
     300: '#062233',
@@ -233,6 +234,9 @@ const spacing = {
   78.6: rem(315),
   72.6: rem(291),
   157.6: rem(631),
+  165.5: rem(662),
+  84.5: rem(338),
+  250: rem(1000),
 };
 
 const minHeight = {
@@ -256,6 +260,7 @@ const padding = {
 const borderRadius = {
   '2.5xl': rem(20),
   '4xl': rem(28),
+  10: rem(40),
   20: rem(80),
 };
 

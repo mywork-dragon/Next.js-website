@@ -1,0 +1,17 @@
+.wave {
+  animation: wave linear 7s infinite;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateY(-0%) translateX(-25%) scaleX(2) scaleY(1);
+  }
+  25%,
+  75% {
+    transform: translateY(-25%) translateX(0%) scaleX(1) scaleY(0.5);
+  }
+  50% {
+    transform: translateY(-75%) translateX(25%) scaleX(2) scaleY(1);
+  }
+}
