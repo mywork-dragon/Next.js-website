@@ -2,10 +2,8 @@ import BenefitsOfPersonalization from './BenefitsOfPersonalization';
 
 import { ScreenSize } from '@/enums/screenSize';
 
-import Target from '@/assets/icons/target.svg';
-import Sandbox from '@/assets/icons/sandbox.svg';
-import Directions from '@/assets/icons/directions.svg';
-import Code from '@/assets/icons/code.svg';
+import style from './waveAnimations.module.scss';
+import Wave from '@/assets/other/wave-md.svg';
 
 export default {
   title: 'Benefits Of Personalization',
@@ -42,22 +40,22 @@ const reviews = [
 
 const articles = [
   {
-    icon: <Target />,
+    icon: 'target.svg',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },
   {
-    icon: <Sandbox />,
+    icon: 'sandbox.svg',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },
   {
-    icon: <Directions />,
+    icon: 'directions.svg',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },
   {
-    icon: <Code />,
+    icon: 'code.svg',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },
@@ -74,4 +72,19 @@ const props = {
 
 export const Default = (): JSX.Element => (
   <BenefitsOfPersonalization {...props} />
+);
+
+export const BackgroundWave = (): JSX.Element => (
+  <div
+    style={{
+      height: 768,
+      width: 1680,
+    }}
+    className={[
+      'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2',
+      style.wave,
+    ].join(' ')}
+  >
+    <Wave />
+  </div>
 );
