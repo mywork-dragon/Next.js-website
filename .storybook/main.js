@@ -74,6 +74,16 @@ module.exports = {
       loader: require.resolve('@svgr/webpack'),
     });
 
+    config.module.rules.push({
+      test: /\.s[ac]ss$/,
+      include: path.resolve(process.cwd(), 'components'),
+      use: [
+        'style-loader',
+        { loader: 'css-loader', options: { importLoaders: 1, modules: true } },
+        'sass-loader',
+      ],
+    });
+
     return config;
   },
 };
