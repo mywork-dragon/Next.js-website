@@ -7,15 +7,18 @@ import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import Frame2Transparent from '@/assets/benefits-of-personalization/frame-2-transparent.svg';
 
 import Frame2MD from '@/assets/benefits-of-personalization/frame-2-md.svg';
-import Frame3MD from '@/assets/benefits-of-personalization/frame-3-md.svg';
 
 import Line1 from '@/assets/other/benefits-line-1.svg';
 import Line2 from '@/assets/other/benefits-line-2.svg';
 
 import style from './PersonalizationFrame.module.css';
 
+import images from './images';
+
 import YText from '@/components/YText';
 import YHeading from '@/components/YHeading';
+
+import usePrefetch, { ResponsiveImages } from '@/hooks/usePrefetch';
 
 interface Review {
   image: string;
@@ -47,6 +50,11 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
   const screenSize =
     useWindowWidth() < BreakPoint.LG ? ScreenSize.MD : ScreenSize.LG;
 
+  usePrefetch({
+    [ScreenSize.MD]: Object.values(images[ScreenSize.MD]),
+    [ScreenSize.LG]: Object.values(images[ScreenSize.LG]),
+  } as ResponsiveImages);
+
   const { reviews } = frames[0];
   const { articles } = [1, 2].includes(activeFrame)
     ? (frames[activeFrame] as Frames[1])
@@ -60,7 +68,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       <div className="absolute top-0 right-0 w-70 h-86.6">
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/website-pane-sm.png"
+          src={images[ScreenSize.MD].websitePane}
         />
       </div>
       <div
@@ -71,7 +79,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       >
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/mobile-panel-sm.png"
+          src={images[ScreenSize.MD].mobilePane}
         />
       </div>
       <div className="absolute left-3.5 -bottom-4">
@@ -88,7 +96,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       <div className="absolute top-11.5 right-0 h-63 w-37.5">
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-2-blue.png"
+          src={images[ScreenSize.MD].frame2Blue}
         />
       </div>
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
@@ -97,7 +105,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       <div className="absolute top-0 left-0 w-40 h-65">
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-2-white.png"
+          src={images[ScreenSize.MD].frame2White}
         />
       </div>
     </>
@@ -108,7 +116,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       <div className="absolute top-0 w-61.6 h-77.5 left-1/2 transform -translate-x-1/2">
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-3-white.png"
+          src={images[ScreenSize.MD].frame3White}
         />
       </div>
       <div
@@ -119,7 +127,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       >
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-3-green.png"
+          src={images[ScreenSize.MD].frame3Green}
         />
       </div>
       <div
@@ -130,7 +138,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       >
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-3-blue.png"
+          src={images[ScreenSize.MD].frame3Blue}
         />
       </div>
     </>
@@ -213,13 +221,13 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       <div className="w-full h-full">
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/mobile-panel-md.png"
+          src={images[ScreenSize.LG].mobilePane}
         />
       </div>
       <div className="absolute -top-32.5 -right-5 transform translate-x-full w-195 h-115">
         <img
           className="object-contain"
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/website-pane-md.png"
+          src={images[ScreenSize.LG].websitePane}
         />
       </div>
       {reviews.map((review, index) => (
@@ -263,7 +271,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
     <div className="relative w-143.6 h-164.5">
       <div className="absolute top-0 w-full transform scale-105 z-10">
         <img
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-2-white-md.png"
+          src={images[ScreenSize.LG].frame2White}
           className="object-contain"
         />
       </div>
@@ -275,11 +283,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
 
   const frame3Cover = (
     <div className="w-lg">
-      {/* <Frame3MD /> */}
-      <img
-        src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-3-md.png"
-        className="object-contain"
-      />
+      <img src={images[ScreenSize.LG].frame3} className="object-contain" />
     </div>
   );
 
