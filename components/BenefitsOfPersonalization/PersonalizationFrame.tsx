@@ -264,7 +264,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       <div className="absolute top-0 w-full transform scale-105 z-10">
         <img
           src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-2-white-md.png"
-          className="object-fit"
+          className="object-contain"
         />
       </div>
       <div className="absolute w-full bottom-0">
@@ -275,7 +275,11 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
 
   const frame3Cover = (
     <div className="w-lg">
-      <Frame3MD />
+      {/* <Frame3MD /> */}
+      <img
+        src="https://yeaimages.s3.eu-central-1.amazonaws.com/frame-3-md.png"
+        className="object-contain"
+      />
     </div>
   );
 
