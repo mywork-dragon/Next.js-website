@@ -348,8 +348,8 @@ module.exports = {
       scale,
       minHeight,
       inset,
-      screens,
     },
+    screens,
     cards,
   },
   variants: {

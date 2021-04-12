@@ -39,15 +39,15 @@ const fields = {
 
 const contactInfo = [
   {
-    icon: <Phone />,
+    icon: 'contact/phone',
     info: '+06 40 30 17 05',
   },
   {
-    icon: <Map />,
+    icon: 'contact/map',
     info: 'Donjon 1, 1315 XH Almere',
   },
   {
-    icon: <Envelope />,
+    icon: 'contact/envelope',
     info: 'hello@yea.com',
   },
 ];

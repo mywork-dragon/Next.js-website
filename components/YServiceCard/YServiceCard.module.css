@@ -4,7 +4,7 @@
   display: none;
 }
 
-@media screen and (min-width: 414px) {
+@media screen and (min-width: 640px) {
   .points li:nth-child(n + 5) {
     display: block;
   }

@@ -1,5 +1,9 @@
 .skew {
-  transform: matrix(0.43, -0.25, 0.42, 0.24, 1000, -700);
+  transform: matrix(0.43, -0.25, 0.42, 0.24, 1050, -650);
+
+  @screen xs {
+    transform: matrix(0.43, -0.25, 0.42, 0.24, 1000, -700);
+  }
 
   @screen lg {
     transform: matrix(0.74, -0.42, 0.72, 0.41, -920, -920);

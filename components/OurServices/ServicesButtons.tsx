@@ -21,7 +21,7 @@ const ServicesButtons: React.FC<Props> = ({ services, active, onChange }) => {
     []
   );
 
-  return screenSize == ScreenSize.MD ? (
+  return screenSize == ScreenSize.LG ? (
     <div className="w-full mt-8 grid grid-cols-2 grid-rows-4 gap-8">
       {services.map((service) => (
         <YServiceButton

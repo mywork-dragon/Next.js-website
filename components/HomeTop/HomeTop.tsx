@@ -110,7 +110,7 @@ const HomeTop: React.FC<Props> = ({
 
   return (
     <section {...props} className="overflow-hidden">
-      <div className="container relative pt-88.1 lg:pt-48.5">
+      <div className="container relative pt-88.1 lg:px-0 lg:pt-48.5">
         {screenReady && <BackgroundGrid cards={cards} />}
         <div className="relative z-20 max-w-md lg:w-100">
           <YHeading

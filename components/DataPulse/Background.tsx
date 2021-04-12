@@ -29,7 +29,7 @@ const Background: React.FC<BackgroundProps> = ({ cards }) => {
   const { screenSize, screenReady } = useBreakpoint();
 
   return (
-    <div className="absolute overflow-hidden -z-10 top-0 bottom-0 w-full lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:w-420 lg:rounded-2.5xl">
+    <div className="absolute -mx-5 overflow-hidden -z-10 top-0 bottom-0 w-full lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:w-420 lg:rounded-2.5xl">
       <div className="absolute top-0 z-10 right-0">
         {screenReady &&
           (screenSize == ScreenSize.SM ? (

@@ -11,14 +11,13 @@ import { Default as Reviews } from '@/components/Reviews/Reviews.stories';
 const Test: React.FC = () => {
   return (
     <div className="bg-secondary">
-      <DataPulse />
-      {/* 
       <Header />
       <HomeTop />
+      <DataPulse />
       <OurServices />
       <BenefitsOfPersonalization />
       <MarketingAutomations />
-      <Reviews /> */}
+      <Reviews />
     </div>
   );
 };

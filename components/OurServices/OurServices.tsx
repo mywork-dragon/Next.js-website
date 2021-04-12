@@ -41,10 +41,10 @@ const OurServices: React.FC<Props> = ({
   );
 
   const leftSection = (
-    <div className="text-center md:w-148 md:h-full md:text-left">
-      <div className="md:pr-12.5">
+    <div className="text-center lg:w-148 lg:h-full lg:text-left">
+      <div className="max-w-md mx-auto lg:mx-0 lg:pr-12.5">
         <YHeading
-          className="text-white mt-10 mb-3 md:mt-0 md:text-3xl md:leading-18"
+          className="text-white mt-10 mb-3 lg:mt-0 lg:text-3xl lg:leading-18"
           fontSize={FontSize.XL}
           fontWeight={FontWeight.ExtraBold}
           as="p"
@@ -52,7 +52,7 @@ const OurServices: React.FC<Props> = ({
           {title}
         </YHeading>
         <YText
-          className="mb-5 md:mb-0 text-gray-300 md:text-base md:leading-11"
+          className="mb-5 lg:mb-0 text-gray-300 lg:text-base lg:leading-11"
           fontSize={FontSize.SM}
           lineHeight={FontLineHeight.Relaxed}
           as="p"
@@ -70,25 +70,22 @@ const OurServices: React.FC<Props> = ({
 
   // card deck and partners
   const rightSection = (
-    <div className="relative w-full px-4 md:w-101.5 md:h-full md:px-0">
+    <div className="relative max-w-xs mx-auto px-4 lg:max-w-none lg:w-101.5 lg:h-full lg:px-0">
       <CardDeck
-        className="relative h-80 sm:h-103.1 md:h-100"
+        className="relative h-80 sm:h-103.1 lg:h-100"
         services={rotate([...services].reverse())}
         active={active}
       />
-      <div className="mt-10 w-full text-center md:text-left md:mt-8">
+      <div className="mt-10 w-full text-center lg:text-left lg:mt-8">
         <YText fontSize={FontSize.XS} className="text-white opacity-40" as="p">
           {partnersLabel}
         </YText>
-        <div className="relative h-7 w-full overflow-x-auto no-scrollbar mt-3 md:mt-4">
-          <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex md:transform-none">
+        <div className="relative h-7 w-full overflow-x-auto no-scrollbar mt-3 lg:mt-4">
+          <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex lg:transform-none">
             {partners.map((partner) => {
-              let Logo: () => JSX.Element;
-              try {
-                Logo = require(`@/assets/icons/${partner.logo}.svg`).default;
-              } catch {
-                Logo = () => null;
-              }
+              const Logo = dynamic(
+                () => import(`@/assets/icons/${partner.logo}.svg`)
+              );
 
               return (
                 <YOutLink
@@ -107,8 +104,8 @@ const OurServices: React.FC<Props> = ({
   );
 
   return (
-    <section className="container md:px-0 md:py-35">
-      <div className="pb-10 md:px-0 md:h-124.1 md:w-full md:flex md:justify-between md:pb-0">
+    <section className="w-full overflow-hidden">
+      <div className="pb-10 container lg:px-0 lg:h-195 lg:py-35 lg:w-full lg:flex lg:justify-between">
         {leftSection}
         {rightSection}
       </div>

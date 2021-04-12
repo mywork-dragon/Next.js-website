@@ -33,7 +33,7 @@ const DataPulse: React.FC<Props> = ({
   return (
     <>
       <div className="relative w-full overflow-hidden lg:h-210">
-        <div className="container relative h-full pb-10 pt-111.1 lg:pt-0">
+        <div className="container relative h-full pb-10 pt-111.1 lg:pt-0 lg:px-0">
           <Background cards={cards} />
           <div className="relative z-10 w-full text-center lg:text-left lg:top-45 lg:w-97.5">
             <YHeading

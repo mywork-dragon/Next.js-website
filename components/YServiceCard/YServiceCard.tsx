@@ -44,18 +44,18 @@ const YServiceCard: React.FC<Props> = ({
 
   // title, subtitle, logo
   const topSection = (
-    <div className="flex w-full justify-between items-center border-soft-white border-b pb-3 px-4 sm:pb-5 sm:px-7.5 md:px-8 md:pb-6">
+    <div className="flex w-full justify-between items-center border-soft-white border-b pb-3 px-4 sm:pb-5 sm:px-7.5 lg:px-8 lg:pb-6">
       <div>
         <YHeading
           fontSize={FontSize.XS}
-          className="text-white md:text-base md:leading-7"
+          className="text-white lg:text-base lg:leading-7"
           as="h2"
         >
           {title}
         </YHeading>
         <YText
           fontSize={FontSize.XXS}
-          className="text-white md:text-xs md:leading-5"
+          className="text-white lg:text-xs lg:leading-5"
           as="p"
         >
           {subtitle}
@@ -70,7 +70,7 @@ const YServiceCard: React.FC<Props> = ({
   const descriptionPoints = (
     <ul
       className={[
-        'px-4 pt-3 sm:px-7.5 sm:pt-5 md:px-8 md:pt-6',
+        'px-4 pt-3 sm:px-7.5 sm:pt-5 lg:px-8 lg:pt-6',
         styles.points,
       ].join(' ')}
     >
@@ -78,7 +78,7 @@ const YServiceCard: React.FC<Props> = ({
         <YText
           fontSize={FontSize.XXS}
           key={point}
-          className="py-1 text-white opacity-50 md:text-xs md:leading-5"
+          className="py-1 text-white opacity-50 lg:text-xs lg:leading-5"
           as="li"
         >
           {`- ${point}`}
@@ -90,7 +90,7 @@ const YServiceCard: React.FC<Props> = ({
   const buttonElement = (
     <YLink href={button.link}>
       <YButton
-        className="absolute bottom-6 left-7.5 md:bottom-8 md:left-8"
+        className="absolute bottom-6 left-7.5 lg:bottom-8 lg:left-8"
         buttonSize={ButtonSize.XS}
         shape={ButtonShape.Round}
         shadow
@@ -120,7 +120,7 @@ const containerClasses = [
   'overflow-hidden',
   'py-5',
   'sm:py-6',
-  'md:py-8',
+  'lg:py-8',
 ];
 
 export default YServiceCard;

@@ -20,9 +20,9 @@ const CardDeck: React.FC<Props> = (props) => {
     () =>
       dynamic(
         () =>
-          screenSize == ScreenSize.MD
-            ? import('./YCardDeckMD')
-            : import('./YCardDeckMD'),
+          screenSize == ScreenSize.LG
+            ? import('./YCardDeckLG')
+            : import('./YCardDeckSM'),
         {
           ssr: false,
         }

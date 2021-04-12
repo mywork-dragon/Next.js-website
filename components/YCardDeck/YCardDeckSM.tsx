@@ -100,9 +100,9 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
 const baseClasses = ['absolute', 'rounded'];
 
 const cardClasses = [
-  'left-0 top-10 bottom-0 right-0 z-20 md:top-0 md:right-26',
-  'left-5 top-5 bottom-5 right-5 z-10 md:left-12 md:top-5 md:bottom-5 md:right-16',
-  'left-10 top-0 bottom-10 right-10 md:left-20 md:top-10 md:bottom-10 md:right-8',
+  'left-0 top-10 bottom-0 right-0 z-20',
+  'left-5 top-5 bottom-5 right-5 z-10',
+  'left-10 top-0 bottom-10 right-10',
 ];
 
 // colors for each card -> used for crossfade animation

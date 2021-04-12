@@ -69,14 +69,14 @@ const Reviews: React.FC<Props> = ({
    * Dialog icon
    */
   const icon = (
-    <div className="relative w-25 h-17.6 mx-auto mb-8 md:absolute md:h-53 md:w-15 md:-left-25 md:-top-1">
-      <div className="absolute left-0 top-0 h-full w-20.1 md:w-12">
+    <div className="relative w-25 h-17.6 mx-auto mb-8 lg:absolute lg:h-53 lg:w-15 lg:-left-25 lg:-top-1">
+      <div className="absolute left-0 top-0 h-full w-20.1 lg:w-12">
         <img
           src="https://yeaimages.s3.eu-central-1.amazonaws.com/left.png"
           className="object-contain"
         />
       </div>
-      <div className="absolute right-0 top-0 h-14 w-16 md:h-10.5 md:w-9">
+      <div className="absolute right-0 top-0 h-14 w-16 lg:h-10.5 lg:w-9">
         <img
           src="https://yeaimages.s3.eu-central-1.amazonaws.com/right.png"
           className="object-contain"
@@ -89,30 +89,29 @@ const Reviews: React.FC<Props> = ({
    * Title, description and contact button section with icon on top / floating left
    */
   const textBox = (
-    <div className="relative md:absolute md:-left-103 md:top-1/2 md:transform md:-translate-y-1/2 md:w-76.6 md:text-left">
+    <div className="relative max-w-md mx-auto lg:mx-0 lg:max-w-none lg:absolute lg:-left-103 lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:w-76.6 lg:text-left">
       {icon}
-      <div className="flex justify-center text-center items-center flex-wrap md:block md:text-left">
+      <div className="flex justify-center text-center items-center flex-wrap lg:block lg:text-left">
         <YHeading
           fontSize={FontSize.XL}
           fontWeight={FontWeight.ExtraBold}
           as="h1"
-          className="text-white order-1 mx-1 sm:mx-5.5 md:mx-0 md:text-3xl md:leading-18 md:font-bold"
+          className="text-white order-1 mx-1 xs:mx-5.5 lg:mx-0 lg:text-3xl lg:leading-18 lg:font-bold"
         >
           {title}
         </YHeading>
         <YText
           fontSize={FontSize.SM}
           lineHeight={FontLineHeight.Relaxed}
-          className="text-gray-300 order-3 mt-3 md:text-base md:leading-11"
+          className="text-gray-300 order-3 mt-3 lg:text-base lg:leading-11"
           as="p"
         >
           {description}
         </YText>
         <YLink href={buttonProps.link}>
           <YButton
-            buttonSize={ButtonSize.XS}
             shape={ButtonShape.Round}
-            className="bg-blue-100 order-2 py-1.6 px-3 md:text-base md:leading-11 md:py-2 md:px-5 md:rounded md:shadow-blue md:mt-5"
+            className="bg-blue-100 order-2 px-4.6 py-1.9 text-xxs leading-4 lg:text-base lg:leading-11 lg:py-2 lg:px-5 lg:rounded lg:shadow-blue lg:mt-5"
           >
             {buttonProps.text}
           </YButton>
@@ -125,15 +124,15 @@ const Reviews: React.FC<Props> = ({
    * Body of review with review text and stats
    */
   const reviewBody = (
-    <div className="relative left-1/2 transform -translate-x-1/2 w-100 sm:w-78.6 sm:h-72.6 md:left-0 md:transform-none md:w-157.6 md:h-80">
+    <div className="relative left-1/2 transform -translate-x-1/2 w-100 xs:w-78.6 xs:h-72.6 lg:left-0 lg:transform-none lg:w-157.6 lg:h-80">
       <DialogBox />
       <div
         onClick={setNextReview}
-        className="absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 sm:-translate-y-full sm:translate-x-1/4 sm:w-15 sm:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 md:w-20 md:h-20 md:p-6 md:-translate-y-1/2"
+        className="absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 xs:-translate-y-full xs:translate-x-1/4 xs:w-15 xs:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 lg:w-20 lg:h-20 lg:p-6 lg:-translate-y-1/2"
       >
         <Arrow />
       </div>
-      <article className="w-full h-full mt-8 p-20 pt-5 pb-15 pr-20 sm:p-5 sm:pr-10 md:mt-0 md:pt-10 md:pl-13 md:pr-15 md:pb-21 overflow-hidden">
+      <article className="w-full h-full mt-8 p-20 pt-5 pb-15 pr-20 xs:p-5 xs:pr-10 lg:mt-0 lg:pt-10 lg:pl-13 lg:pr-15 lg:pb-21 overflow-hidden">
         <AnimatePresence exitBeforeEnter>
           <motion.div
             {...getMotionProps(ReviewSection.Body, firstRender)}
@@ -144,7 +143,7 @@ const Reviews: React.FC<Props> = ({
               fontWeight={FontWeight.SemiBold}
               fontSize={FontSize.SM}
               lineHeight={FontLineHeight.Relaxed}
-              className="text-white mb-4 md:text-lg md:leading-12"
+              className="text-white mb-4 lg:text-lg lg:leading-12"
               as="p"
             >
               {review.text}
@@ -153,7 +152,7 @@ const Reviews: React.FC<Props> = ({
               fontWeight={FontWeight.ExtraBold}
               fontSize={FontSize.SM}
               lineHeight={FontLineHeight.Relaxed}
-              className="text-primary md:text-lg md:leading-12"
+              className="text-primary lg:text-lg lg:leading-12"
               as="p"
             >
               {review.stats}
@@ -174,23 +173,23 @@ const Reviews: React.FC<Props> = ({
   const reviewCredentials = (
     <AnimatePresence exitBeforeEnter>
       <motion.div
-        className="flex justify-center items-center w-full md:justify-start md:mt-2 md:transform"
+        className="flex justify-center items-center w-full lg:justify-start lg:mt-2 lg:transform"
         {...getMotionProps(ReviewSection.Credentials, firstRender)}
         key={review.name}
       >
-        <div className="mr-6 md:ml-13.6">{<ReviewerLogo />}</div>
+        <div className="mr-6 lg:ml-13.6">{<ReviewerLogo />}</div>
         <div>
           <YText
             fontWeight={FontWeight.ExtraBold}
             fontSize={FontSize.SM}
-            className="text-white md:text-lg md:leading-12"
+            className="text-white lg:text-lg lg:leading-12"
             as="p"
           >
             {review.name}
           </YText>
           <YText
             fontSize={FontSize.SM}
-            className="text-gray-300 md:text-lg md:leading-12"
+            className="text-gray-300 lg:text-lg lg:leading-12"
             as="p"
           >
             {review.role}
@@ -203,9 +202,9 @@ const Reviews: React.FC<Props> = ({
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
       <section className="w-full overflow-hidden border-b border-soft">
-        <div className="container pt-12.5 pb-23 md:pt-35 md:pb-48">
-          <div className="md:ml-103">
-            <div className="relative md:w-156">
+        <div className="container pt-12.5 pb-23 lg:pt-35 lg:pb-48 lg:px-0">
+          <div className="lg:ml-103">
+            <div className="relative lg:w-156">
               {textBox}
               {reviewBody}
             </div>
