@@ -3,7 +3,7 @@ import React from 'react';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 
@@ -13,8 +13,7 @@ interface Props {
 }
 
 const ServiceSimple: React.FC<Props> = ({ heading, description }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   return screenSize ? (
     <section className="w-full border-soft border-b py-15 md:py-40">

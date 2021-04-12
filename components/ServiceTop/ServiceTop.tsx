@@ -2,9 +2,9 @@ import React from 'react';
 
 import { ButtonSize, Service } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
@@ -33,8 +33,7 @@ const ServiceTop: React.FC<Props> = ({
   serviceLabel,
   service,
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   const hero = heroImages[service];
 

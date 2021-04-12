@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { TextPosition } from '@/enums/components';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -24,10 +24,9 @@ const ServiceSimpleImage: React.FC<Props> = ({
   image,
   textPosition = TextPosition.Right,
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
-  return screenSize ? (
+  return (
     <section className="w-full pt-12.5 pb-10 md:py-30 border-b border-soft">
       <div className="container md:px-0">
         <div
@@ -66,7 +65,7 @@ const ServiceSimpleImage: React.FC<Props> = ({
         </div>
       </div>
     </section>
-  ) : null;
+  );
 };
 
 const textBoxClasses = {

@@ -43,30 +43,28 @@ export const YSlider: React.FC<ScrollProps> = ({
   const arrowClasses = ['absolute', 'transform', 'top-1/2', '-translate-y-1/2'];
 
   return (
-    <AnimatePresence>
-      <YAnimateItem className={filterPosition([], className)}>
-        <motion.div {...motionProps} ref={sliderContainer}>
-          {children}
-        </motion.div>
-        <AnimatePresence exitBeforeEnter>
-          {position == 'left' ? (
-            <YArrowButton
-              key="arrow-right"
-              onClick={() => setPosition('right')}
-              className={[...arrowClasses, 'right-12.5'].join(' ')}
-              showMore={showMoreLabel}
-            />
-          ) : (
-            <YArrowButton
-              key="arrow-left"
-              type={ArrowType.Left}
-              onClick={() => setPosition('left')}
-              className={[...arrowClasses, 'left-12.5'].join(' ')}
-            />
-          )}
-        </AnimatePresence>
-      </YAnimateItem>
-    </AnimatePresence>
+    <YAnimateItem className={filterPosition([], className)}>
+      <motion.div {...motionProps} ref={sliderContainer}>
+        {children}
+      </motion.div>
+      <AnimatePresence exitBeforeEnter>
+        {position == 'left' ? (
+          <YArrowButton
+            key="arrow-right"
+            onClick={() => setPosition('right')}
+            className={[...arrowClasses, 'right-12.5'].join(' ')}
+            showMore={showMoreLabel}
+          />
+        ) : (
+          <YArrowButton
+            key="arrow-left"
+            type={ArrowType.Left}
+            onClick={() => setPosition('left')}
+            className={[...arrowClasses, 'left-12.5'].join(' ')}
+          />
+        )}
+      </AnimatePresence>
+    </YAnimateItem>
   );
 };
 

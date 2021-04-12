@@ -9,6 +9,9 @@ import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
 
 import { ToggleType } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import DownArrow from '@/assets/icons/chevron-down.svg';
 
@@ -19,10 +22,8 @@ export interface NavItemInterface {
 }
 
 interface Props extends NavItemInterface {
-  textProps: Parameters<typeof YText>[0];
   onClick?: () => void;
   className?: string;
-  screenSize: ScreenSize;
   disableMount?: boolean;
 }
 
@@ -32,18 +33,20 @@ const YHeaderItem: React.FC<Props> = ({
   text,
   subItems,
   children,
-  textProps,
   onClick,
-  screenSize,
   disableMount,
 }) => {
+  const { screenSize } = useBreakpoint();
+
   const [openItems, setOpenItems] = useState(false);
 
   const itemText = (
     <YText
       onClick={() => (subItems ? setOpenItems(!openItems) : null)}
-      {...textProps}
-      className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:transform-none md:top-0"
+      fontSize={FontSize.XS}
+      lineHeight={FontLineHeight.Relaxed}
+      fontWeight={FontWeight.SemiBold}
+      className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:transform-none md:top-0 md:leading-5"
       as="span"
     >
       {text}

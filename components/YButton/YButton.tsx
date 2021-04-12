@@ -44,7 +44,7 @@ export default function YButton({
   );
 
   const className = [
-    ...defaultClasses,
+    ...filterColorClass(classes, defaultClasses),
     ...filteredSizeClasses,
     shapeClass,
     shadowClass,
@@ -73,6 +73,18 @@ const filterSizeClasses = (classType: string[], classes, sizeClasses) => {
       ? result.filter((value) => !value.includes(type))
       : result;
   });
+
+  return result;
+};
+
+const filterColorClass = (classes: string, defaultClasses: string[]) => {
+  if (!classes) return defaultClasses;
+
+  let result: string[] = [...defaultClasses];
+
+  result = classes.includes('bg')
+    ? result.filter((value) => !value.includes('bg'))
+    : result;
 
   return result;
 };

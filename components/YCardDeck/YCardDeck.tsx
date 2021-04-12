@@ -9,9 +9,9 @@ import {
   MotionProps,
 } from 'framer-motion';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import rotate from '@/libs/utils/rotate';
 
@@ -26,10 +26,8 @@ interface Props {
 
 const CardDeck: React.FC<Props> = ({ services, className, active }) => {
   const [deck, setDeck] = useState(services);
-  // const [firstRender, setFirstRender] = useState(true);
 
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   // controls card being selected outside the component i.e. from buttons
   useEffect(() => {
@@ -70,7 +68,6 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
     },
   };
 
-  // gets motion props
   const getMotionProps = (index: number, screenSize: ScreenSize) => ({
     initial: {
       ...motionProps[screenSize].initial,

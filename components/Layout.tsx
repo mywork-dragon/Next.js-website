@@ -1,9 +1,7 @@
 import Head from '../components/Head';
 import Footer from '../components/Footer';
 import { HTMLAttributes } from 'react';
-import Header from '@/components/Header';
 
-import { props } from '@/components/Header/storiesData';
 import Facebook from '@/assets/icons/facebook.svg';
 import LinkedIn from '@/assets/icons/linkedin.svg';
 import Instagram from '@/assets/icons/instagram.svg';
@@ -53,7 +51,6 @@ const contactButton = 'Contact us';
 const Layout = ({ children }: HTMLAttributes<HTMLElement>): JSX.Element => (
   <div className="bg-blue-300 text-white">
     <Head title="test" description="description" />
-    <Header {...props} showIcons />
     {children}
     <Footer
       links={links}

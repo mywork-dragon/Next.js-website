@@ -2,9 +2,9 @@ import React from 'react';
 
 import { ButtonSize } from '@/enums/components';
 import { FontLineHeight, FontSize } from '@/enums/font';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
@@ -28,8 +28,7 @@ const AboutContact: React.FC<Props> = ({
   description,
   buttonProps: { link, text: buttonText },
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   const content = (
     <div className="w-full text-center pt-111.1 pb-15 md:text-left md:pt-60 md:w-100 md:pb-75 text-white">
@@ -51,14 +50,14 @@ const AboutContact: React.FC<Props> = ({
     </div>
   );
 
-  return screenSize ? (
+  return (
     <section className="w-full overflow-hidden">
       <div className="container border border-transparent relative md:p-0">
         <Cloud />
         {content}
       </div>
     </section>
-  ) : null;
+  );
 };
 
 const titleProps = {

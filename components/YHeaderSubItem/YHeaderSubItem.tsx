@@ -7,41 +7,32 @@ import YText from '@/components/YText';
 
 import { ToggleType } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 export interface SubItemInterface {
-  icon: JSX.Element;
+  icon: string;
   text: string;
   link: string;
 }
 
 interface Props extends SubItemInterface {
-  textProps?: Parameters<typeof YText>[0];
   className?: string;
-  showIcon?: boolean; // temp
-  screenSize?: ScreenSize;
 }
 
-const SubItem: React.FC<Props> = ({
-  icon,
-  text,
-  link,
-  textProps,
-  className,
-  showIcon,
-  screenSize,
-}) => {
+const SubItem: React.FC<Props> = ({ icon, text, link, className }) => {
+  const { screenSize } = useBreakpoint();
+
   const iconBox = (
     <div className="h-25 w-full bg-blue-250 bg-opacity-40 rounded-lg flex items-center justify-center">
-      {showIcon && icon}
+      <img src={icon} className="object-cover" />
     </div>
   );
 
   return (
     <YLink href={link}>
-      <YAnimateItem
-        onClick={() => console.log('clicked')}
-        className={[...containerClasses, className].join(' ')}
-      >
+      <YAnimateItem className={[...containerClasses, className].join(' ')}>
         {screenSize == ScreenSize.SM ? (
           <YMenuToggle
             type={ToggleType.Plus}
@@ -50,7 +41,13 @@ const SubItem: React.FC<Props> = ({
         ) : (
           iconBox
         )}
-        <YText className={textClasses.join(' ')} {...textProps} as="p">
+        <YText
+          className={textClasses.join(' ')}
+          fontSize={FontSize.XS}
+          lineHeight={FontLineHeight.Relaxed}
+          fontWeight={FontWeight.SemiBold}
+          as="p"
+        >
           {text}
         </YText>
       </YAnimateItem>
@@ -78,5 +75,7 @@ const textClasses = [
   'md:left-1/2',
   'md:transform',
   'md:-translate-x-1/2',
+  'md:text-xxs',
+  'md:leading-4',
 ];
 export default SubItem;

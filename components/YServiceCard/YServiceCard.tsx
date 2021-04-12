@@ -2,9 +2,9 @@ import { m as motion, MotionProps } from 'framer-motion';
 
 import { FontSize } from '@/enums/font';
 import { ButtonShape, ButtonSize } from '@/enums/components';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -43,13 +43,7 @@ const ServiceCard: React.FC<Props> = ({
   className,
   ...props
 }) => {
-  const windowWidth = useClientWidth();
-  const screenSize =
-    windowWidth < BreakPoint.SM
-      ? ScreenSize.XS
-      : windowWidth < BreakPoint.MD
-      ? ScreenSize.SM
-      : ScreenSize.MD;
+  const { screenSize } = useBreakpoint([ScreenSize.XS]);
 
   // title, subtitle, logo
   const topSection = (
@@ -75,6 +69,7 @@ const ServiceCard: React.FC<Props> = ({
       {points.map((line) => (
         <YText
           {...getTextProps(TextSection.Text, screenSize)}
+          key={line}
           className="py-1 text-white opacity-50"
           as="li"
         >

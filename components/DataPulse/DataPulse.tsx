@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import { ScreenSize, BreakPoint } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { ButtonShape, ButtonSize } from '@/enums/components';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import PulseBackground from './PulseBackground';
 import YCardStack from '@/components/YCardStack';
@@ -44,10 +44,9 @@ const DataPulse: React.FC<Props> = ({
   buttonProps,
   cards,
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize, screenReady } = useBreakpoint();
 
-  return screenSize ? (
+  return (
     <>
       <div className="relative w-full overflow-hidden md:h-210">
         <div className="absolute overflow-hidden -z-10 top-0 bottom-0 w-full md:left-1/2 md:transform md:-translate-x-1/2 md:w-420 md:rounded-2.5xl">
@@ -58,7 +57,7 @@ const DataPulse: React.FC<Props> = ({
               <PhonePerspective />
             )}
           </div>
-          <Background cards={cards} />
+          {screenReady && <Background cards={cards} />}
         </div>
         <div className="container relative h-full mb-10">
           <div className="relative z-10 mt-111.1 w-full text-center md:mt-0 md:text-left md:top-45 md:w-97.5">
@@ -86,7 +85,7 @@ const DataPulse: React.FC<Props> = ({
         </div>
       </div>
     </>
-  ) : null;
+  );
 };
 
 const buttonSize = {

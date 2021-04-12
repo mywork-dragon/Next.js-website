@@ -11,7 +11,6 @@ import Mobile from '@/assets/icons/mobile.svg';
 import Megaphone from '@/assets/icons/megaphone.svg';
 import Code from '@/assets/icons/code.svg';
 import Analitics from '@/assets/icons/analytics.svg';
-import ServiceButton from '../YServiceButton/YServiceButton';
 
 const Cloud: React.FC<{ className?: string }> = ({ className }) => {
   const boxes = (

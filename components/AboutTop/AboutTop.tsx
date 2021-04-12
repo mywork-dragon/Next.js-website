@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 
@@ -13,10 +13,9 @@ interface Props {
 }
 
 const AboutTop: React.FC<Props> = ({ title, description }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
-  return screenSize ? (
+  return (
     <section className="container">
       <YHeading
         {...titleProps[screenSize]}
@@ -31,7 +30,7 @@ const AboutTop: React.FC<Props> = ({ title, description }) => {
         {description}
       </YHeading>
     </section>
-  ) : null;
+  );
 };
 
 const titleProps = {

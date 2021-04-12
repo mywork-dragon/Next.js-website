@@ -1,10 +1,10 @@
 import React, { AriaAttributes, HTMLAttributes } from 'react';
 
 import { FontSize, FontWeight, FontLineHeight } from '@/enums/font';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { ButtonSize } from '@/enums/components';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import BackgroundGrid, { Card } from './BackgroundGrid';
 
@@ -44,8 +44,7 @@ const HomeTop: React.FC<Props> = ({
   cards,
   ...props
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize, screenReady } = useBreakpoint();
 
   const renderCompanies = showCompanies && companies && (
     <div
@@ -93,7 +92,9 @@ const HomeTop: React.FC<Props> = ({
   return (
     <section {...props} className="overflow-hidden">
       <div className="container relative pt-88.1 md:px-0 md:pt-48.5">
-        <BackgroundGrid cards={cards} />
+        {screenReady && (
+          <BackgroundGrid screenSize={screenSize} cards={cards} />
+        )}
 
         <div className="relative z-20 md:w-100">
           <YHeading

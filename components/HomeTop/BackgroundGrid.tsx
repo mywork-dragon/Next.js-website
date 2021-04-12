@@ -4,7 +4,7 @@ import { ScreenSize, BreakPoint } from '@/enums/screenSize';
 
 import style from './BackgroundGrid.module.css';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import { cardAppearances, cardBaseClasses } from './gridElements';
 
@@ -22,9 +22,8 @@ interface Props {
 
 const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   // screen size section
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
-
+  const { screenSize, screenReady } = useBreakpoint();
+  console.log('screen size', screenSize);
   const cardsForDisplay = {
     [ScreenSize.SM]: mirrorForMobile(cards),
     [ScreenSize.MD]: rearrangeForDesktop(cards),
@@ -64,9 +63,11 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
 
   // return grid
   return (
-    <div className={['absolute top-0 bg-blue-100', style.bgGrid].join(' ')}>
-      {populateGrid(screenSize, cardsForDisplay[screenSize])}
-    </div>
+    screenReady && (
+      <div className={['absolute top-0 bg-blue-100', style.bgGrid].join(' ')}>
+        {populateGrid(screenSize, cardsForDisplay[screenSize])}
+      </div>
+    )
   );
 };
 

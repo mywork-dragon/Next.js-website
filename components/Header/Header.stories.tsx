@@ -7,14 +7,4 @@ export default {
   component: Header,
 };
 
-export const Default = (): JSX.Element => (
-  <div className="absolute top-0 right-0 left-0">
-    <Header {...props} />
-  </div>
-);
-
-export const WithIcons = (): JSX.Element => (
-  <div className="absolute top-0 right-0 left-0">
-    <Header showIcons {...props} />
-  </div>
-);
+export const Default = (): JSX.Element => <Header {...props} />;

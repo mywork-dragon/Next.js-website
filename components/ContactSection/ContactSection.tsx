@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { FormField } from '@/enums/form';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { InputStyle, InputType } from '@/enums/components';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YContactForm from '@/components/YContactForm';
 import YHeading from '@/components/YHeading';
@@ -54,8 +54,7 @@ const ContactSection: React.FC<Props> = ({
   fields,
   contactInfo,
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   const [openForm, setOpenForm] = useState(
     screenSize == ScreenSize.MD ? true : false
@@ -131,7 +130,7 @@ const ContactSection: React.FC<Props> = ({
       </AnimateSharedLayout>
     );
 
-  return screenSize ? (
+  return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
@@ -142,7 +141,7 @@ const ContactSection: React.FC<Props> = ({
         </div>
       </section>
     </MotionConfig>
-  ) : null;
+  );
 };
 
 const titleProps = {

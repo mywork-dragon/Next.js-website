@@ -7,27 +7,28 @@ import {
   AnimateLayoutFeature,
 } from 'framer-motion';
 
+// dynamic
 import YHeaderItem, {
   NavItemInterface,
 } from '@/components/YHeaderItem/YHeaderItem';
 import YHeaderSubItem, {
   SubItemInterface,
 } from '@/components/YHeaderSubItem/YHeaderSubItem';
+// dynamic
+
 import YMenuToggle from '@/components/YMenuToggle';
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateBackground from '@/components/AnimateComponents/YAnimateBackground';
 import YSlider from '@/components/YSlider';
 import YLink from '@/components/YLink';
-import YText from '@/components/YText';
 import YButton from '@/components/YButton';
 import YSelect from '@/components/YSelect';
 
 import useClickOutside from '@/hooks/useClickOutside';
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
-import { ScreenSize, BreakPoint } from '@/enums/screenSize';
-import { FontLineHeight, FontWeight, FontSize } from '@/enums/font';
+import { ScreenSize } from '@/enums/screenSize';
 import { Language } from '@/enums/language';
 
 interface Logo {
@@ -44,26 +45,18 @@ interface Props {
   logo: Logo;
   navItems: NavItemInterface[];
   button: Button;
-  showIcons?: boolean; // temp
-  onLangChange?: (lang: Language) => void;
+  onLangChange?: (lang: Language) => any;
   showMoreLabel?: string;
-}
-
-enum Region {
-  Item = 'item',
-  SubItem = 'sub-item',
 }
 
 const Header: React.FC<Props> = ({
   logo,
   navItems,
   button,
-  showIcons,
   onLangChange,
   showMoreLabel,
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize, screenReady } = useBreakpoint();
 
   // control opening and closing of header
   const [showItems, setShowItems] = useState(false);
@@ -94,10 +87,8 @@ const Header: React.FC<Props> = ({
           {navItems.map((item) => (
             <YHeaderItem
               key={item.text}
-              textProps={getTextProps(screenSize, Region.Item)}
               {...item}
               onClick={() => setSubItems(subItems ? null : item.subItems)}
-              screenSize={screenSize}
               disableMount
             />
           ))}
@@ -112,18 +103,14 @@ const Header: React.FC<Props> = ({
       navItems.map((item, index) => (
         <YHeaderItem
           key={item.text}
-          textProps={getTextProps(screenSize)}
           {...item}
           className={index != 0 ? 'border-t' : ''}
-          screenSize={screenSize}
         >
           {item.subItems?.map((subItem, index) => (
             <YHeaderSubItem
               {...subItem}
               key={subItem.text}
               className={index == 0 ? 'pt-1' : ''}
-              textProps={getTextProps(screenSize)}
-              screenSize={screenSize}
             />
           ))}
         </YHeaderItem>
@@ -139,8 +126,6 @@ const Header: React.FC<Props> = ({
               {...subItem}
               key={subItem.text}
               className={index < subItems.length - 1 ? 'mr-5' : ''}
-              textProps={getTextProps(screenSize, Region.SubItem)}
-              showIcon={showIcons}
             />
           ))}
         </YSlider>
@@ -148,63 +133,64 @@ const Header: React.FC<Props> = ({
       </>
     );
 
-  return screenSize ? (
-    <MotionConfig
-      features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
-    >
-      <YAnimateBackground
-        ref={headerRef}
-        screenSize={screenSize}
-        className="fixed w-full left-0 top-0 z-40 md:absolute"
-        open={open}
+  return (
+    screenReady && (
+      <MotionConfig
+        features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
       >
-        <div
-          className={[
-            'h-15.5 container px-0 md:h-23.5 border-soft',
-            open ? 'md:border-b' : '',
-          ].join(' ')}
+        <YAnimateBackground
+          ref={headerRef}
+          className="fixed w-full left-0 top-0 z-40 md:absolute"
+          open={open}
         >
-          <div className="relative w-full h-full md:h-8.5 md:top-1/2 md:flex md:items-center">
-            <div
-              className={[
-                ...menuItemClasses,
-                'left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 md:inline-block',
-              ].join(' ')}
-            >
-              <YLink href={logo.link}>
-                <div className="cursor-pointer">{logo.Icon}</div>
-              </YLink>
-            </div>
-            {additionalComponents}
-            <YLink href={button.link}>
-              <YButton
-                buttonSize={ButtonSize.XS}
-                shape={ButtonShape.Round}
+          <div
+            className={[
+              'h-15.5 container px-0 md:h-23.5 border-soft',
+              open ? 'md:border-b' : '',
+            ].join(' ')}
+          >
+            <div className="relative w-full h-full md:h-8.5 md:top-1/2 md:flex md:items-center">
+              <div
                 className={[
                   ...menuItemClasses,
-                  'right-4',
-                  'md:right-0',
-                  'whitespace-nowrap',
+                  'left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 md:inline-block',
                 ].join(' ')}
               >
-                {screenSize == ScreenSize.SM
-                  ? button.text.split(' ')[0]
-                  : button.text}
-              </YButton>
-            </YLink>
+                <YLink href={logo.link}>
+                  <div className="cursor-pointer">{logo.Icon}</div>
+                </YLink>
+              </div>
+              {additionalComponents}
+              <YLink href={button.link}>
+                <YButton
+                  buttonSize={ButtonSize.XS}
+                  shape={ButtonShape.Round}
+                  className={[
+                    ...menuItemClasses,
+                    'right-4',
+                    'md:right-0',
+                    'whitespace-nowrap',
+                  ].join(' ')}
+                >
+                  {screenSize == ScreenSize.SM
+                    ? button.text.split(' ')[0]
+                    : button.text}
+                </YButton>
+              </YLink>
+            </div>
           </div>
-        </div>
-        <AnimateSharedLayout>
-          <YExpandableRegion
-            className="flex flex-col items-stretch container"
-            open={open}
-          >
-            {hiddenRegion}
-          </YExpandableRegion>
-        </AnimateSharedLayout>
-      </YAnimateBackground>
-    </MotionConfig>
-  ) : null;
+          <AnimateSharedLayout>
+            <YExpandableRegion
+              className="flex flex-col items-stretch container"
+              open={open}
+            >
+              {hiddenRegion}
+            </YExpandableRegion>
+          </AnimateSharedLayout>
+        </YAnimateBackground>
+      </MotionConfig>
+    )
+  );
 };
 
 const menuItemClasses = [
@@ -214,31 +200,5 @@ const menuItemClasses = [
   '-translate-y-1/2',
   'md:relative',
 ];
-
-// text props for components
-const getTextProps = (screenSize: ScreenSize, region?: Region) =>
-  screenSize == ScreenSize.SM ? mobileTextProps : desktopTextProps[region];
-
-const mobileTextProps = {
-  fontSize: FontSize.XS,
-  lineHeight: FontLineHeight.Relaxed,
-  fontWeight: FontWeight.SemiBold,
-  as: 'p',
-} as Parameters<typeof YText>[0];
-
-const desktopTextProps = {
-  [Region.Item]: {
-    fontSize: FontSize.XS,
-    lineHeight: FontLineHeight.Tight,
-    fontWeight: FontWeight.SemiBold,
-    as: 'p',
-  },
-  [Region.SubItem]: {
-    fontSize: FontSize.XXS,
-    lineHeight: FontLineHeight.Tight,
-    fontWeight: FontWeight.SemiBold,
-    as: 'p',
-  },
-} as Record<Region, Parameters<typeof YText>[0]>;
 
 export default Header;

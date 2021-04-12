@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { FourPoints } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -32,8 +32,7 @@ const ServiceFourPoints: React.FC<Props> = ({
   cover,
   type = FourPoints.OrderedList,
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.SM ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   const pointsSection =
     type == FourPoints.OrderedList ? (
@@ -83,7 +82,7 @@ const ServiceFourPoints: React.FC<Props> = ({
       </div>
     );
 
-  return screenSize ? (
+  return (
     <section className={sectionClasses.join(' ')}>
       <div
         className={[
@@ -112,7 +111,7 @@ const ServiceFourPoints: React.FC<Props> = ({
         {type == FourPoints.Stats && pointsSection}
       </div>
     </section>
-  ) : null;
+  );
 };
 /**
  * Base classNames for each region

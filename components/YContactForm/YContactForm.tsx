@@ -4,7 +4,7 @@ import { InputStyle, InputType, ToggleType } from '@/enums/components';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize } from '@/enums/font';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 import useValidate from '@/hooks/useValidate';
 
 import YFormElement from '@/components/YFormElement';
@@ -50,8 +50,7 @@ const YContactForm: React.FC<Props> = ({
   fields,
   onClose,
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   const fieldNames = Object.keys(fields);
 

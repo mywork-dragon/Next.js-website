@@ -78,3 +78,14 @@ export enum FourPoints {
   OrderedList = 'ordered_list',
 }
 //endregion
+
+//region marketing automations
+export enum Elapsed {
+  '0h' = 0,
+  '12h' = 1,
+  '24h' = 2,
+  '48h' = 3,
+  '72h' = 4,
+  '96h' = 5,
+}
+//endregion

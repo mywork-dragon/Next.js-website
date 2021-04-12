@@ -2,9 +2,9 @@ import React from 'react';
 
 import { ThreePoints } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -42,8 +42,7 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
   type,
   ...props
 }) => {
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   if (type == ThreePoints.Articles) {
     /**

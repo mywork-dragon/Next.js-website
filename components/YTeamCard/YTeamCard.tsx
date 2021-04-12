@@ -12,9 +12,9 @@ import {
 
 import filterPosition from '@/libs/utils/filterPosition';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { FontSize, FontWeight } from '@/enums/font';
 
 import YToggleRound from '@/components/YToggleRound';
@@ -50,8 +50,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
     setFirstRender(false);
   }, []);
 
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   const imageElement = (screenSize == ScreenSize.MD || !open) && (
     <motion.div
@@ -119,11 +118,21 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
     </motion.div>
   );
 
+  const handleCardClick = (e: React.SyntheticEvent) => {
+    // e.stopPropagation();
+    if (!open) setOpen(true);
+  };
+
+  const containerClassName = [
+    filterPosition(containerClasses, className),
+    open ? 'cursor-default' : 'cursor-pointer',
+  ].join(' ');
+
   return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
-      <div className={filterPosition(containerClasses, className)}>
+      <div onClick={handleCardClick} className={containerClassName}>
         <AnimateSharedLayout>
           <AnimatePresence>
             {imageElement}
@@ -147,7 +156,6 @@ const containerClasses = [
   'text-gray-400',
   'duration-200',
   'transition',
-  'cursor-pointer',
   'rounded-sm',
   'md:rounded',
   'border',

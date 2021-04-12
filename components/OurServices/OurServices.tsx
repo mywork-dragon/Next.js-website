@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import useClientWidth from '@/hooks/useClientWidth';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import { Service } from '@/components/YServiceCard/YServiceCard';
 import YCardDeck from '@/components/YCardDeck';
@@ -31,8 +31,7 @@ const OurServices: React.FC<Props> = ({
 }) => {
   const [active, setActive] = useState(services[0].title);
 
-  const screenSize =
-    useClientWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint();
 
   // section title, description + services
   const servicesButtons = (
@@ -40,6 +39,7 @@ const OurServices: React.FC<Props> = ({
       {services.map((service) => (
         <YServiceButton
           {...service}
+          key={service.title}
           active={active == service.title}
           onClick={() => setActive(service.title)}
         />
@@ -85,6 +85,7 @@ const OurServices: React.FC<Props> = ({
           <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex md:transform-none">
             {partners.map((partner) => (
               <YOutLink
+                key={partner.link}
                 className="outline-none mr-7.5 inline-block"
                 href={partner.link}
               >
@@ -97,14 +98,14 @@ const OurServices: React.FC<Props> = ({
     </div>
   );
 
-  return screenSize ? (
+  return (
     <section className="container md:px-0 md:py-35">
       <div className="pb-10 md:px-0 md:h-124.1 md:w-full md:flex md:justify-between md:pb-0">
         {leftSection}
         {rightSection}
       </div>
     </section>
-  ) : null;
+  );
 };
 
 // text props
