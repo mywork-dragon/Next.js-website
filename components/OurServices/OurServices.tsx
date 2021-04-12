@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
 
-import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import useBreakpoint from '@/hooks/useBreakpoint';
-
 import { Service } from '@/components/YServiceCard/YServiceCard';
-import YCardDeck from '@/components/YCardDeck';
-import YServiceButton from '@/components/YServiceButton';
 import YText from '@/components/YText';
 import YHeading from '@/components/YHeading';
 import YOutLink from '@/components/YOutLink';
@@ -18,9 +14,17 @@ interface Props {
   title: string;
   description: string;
   services: Service[];
-  partners: { logo: JSX.Element; link: string }[];
+  partners: { logo: string; link: string }[];
   partnersLabel?: string;
 }
+
+const ServicesButtons = dynamic(() => import('./ServicesButtons'), {
+  ssr: false,
+});
+
+const CardDeck = dynamic(() => import('@/components/YCardDeck'), {
+  ssr: false,
+});
 
 const OurServices: React.FC<Props> = ({
   title,
@@ -31,48 +35,43 @@ const OurServices: React.FC<Props> = ({
 }) => {
   const [active, setActive] = useState(services[0].title);
 
-  const { screenSize } = useBreakpoint();
-
-  // section title, description + services
-  const servicesButtons = (
-    <div className="w-full mt-8 grid grid-cols-2 grid-rows-4 gap-8">
-      {services.map((service) => (
-        <YServiceButton
-          {...service}
-          key={service.title}
-          active={active == service.title}
-          onClick={() => setActive(service.title)}
-        />
-      ))}
-    </div>
+  const handleActiveChange = useCallback(
+    (title: string) => setActive(title),
+    []
   );
 
   const leftSection = (
     <div className="text-center md:w-148 md:h-full md:text-left">
       <div className="md:pr-12.5">
         <YHeading
-          className="mt-10 mb-3 md:mt-0"
-          {...headingProps[screenSize]}
+          className="text-white mt-10 mb-3 md:mt-0 md:text-3xl md:leading-18"
+          fontSize={FontSize.XL}
+          fontWeight={FontWeight.ExtraBold}
           as="p"
         >
           {title}
         </YHeading>
         <YText
-          className="mb-5 md:mb-0 text-gray-300"
-          {...textProps[screenSize]}
+          className="mb-5 md:mb-0 text-gray-300 md:text-base md:leading-11"
+          fontSize={FontSize.SM}
+          lineHeight={FontLineHeight.Relaxed}
           as="p"
         >
           {description}
         </YText>
       </div>
-      {screenSize == ScreenSize.MD && servicesButtons}
+      <ServicesButtons
+        services={services}
+        active={active}
+        onChange={handleActiveChange}
+      />
     </div>
   );
 
   // card deck and partners
   const rightSection = (
     <div className="relative w-full px-4 md:w-101.5 md:h-full md:px-0">
-      <YCardDeck
+      <CardDeck
         className="relative h-80 sm:h-103.1 md:h-100"
         services={rotate([...services].reverse())}
         active={active}
@@ -83,15 +82,24 @@ const OurServices: React.FC<Props> = ({
         </YText>
         <div className="relative h-7 w-full overflow-x-auto no-scrollbar mt-3 md:mt-4">
           <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex md:transform-none">
-            {partners.map((partner) => (
-              <YOutLink
-                key={partner.link}
-                className="outline-none mr-7.5 inline-block"
-                href={partner.link}
-              >
-                {partner.logo}
-              </YOutLink>
-            ))}
+            {partners.map((partner) => {
+              let Logo: () => JSX.Element;
+              try {
+                Logo = require(`@/assets/icons/${partner.logo}.svg`).default;
+              } catch {
+                Logo = () => null;
+              }
+
+              return (
+                <YOutLink
+                  key={partner.link}
+                  className="outline-none mr-7.5 inline-block"
+                  href={partner.link}
+                >
+                  <Logo />
+                </YOutLink>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -107,28 +115,5 @@ const OurServices: React.FC<Props> = ({
     </section>
   );
 };
-
-// text props
-const headingProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.XL,
-    fontWeight: FontWeight.ExtraBold,
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize['3XL'],
-    lineHeight: FontLineHeight.Relaxed,
-  },
-};
-
-const textProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Relaxed,
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize.MD,
-    lineHeight: FontLineHeight.Loose,
-  },
-} as Parameters<typeof YText>[0];
 
 export default OurServices;

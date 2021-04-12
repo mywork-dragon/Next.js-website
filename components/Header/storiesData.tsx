@@ -1,7 +1,5 @@
-import LogoMain from '@/assets/icons/logo-main.svg';
-
 const logo = {
-  Icon: <LogoMain />,
+  icon: 'logo-main',
   link: '#',
 };
 
@@ -28,7 +26,7 @@ const subItems = [
   },
   {
     text: 'Affiliate Marketing',
-    link: '',
+    link: '/services/affiliate',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/affiliate-marketing.png',
   },
@@ -52,7 +50,7 @@ const subItems = [
   },
   {
     text: 'Integration/Implementation',
-    link: '',
+    link: 'services/integration',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/integration-implementation.png',
   },
@@ -61,7 +59,7 @@ const subItems = [
 const navItems = [
   {
     text: 'Home',
-    link: '#',
+    link: '/home',
   },
   {
     text: 'Services',
@@ -70,7 +68,7 @@ const navItems = [
   },
   {
     text: 'About',
-    link: '#',
+    link: '/about',
   },
   {
     text: 'Cases',

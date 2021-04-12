@@ -10,9 +10,8 @@ import Analise from '@/assets/icons/analise.svg';
 import Mobile from '@/assets/icons/mobile.svg';
 import Megaphone from '@/assets/icons/megaphone.svg';
 import Code from '@/assets/icons/code.svg';
-import Analitics from '@/assets/icons/analytics.svg';
 
-const Cloud: React.FC<{ className?: string }> = ({ className }) => {
+const Cloud: React.FC = () => {
   const boxes = (
     <>
       <Box className="left-12.5 top-0 text-primary md:border-none md:text-blue-100 md:bg-blue-350">
@@ -49,61 +48,51 @@ const Cloud: React.FC<{ className?: string }> = ({ className }) => {
     <>
       <YServiceButton
         className="absolute w-65 left-110 top-13 md:border-blue-100 md:text-blue-100"
-        icon={<Analitics />}
+        icon="analytics"
         title="Data & Analitics"
         interactive={false}
       />
       <YServiceButton
         className="absolute w-65 left-22.5 top-37.5 text-white border-primary"
-        icon={
-          <div className="w-full h-full text-primary">
-            <User />
-          </div>
-        }
+        icon="user"
         title="Personalization"
         interactive={false}
+        active
+        iconGreen
       />
       <YServiceButton
         className="absolute w-65 left-37.5 bottom-48.5 blur-3"
-        icon={<Email />}
+        icon="email"
         title="E-mail marketing"
         interactive={false}
       />
       <YServiceButton
         className="absolute w-65 top-58.5 right-0 md:border-primary md:text-white"
-        icon={
-          <div className="w-full h-full text-primary">
-            <UserVoice />
-          </div>
-        }
+        icon="user-voice"
         title="Affiliate Marketing"
         interactive={false}
+        active
+        iconGreen
       />
       <YServiceButton
         className="absolute w-65 left-70 bottom-25 md:border-blue-100 md:text-blue-100"
-        icon={<Email />}
+        icon="email"
         title="E-mail marketing"
         interactive={false}
       />
       <YServiceButton
         className="absolute w-70 left-43.6 bottom-0 blur-3"
-        icon={
-          <div className="w-full h-full text-primary">
-            <Megaphone />
-          </div>
-        }
+        icon="megaphone"
         title="Social media advertising"
         interactive={false}
+        iconGreen
       />
       <YServiceButton
         className="absolute w-70 -left-35 -bottom-20 blur-3 md:hidden"
-        icon={
-          <div className="w-full h-full text-primary">
-            <Megaphone />
-          </div>
-        }
+        icon="megaphone"
         title="Social media advertising"
         interactive={false}
+        iconGreen
       />
     </>
   );
@@ -121,12 +110,13 @@ const containerClasses = [
   'text-white-40',
   'select-none',
   'cursor-normal',
-  'top-0',
-  '-left-7.5',
   'h-130.1',
   'w-185.1',
-  'scale-left-65',
-  'md:transform',
+  '-top-12.5',
+  'left-1/2',
+  'transform',
+  'scale-65',
+  '-translate-x-1/2',
   'md:left-100',
   'md:top-1/2',
   'md:-translate-y-1/2',

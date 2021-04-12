@@ -12,13 +12,13 @@ interface BreakPointHook {
 
 /**
  *
- * @param extendScreensizes extend required screen sizes (default is ScreenSize.SM and ScreenSize.MD)
+ * @param extendScreensizes extend required screen sizes (default is ScreenSize.SM and ScreenSize.LG)
  * @returns object containing screenSize (a current screenSize) and screenReady (boolean set when screenSize is processed, on mount)
  */
 const useBreakpoint: BreakPointHook = (extendScreensizes = []) => {
   const requiredScreenSizes = new Set([
     ScreenSize.SM,
-    ScreenSize.MD,
+    ScreenSize.LG,
     ...extendScreensizes,
   ]);
 
@@ -27,8 +27,6 @@ const useBreakpoint: BreakPointHook = (extendScreensizes = []) => {
   const screenSize = determineBreakpoint(screenWidth, requiredScreenSizes);
 
   const [screenReady, setScreenReady] = useState(false);
-
-  console.log('screen width', screenWidth);
 
   // set ready when screen size is determined, for sensitive content i.e. Background grid
   useEffect(() => {
@@ -44,7 +42,9 @@ const determineBreakpoint = (
   screenWidth: number,
   requiredScreenSizes: Set<ScreenSize>
 ) =>
-  screenWidth > BreakPoint.MD && requiredScreenSizes.has(ScreenSize.MD)
+  screenWidth > BreakPoint.LG
+    ? ScreenSize.LG
+    : screenWidth > BreakPoint.MD && requiredScreenSizes.has(ScreenSize.MD)
     ? ScreenSize.MD
     : ScreenSize.SM;
 

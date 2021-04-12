@@ -21,6 +21,20 @@ const AnimateBackground = React.forwardRef<HTMLElement, BackgroundProps>(
         ref={ref}
         className={className}
       >
+        <motion.div
+          className="absolute top-0 left-0 right-0 bottom-0"
+          style={{
+            backdropFilter: 'blur(60px)',
+          }}
+          animate={open ? 'open' : 'closed'}
+          variants={{
+            open: {
+              opacity: 1,
+            },
+            closed: { opacity: 0 },
+          }}
+          transition={{ duration: 0.4 }}
+        />
         {children}
       </motion.section>
     );
@@ -40,7 +54,11 @@ const getProps = (
 
     const variant = isOpen ? 'open' : 'closed';
 
-    return { style: style[variant], open, closed, animate: variant };
+    return {
+      open,
+      closed,
+      animate: variant,
+    };
   }
 };
 
@@ -53,7 +71,7 @@ const backdropStyles = {
       backdropFilter: 'blur(20px)',
     },
   },
-  [ScreenSize.MD]: {
+  [ScreenSize.LG]: {
     open: {
       backdropFilter: 'blur(60px)',
     },
@@ -73,7 +91,7 @@ const motionProps = {
       transition: { duration: 0.4 },
     },
   },
-  [ScreenSize.MD]: {
+  [ScreenSize.LG]: {
     open: {
       backgroundColor: 'rgba(32, 56, 118, 0.68)',
       boxShadow: '0px 0px 120px rgba(6, 29, 51, 0.7)',

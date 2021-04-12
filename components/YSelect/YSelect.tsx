@@ -19,7 +19,7 @@ interface Props {
   current?: Language;
 }
 
-const OSelect: React.FC<Props> = ({
+const YSelect: React.FC<Props> = ({
   className,
   onChange = () => {},
   current = Language.UK,
@@ -46,7 +46,9 @@ const OSelect: React.FC<Props> = ({
       <div className="w-7 mx-1">
         <img src={flags[current]} />
       </div>
-      <YText {...textProps}>{current}</YText>
+      <YText className="text-white" {...textProps}>
+        {current}
+      </YText>
       <div className="h-3 w-3 mx-1 flex items-center">
         <ArrowDown />
       </div>
@@ -63,7 +65,7 @@ const OSelect: React.FC<Props> = ({
             <div className="w-7 m-1">
               <img src={flags[lang]} />
             </div>
-            <YText {...textProps} className="m-1">
+            <YText {...textProps} className="text-white m-1">
               {lang}
             </YText>
           </YAnimateItem>
@@ -89,4 +91,4 @@ const textProps = {
   as: 'p',
 } as Parameters<typeof YText>[0];
 
-export default OSelect;
+export default YSelect;

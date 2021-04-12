@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 import {
   m as motion,
   MotionConfig,
@@ -8,7 +7,6 @@ import {
   AnimateSharedLayout,
 } from 'framer-motion';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FontSize, FontWeight } from '@/enums/font';
 
 import filterPosition from '@/libs/utils/filterPosition';
@@ -17,13 +15,8 @@ import YHeading from '@/components/YHeading';
 
 import style from './YButtonGroup.module.css';
 
-export type ButtonGroup = {
-  [ScreenSize.MD]: string;
-  [ScreenSize.SM]: string;
-}[];
-
 interface Props {
-  buttons: ButtonGroup;
+  buttons: string[];
   className?: string;
   onChange?: (index: number) => void;
 }
@@ -33,9 +26,6 @@ const YButtonGroup: React.FC<Props> = ({
   className,
   onChange = () => null,
 }) => {
-  const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
-
   const [active, setActive] = useState(0);
 
   const handleClick = (index: number) => {
@@ -54,7 +44,7 @@ const YButtonGroup: React.FC<Props> = ({
             const isActive = active == index;
 
             return (
-              <>
+              <React.Fragment key={`button-${index}`}>
                 {index != 0 && (
                   <div
                     key={`dot-${index}`}
@@ -62,7 +52,6 @@ const YButtonGroup: React.FC<Props> = ({
                   />
                 )}
                 <button
-                  key={`button-${index}`}
                   onClick={() => handleClick(index)}
                   className="relative z-10 px-4 -mx-1 py-3.5 md:px-5 md:py-4 focus:outline-none inline-block top-1/2 transform -translate-y-1/2"
                 >
@@ -86,10 +75,10 @@ const YButtonGroup: React.FC<Props> = ({
                       isActive ? 'text-white md:font-bold' : 'text-gray-300',
                     ].join(' ')}
                   >
-                    {button[screenSize]}
+                    {button}
                   </YHeading>
                 </button>
-              </>
+              </React.Fragment>
             );
           })}
         </div>

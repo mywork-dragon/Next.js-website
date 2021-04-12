@@ -18,6 +18,7 @@ const ExpandableRegion: React.FC<Props> = ({
     initial: disableMount ? false : { height: 0 },
     variants: {
       open: {
+        // height: 181,
         height: 'auto',
       },
       closed: {

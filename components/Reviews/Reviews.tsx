@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import {
   AnimatePresence,
   m as motion,
@@ -14,9 +15,6 @@ import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
-
-/**@TODO make this dynamic import */
-import DialogBox from './DialogBox';
 
 import Arrow from '@/assets/icons/arrow-lg.svg';
 
@@ -44,6 +42,8 @@ enum ReviewSection {
   Body = 'body',
   Credentials = 'credentials',
 }
+
+const DialogBox = dynamic(() => import('./DialogBox'), { ssr: false });
 
 const Reviews: React.FC<Props> = ({
   title,
@@ -96,7 +96,7 @@ const Reviews: React.FC<Props> = ({
           fontSize={FontSize.XL}
           fontWeight={FontWeight.ExtraBold}
           as="h1"
-          className="order-1 mx-1 sm:mx-5.5 md:mx-0 md:text-3xl md:leading-18 md:font-bold"
+          className="text-white order-1 mx-1 sm:mx-5.5 md:mx-0 md:text-3xl md:leading-18 md:font-bold"
         >
           {title}
         </YHeading>
@@ -144,7 +144,7 @@ const Reviews: React.FC<Props> = ({
               fontWeight={FontWeight.SemiBold}
               fontSize={FontSize.SM}
               lineHeight={FontLineHeight.Relaxed}
-              className="mb-4 md:text-lg md:leading-12"
+              className="text-white mb-4 md:text-lg md:leading-12"
               as="p"
             >
               {review.text}
@@ -167,7 +167,9 @@ const Reviews: React.FC<Props> = ({
   /**
    * Reviewer info with name, role and company
    */
-  const ReviewerLogo = require(`@/assets/icons/${review.logo}`).default;
+  const ReviewerLogo = dynamic(() => {
+    return import(`@/assets/icons/${review.logo}`);
+  });
 
   const reviewCredentials = (
     <AnimatePresence exitBeforeEnter>
@@ -176,14 +178,12 @@ const Reviews: React.FC<Props> = ({
         {...getMotionProps(ReviewSection.Credentials, firstRender)}
         key={review.name}
       >
-        <div className="mr-6 md:ml-13.6">
-          <ReviewerLogo />
-        </div>
+        <div className="mr-6 md:ml-13.6">{<ReviewerLogo />}</div>
         <div>
           <YText
             fontWeight={FontWeight.ExtraBold}
             fontSize={FontSize.SM}
-            className="md:text-lg md:leading-12"
+            className="text-white md:text-lg md:leading-12"
             as="p"
           >
             {review.name}

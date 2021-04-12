@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
 import {
   m as motion,
   MotionConfig,
@@ -9,15 +10,17 @@ import {
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-/**@TODO dynamic import */
-import YButtonGroup, {
-  ButtonGroup,
-} from '@/components/YButtonGroup/YButtonGroup';
-import Wave from './Wave';
-import Frame, { Frames } from './PersonalizationFrame';
+import { Frames } from './PersonalizationFrame';
 
+import YButtonGroup from '@/components/YButtonGroup/YButtonGroup';
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
+import useBreakpoint from '@/hooks/useBreakpoint';
+import { ScreenSize } from '@/enums/screenSize';
+
+type ButtonGroup = {
+  [index in ScreenSize]: string[];
+};
 
 interface Props {
   buttons: ButtonGroup;
@@ -26,12 +29,21 @@ interface Props {
   frames: Frames;
 }
 
+const Wave = dynamic(
+  () => {
+    return import('./Wave');
+  },
+  { ssr: false }
+);
+
 const BenefitsOfPersonalization: React.FC<Props> = ({
   title,
   description,
   buttons,
   frames,
 }) => {
+  const { screenSize, screenReady } = useBreakpoint([ScreenSize.LG]);
+
   const [activeFrame, setActiveFrame] = useState(0);
   const [firstRender, setFirstRender] = useState(true);
 
@@ -49,6 +61,23 @@ const BenefitsOfPersonalization: React.FC<Props> = ({
     key: activeFrame,
   };
 
+  const PersonalizationFrame = useMemo(
+    () =>
+      dynamic(
+        () =>
+          screenSize == ScreenSize.LG
+            ? import('./PersonalizationFrameLG')
+            : import('./PersonalizationFrameSM'),
+        { ssr: false }
+      ),
+    [screenSize]
+  );
+
+  const buttonsToShow =
+    screenSize == ScreenSize.SM
+      ? buttons[ScreenSize.SM]
+      : buttons[ScreenSize.MD];
+
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
       <section className="relative w-full overflow-hidden md:border-b border-soft">
@@ -58,7 +87,7 @@ const BenefitsOfPersonalization: React.FC<Props> = ({
             <YHeading
               fontSize={FontSize.XL}
               fontWeight={FontWeight.ExtraBold}
-              className="relative mb-3 md:text-3xl md:font-bold md:leading-18 md:w-82.5 md:mx-auto lg:mx-0"
+              className="text-white relative mb-3 md:text-3xl md:font-bold md:leading-18 md:w-82.5 md:mx-auto lg:mx-0"
               as="h1"
             >
               {title}
@@ -66,20 +95,27 @@ const BenefitsOfPersonalization: React.FC<Props> = ({
             <YText
               fontSize={FontSize.SM}
               lineHeight={FontLineHeight.Relaxed}
-              className="relative  text-gray-300 mb-10 md:text-base md:leading-11 md:w-138.6 md:mx-auto lg:mx-0"
+              className="relative text-gray-300 mb-10 md:text-base md:leading-11 md:w-138.6 md:mx-auto lg:mx-0"
               as="p"
             >
               {description}
             </YText>
-            <YButtonGroup
-              onChange={handleFrameChange}
-              className="z-10 mb-7.5 lg:transform lg:-translate-x-1/2 lg:left-1/2 lg:absolute lg:bottom-35"
-              buttons={buttons}
-            />
+            {screenReady && (
+              <YButtonGroup
+                onChange={handleFrameChange}
+                className="z-10 mb-7.5 lg:transform lg:-translate-x-1/2 lg:left-1/2 lg:absolute lg:bottom-35"
+                buttons={buttonsToShow}
+              />
+            )}
           </div>
           <AnimatePresence exitBeforeEnter>
             <motion.div {...motionProps}>
-              <Frame frames={frames} activeFrame={activeFrame} />
+              {screenReady && (
+                <PersonalizationFrame
+                  frames={frames}
+                  activeFrame={activeFrame}
+                />
+              )}
             </motion.div>
           </AnimatePresence>
         </div>

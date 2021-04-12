@@ -3,15 +3,17 @@ import React, { createElement } from 'react';
 import { FontSize, FontWeight } from '@/enums/font';
 
 import YText from '@/components/YText';
+import dynamic from 'next/dynamic';
 
 interface Props {
   as?: keyof JSX.IntrinsicElements;
   active?: boolean;
-  onClick?: () => void;
-  icon: JSX.Element;
+  onClick?: (service: Props['title']) => void;
+  icon: string;
   title: string;
   className?: string;
   interactive?: boolean;
+  iconGreen?: boolean;
 }
 
 const ServiceButton: React.FC<Props> = ({
@@ -22,11 +24,12 @@ const ServiceButton: React.FC<Props> = ({
   active,
   as = 'div',
   interactive = true,
+  iconGreen,
 }) => {
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onClick();
+    onClick(title);
   };
 
   const iconClasses = [
@@ -37,11 +40,18 @@ const ServiceButton: React.FC<Props> = ({
     'justify-center',
     'items-center',
     'fill-current',
+    iconGreen ? 'text-primary' : '',
   ].join(' ');
+
+  const Icon = dynamic(() => import(`@/assets/icons/${icon}.svg`), {
+    ssr: false,
+  });
 
   const children = (
     <>
-      <div className={iconClasses}>{icon}</div>
+      <div className={iconClasses}>
+        <Icon />
+      </div>
       <div>
         <YText
           fontSize={FontSize.XS}

@@ -1,41 +1,25 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import { ScreenSize } from '@/enums/screenSize';
 import { ButtonShape, ButtonSize } from '@/enums/components';
 
-import useBreakpoint from '@/hooks/useBreakpoint';
-
-import PulseBackground from './PulseBackground';
-import YCardStack from '@/components/YCardStack';
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 import YLink from '@/components/YLink';
 import YButton from '@/components/YButton';
 
-import PhonePerspective from '@/assets/other/phone-perspective.svg';
-import PhonePerspectiveSM from '@/assets/other/phone-perspective-sm.svg';
-import Pulse7 from '@/assets/pulse/pulse-7.svg';
-import Pulse3 from '@/assets/pulse/pulse-3.svg';
-
-import style from './DataPulse.module.css';
+import { BackgroundProps } from './Background';
 
 interface ButtonProps {
   text: string;
   link: string;
 }
 
-interface Card {
-  Icon: JSX.Element;
-  title: string;
-  description: string;
-}
-
-interface Props {
+interface Props extends BackgroundProps {
   title: string;
   description: string;
   buttonProps: ButtonProps;
-  cards: Card[];
 }
 
 const DataPulse: React.FC<Props> = ({
@@ -44,39 +28,35 @@ const DataPulse: React.FC<Props> = ({
   buttonProps,
   cards,
 }) => {
-  const { screenSize, screenReady } = useBreakpoint();
+  const Background = dynamic(() => import('./Background'), { ssr: false });
 
   return (
     <>
-      <div className="relative w-full overflow-hidden md:h-210">
-        <div className="absolute overflow-hidden -z-10 top-0 bottom-0 w-full md:left-1/2 md:transform md:-translate-x-1/2 md:w-420 md:rounded-2.5xl">
-          <div className="absolute top-0 z-10 right-0">
-            {screenSize == ScreenSize.SM ? (
-              <PhonePerspectiveSM />
-            ) : (
-              <PhonePerspective />
-            )}
-          </div>
-          {screenReady && <Background cards={cards} />}
-        </div>
-        <div className="container relative h-full mb-10">
-          <div className="relative z-10 mt-111.1 w-full text-center md:mt-0 md:text-left md:top-45 md:w-97.5">
-            <YHeading className="mb-3" as="p" {...titleProps[screenSize]}>
+      <div className="relative w-full overflow-hidden lg:h-210">
+        <div className="container relative h-full pb-10 pt-111.1 lg:pt-0">
+          <Background cards={cards} />
+          <div className="relative z-10 w-full text-center lg:text-left lg:top-45 lg:w-97.5">
+            <YHeading
+              className="text-white mb-3 lg:text-3xl lg:leading-18 lg:font-bold"
+              fontSize={FontSize.XL}
+              fontWeight={FontWeight.ExtraBold}
+              as="h1"
+            >
               {title}
             </YHeading>
             <YText
-              {...textProps[screenSize]}
-              className="text-gray-300 mb-4 md:mb-5"
-              lineHeight={FontLineHeight.Loose}
+              fontSize={FontSize.SM}
+              lineHeight={FontLineHeight.Relaxed}
+              className="text-gray-300 mb-4 max-w-md mx-auto lg:mb-5 lg:text-base lg:leading-11"
               as="p"
             >
               {description}
             </YText>
             <YLink href={buttonProps.link}>
               <YButton
+                className="px-4.5 py-2.5 text-xs leading-5 lg:px-5 lg:py-3 lg:text-sm lg:leading-6"
                 shape={ButtonShape.Round}
                 shadow
-                buttonSize={buttonSize[screenSize]}
               >
                 {buttonProps.text}
               </YButton>
@@ -87,129 +67,5 @@ const DataPulse: React.FC<Props> = ({
     </>
   );
 };
-
-const buttonSize = {
-  [ScreenSize.SM]: ButtonSize.SM,
-  [ScreenSize.MD]: ButtonSize.MD,
-};
-
-const titleProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.XL,
-    fontWeight: FontWeight.ExtraBold,
-  },
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Relaxed,
-  },
-};
-const textProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Relaxed,
-  },
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Loose,
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
-
-export const Background: React.FC<{
-  cards: Props['cards'];
-}> = ({ cards }) => {
-  return (
-    <>
-      <div
-        className={[
-          'absolute',
-          '-z-10',
-          'h-500 md:h-535',
-          'pl-124.1 md:pl-40',
-          'whitespace-nowrap',
-          style.bgGradient,
-          style.skew,
-        ].join(' ')}
-      >
-        <div className="relative h-full w-224.1 inline-block">
-          <div className="absolute bottom-200 h-223.6 w-224.1 whitespace-normal md:bottom-72">
-            {useMemo(
-              () =>
-                cards.map((card, index) => (
-                  <YCardStack
-                    className="drop-shadow"
-                    {...getStackProps(card, index)}
-                  />
-                )),
-              [cards]
-            )}
-            <PulseBackground />
-          </div>
-        </div>
-        <div
-          className={[
-            'relative inline-block h-500 w-52.5 md:h-535',
-            style.sideWall,
-          ].join(' ')}
-        >
-          <div className="relative top-70 md:top-233">
-            <Pulse7 />
-          </div>
-        </div>
-        <div
-          className={[
-            'relative inline-block h-full w-185.5 md:w-156',
-            style.bgGradient,
-          ].join(' ')}
-        >
-          <div className="relative h-5 w-34 top-128.5 md:top-291.5">
-            <Pulse3 />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-const grayCard = { cardClasses: 'card-gray' };
-const blueCard = { cardClasses: 'card-blue' };
-
-const getStackProps = (topCard: Card, index: number) => {
-  const className = classesByStack[index];
-  let cards = stackCards[index];
-  cards.push({ ...topCard, cardClasses: topCardClasses[index] });
-
-  return { className, cards };
-};
-
-// cards in each stack
-const stackCards = [
-  [grayCard, grayCard],
-  [],
-  [grayCard, grayCard, grayCard],
-  [grayCard, blueCard],
-  [grayCard],
-  [grayCard],
-  [grayCard, blueCard, grayCard],
-];
-
-// position classnames for each stack
-const classesByStack = [
-  '-left-8 top-7.5',
-  'top-30.5 left-74.6',
-  'left-auto -top-2 right-33',
-  '-left-8 top-91.6',
-  'top-114.1 left-74.6',
-  'left-auto top-81.6 right-33',
-  'left-auto bottom-1 right-33',
-];
-
-// cardCasses for each top card on stack (empty are default -> "card-white")
-const topCardClasses = [
-  '',
-  '',
-  'card-green',
-  '',
-  'card-orange',
-  'card-blue',
-  '',
-];
 
 export default DataPulse;

@@ -10,11 +10,10 @@ export default {
   component: BenefitsOfPersonalization,
 };
 
-const buttons = [
-  { [ScreenSize.MD]: 'Websites & Apps', [ScreenSize.SM]: 'Website' },
-  { [ScreenSize.MD]: 'Social Ads', [ScreenSize.SM]: 'Mobile' },
-  { [ScreenSize.MD]: 'Email Marketing', [ScreenSize.SM]: 'Email' },
-];
+const buttons = {
+  [ScreenSize.MD]: ['Websites & Apps', 'Social Ads', 'Email Marketing'],
+  [ScreenSize.SM]: ['Website', 'Mobile', 'Email'],
+};
 
 const title = 'Benefits of Personalization';
 
@@ -40,22 +39,22 @@ const reviews = [
 
 const articles = [
   {
-    icon: 'target.svg',
+    icon: 'target',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },
   {
-    icon: 'sandbox.svg',
+    icon: 'sandbox',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },
   {
-    icon: 'directions.svg',
+    icon: 'directions',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },
   {
-    icon: 'code.svg',
+    icon: 'code',
     title: loremIpsumTitle,
     description: loremIpsumDescription,
   },

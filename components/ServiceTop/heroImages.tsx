@@ -28,7 +28,7 @@ import style from './heroStyles.module.css';
 
 interface HeroVariants {
   [ScreenSize.SM]: JSX.Element;
-  [ScreenSize.MD]: JSX.Element;
+  [ScreenSize.LG]: JSX.Element;
 }
 
 const affiliateMarketing = (
@@ -123,34 +123,34 @@ const conversionOptimizationSM = (
 export default {
   [Service.AffiliateMarketing]: {
     [ScreenSize.SM]: affiliateMarketingSM,
-    [ScreenSize.MD]: affiliateMarketing,
+    [ScreenSize.LG]: affiliateMarketing,
   },
   [Service.IntegrationImplementation]: {
     [ScreenSize.SM]: integrationImplementationSM,
-    [ScreenSize.MD]: integrationImplementation,
+    [ScreenSize.LG]: integrationImplementation,
   },
   [Service.OnlineAdvertising]: {
     [ScreenSize.SM]: onlineAdvertisingSM,
-    [ScreenSize.MD]: onlineAdvertising,
+    [ScreenSize.LG]: onlineAdvertising,
   },
   [Service.EmailMarketing]: {
     [ScreenSize.SM]: emailMarketingSM,
-    [ScreenSize.MD]: emailMarketing,
+    [ScreenSize.LG]: emailMarketing,
   },
   [Service.Personalization]: {
     [ScreenSize.SM]: personalizationSM,
-    [ScreenSize.MD]: personalization,
+    [ScreenSize.LG]: personalization,
   },
   [Service.MarketingAutomation]: {
     [ScreenSize.SM]: marketingAutomationSM,
-    [ScreenSize.MD]: marketingAutomation,
+    [ScreenSize.LG]: marketingAutomation,
   },
   [Service.DataAnalytics]: {
     [ScreenSize.SM]: dataAnalyticsSM,
-    [ScreenSize.MD]: dataAnalytics,
+    [ScreenSize.LG]: dataAnalytics,
   },
   [Service.ConversionOptimization]: {
     [ScreenSize.SM]: conversionOptimizationSM,
-    [ScreenSize.MD]: conversionOptimization,
+    [ScreenSize.LG]: conversionOptimization,
   },
-} as Record<Service, JSX.Element | HeroVariants>;
+} as Record<Service, HeroVariants>;

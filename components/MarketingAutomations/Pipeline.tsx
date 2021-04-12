@@ -1,4 +1,5 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 
 import { Elapsed } from '@/enums/components';
 import { FontSize, FontWeight } from '@/enums/font';
@@ -25,6 +26,11 @@ const Pipeline: React.FC<{
     const index = Number(elapsed);
     const { bgColor, fontColor } = getColorClasses(index);
 
+    const Logo = dynamic(
+      () => import(`@/assets/icons/${actions[index].logo}.svg`),
+      { ssr: false }
+    );
+
     return (
       <div
         key={Elapsed[index]}
@@ -33,6 +39,7 @@ const Pipeline: React.FC<{
         <YHeading
           fontSize={FontSize.XXS}
           fontWeight={FontWeight.SemiBold}
+          className="text-white"
           as="p"
         >
           {Elapsed[index]}
@@ -47,7 +54,7 @@ const Pipeline: React.FC<{
               fontColor,
             ].join(' ')}
           >
-            {actions[index].logo}
+            <Logo />
           </div>
           {![0, 6].includes(index) && (
             <div className={[...textboxClasses, bgColor, fontColor].join(' ')}>
@@ -55,7 +62,11 @@ const Pipeline: React.FC<{
             </div>
           )}
           {[2, 3, 4].includes(index) && (
-            <div className={[...textboxClasses, 'bg-gray-700'].join(' ')}>
+            <div
+              className={[...textboxClasses, 'text-white bg-gray-700'].join(
+                ' '
+              )}
+            >
               {actions[index].followUp}
             </div>
           )}

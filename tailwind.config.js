@@ -247,10 +247,13 @@ const spacing = {
   237: rem(948),
   250: rem(1000),
   291.5: rem(1166),
+  377.5: rem(1510),
   420: rem(1680),
   500: rem(2000),
   535: rem(2140),
+  625: rem(2500),
   lg: rem(1024),
+  xl: rem(1280),
 };
 
 const minHeight = {
@@ -315,7 +318,12 @@ const inset = {
 };
 
 const screens = {
-  sm: '414px',
+  xs: '414px',
+  sm: '640px',
+  md: '768px',
+  lg: '1080px',
+  xl: '1280px',
+  '2xl': '1536px',
 };
 
 module.exports = {

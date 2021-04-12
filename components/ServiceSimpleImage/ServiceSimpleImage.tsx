@@ -1,10 +1,7 @@
 import React from 'react';
 
 import { TextPosition } from '@/enums/components';
-import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-
-import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -24,41 +21,48 @@ const ServiceSimpleImage: React.FC<Props> = ({
   image,
   textPosition = TextPosition.Right,
 }) => {
-  const { screenSize } = useBreakpoint();
-
   return (
-    <section className="w-full pt-12.5 pb-10 md:py-30 border-b border-soft">
-      <div className="container md:px-0">
+    <section className="w-full pt-12.5 pb-10 lg:py-30 border-b border-soft">
+      <div className="container lg:px-0">
         <div
           className={[
             'relative',
-            'md:h-119',
-            'md:w-162',
-            'md:transform',
+            'lg:h-119',
+            'lg:w-162',
+            'lg:transform',
             ...containerClasses[textPosition],
           ].join(' ')}
         >
-          <div className="w-full h-224 mb-10 md:mb-0 md:px-auto">{image}</div>
+          <div className="w-full h-224 mb-10 lg:mb-0 lg:px-auto">{image}</div>
           <div
             className={[
-              'md:absolute',
-              'md:w-100',
-              'md:top-1/2',
-              'md:transform',
-              'md:-translate-y-1/2',
+              'lg:absolute',
+              'lg:w-100',
+              'lg:top-1/2',
+              'lg:transform',
+              'lg:-translate-y-1/2',
               ...textBoxClasses[textPosition],
             ].join(' ')}
           >
             <YHeading
               {...titleProps}
-              className="text-gray-400 hidden md:block mb-3"
+              className="text-gray-400 hidden lg:block mb-3"
             >
               {title}
             </YHeading>
-            <YHeading className="mb-2 md:mb-4" {...subtitleProps[screenSize]}>
+            <YHeading
+              fontSize={FontSize.LG}
+              className="text-white mb-2 lg:mb-4 lg:text-xxl lg:leading-13"
+              as="h2"
+            >
               {subtitle}
             </YHeading>
-            <YText className="text-gray-400" {...textProps[screenSize]}>
+            <YText
+              fontSize={FontSize.SM}
+              lineHeight={FontLineHeight.Relaxed}
+              className="text-gray-400 lg:text-base lg:leading-9"
+              as="p"
+            >
               {text}
             </YText>
           </div>
@@ -69,13 +73,13 @@ const ServiceSimpleImage: React.FC<Props> = ({
 };
 
 const textBoxClasses = {
-  [TextPosition.Left]: ['md:-left-125'],
-  [TextPosition.Right]: ['md:-right-125'],
+  [TextPosition.Left]: ['lg:-left-125'],
+  [TextPosition.Right]: ['lg:-right-125'],
 };
 
 const containerClasses = {
-  [TextPosition.Left]: ['md:mr-0', 'md:ml-auto', 'md:translate-x-16.6'],
-  [TextPosition.Right]: ['md:ml-0', 'md:mr-auto', 'md:-translate-x-16.6'],
+  [TextPosition.Left]: ['lg:mr-0', 'lg:ml-auto', 'lg:translate-x-16.6'],
+  [TextPosition.Right]: ['lg:ml-0', 'lg:mr-auto', 'lg:-translate-x-16.6'],
 };
 
 const titleProps = {
@@ -84,28 +88,5 @@ const titleProps = {
   lineHeight: FontLineHeight.Relaxed,
   as: 'h1',
 } as Parameters<typeof YHeading>[0];
-
-const subtitleProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.LG,
-    as: 'h2',
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize.XXL,
-    as: 'h2',
-  },
-} as Record<ScreenSize, Parameters<typeof YHeading>[0]>;
-
-const textProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'p',
-  },
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'p',
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
 
 export default ServiceSimpleImage;

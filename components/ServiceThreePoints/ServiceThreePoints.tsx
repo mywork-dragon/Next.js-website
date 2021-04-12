@@ -2,9 +2,6 @@ import React from 'react';
 
 import { ThreePoints } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import { ScreenSize } from '@/enums/screenSize';
-
-import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -42,8 +39,6 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
   type,
   ...props
 }) => {
-  const { screenSize } = useBreakpoint();
-
   if (type == ThreePoints.Articles) {
     /**
      * Type: Articles
@@ -56,21 +51,24 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
           <YHeading {...titleProps[type]} className={titleClasses.join(' ')}>
             {title}
           </YHeading>
-          <YHeading {...subtitleProps[screenSize]}>{subtitle}</YHeading>
-          <div className="grid grid-cols-1 mt-10 mb-25 gap-10 md:grid-cols-3 md:gap-42.5">
-            {points.map((article) => (
-              <article
-                key={article.text}
-                className="w-full relative px-1 md:px-0"
-              >
-                <div className="relative left-1/2 transform -translate-x-1/2 w-67.5 h-47.5 mb-8 md:w-80 md:h-60 md:mb-10">
-                  {article.image}
+          <YHeading {...subtitleProps}>{subtitle}</YHeading>
+          <div className="grid grid-cols-1 mt-10 mb-25 gap-10 lg:grid-cols-3 lg:gap-42.5">
+            {points.map(({ text, image, heading }, index) => (
+              <article key={index} className="w-full relative px-1 lg:px-0">
+                <div className="relative left-1/2 transform -translate-x-1/2 w-67.5 h-47.5 mb-8 lg:w-80 lg:h-60 lg:mb-10">
+                  {image}
                 </div>
-                <YHeading className="md:w-3/4 md:mx-auto" {...pointsProps}>
-                  {article.heading}
+                <YHeading
+                  className="text-white lg:w-3/4 lg:mx-auto"
+                  {...pointsProps}
+                >
+                  {heading}
                 </YHeading>
-                <YText className="text-gray-400 mt-2" {...articleTextProps}>
-                  {article.text}
+                <YText
+                  className="text-gray-400 mt-2 max-w-md mx-auto lg:mx-0"
+                  {...articleTextProps}
+                >
+                  {text}
                 </YText>
               </article>
             ))}
@@ -84,43 +82,51 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
      */
     const { description, cover, points } = props as OrderedProps;
 
-    return screenSize ? (
+    return (
       <section className={sectionClasses.join(' ')}>
         <div className={containerClasses.join(' ')}>
-          <div className="relative left-1/2 transform -translate-x-1/2 w-103 h-72.5 mb-7.5 md:w-153 md:h-112.5 md:mb-15">
+          <div className="relative left-1/2 transform -translate-x-1/2 w-103 h-72.5 mb-7.5 lg:w-153 lg:h-112.5 lg:mb-15">
             {cover}
           </div>
           <YHeading {...titleProps[type]} className={titleClasses.join(' ')}>
             {title}
           </YHeading>
-          <YHeading {...subtitleProps[screenSize]}>{subtitle}</YHeading>
+          <YHeading {...subtitleProps}>{subtitle}</YHeading>
           <YText
-            {...descriptionProps[screenSize]}
-            className="text-gray-400 mt-2 md:mt-4 md:w-125 md:mx-auto"
+            fontSize={FontSize.SM}
+            lineHeight={FontLineHeight.Relaxed}
+            className="text-gray-400 mt-2 max-w-md mx-auto lg:mt-4 lg:w-125 lg:text-base lg:leading-9"
+            as="p"
           >
             {description}
           </YText>
-          <ol className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar list-none my-8 mb-16 md:mb-25 md:mt-15">
-            {points.map((article, index) => (
+          <ol className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar list-none my-8 mb-16 pb-5 lg:mb-25 lg:mt-15">
+            {points.map(({ text }, index) => (
               <li
-                key={article.text}
+                key={index}
                 className={[
-                  index == 0 ? '' : 'ml-6 md:ml-8',
+                  index == 0 ? '' : 'ml-6 lg:ml-8',
                   'w-70 h-47 p-7 border border-blue-100 rounded-xl inline-block text-left align-text-top',
                 ].join(' ')}
               >
-                <YHeading className="text-shadow-blue" {...indexProps}>
+                <YHeading
+                  className="text-white text-shadow-blue"
+                  {...indexProps}
+                >
                   {index}
                 </YHeading>
-                <YHeading className="whitespace-normal mt-2" {...pointsProps}>
-                  {article.text}
+                <YHeading
+                  className="text-white whitespace-normal mt-2"
+                  {...pointsProps}
+                >
+                  {text}
                 </YHeading>
               </li>
             ))}
           </ol>
         </div>
       </section>
-    ) : null;
+    );
   }
 };
 
@@ -129,9 +135,9 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
  */
 const sectionClasses = ['w-full', 'overflow-hidden', 'border-soft', 'border-b'];
 
-const containerClasses = ['container', 'pt-10', 'md:py-30', 'text-center'];
+const containerClasses = ['container', 'pt-10', 'lg:py-30', 'text-center'];
 
-const titleClasses = ['hidden', 'md:block', 'text-gray-400', 'mb-3'];
+const titleClasses = ['hidden', 'lg:block', 'text-gray-400', 'mb-3'];
 
 /**
  * Text props for each region
@@ -151,28 +157,11 @@ const titleProps = {
 } as Record<ThreePoints, Parameters<typeof YHeading>[0]>;
 
 const subtitleProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.LG,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'h2',
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize.XXL,
-    as: 'h2',
-  },
-} as Record<ScreenSize, Parameters<typeof YHeading>[0]>;
-
-const descriptionProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'p',
-  },
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'p',
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
+  fontSize: FontSize.LG,
+  lineHeight: FontLineHeight.Relaxed,
+  as: 'h2',
+  className: 'text-white lg:text-xxl lg:leading-13',
+} as Parameters<typeof YHeading>[0];
 
 const pointsProps = {
   fontSize: FontSize.LG,

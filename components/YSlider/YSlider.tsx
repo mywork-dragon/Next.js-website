@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, m as motion, MotionProps } from 'framer-motion';
 
 import { ArrowType } from '@/enums/components';
@@ -19,10 +19,19 @@ export const YSlider: React.FC<ScrollProps> = ({
   showMoreLabel,
 }) => {
   const [position, setPosition] = useState<'left' | 'right'>('left');
+  const [diff, setDiff] = useState(0);
 
   const sliderContainer = useRef<HTMLDivElement>(null);
-  const diff =
-    sliderContainer.current?.scrollWidth - sliderContainer.current?.clientWidth;
+
+  useEffect(() => {
+    if (sliderContainer.current) {
+      setDiff(
+        sliderContainer.current.scrollWidth -
+          sliderContainer.current.clientWidth
+      );
+    }
+    console.log('hook ran');
+  }, [sliderContainer.current]);
 
   const motionProps = {
     animate: position,
@@ -31,7 +40,7 @@ export const YSlider: React.FC<ScrollProps> = ({
         x: 0,
       },
       right: {
-        x: -diff || 0,
+        x: -diff,
       },
     },
     transition: {

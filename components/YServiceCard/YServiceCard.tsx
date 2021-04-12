@@ -1,20 +1,15 @@
+import dynamic from 'next/dynamic';
 import { m as motion, MotionProps } from 'framer-motion';
 
 import { FontSize } from '@/enums/font';
 import { ButtonShape, ButtonSize } from '@/enums/components';
-import { ScreenSize } from '@/enums/screenSize';
-
-import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 import YButton from '@/components/YButton';
 import YLink from '@/components/YLink';
 
-enum TextSection {
-  Heading = 'heading',
-  Text = 'text',
-}
+import styles from './YServiceCard.module.css';
 
 interface Button {
   text: string;
@@ -22,10 +17,10 @@ interface Button {
 }
 
 export interface Service {
-  icon: JSX.Element;
+  icon: string;
   title: string;
   subtitle: string;
-  description: string;
+  description: string[];
   button: Button;
 }
 
@@ -34,7 +29,7 @@ type Props = Service &
     className?: string;
   };
 
-const ServiceCard: React.FC<Props> = ({
+const YServiceCard: React.FC<Props> = ({
   icon,
   title,
   subtitle,
@@ -43,37 +38,50 @@ const ServiceCard: React.FC<Props> = ({
   className,
   ...props
 }) => {
-  const { screenSize } = useBreakpoint([ScreenSize.XS]);
+  const Icon = dynamic(() => import(`@/assets/icons/${icon}.svg`), {
+    ssr: false,
+  });
 
   // title, subtitle, logo
   const topSection = (
     <div className="flex w-full justify-between items-center border-soft-white border-b pb-3 px-4 sm:pb-5 sm:px-7.5 md:px-8 md:pb-6">
       <div>
-        <YHeading {...getTextProps(TextSection.Heading, screenSize)} as="h2">
+        <YHeading
+          fontSize={FontSize.XS}
+          className="text-white md:text-base md:leading-7"
+          as="h2"
+        >
           {title}
         </YHeading>
-        <YText {...getTextProps(TextSection.Text, screenSize)} as="p">
+        <YText
+          fontSize={FontSize.XXS}
+          className="text-white md:text-xs md:leading-5"
+          as="p"
+        >
           {subtitle}
         </YText>
       </div>
       <div className="w-8 h-8 sm:w-10 sm:h-10 flex flex-shrink-0 items-center justify-center">
-        {icon}
+        <Icon />
       </div>
     </div>
   );
 
-  const points = createPoints(description, screenSize);
-
   const descriptionPoints = (
-    <ul className="px-4 pt-3 sm:px-7.5 sm:pt-5 md:px-8 md:pt-6">
-      {points.map((line) => (
+    <ul
+      className={[
+        'px-4 pt-3 sm:px-7.5 sm:pt-5 md:px-8 md:pt-6',
+        styles.points,
+      ].join(' ')}
+    >
+      {description.map((point) => (
         <YText
-          {...getTextProps(TextSection.Text, screenSize)}
-          key={line}
-          className="py-1 text-white opacity-50"
+          fontSize={FontSize.XXS}
+          key={point}
+          className="py-1 text-white opacity-50 md:text-xs md:leading-5"
           as="li"
         >
-          {line.trim()}
+          {`- ${point}`}
         </YText>
       ))}
     </ul>
@@ -105,45 +113,6 @@ const ServiceCard: React.FC<Props> = ({
   );
 };
 
-const getTextProps = (textSection: TextSection, screenSize: ScreenSize) => {
-  // filter small screen since props for SM and MD are the same
-  const size = screenSize == ScreenSize.XS ? ScreenSize.XS : ScreenSize.MD;
-
-  return textProps[textSection][size];
-};
-
-const textProps = {
-  [TextSection.Heading]: {
-    [ScreenSize.MD]: {
-      fontSize: FontSize.MD,
-    },
-    [ScreenSize.XS]: {
-      fontSize: FontSize.XS,
-    },
-  },
-  [TextSection.Text]: {
-    [ScreenSize.MD]: {
-      fontSize: FontSize.XS,
-    },
-    [ScreenSize.XS]: {
-      fontSize: FontSize.XXS,
-    },
-  },
-} as Record<TextSection, Record<ScreenSize, Parameters<typeof YText>[0]>>;
-
-// splits description and creates bullet points
-/**
- * @TODO review this in case it will be passed differently,
- * or needs to be shortened for smaller breakpoints */
-const createPoints = (string: string, screenSize: ScreenSize) => {
-  // split points
-  const points = string.split(',').map((subStr) => `- ${subStr.trim()}`);
-
-  // filter according to size
-  const displayItems = screenSize == ScreenSize.XS ? 4 : 6;
-  return points.slice(0, displayItems);
-};
-
 const containerClasses = [
   'flex',
   'flex-col',
@@ -154,4 +123,4 @@ const containerClasses = [
   'md:py-8',
 ];
 
-export default ServiceCard;
+export default YServiceCard;

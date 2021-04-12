@@ -1,22 +1,16 @@
-import Cart from '@/assets/icons/cart.svg';
-import Envelope from '@/assets/icons/contact/envelope.svg';
-import Facebook from '@/assets/icons/facebook-simple.svg';
-
-import { Elapsed } from '@/enums/components';
-
 export const partners = [
   {
-    logo: 'companies/mixpanel.svg',
+    logo: 'companies/mixpanel',
     link: 'https://mixpanel.com',
     title: 'Mixpanel',
   },
   {
-    logo: 'companies/customer-io.svg',
+    logo: 'companies/customer-io',
     link: 'https://customer.io',
     title: 'Customer IO',
   },
   {
-    logo: 'companies/segment.svg',
+    logo: 'companies/segment',
     link: 'https://segment.com',
     title: 'Segment',
   },
@@ -25,14 +19,14 @@ export const partners = [
 export const actions = [
   { action: '' },
   { action: '' },
-  { logo: <Cart />, action: 'User has abandoned the cart.' },
+  { logo: 'cart', action: 'User has abandoned the cart.' },
   {
-    logo: <Envelope />,
+    logo: 'contact/envelope',
     action: 'Send "abandoned cart" email.',
     followUp: 'Send a remainder email after some time.',
   },
   {
-    logo: <Facebook />,
+    logo: 'facebook-simple',
     action: 'If the email is opened, retarget him with Facebook ads.',
   },
   { action: '' },
