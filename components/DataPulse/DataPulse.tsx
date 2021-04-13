@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import { ButtonShape, ButtonSize } from '@/enums/components';
+import { ButtonShape } from '@/enums/components';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';

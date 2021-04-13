@@ -65,9 +65,10 @@ const HomeTop: React.FC<Props> = ({
       ].join(' ')}
     >
       {companies.map(({ logo, title, link }) => {
-        const CompanyLogo = dynamic(
-          () => import(`@/assets/icons/${logo}.svg`),
-          { ssr: false }
+        const CompanyLogo = useMemo(
+          () =>
+            dynamic(() => import(`@/assets/icons/${logo}.svg`), { ssr: false }),
+          []
         );
         return (
           <YOutLink

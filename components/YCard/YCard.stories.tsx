@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import YCard from './YCard';
 import YCardBasic from './YCardBasic';
-import CartIcon from '@/assets/icons/cart.svg';
 
 const dummyProps = {
   description: 'Personalized suggestion',
@@ -15,11 +14,7 @@ export default {
 
 export const Default = (): JSX.Element => (
   <>
-    <YCardBasic
-      {...dummyProps}
-      className="inline-block mx-8"
-      Icon={<CartIcon />}
-    />
+    <YCardBasic {...dummyProps} className="inline-block mx-8" icon="cart" />
     <YCardBasic
       {...dummyProps}
       className="inline-block"
@@ -37,7 +32,7 @@ export const HoverEffect = (): JSX.Element => {
         {...dummyProps}
         key="card1"
         className="inline-block mx-8"
-        Icon={<CartIcon />}
+        icon="cart"
         hovered={hovered == 0}
         onHover={() => setHovered(0)}
       />

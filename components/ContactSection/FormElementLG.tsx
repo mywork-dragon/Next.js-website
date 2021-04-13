@@ -15,8 +15,6 @@ export interface FormElementProps {
   fields: Record<FormField, InputField>;
   formTitle: string;
   formButtonText: string;
-  openForm: boolean;
-  setOpenForm: (open: boolean) => void;
   onFormSubmit: (values: Record<string, string>) => void;
 }
 
@@ -25,11 +23,9 @@ const FormElement: React.FC<FormElementProps> = ({
   formTitle,
   formButtonText,
   onFormSubmit,
-  setOpenForm,
 }) => {
   // handles closing of modal on mobile on submit
   const handleSubmit: typeof onFormSubmit = (values) => {
-    setOpenForm(false);
     onFormSubmit(values);
   };
 
@@ -42,7 +38,6 @@ const FormElement: React.FC<FormElementProps> = ({
       },
     },
     onSubmit: handleSubmit,
-    onClose: () => setOpenForm(false),
     title: formTitle,
     style: InputStyle.Light,
     buttonText: formButtonText,

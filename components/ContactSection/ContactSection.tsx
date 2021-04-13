@@ -49,7 +49,12 @@ const ContactSection: React.FC<Props> = ({
             ? import('./FormElementSM')
             : import('./FormElementLG'),
         { ssr: false }
-      ) as React.FC<FormElementProps>,
+      ) as React.FC<
+        FormElementProps & {
+          openForm?: boolean;
+          setOpenForm?: (open: boolean) => void;
+        }
+      >,
     [screenSize]
   );
 

@@ -16,7 +16,7 @@ import style from './DataPulse.module.css';
 import useBreakpoint from '@/hooks/useBreakpoint';
 
 interface Card {
-  Icon: JSX.Element;
+  icon: string;
   title: string;
   description: string;
 }

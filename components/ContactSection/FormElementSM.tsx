@@ -19,12 +19,15 @@ export interface FormElementProps {
   fields: Record<FormField, InputField>;
   formTitle: string;
   formButtonText: string;
-  openForm: boolean;
-  setOpenForm: (open: boolean) => void;
   onFormSubmit: (values: Record<string, string>) => void;
 }
 
-const FormElement: React.FC<FormElementProps> = ({
+const FormElement: React.FC<
+  FormElementProps & {
+    openForm?: boolean;
+    setOpenForm?: (open: boolean) => void;
+  }
+> = ({
   fields,
   formTitle,
   formButtonText,

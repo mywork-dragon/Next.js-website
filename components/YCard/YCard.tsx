@@ -1,4 +1,4 @@
-import React, { createElement, useRef } from 'react';
+import React, { createElement, useMemo, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { AriaButtonProps } from '@react-types/button';
 import { useButton } from '@react-aria/button';
@@ -109,9 +109,13 @@ const YCard: React.FC<Props> = ({
     ? getHoverProps(hovered, AnimateSection.Icon)
     : {};
 
-  const NewIcon = dynamic(() => import(`@/assets/icons/${icon}.svg`), {
-    ssr: false,
-  });
+  const NewIcon = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/icons/${icon}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
 
   const iconElement = createElement(
     iconTag,

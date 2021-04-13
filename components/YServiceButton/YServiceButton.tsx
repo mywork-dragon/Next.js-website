@@ -1,4 +1,4 @@
-import React, { createElement } from 'react';
+import React, { createElement, useMemo } from 'react';
 
 import { FontSize, FontWeight } from '@/enums/font';
 
@@ -43,9 +43,13 @@ const ServiceButton: React.FC<Props> = ({
     iconGreen ? 'text-primary' : '',
   ].join(' ');
 
-  const Icon = dynamic(() => import(`@/assets/icons/${icon}.svg`), {
-    ssr: false,
-  });
+  const Icon = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/icons/${icon}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
 
   const children = (
     <>
