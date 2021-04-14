@@ -19,7 +19,7 @@ const props = {
   title: 'Reviews',
   description: "Join 20,000+ businesses that use Segment's software and APIs.",
   buttonProps: {
-    link: '',
+    link: '/contact',
     text: 'Contact us',
   },
   reviews: [review, { ...review, name: 'Different Guy' }],

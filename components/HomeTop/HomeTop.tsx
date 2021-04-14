@@ -87,7 +87,7 @@ const HomeTop: React.FC<Props> = ({
   const renderButton =
     screenSize == ScreenSize.SM ? (
       <YLink href={buttonProps.link}>
-        <YButton className="mb-10" buttonSize={ButtonSize.LG} shadow>
+        <YButton buttonSize={ButtonSize.LG} className="mb-10" shadow>
           {buttonProps.text}
         </YButton>
       </YLink>

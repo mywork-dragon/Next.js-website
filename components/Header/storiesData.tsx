@@ -1,27 +1,27 @@
 const logo = {
   icon: 'logo-main',
-  link: '#',
+  link: '/home',
 };
 
 const button = {
   text: 'Contact us',
-  link: '#',
+  link: '/contact',
 };
 
 const subItems = [
   {
     text: 'Personalization',
-    link: '#',
+    link: '/',
     icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/personalization.png',
   },
   {
     text: 'Data & Analitics',
-    link: '',
+    link: '/',
     icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/data-analytics.png',
   },
   {
     text: 'Email Marketing',
-    link: '',
+    link: '/',
     icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/email-marketing.png',
   },
   {
@@ -32,25 +32,25 @@ const subItems = [
   },
   {
     text: 'Conversion Optimization',
-    link: '',
+    link: '/',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/conversion-optimization.png',
   },
   {
     text: 'Marketing Automatization',
-    link: '',
+    link: '/',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/marketing-automation.png',
   },
   {
     text: 'Online Advertising',
-    link: '',
+    link: '/',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/online-advertising.png',
   },
   {
     text: 'Integration/Implementation',
-    link: 'services/integration',
+    link: '/services/integration',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/integration-implementation.png',
   },
@@ -63,7 +63,7 @@ const navItems = [
   },
   {
     text: 'Services',
-    link: '#',
+    link: '/',
     subItems,
   },
   {
@@ -72,19 +72,19 @@ const navItems = [
   },
   {
     text: 'Cases',
-    link: '#',
+    link: '/',
   },
   {
     text: 'Partners',
-    link: '#',
+    link: '/',
   },
   {
     text: 'Blog',
-    link: '#',
+    link: '/',
   },
   {
     text: 'Contact',
-    link: '#',
+    link: '/contact',
   },
 ];
 

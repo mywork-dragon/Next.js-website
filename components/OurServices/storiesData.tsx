@@ -9,7 +9,7 @@ const description = [
 ];
 const button = {
   text: 'Contact us',
-  link: '',
+  link: '/contact',
 };
 
 const services = [

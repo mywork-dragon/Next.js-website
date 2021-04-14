@@ -32,7 +32,10 @@ const SubItem: React.FC<Props> = ({ icon, text, link, className }) => {
 
   return (
     <YLink href={link}>
-      <YAnimateItem className={[...containerClasses, className].join(' ')}>
+      <YAnimateItem
+        className={[...containerClasses, className].join(' ')}
+        as="a"
+      >
         {screenSize == ScreenSize.SM ? (
           <YMenuToggle
             type={ToggleType.Plus}

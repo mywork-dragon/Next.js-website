@@ -43,12 +43,14 @@ const AboutContact: React.FC<Props> = ({
       >
         {description}
       </YText>
-      <YButton
-        shadow
-        className="px-5 py-3 text-sm leading-6 md:text-md md:leading-7"
-      >
-        {buttonText}
-      </YButton>
+      <YLink href={link}>
+        <YButton
+          shadow
+          className="px-5 py-3 text-sm leading-6 md:text-md md:leading-7"
+        >
+          {buttonText}
+        </YButton>
+      </YLink>
     </div>
   );
 

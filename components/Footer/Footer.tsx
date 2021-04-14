@@ -57,15 +57,17 @@ function Footer({
 
   const renderListItem = (link: Link) => (
     <li key={link.link} className="mb-3">
-      <YLink as={'a'} href={link.link}>
-        <YText
-          fontSize={FontSize.XXS}
-          fontWeight={FontWeight.SemiBold}
-          lineHeight={FontLineHeight.Loose}
-          className="text-gray-300"
-        >
-          {link.text}
-        </YText>
+      <YLink href={link.link}>
+        <a>
+          <YText
+            fontSize={FontSize.XXS}
+            fontWeight={FontWeight.SemiBold}
+            lineHeight={FontLineHeight.Loose}
+            className="text-gray-300"
+          >
+            {link.text}
+          </YText>
+        </a>
       </YLink>
     </li>
   );

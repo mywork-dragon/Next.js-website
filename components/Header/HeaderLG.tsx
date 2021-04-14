@@ -122,9 +122,9 @@ const HeaderLG: React.FC<Props> = ({
             ].join(' ')}
           >
             <YLink href={logo.link}>
-              <div className="cursor-pointer">
+              <a className="cursor-pointer">
                 <LogoIcon />
-              </div>
+              </a>
             </YLink>
           </div>
           {additionalComponents}

@@ -95,9 +95,9 @@ const YServiceCard: React.FC<Props> = ({
   const buttonElement = (
     <YLink href={button.link}>
       <YButton
-        className="absolute bottom-6 left-7.5 lg:bottom-8 lg:left-8"
         buttonSize={ButtonSize.XS}
         shape={ButtonShape.Round}
+        className="absolute bottom-6 left-7.5 lg:bottom-8 lg:left-8"
         shadow
       >
         {button.text}

@@ -7,6 +7,7 @@ import { Default as OurServices } from '@/components/OurServices/OurServices.sto
 import { Default as BenefitsOfPersonalization } from '@/components/BenefitsOfPersonalization/BenefitsOfPersonalization.stories';
 import { Default as MarketingAutomations } from '@/components/MarketingAutomations/MarketingAutomations.stories';
 import { Default as Reviews } from '@/components/Reviews/Reviews.stories';
+import { Default as Footer } from '@/components/Footer/Footer.stories';
 
 const Test: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const Test: React.FC = () => {
       <BenefitsOfPersonalization />
       <MarketingAutomations />
       <Reviews />
+      <Footer />
     </div>
   );
 };

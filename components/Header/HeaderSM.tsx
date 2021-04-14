@@ -99,9 +99,9 @@ const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
             )}
           >
             <YLink href={logo.link}>
-              <div className="cursor-pointer">
+              <a className="cursor-pointer">
                 <LogoIcon />
-              </div>
+              </a>
             </YLink>
           </div>
           {additionalComponents}

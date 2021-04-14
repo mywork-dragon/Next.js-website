@@ -33,7 +33,7 @@ export const defaultProps = {
     "Join 20000+ businesses that use Segment's software and APIs to collect, clean, and control their customer data.",
   buttonProps: {
     text: 'Learn More',
-    link: '#',
+    link: '/',
   },
   companies,
 };

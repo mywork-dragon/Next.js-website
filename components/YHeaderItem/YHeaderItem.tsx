@@ -71,7 +71,9 @@ const YHeaderItem: React.FC<Props> = ({
         disableMount={disableMount}
       >
         {!subItems ? (
-          <YLink href={link}>{itemText}</YLink>
+          <YLink href={link}>
+            <a>{itemText}</a>
+          </YLink>
         ) : (
           <>
             {itemText}

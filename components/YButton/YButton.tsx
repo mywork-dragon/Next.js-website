@@ -1,4 +1,4 @@
-import { createElement, useRef } from 'react';
+import { createElement, useRef, forwardRef, MutableRefObject } from 'react';
 import { ButtonShape, ButtonSize } from '@/enums/components';
 import styles from './YButton.module.css';
 import { useButton } from '@react-aria/button';
@@ -12,56 +12,64 @@ type Props = AriaButtonProps & {
   className?: string;
 };
 
-export default function YButton({
-  as = 'button',
-  buttonSize = ButtonSize.MD,
-  shape = ButtonShape.Square,
-  shadow = false,
-  children,
-  className: classes,
-  ...props
-}: Props): JSX.Element {
-  const CustomTag = as as keyof JSX.IntrinsicElements;
-  const ref = useRef();
-  const { buttonProps } = useButton(props as AriaButtonProps, ref);
-
-  const defaultClasses = [
-    styles.base,
-    'bg-primary',
-    'rounded',
-    'font-serif',
-    'font-semibold',
-    'text-white',
-  ];
-
-  const shapeClass = shape === ButtonShape.Square ? '' : 'rounded-4xl';
-  const shadowClass = shadow ? styles.shadow : '';
-
-  const filteredSizeClasses = filterSizeClasses(
-    ['px', 'py', 'text', 'leading'],
-    classes,
-    sizeClasses[buttonSize]
-  );
-
-  const className = [
-    ...filterColorClass(classes, defaultClasses),
-    ...filteredSizeClasses,
-    shapeClass,
-    shadowClass,
-    classes,
-  ].join(' ');
-
-  return createElement(
-    CustomTag,
+const YButton = forwardRef(
+  (
     {
-      className,
-      ref,
-      ...buttonProps,
-    },
-    children,
-    ''
-  );
-}
+      as = 'button',
+      buttonSize = ButtonSize.MD,
+      shape = ButtonShape.Square,
+      shadow = false,
+      children,
+      className: classes,
+      ...props
+    }: Props,
+    forwardedRef?: MutableRefObject<HTMLElement>
+  ): JSX.Element => {
+    const CustomTag = as as keyof JSX.IntrinsicElements;
+
+    const fallbackRef = useRef();
+    const ref = forwardedRef || fallbackRef;
+
+    const { buttonProps } = useButton({ ...props } as AriaButtonProps, ref);
+
+    const defaultClasses = [
+      styles.base,
+      'bg-primary',
+      'rounded',
+      'font-serif',
+      'font-semibold',
+      'text-white',
+    ];
+
+    const shapeClass = shape === ButtonShape.Square ? '' : 'rounded-4xl';
+    const shadowClass = shadow ? styles.shadow : '';
+
+    const filteredSizeClasses = filterSizeClasses(
+      ['px', 'py', 'text', 'leading'],
+      classes,
+      sizeClasses[buttonSize]
+    );
+
+    const className = [
+      ...filterColorClass(classes, defaultClasses),
+      ...filteredSizeClasses,
+      shapeClass,
+      shadowClass,
+      classes,
+    ].join(' ');
+
+    return createElement(
+      CustomTag,
+      {
+        className,
+        ref,
+        ...buttonProps,
+      },
+      children,
+      ''
+    );
+  }
+);
 
 const filterSizeClasses = (classType: string[], classes, sizeClasses) => {
   if (!classes) return sizeClasses;
@@ -95,3 +103,5 @@ const sizeClasses = {
   [ButtonSize.MD]: ['px-5', 'py-3', 'text-sm', 'leading-6'],
   [ButtonSize.LG]: ['px-5', 'py-3', 'text-md', 'leading-7'],
 };
+
+export default YButton;

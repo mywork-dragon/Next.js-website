@@ -5,6 +5,7 @@ import { Default as AboutTop } from '@/components/AboutTop/AboutTop.stories';
 import { Default as AboutDifferent } from '@/components/AboutDifferent/AboutDifferent.stories';
 import { Default as AboutTeam } from '@/components/AboutTeam/AboutTeam.stories';
 import { Default as AboutContact } from '@/components/AboutContact/AboutContact.stories';
+import { Default as Footer } from '@/components/Footer/Footer.stories';
 
 const About: React.FC = () => (
   <div className="w-full bg-secondary">
@@ -13,6 +14,7 @@ const About: React.FC = () => (
     <AboutDifferent />
     <AboutTeam />
     <AboutContact />
+    <Footer />
   </div>
 );
 

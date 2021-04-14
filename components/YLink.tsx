@@ -10,8 +10,8 @@ export default function YLink({
 }: Props): JSX.Element {
   // TODO: Fix Localization
   return (
-    <Link href={href} {...props}>
-      <>{children}</>
+    <Link href={href} {...props} passHref>
+      {children}
     </Link>
   );
 }

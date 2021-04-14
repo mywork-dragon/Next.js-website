@@ -111,7 +111,7 @@ const Reviews: React.FC<Props> = ({
         <YLink href={buttonProps.link}>
           <YButton
             shape={ButtonShape.Round}
-            className="bg-blue-100 order-2 px-4.6 py-1.9 text-xxs leading-4 lg:text-base lg:leading-11 lg:py-2 lg:px-5 lg:rounded lg:shadow-blue lg:mt-5"
+            className="order-2 bg-blue-100 px-4.6 py-1.9 text-xxs leading-4 lg:text-base lg:leading-11 lg:py-2 lg:px-5 lg:rounded lg:shadow-blue lg:mt-5"
           >
             {buttonProps.text}
           </YButton>

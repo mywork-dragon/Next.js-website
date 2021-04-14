@@ -10,7 +10,7 @@ const description =
   "Join 20000+ businesses that use Segment's software and APIs to collect, clean, and control their customer data.";
 const buttonProps = {
   text: 'Contact us',
-  link: '',
+  link: '/contact',
 };
 
 const props = {
