@@ -1,5 +1,6 @@
-import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 import { m as motion, MotionProps } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
 import { FontSize } from '@/enums/font';
 import { ButtonShape, ButtonSize } from '@/enums/components';
@@ -38,9 +39,13 @@ const YServiceCard: React.FC<Props> = ({
   className,
   ...props
 }) => {
-  const Icon = dynamic(() => import(`@/assets/icons/${icon}.svg`), {
-    ssr: false,
-  });
+  const Icon = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/icons/${icon}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
 
   // title, subtitle, logo
   const topSection = (

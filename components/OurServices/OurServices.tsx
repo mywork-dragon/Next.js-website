@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -83,8 +83,12 @@ const OurServices: React.FC<Props> = ({
         <div className="relative h-7 w-full overflow-x-auto no-scrollbar mt-3 lg:mt-4">
           <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex lg:transform-none">
             {partners.map((partner) => {
-              const Logo = dynamic(
-                () => import(`@/assets/icons/${partner.logo}.svg`)
+              const Logo = useMemo(
+                () =>
+                  dynamic(() => import(`@/assets/icons/${partner.logo}.svg`), {
+                    ssr: false,
+                  }),
+                []
               );
 
               return (
