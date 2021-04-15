@@ -2,16 +2,6 @@ import { ThreePoints } from '@/enums/components';
 
 import { ArticlesProps, OrderedProps } from './ServiceThreePoints';
 
-import Integration1 from '@/assets/services-points-images/integration-implementation-1-1.svg';
-import Integration2 from '@/assets/services-points-images/integration-implementation-1-2.svg';
-import Integration3 from '@/assets/services-points-images/integration-implementation-1-3.svg';
-
-import Conversion1 from '@/assets/services-points-images/conversion-optimization-2-1.svg';
-import Conversion2 from '@/assets/services-points-images/conversion-optimization-2-2.svg';
-import Conversion3 from '@/assets/services-points-images/conversion-optimization-2-3.svg';
-
-import Affiliate1 from '@/assets/services-points-images/affiliate-marketing-1.svg';
-
 const heading = 'Lowered bounce rate';
 const text =
   'When using personalization you keep in mind the needs and preferences of your audience so that you market the right product to the right person at the right time.';
@@ -20,17 +10,17 @@ const integrationPoints = [
   {
     heading,
     text,
-    image: <Integration1 />,
+    image: 'integration-implementation-1',
   },
   {
     heading,
     text,
-    image: <Integration2 />,
+    image: 'integration-implementation-2',
   },
   {
     heading,
     text,
-    image: <Integration3 />,
+    image: 'integration-implementation-3',
   },
 ];
 
@@ -38,17 +28,17 @@ const conversionPoints = [
   {
     heading,
     text,
-    image: <Conversion1 />,
+    image: 'conversion-optimization-2',
   },
   {
     heading,
     text,
-    image: <Conversion2 />,
+    image: 'conversion-optimization-3',
   },
   {
     heading,
     text,
-    image: <Conversion3 />,
+    image: 'conversion-optimization-4',
   },
 ];
 
@@ -84,5 +74,5 @@ export const affiliate1 = {
   points: affiliatePoints,
   description: text,
   type: ThreePoints.OrderedList,
-  cover: <Affiliate1 />,
+  cover: 'affiliate-marketing-1',
 } as OrderedProps;

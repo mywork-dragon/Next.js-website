@@ -58,9 +58,9 @@ export enum Service {
   AffiliateMarketing = 'affiliate_marketing',
   Personalization = 'personalization',
   ConversionOptimization = 'conversion_optimization',
-  DataAnalytics = 'data_and_analytics',
+  DataAnalytics = 'data_analytics',
   MarketingAutomation = 'marketing_automation',
-  EmailMarketing = 'eamil_marketing',
+  EmailMarketing = 'email_marketing',
 }
 
 export enum TextPosition {

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
 import { TextPosition } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -10,7 +11,7 @@ interface Props {
   title: string;
   subtitle: string;
   text: string;
-  image: JSX.Element;
+  image: string;
   textPosition?: TextPosition;
 }
 
@@ -21,6 +22,14 @@ const ServiceSimpleImage: React.FC<Props> = ({
   image,
   textPosition = TextPosition.Right,
 }) => {
+  const ImageElement = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/illustrations/${image}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
+
   return (
     <section className="w-full pt-12.5 pb-10 lg:py-30 border-b border-soft">
       <div className="container lg:px-0">
@@ -33,7 +42,9 @@ const ServiceSimpleImage: React.FC<Props> = ({
             ...containerClasses[textPosition],
           ].join(' ')}
         >
-          <div className="w-full h-224 mb-10 lg:mb-0 lg:px-auto">{image}</div>
+          <div className="w-full h-224 mb-10 lg:mb-0 lg:px-auto">
+            <ImageElement />
+          </div>
           <div
             className={[
               'lg:absolute',
