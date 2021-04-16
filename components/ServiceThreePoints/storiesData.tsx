@@ -62,7 +62,7 @@ export const integration1 = {
 } as ArticlesProps;
 
 export const conversion2 = {
-  title: 'Integration / Implementation',
+  title: 'Conversion Optimization',
   subtitle: 'What are the pros?',
   type: ThreePoints.Articles,
   points: conversionPoints,

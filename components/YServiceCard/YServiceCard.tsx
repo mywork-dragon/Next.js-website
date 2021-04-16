@@ -12,17 +12,13 @@ import YLink from '@/components/YLink';
 
 import styles from './YServiceCard.module.css';
 
-interface Button {
-  text: string;
-  link: string;
-}
-
 export interface Service {
   icon: string;
   title: string;
   subtitle: string;
-  description: string[];
-  button: Button;
+  description: string;
+  buttonLink: string;
+  buttonText: string;
 }
 
 type Props = Service &
@@ -35,7 +31,8 @@ const YServiceCard: React.FC<Props> = ({
   title,
   subtitle,
   description,
-  button,
+  buttonLink,
+  buttonText,
   className,
   ...props
 }) => {
@@ -72,35 +69,39 @@ const YServiceCard: React.FC<Props> = ({
     </div>
   );
 
-  const descriptionPoints = (
-    <ul
-      className={[
-        'px-4 pt-3 sm:px-7.5 sm:pt-5 lg:px-8 lg:pt-6',
-        styles.points,
-      ].join(' ')}
-    >
-      {description.map((point) => (
-        <YText
-          fontSize={FontSize.XXS}
-          key={point}
-          className="py-1 text-white opacity-50 lg:text-xs lg:leading-5"
-          as="li"
-        >
-          {`- ${point}`}
-        </YText>
-      ))}
-    </ul>
-  );
+  const descriptionPoints = useMemo(() => {
+    const points = description.split(',').map((point) => point.trim());
+
+    return (
+      <ul
+        className={[
+          'px-4 pt-3 sm:px-7.5 sm:pt-5 lg:px-8 lg:pt-6',
+          styles.points,
+        ].join(' ')}
+      >
+        {points.map((point) => (
+          <YText
+            fontSize={FontSize.XXS}
+            key={point}
+            className="py-1 text-white opacity-50 lg:text-xs lg:leading-5"
+            as="li"
+          >
+            {`- ${point}`}
+          </YText>
+        ))}
+      </ul>
+    );
+  }, []);
 
   const buttonElement = (
-    <YLink href={button.link}>
+    <YLink href={buttonLink}>
       <YButton
         buttonSize={ButtonSize.XS}
         shape={ButtonShape.Round}
         className="absolute bottom-6 left-7.5 lg:bottom-8 lg:left-8"
         shadow
       >
-        {button.text}
+        {buttonText}
       </YButton>
     </YLink>
   );

@@ -12,7 +12,7 @@ const review = {
     '70% increase in revenue following a three-month customer messaging pilot program',
   name: 'Nic Sauriol',
   role: 'Software Development Leader',
-  logo: 'companies/ibm.svg',
+  logo: 'companies/ibm',
 };
 
 const props = {

@@ -108,7 +108,7 @@ const OurServices: React.FC<Props> = ({
   );
 
   return (
-    <section className="w-full overflow-hidden">
+    <section className="w-full overflow-hidden border-soft border-b">
       <div className="pb-10 container lg:px-0 lg:h-195 lg:py-35 lg:w-full lg:flex lg:justify-between">
         {leftSection}
         {rightSection}

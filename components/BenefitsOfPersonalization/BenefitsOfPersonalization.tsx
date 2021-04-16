@@ -9,21 +9,28 @@ import {
 } from 'framer-motion';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+import { ScreenSize } from '@/enums/screenSize';
 
-import { Frames } from './PersonalizationFrame';
+import useBreakpoint from '@/hooks/useBreakpoint';
+
+import { ArticlesFrame, ReviewsFrame } from './PersonalizationFrameLG';
 
 import YButtonGroup from '@/components/YButtonGroup/YButtonGroup';
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
-import useBreakpoint from '@/hooks/useBreakpoint';
-import { ScreenSize } from '@/enums/screenSize';
 
-type ButtonGroup = {
-  [index in ScreenSize]: string[];
+type FrameWithButtons<F extends ArticlesFrame | ReviewsFrame> = F & {
+  buttonSM: string;
+  buttonMD: string;
 };
 
+type Frames = [
+  FrameWithButtons<ReviewsFrame>,
+  FrameWithButtons<ArticlesFrame>,
+  FrameWithButtons<ArticlesFrame>
+];
+
 interface Props {
-  buttons: ButtonGroup;
   title: string;
   description: string;
   frames: Frames;
@@ -39,10 +46,9 @@ const Wave = dynamic(
 const BenefitsOfPersonalization: React.FC<Props> = ({
   title,
   description,
-  buttons,
   frames,
 }) => {
-  const { screenSize, screenReady } = useBreakpoint([ScreenSize.LG]);
+  const { screenSize, screenReady } = useBreakpoint([ScreenSize.MD]);
 
   const [activeFrame, setActiveFrame] = useState(0);
   const [firstRender, setFirstRender] = useState(true);
@@ -73,10 +79,15 @@ const BenefitsOfPersonalization: React.FC<Props> = ({
     [screenSize]
   );
 
+  const getButtonsToShow = (frames: Frames, screenSize: ScreenSize) =>
+    frames.map(({ buttonSM, buttonMD }) =>
+      screenSize == ScreenSize.SM || !buttonMD ? buttonSM : buttonMD
+    );
+
   const buttonsToShow =
     screenSize == ScreenSize.SM
-      ? buttons[ScreenSize.SM]
-      : buttons[ScreenSize.MD];
+      ? getButtonsToShow(frames, ScreenSize.SM)
+      : getButtonsToShow(frames, ScreenSize.MD);
 
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>

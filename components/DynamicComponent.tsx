@@ -20,6 +20,8 @@ import ServiceSimpleImage from '@/components/ServiceSimpleImage';
 import ServiceThreePoints from '@/components/ServiceThreePoints';
 import ServiceFourPoints from '@/components/ServiceFourPoints';
 
+import ContactSection from '@/components/ContactSection';
+
 import Placeholder from './Placeholder';
 import { PageComponent, PostComponent } from '@/types/storyblok';
 import { mapStoryblokProps } from '@/utils/storyblok';
@@ -43,6 +45,7 @@ const Components = {
   ServiceSimpleImage,
   ServiceThreePoints,
   ServiceFourPoints,
+  ContactSection,
 };
 
 interface Props {

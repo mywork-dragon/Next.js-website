@@ -29,14 +29,15 @@ interface Article {
   description: string;
 }
 
-export type Frames = [
-  {
-    reviews: [Review, Review];
-  },
-  {
-    articles: [Article, Article, Article, Article];
-  }
-];
+interface ReviewsFrame {
+  reviews: [Review, Review];
+}
+
+interface ArticlesFrame {
+  articles: [Article, Article, Article, Article];
+}
+
+type Frames = [ReviewsFrame, ArticlesFrame, ArticlesFrame];
 
 interface Props {
   frames: Frames;

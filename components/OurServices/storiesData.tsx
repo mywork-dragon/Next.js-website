@@ -1,15 +1,9 @@
-const description = [
-  'Data & Analitics',
-  'Conversion Optimization',
-  'E-mail marketing',
-  'Social Media Advertising',
-  'Affiliate Marketing',
-  'Integration & Implementation',
-  'Something Else',
-];
+const description =
+  'Data & Analitics, Conversion Optimization, E-mail marketing, Social Media Advertising, Affiliate Marketing, Integration & Implementation, Something Else';
+
 const button = {
-  text: 'Contact us',
-  link: '/contact',
+  buttonText: 'Contact us',
+  buttonLink: '/contact',
 };
 
 const services = [
@@ -17,56 +11,56 @@ const services = [
     title: 'Personalization',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'user',
   },
   {
     title: 'Data & Analicits',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'analytics',
   },
   {
     title: 'E-mail marketing',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'email',
   },
   {
     title: 'Affiliate marketing',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'user-voice',
   },
   {
     title: 'Conversion optimization',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'analise',
   },
   {
     title: 'Marketing automation',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'chip',
   },
   {
     title: 'Social media advertising',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'megaphone',
   },
   {
     title: 'Integration & Implementation',
     subtitle: 'PHP, Node.js',
     description,
-    button,
+    ...button,
     icon: 'code',
   },
 ];
