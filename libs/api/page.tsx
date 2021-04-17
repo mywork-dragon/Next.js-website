@@ -5,10 +5,13 @@ import { DocumentNode, gql } from '@apollo/client';
  */
 export const GET_PAGE: DocumentNode = gql`
   query PageItem($id: ID!) {
-    PageItem(id: $id) {
+    PageItem(id: $id, resolve_relations: "page.header") {
       content {
         _uid
         body
+        header {
+          content
+        }
         component
       }
     }

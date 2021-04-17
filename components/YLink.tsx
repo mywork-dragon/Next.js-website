@@ -1,5 +1,6 @@
+import { HTMLAttributes } from 'react';
+import { useRouter } from 'next/dist/client/router';
 import Link, { LinkProps } from 'next/link';
-import { HTMLAttributes, forwardRef } from 'react';
 
 type Props = LinkProps & HTMLAttributes<HTMLAnchorElement>;
 
@@ -8,9 +9,18 @@ export default function YLink({
   href,
   ...props
 }: Props): JSX.Element {
-  // TODO: Fix Localization
+  const { lang } = useRouter().query;
+
+  /**@TODO add case for typeof URL */
+  const processedHref =
+    typeof href != 'string'
+      ? href
+      : href.includes('[lang]')
+      ? href.replace('[lang]', lang as string)
+      : `/${lang}/${href.replace(/^\/|\/$/g, '')}`;
+
   return (
-    <Link href={href} {...props} passHref>
+    <Link href={processedHref} {...props} passHref>
       {children}
     </Link>
   );

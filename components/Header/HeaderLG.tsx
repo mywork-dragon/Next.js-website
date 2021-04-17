@@ -36,7 +36,7 @@ interface Button {
 interface Props {
   logo: Logo;
   navItems: NavItemInterface[];
-  button: Button;
+  buttonProps: Button;
   onLangChange?: (lang: Language) => any;
   showMoreLabel?: string;
 }
@@ -44,7 +44,7 @@ interface Props {
 const HeaderLG: React.FC<Props> = ({
   logo,
   navItems,
-  button,
+  buttonProps,
   onLangChange,
   showMoreLabel,
 }) => {
@@ -128,7 +128,7 @@ const HeaderLG: React.FC<Props> = ({
             </YLink>
           </div>
           {additionalComponents}
-          <YLink href={button.link}>
+          <YLink href={buttonProps.link}>
             <YButton
               buttonSize={ButtonSize.XS}
               shape={ButtonShape.Round}
@@ -138,7 +138,7 @@ const HeaderLG: React.FC<Props> = ({
                 'whitespace-nowrap',
               ].join(' ')}
             >
-              {button.text}
+              {buttonProps.text}
             </YButton>
           </YLink>
         </div>

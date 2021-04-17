@@ -11,19 +11,21 @@ interface InputField {
   info?: string;
 }
 
-export interface FormElementProps {
-  fields: Record<FormField, InputField>;
-  formTitle: string;
-  formButtonText: string;
-  onFormSubmit: (values: Record<string, string>) => void;
+interface SubmitHandler {
+  (values: Record<string, string>): void;
 }
 
-const FormElement: React.FC<FormElementProps> = ({
-  fields,
-  formTitle,
-  formButtonText,
-  onFormSubmit,
-}) => {
+interface FormElementProps {
+  formTitle: string;
+  formButtonText: string;
+  fields: Record<FormField, InputField>;
+}
+
+const FormElement: React.FC<
+  FormElementProps & {
+    onFormSubmit: SubmitHandler;
+  }
+> = ({ fields, formTitle, formButtonText, onFormSubmit }) => {
   // handles closing of modal on mobile on submit
   const handleSubmit: typeof onFormSubmit = (values) => {
     onFormSubmit(values);

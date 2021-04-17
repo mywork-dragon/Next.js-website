@@ -30,15 +30,15 @@ interface Button {
   link: string;
 }
 
-interface Props {
+export interface HeaderProps {
   logo: Logo;
   navItems: NavItemInterface[];
-  button: Button;
+  buttonProps: Button;
   onLangChange?: (lang: Language) => any;
   showMoreLabel?: string;
 }
 
-const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
+const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
   // control opening and closing of header
   const [showItems, setShowItems] = useState(false);
 
@@ -105,7 +105,7 @@ const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
             </YLink>
           </div>
           {additionalComponents}
-          <YLink href={button.link}>
+          <YLink href={buttonProps.link}>
             <YButton
               buttonSize={ButtonSize.XS}
               shape={ButtonShape.Round}
@@ -115,7 +115,7 @@ const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
                 'whitespace-nowrap',
               ].join(' ')}
             >
-              {button.text.split(' ')[0]}
+              {buttonProps.text.split(' ')[0]}
             </YButton>
           </YLink>
         </div>

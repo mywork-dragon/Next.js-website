@@ -3,8 +3,9 @@ import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { ScreenSize } from '@/enums/screenSize';
+import { FormField } from '@/enums/form';
 
-import { FormElementProps } from './FormElementSM';
+import { FormElementProps, InputField, SubmitHandler } from './FormElementSM';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -53,6 +54,7 @@ const ContactSection: React.FC<Props> = ({
         FormElementProps & {
           openForm?: boolean;
           setOpenForm?: (open: boolean) => void;
+          onFormSubmit: SubmitHandler;
         }
       >,
     [screenSize]
@@ -110,6 +112,11 @@ const ContactSection: React.FC<Props> = ({
     </div>
   );
 
+  const handleSubmit: SubmitHandler = (values) => {
+    /**@TODO connect to segment */
+    console.log(values);
+  };
+
   return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
@@ -123,6 +130,7 @@ const ContactSection: React.FC<Props> = ({
                 {...props}
                 openForm={openForm}
                 setOpenForm={setOpenForm}
+                onFormSubmit={handleSubmit}
               />
             </>
           )}

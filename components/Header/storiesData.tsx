@@ -3,7 +3,7 @@ const logo = {
   link: '/home',
 };
 
-const button = {
+const buttonProps = {
   text: 'Contact us',
   link: '/contact',
 };
@@ -91,5 +91,5 @@ const navItems = [
 export const props = {
   logo,
   navItems,
-  button,
+  buttonProps,
 };

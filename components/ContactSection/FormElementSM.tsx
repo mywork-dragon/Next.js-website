@@ -8,24 +8,28 @@ import YContactForm from '@/components/YContactForm';
 import ExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 
-interface InputField {
+export interface InputField {
   label: string;
   placeholder: string;
   errorMessage?: string;
   info?: string;
 }
 
+export interface SubmitHandler {
+  (values: Record<string, string>): void;
+}
+
 export interface FormElementProps {
-  fields: Record<FormField, InputField>;
   formTitle: string;
   formButtonText: string;
-  onFormSubmit: (values: Record<string, string>) => void;
+  fields: Record<FormField, InputField>;
 }
 
 const FormElement: React.FC<
   FormElementProps & {
     openForm?: boolean;
     setOpenForm?: (open: boolean) => void;
+    onFormSubmit: SubmitHandler;
   }
 > = ({
   fields,

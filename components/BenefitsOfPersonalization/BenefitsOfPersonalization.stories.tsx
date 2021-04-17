@@ -1,7 +1,5 @@
 import BenefitsOfPersonalization from './BenefitsOfPersonalization';
 
-import { ScreenSize } from '@/enums/screenSize';
-
 import style from './waveAnimations.module.scss';
 import Wave from '@/assets/other/wave-md.svg';
 

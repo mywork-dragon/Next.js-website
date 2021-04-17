@@ -2,6 +2,8 @@ import Teaser from './Teaser';
 import Feature from './Feature';
 import Grid from './Grid';
 
+import Header from '@/components/Header';
+
 import HomeTop from '@/components/HomeTop';
 import DataPulse from '@/components/DataPulse';
 import OurServices from '@/components/OurServices';
@@ -30,6 +32,7 @@ const Components = {
   teaser: Teaser,
   grid: Grid,
   feature: Feature,
+  Header,
   HomeTop,
   DataPulse,
   OurServices,

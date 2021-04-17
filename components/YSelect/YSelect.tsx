@@ -12,25 +12,30 @@ import useClickOutside from '@/hooks/useClickOutside';
 import ArrowDown from '@/assets/icons/chevron-down.svg';
 
 import flags from './flags';
+import { useRouter } from 'next/dist/client/router';
 
 interface Props {
-  onChange?: (lang: Language) => any;
   className?: string;
-  current?: Language;
 }
 
-const YSelect: React.FC<Props> = ({
-  className,
-  onChange = () => {},
-  current = Language.UK,
-}) => {
+const YSelect: React.FC<Props> = ({ className }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
+
   useClickOutside(ref, () => setOpen(false));
+
+  const {
+    query: { lang, page },
+    push: routerPush,
+  } = useRouter();
+
+  const current = !lang ? 'uk' : lang;
 
   const onLangClick = (lang: Language) => {
     setOpen(!open);
-    onChange(lang);
+
+    const pageURI = typeof page == 'string' ? page : page.join('/');
+    routerPush(`/${lang}/${pageURI}`);
   };
 
   const flagsToShow = Object.keys(flags).filter((lang) => lang != current);

@@ -8,14 +8,22 @@ import {
   LanguageCodesResponse,
   PageItem,
   PageSlugsResponse,
+  PostComponent,
 } from '@/types/storyblok';
 import { ApolloQueryResult } from '@apollo/client';
 import { NextApiRequest } from 'next';
 import { GET_LANGUAGES } from '@/libs/api/app';
 
-function Home({ res }: DefaultProps<{ PageItem: PageItem }>): JSX.Element {
-  const [story, setStory] = useState<PageItem>(res.data.PageItem);
+function Home({
+  res,
+}: DefaultProps<{
+  PageItem: PageItemWithLayout;
+}>): JSX.Element {
+  const [story, setStory] = useState<PageItemWithLayout>(res.data.PageItem);
   const contentOfStory = story.content;
+
+  const headerContent = story.content.header.content;
+  // const footerContent = story.content.footer.content;
 
   useEffect(() => {
     setStory(res.data.PageItem);
@@ -23,10 +31,14 @@ function Home({ res }: DefaultProps<{ PageItem: PageItem }>): JSX.Element {
 
   useEffect(() => {
     setTimeout(() => initEditor([story, setStory]), 200);
+    console.log(res);
   }, []);
 
   return (
-    <Layout>
+    <Layout
+      headerContent={headerContent}
+      // footerContent={footerContent}
+    >
       <Page content={contentOfStory} />
       <script
         src={
@@ -38,6 +50,13 @@ function Home({ res }: DefaultProps<{ PageItem: PageItem }>): JSX.Element {
 }
 
 export default Home;
+
+type PageItemWithLayout = PageItem & {
+  content: PageItem['content'] & {
+    header: { content: PostComponent };
+    footer: { content: PostComponent };
+  };
+};
 
 type DefaultProps<T> = {
   res: ApolloQueryResult<T>;

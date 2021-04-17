@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { InputStyle, InputType, ToggleType } from '@/enums/components';
+import { FormField } from '@/enums/form';
 import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize } from '@/enums/font';
 
@@ -15,13 +16,6 @@ import YMenuToggle from '@/components/YMenuToggle';
 import styles from './YContactForm.module.css';
 
 import filterPosition from '@/libs/utils/filterPosition';
-
-enum Field {
-  Name = 'name',
-  PhoneNumber = 'phoneNumber',
-  Email = 'email',
-  Comment = 'comment',
-}
 
 interface InputField {
   label: string;
@@ -184,8 +178,8 @@ const getFieldClasses = (type: InputType, screenSize: ScreenSize) =>
   ].join(' ');
 
 const validationRegex = {
-  [Field.Name]: /(.|\s)*\S(.|\s)*/,
-  [Field.Email]: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-  [Field.PhoneNumber]: /[0-9]+/,
+  [FormField.Name]: /(.|\s)*\S(.|\s)*/,
+  [FormField.Email]: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+  [FormField.Phone]: /[0-9]+/,
 };
 export default YContactForm;

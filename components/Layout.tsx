@@ -5,6 +5,9 @@ import { HTMLAttributes } from 'react';
 import Facebook from '@/assets/icons/facebook.svg';
 import LinkedIn from '@/assets/icons/linkedin.svg';
 import Instagram from '@/assets/icons/instagram.svg';
+import SbEditable from 'storyblok-react';
+import DynamicComponent from './DynamicComponent';
+import { Blok, PostComponent } from '@/types/storyblok';
 
 const links = {
   first: [
@@ -48,18 +51,48 @@ const content = {
 
 const contactButton = 'Contact us';
 
-const Layout = ({ children }: HTMLAttributes<HTMLElement>): JSX.Element => (
-  <div className="bg-blue-300 text-white">
-    <Head title="test" description="description" />
-    {children}
-    <Footer
-      links={links}
-      contactDetails={contactDetails}
-      content={content}
-      socialMedia={socialMedia}
-      contactButton={contactButton}
-    />
-  </div>
-);
+// const Layout = ({ children }: HTMLAttributes<HTMLElement>): JSX.Element => (
+//   <div className="bg-blue-300 text-white">
+//     <Head title="test" description="description" />
+//     {children}
+//     <Footer
+//       links={links}
+//       contactDetails={contactDetails}
+//       content={content}
+//       socialMedia={socialMedia}
+//       contactButton={contactButton}
+//     />
+//   </div>
+// );
+
+interface Props {
+  headerContent?: PostComponent;
+  // footerContent?: PostComponent;
+}
+const Layout: React.FC<Props> = ({
+  children,
+  headerContent,
+  // footerContent,
+}) => {
+  return (
+    <div className="bg-blue-300 text-white">
+      <Head title="test" description="description" />
+
+      <SbEditable content={headerContent}>
+        <header>
+          <DynamicComponent blok={headerContent} />
+        </header>
+      </SbEditable>
+
+      {children}
+
+      {/* <SbEditable content={footerContent}>
+        <footer>
+          <DynamicComponent blok={footerContent} />
+        </footer>
+      </SbEditable> */}
+    </div>
+  );
+};
 
 export default Layout;

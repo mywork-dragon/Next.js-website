@@ -1,5 +1,10 @@
 import { PageItem, PostItem, Blok } from '@/types/storyblok';
 import { Company } from '@/components/HomeTop/HomeTop';
+import { FormField } from '@/enums/form';
+import { NavItemInterface } from '@/components/YHeaderItem/YHeaderItem';
+import SubItem, {
+  SubItemInterface,
+} from '@/components/YHeaderSubItem/YHeaderSubItem';
 
 export function initEditor([story, setStory]: [
   PageItem | PostItem,
@@ -42,7 +47,14 @@ export const mapStoryblokProps = (props: Blok): Blok => {
   if (propKeys.includes('buttonText')) {
     newProps.buttonProps = {
       text: props.buttonText,
-      link: props.buttonLink.cached_url,
+      link: props.buttonLink?.cached_url || '',
+    };
+  }
+
+  if (propKeys.includes('logoLink')) {
+    newProps.logo = {
+      icon: props.logoIcon,
+      link: props.logoLink?.cached_url || '',
     };
   }
 
@@ -72,5 +84,72 @@ export const mapStoryblokProps = (props: Blok): Blok => {
     });
   }
 
+  if (propKeys.includes('nameLabel')) {
+    const fields = Object.values(FormField).reduce(
+      (acc, curr) => ((acc[curr] = processFormField(curr, props)), acc),
+      {}
+    );
+    newProps.fields = fields;
+  }
+
+  if (propKeys.includes('articlesFrames')) {
+    newProps.frames = [];
+    newProps.frames[0] = processReviewsFrame(props);
+    newProps.frames = [
+      newProps.frames[0],
+      ...props.articlesFrames.map((article) => processArticlesFrame(article)),
+    ];
+  }
+
+  if (propKeys.includes('navItems')) {
+    newProps.navItems = processNavItems(props.navItems);
+  }
+
   return newProps;
 };
+
+const processReviewsFrame = (props) => ({
+  reviews: props.reviews,
+  buttonSM: props.reviewsButtonSm,
+  buttonLG: props.reviewsButtonLg,
+});
+
+const processArticlesFrame = (article) => ({
+  articles: article.articles,
+  buttonSM: article.buttonSm,
+  buttonLG: article.buttonLg,
+});
+
+const processFormField = (field: FormField, props: any) => {
+  return {
+    label: props[`${field}Label`],
+    placeholder: props[`${field}Placeholder`],
+    errorMessage: props[`${field}ErrorMessage`],
+  };
+};
+
+interface LinkObject {
+  cached_url: string;
+}
+
+const processNavItems = (
+  navItems: Array<
+    NavItemInterface & {
+      link: LinkObject;
+      subItems: Array<SubItemInterface & { link: LinkObject }>;
+    }
+  >
+) =>
+  navItems.map((navItem) => {
+    const link = navItem.link.cached_url;
+    return navItem.subItems?.length
+      ? {
+          ...navItem,
+          link,
+          subItems: navItem.subItems.map((subItem) => ({
+            ...subItem,
+            link: (subItem.link as any).cached_url,
+          })),
+        }
+      : { link, text: navItem.text };
+  });

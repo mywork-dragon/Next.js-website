@@ -17,7 +17,7 @@ const fields = {
     placeholder: 'Your Name',
     errorMessage: 'This field is required',
   },
-  [FormField.PhoneNumber]: {
+  [FormField.Phone]: {
     label: 'Phone number',
     placeholder: 'Your phone number',
     errorMessage: 'please enter a valid phone number',
