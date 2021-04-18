@@ -1,12 +1,11 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { AnimateSharedLayout } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
-// dynamic
 import YHeaderItem, {
   NavItemInterface,
 } from '@/components/YHeaderItem/YHeaderItem';
 import YHeaderSubItem from '@/components/YHeaderSubItem/YHeaderSubItem';
-// dynamic
 
 import YMenuToggle from '@/components/YMenuToggle';
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
@@ -18,7 +17,6 @@ import useClickOutside from '@/hooks/useClickOutside';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { Language } from '@/enums/language';
-import dynamic from 'next/dynamic';
 
 interface Logo {
   icon: string;
@@ -34,8 +32,8 @@ export interface HeaderProps {
   logo: Logo;
   navItems: NavItemInterface[];
   buttonProps: Button;
-  onLangChange?: (lang: Language) => any;
   showMoreLabel?: string;
+  locales?: Language[];
 }
 
 const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {

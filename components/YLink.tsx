@@ -9,14 +9,15 @@ export default function YLink({
   href,
   ...props
 }: Props): JSX.Element {
-  const { lang } = useRouter().query;
+  const { lang } = useRouter().query as { lang: string };
 
-  /**@TODO add case for typeof URL */
   const processedHref =
     typeof href != 'string'
       ? href
+      : href.includes(lang)
+      ? href
       : href.includes('[lang]')
-      ? href.replace('[lang]', lang as string)
+      ? href.replace('[lang]', lang)
       : `/${lang}/${href.replace(/^\/|\/$/g, '')}`;
 
   return (

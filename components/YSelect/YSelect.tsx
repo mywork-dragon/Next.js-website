@@ -16,9 +16,10 @@ import { useRouter } from 'next/dist/client/router';
 
 interface Props {
   className?: string;
+  locales?: Language[];
 }
 
-const YSelect: React.FC<Props> = ({ className }) => {
+const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
@@ -29,16 +30,21 @@ const YSelect: React.FC<Props> = ({ className }) => {
     push: routerPush,
   } = useRouter();
 
-  const current = !lang ? 'uk' : lang;
+  const current =
+    !lang || typeof lang != 'string' || lang == 'en' ? 'uk' : lang;
 
   const onLangClick = (lang: Language) => {
     setOpen(!open);
 
-    const pageURI = typeof page == 'string' ? page : page.join('/');
-    routerPush(`/${lang}/${pageURI}`);
+    const pageURI =
+      typeof page == 'string' ? page : Boolean(page) ? page.join('/') : '';
+
+    const newPath = `${lang != 'uk' ? `/${lang}` : '/en'}/${pageURI}`;
+
+    routerPush(newPath);
   };
 
-  const flagsToShow = Object.keys(flags).filter((lang) => lang != current);
+  const flagsToShow = [...locales, 'uk'].filter((lang) => lang != current);
 
   return (
     <div

@@ -7,7 +7,7 @@ interface Props extends AriaLinkOptions {
 }
 
 const YOutLink: React.FC<Props> = ({ href, className, ...props }) => {
-  const ref = useRef();
+  const ref = useRef<HTMLElement | null>(null);
   const { linkProps } = useLink(props, ref);
 
   return (

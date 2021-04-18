@@ -67,14 +67,17 @@ const services = [
 
 const partners = [
   {
+    title: 'mixpanel',
     logo: 'companies/mixpanel',
     link: 'https://mixpanel.com',
   },
   {
+    title: 'customer IO',
     logo: 'companies/customer-io',
     link: 'https://customer.io',
   },
   {
+    title: 'segment',
     logo: 'companies/segment',
     link: 'https://segment.com',
   },

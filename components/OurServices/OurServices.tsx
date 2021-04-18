@@ -10,11 +10,17 @@ import YOutLink from '@/components/YOutLink';
 
 import rotate from '@/libs/utils/rotate';
 
+interface PartnerCompany {
+  title: string;
+  logo: string;
+  link: string;
+}
+
 interface Props {
   title: string;
   description: string;
   services: Service[];
-  partners: { logo: string; link: string }[];
+  partners: PartnerCompany[];
   partnersLabel?: string;
 }
 
@@ -82,10 +88,10 @@ const OurServices: React.FC<Props> = ({
         </YText>
         <div className="relative h-7 w-full overflow-x-auto no-scrollbar mt-3 lg:mt-4">
           <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex lg:transform-none">
-            {partners.map((partner) => {
+            {partners.map(({ title, logo, link }) => {
               const Logo = useMemo(
                 () =>
-                  dynamic(() => import(`@/assets/icons/${partner.logo}.svg`), {
+                  dynamic(() => import(`@/assets/icons/${logo}.svg`), {
                     ssr: false,
                   }),
                 []
@@ -93,9 +99,10 @@ const OurServices: React.FC<Props> = ({
 
               return (
                 <YOutLink
-                  key={partner.link}
+                  key={title}
                   className="outline-none mr-7.5 inline-block"
-                  href={partner.link}
+                  href={link}
+                  aria-label={`${title} website`}
                 >
                   <Logo />
                 </YOutLink>

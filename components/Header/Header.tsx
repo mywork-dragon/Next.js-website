@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic';
 import { HeaderProps } from './HeaderSM';
 
 const Header: React.FC<HeaderProps> = (props) => {
-  const { screenSize, screenReady } = useBreakpoint([ScreenSize.LG]);
+  const { screenSize, screenReady } = useBreakpoint();
   const Content = useMemo(
     () =>
       dynamic(

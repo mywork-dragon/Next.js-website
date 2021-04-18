@@ -1,14 +1,13 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { AnimateSharedLayout } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
-// dynamic
 import YHeaderItem, {
   NavItemInterface,
 } from '@/components/YHeaderItem/YHeaderItem';
 import YHeaderSubItem, {
   SubItemInterface,
 } from '@/components/YHeaderSubItem/YHeaderSubItem';
-// dynamic
 
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateBackground from '@/components/AnimateComponents/YAnimateBackground';
@@ -21,7 +20,6 @@ import useClickOutside from '@/hooks/useClickOutside';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { Language } from '@/enums/language';
-import dynamic from 'next/dynamic';
 
 interface Logo {
   icon: string;
@@ -37,16 +35,16 @@ interface Props {
   logo: Logo;
   navItems: NavItemInterface[];
   buttonProps: Button;
-  onLangChange?: (lang: Language) => any;
   showMoreLabel?: string;
+  locales?: Language[];
 }
 
 const HeaderLG: React.FC<Props> = ({
   logo,
   navItems,
   buttonProps,
-  onLangChange,
   showMoreLabel,
+  locales,
 }) => {
   // control opening and closing of header
   const [subItems, setSubItems] = useState<SubItemInterface[] | null>(null);
@@ -71,7 +69,7 @@ const HeaderLG: React.FC<Props> = ({
           />
         ))}
       </div>
-      <YSelect className="mr-6" onChange={onLangChange} />
+      <YSelect className="mr-6" locales={locales} />
     </>
   );
 

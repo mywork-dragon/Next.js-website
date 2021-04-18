@@ -1,10 +1,9 @@
 import { PageItem, PostItem, Blok } from '@/types/storyblok';
-import { Company } from '@/components/HomeTop/HomeTop';
+
 import { FormField } from '@/enums/form';
+
 import { NavItemInterface } from '@/components/YHeaderItem/YHeaderItem';
-import SubItem, {
-  SubItemInterface,
-} from '@/components/YHeaderSubItem/YHeaderSubItem';
+import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
 
 export function initEditor([story, setStory]: [
   PageItem | PostItem,
@@ -30,7 +29,6 @@ export function initEditor([story, setStory]: [
             event.story,
             ['featured-articles.articles'],
             () => {
-              console.log(story);
               setStory(event.story);
             }
           );
@@ -41,47 +39,40 @@ export function initEditor([story, setStory]: [
 }
 
 export const mapStoryblokProps = (props: Blok): Blok => {
-  const newProps = { ...props };
+  let newProps = { ...props };
   const propKeys = Object.keys(newProps);
 
+  if (propKeys.includes('locales')) {
+    newProps.locales = props.locales.data.Space.languageCodes;
+  }
+
   if (propKeys.includes('buttonText')) {
-    newProps.buttonProps = {
-      text: props.buttonText,
-      link: props.buttonLink?.cached_url || '',
+    const { buttonText, buttonLink, ...tempProps } = newProps;
+    newProps = {
+      ...tempProps,
+      buttonProps: {
+        text: props.buttonText,
+        link: props.buttonLink?.cached_url || '',
+      },
     };
   }
 
   if (propKeys.includes('logoLink')) {
-    newProps.logo = {
-      icon: props.logoIcon,
-      link: props.logoLink?.cached_url || '',
+    const { logoIcon, logoLink, ...tempProps } = newProps;
+    newProps = {
+      ...tempProps,
+      logo: {
+        icon: props.logoIcon,
+        link: props.logoLink.cached_url || '',
+      },
     };
   }
 
-  if (propKeys.includes('companies')) {
-    newProps.companies = Object.keys(newProps.companies).reduce(
-      (companies, companyKey) => {
-        const company = newProps.companies[companyKey];
-        const newCompany = {} as Company;
-
-        newCompany.title = company.title;
-        newCompany.link = company.link.url;
-        newCompany.logo = company.logo.filename;
-
-        return [...companies, newCompany];
-      },
-      []
-    );
-  }
-
-  if (propKeys.includes('cards')) {
-    newProps.cards = newProps.cards.map((card) => {
-      const newCard = { ...card };
-
-      newCard.Icon = card.icon;
-
-      return newCard;
-    });
+  if (propKeys.includes('partners')) {
+    newProps.partners = props.partners.map(({ link, ...props }) => ({
+      ...props,
+      link: link.url,
+    }));
   }
 
   if (propKeys.includes('nameLabel')) {
@@ -105,19 +96,30 @@ export const mapStoryblokProps = (props: Blok): Blok => {
     newProps.navItems = processNavItems(props.navItems);
   }
 
+  if (propKeys.includes('linksFirst')) {
+    newProps = processFooterProps(props);
+  }
+
+  if (propKeys.includes('services')) {
+    newProps.services = props.services.map((service) => ({
+      ...service,
+      buttonLink: service.buttonLink.cached_url,
+    }));
+  }
+
   return newProps;
 };
 
 const processReviewsFrame = (props) => ({
   reviews: props.reviews,
   buttonSM: props.reviewsButtonSm,
-  buttonLG: props.reviewsButtonLg,
+  buttonMD: props.reviewsButtonMd,
 });
 
 const processArticlesFrame = (article) => ({
   articles: article.articles,
   buttonSM: article.buttonSm,
-  buttonLG: article.buttonLg,
+  buttonMD: article.buttonMd,
 });
 
 const processFormField = (field: FormField, props: any) => {
@@ -153,3 +155,35 @@ const processNavItems = (
         }
       : { link, text: navItem.text };
   });
+
+const processFooterProps = (props) => ({
+  links: {
+    first: props.linksFirst.map(({ text, link }) => ({
+      link: link.cached_url || link.cachedUrl,
+      text,
+    })),
+    second: props.linksSecond.map(({ text, link }) => ({
+      link: link.cached_url || link.cachedUrl,
+      text,
+    })),
+  },
+  content: {
+    heading: props.contentHeading,
+    description: props.contentDescription,
+  },
+  contactDetails: {
+    street: props.street,
+    postalCode: props.postalCode,
+    city: props.city,
+    email: props.email,
+    phoneNumber: {
+      label: props.phoneLabel,
+      value: props.phoneValue,
+    },
+  },
+  contactButton: props.contactButton,
+  socialMedia: props.socialMedia.map(({ link, icon }) => ({
+    icon,
+    link: link.cached_url || link.cachedUrl,
+  })),
+});

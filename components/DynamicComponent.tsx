@@ -3,6 +3,7 @@ import Feature from './Feature';
 import Grid from './Grid';
 
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 import HomeTop from '@/components/HomeTop';
 import DataPulse from '@/components/DataPulse';
@@ -49,6 +50,7 @@ const Components = {
   ServiceThreePoints,
   ServiceFourPoints,
   ContactSection,
+  Footer,
 };
 
 interface Props {

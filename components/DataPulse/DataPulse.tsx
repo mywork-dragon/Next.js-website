@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -28,7 +28,10 @@ const DataPulse: React.FC<Props> = ({
   buttonProps,
   cards,
 }) => {
-  const Background = dynamic(() => import('./Background'), { ssr: false });
+  const Background = useMemo(
+    () => dynamic(() => import('./Background'), { ssr: false }),
+    []
+  );
 
   return (
     <>
