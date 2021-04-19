@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 
+import { ScreenSize } from '@/enums/screenSize';
+
 import PulseBackground from './PulseBackground';
 import YCardStack from '@/components/YCardStack';
 
