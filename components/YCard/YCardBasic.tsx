@@ -1,8 +1,6 @@
 import dynamic from 'next/dynamic';
 import React, { useMemo } from 'react';
 
-import { filterDefaultCard } from './YCard';
-
 interface Props {
   icon?: string;
   empty?: boolean;
@@ -60,8 +58,19 @@ const YCardBasic: React.FC<Props> = ({
   );
 };
 
+// local utils
+const filterDefaultCard = (baseClasses: string[], classes: string) =>
+  classes?.split(' ').includes('card')
+    ? [
+        ...baseClasses.filter((className) => className != 'card-white'),
+        classes,
+      ].join(' ')
+    : [...baseClasses, classes].join(' ') || baseClasses.join(' ');
+
 const baseClasses = [
   'rounded',
+  'cursor-default',
+  'select-none',
   'mt-2',
   'ml-3',
   'px-2.5',

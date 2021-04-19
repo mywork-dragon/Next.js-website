@@ -107,6 +107,13 @@ export const mapStoryblokProps = (props: Blok): Blok => {
     }));
   }
 
+  if (propKeys.includes('cards')) {
+    newProps.cards = props.cards.map(({ link, ...card }) => ({
+      ...card,
+      link: link ? link.cached_url : '',
+    }));
+  }
+
   return newProps;
 };
 

@@ -1,3 +1,4 @@
+import BackgroundGrid from './BackgroundGridSM';
 import HomeTop from './HomeTop';
 
 // import default data from spec
@@ -10,4 +11,8 @@ export default {
 
 export const Default = (): JSX.Element => {
   return <HomeTop showCompanies cards={cards} {...defaultProps} />;
+};
+
+export const GridDev = (): JSX.Element => {
+  return <BackgroundGrid cards={cards} {...defaultProps} />;
 };
