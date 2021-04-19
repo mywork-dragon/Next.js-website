@@ -71,16 +71,17 @@ interface StaticPropsResult {
 }
 
 export const getStaticProps = async ({
-  preview = true,
+  preview = false,
   params,
+  locale,
 }: {
   preview: boolean;
   params?: { lang: string; page: string[] };
+  locale: string;
 }): Promise<StaticPropsResult> => {
-  const { lang } = params;
   const page = params.page ? params.page.join('/') : 'home';
 
-  const id = lang === 'en' ? page : `${lang}/${page}`;
+  const id = locale === 'en' ? page : `${locale}/${page}`;
 
   const pageDataPromise: Promise<
     ApolloQueryResult<{ PageItem: PageItem }>
@@ -115,7 +116,7 @@ interface StaticPathResults {
 }
 
 export const getStaticPaths = async ({
-  preview = true,
+  preview = false,
 }: NextApiRequest): Promise<StaticPathResults> => {
   const result: {
     paths: string[];

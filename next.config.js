@@ -7,6 +7,10 @@ module.exports = {
 
     return config;
   },
+  i18n: {
+    locales: ['en', 'nl'],
+    defaultLocale: 'en',
+  },
   images: {
     domains: ['yeaimages.s3.eu-central-1.amazonaws.com'],
   },

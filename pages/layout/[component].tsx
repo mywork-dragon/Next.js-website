@@ -53,14 +53,16 @@ interface StaticPropsResult {
 export const getStaticProps = async ({
   preview = true,
   params,
+  locale,
 }: {
   preview: boolean;
   params?: { lang: string; component: string[] };
+  locale: string;
 }): Promise<{ props: StaticPropsResult }> => {
-  const { lang, component } = params;
+  const { component } = params;
 
   const id =
-    lang === 'en' ? `/layout/${component}` : `${lang}/layout/${component}`;
+    locale === 'en' ? `/layout/${component}` : `${locale}/layout/${component}`;
   const query = id.includes('header') ? GET_HEADER : GET_FOOTER;
 
   const componentPromise: ApolloQueryResult<{
