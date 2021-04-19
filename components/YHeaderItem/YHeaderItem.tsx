@@ -5,11 +5,13 @@ import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
-
 import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
 
 import { ToggleType } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 import DownArrow from '@/assets/icons/chevron-down.svg';
 
@@ -20,10 +22,8 @@ export interface NavItemInterface {
 }
 
 interface Props extends NavItemInterface {
-  textProps: Parameters<typeof YText>[0];
   onClick?: () => void;
   className?: string;
-  screenSize: ScreenSize;
   disableMount?: boolean;
 }
 
@@ -33,33 +33,47 @@ const YHeaderItem: React.FC<Props> = ({
   text,
   subItems,
   children,
-  textProps,
   onClick,
-  screenSize,
   disableMount,
 }) => {
+  const { screenSize } = useBreakpoint();
+
   const [openItems, setOpenItems] = useState(false);
 
   const itemText = (
     <YText
-      onClick={() => (subItems ? setOpenItems(!openItems) : null)}
-      {...textProps}
-      className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:transform-none md:top-0"
-      as="p"
+      onClick={() => (subItems ? setOpenItems(!openItems) : onClick())}
+      fontSize={FontSize.XS}
+      lineHeight={FontLineHeight.Relaxed}
+      fontWeight={FontWeight.SemiBold}
+      className="absolute top-1/2 transform -translate-y-1/2 text-gray-300 lg:relative lg:text-gray-200 lg:transform-none lg:top-0 lg:leading-5"
+      as="span"
     >
       {text}
     </YText>
   );
 
+  const itemClasses = [
+    'relative',
+    'h-14.1',
+    'border-blue-300',
+    'cursor-pointer',
+    'lg:mr-11',
+    'lg:flex',
+    'lg:items-center',
+  ];
+
   return (
     <>
       <YAnimateItem
-        className={[...itemClasses, className].join(' ')}
         onClick={onClick}
+        className={[...itemClasses, className].join(' ')}
         disableMount={disableMount}
       >
         {!subItems ? (
-          <YLink href={link}>{itemText}</YLink>
+          <YLink href={link}>
+            <a>{itemText}</a>
+          </YLink>
         ) : (
           <>
             {itemText}
@@ -86,15 +100,5 @@ const YHeaderItem: React.FC<Props> = ({
     </>
   );
 };
-
-const itemClasses = [
-  'relative',
-  'h-14.1',
-  'border-blue-300',
-  'cursor-pointer',
-  'md:mr-11',
-  'md:flex',
-  'md:items-center',
-];
 
 export default YHeaderItem;

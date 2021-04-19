@@ -1,7 +1,4 @@
 import Footer from './Footer';
-import Facebook from '@/assets/icons/facebook.svg';
-import LinkedIn from '@/assets/icons/linkedin.svg';
-import Instagram from '@/assets/icons/instagram.svg';
 
 export default {
   title: 'Footer',
@@ -14,12 +11,26 @@ const links = {
     { text: 'About', link: '/about' },
     { text: 'Services', link: '/services' },
     { text: 'Cases', link: '/cases' },
+    { text: 'Partners', link: '/partners' },
+    { text: 'Blog', link: '/blog' },
+    { text: 'Contact', link: '/contact' },
   ],
   second: [
     { text: 'Personalization', link: '/personalization' },
     { text: 'Data & Analytics', link: '/data-analytics' },
     { text: 'E-mail marketing', link: '/email-marketing' },
+    { text: 'Affiliate marketing', link: '/affiliate-marketing' },
+    { text: 'Conversion optimisation', link: '/conversion-optimisation' },
+    { text: 'Marketing automation', link: '/marketing-automation' },
+    { text: 'Social media advertising', link: '/social-media-advertising' },
+    { text: 'Integration/Implementation', link: '/integration-implementation' },
   ],
+};
+
+const content = {
+  heading: 'The Leading <br /> Data Platform',
+  description:
+    'Join 20,000+ businesses that use Segment software and APIs to collect, clean, and control their customer data.',
 };
 
 const contactDetails = {
@@ -27,29 +38,30 @@ const contactDetails = {
   postalCode: '1322CK',
   city: 'Almere',
   email: 'info@yeapersonalize.com',
-  phoneNumber: '+316 361 761 25',
+  phoneNumber: {
+    label: '+31 6 36 17 61 25',
+    value: '0031636176125',
+  },
 };
 
 const socialMedia = [
-  { icon: <Facebook />, link: 'https://facebook.com/yeapersonalize' },
   {
-    icon: <LinkedIn />,
+    icon: 'linkedin',
     link: 'https://www.linkedin.com/company/yeapersonalize',
   },
-  { icon: <Instagram />, link: 'https://instagram.com/yeapersonalize' },
+  { icon: 'facebook', link: 'https://facebook.com/yeapersonalize' },
+  { icon: 'instagram', link: 'https://instagram.com/yeapersonalize' },
+  { icon: 'twitter', link: 'https://twitter.com/yeapersonalize' },
 ];
 
+const contactButton = 'Contact us';
+
 export const Default = (): JSX.Element => (
-  <>
-    <h1 className="text-red-600 text-xxl text-center py-5">
-      Under Construction
-    </h1>
-    <Footer
-      links={links}
-      contactDetails={contactDetails}
-      socialMedia={socialMedia}
-    >
-      Test
-    </Footer>
-  </>
+  <Footer
+    links={links}
+    contactDetails={contactDetails}
+    content={content}
+    socialMedia={socialMedia}
+    contactButton={contactButton}
+  />
 );

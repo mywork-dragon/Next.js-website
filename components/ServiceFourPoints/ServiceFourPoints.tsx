@@ -1,7 +1,6 @@
-import { useWindowWidth } from '@react-hook/window-size';
-import React from 'react';
+import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import { FourPoints } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
@@ -9,9 +8,8 @@ import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 
 interface Article {
-  heading?: string;
+  heading: string;
   text: string;
-  stats?: string;
 }
 
 interface Props {
@@ -19,7 +17,7 @@ interface Props {
   subtitle: string;
   description: string;
   points: [Article, Article, Article, Article];
-  cover: JSX.Element;
+  cover: string;
   type?: FourPoints;
 }
 
@@ -31,56 +29,65 @@ const ServiceFourPoints: React.FC<Props> = ({
   cover,
   type = FourPoints.OrderedList,
 }) => {
-  const screenSize =
-    useWindowWidth() < BreakPoint.SM ? ScreenSize.SM : ScreenSize.MD;
-
   const pointsSection =
     type == FourPoints.OrderedList ? (
-      <ol className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar text-left list-none mt-8 md:grid md:grid-cols-2 md:gap-6">
-        {points.map((article, index) => (
+      <ol className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar text-left list-none mt-8 lg:grid lg:grid-cols-2 lg:gap-6">
+        {points.map(({ heading, text }, index) => (
           <li
-            key={article.text}
+            key={index}
             className={[
               index == 0 ? '' : 'ml-6',
-              'w-60 h-42 p-4 border border-blue-100 rounded-xl inline-block whitespace-normal align-text-top md:block md:m-0',
+              'w-60 h-42 p-4 border border-blue-100 rounded-xl inline-block whitespace-normal align-text-top lg:block lg:m-0',
             ].join(' ')}
           >
-            <YHeading className="text-shadow-blue" {...indexProps}>
+            <YHeading className="text-white text-shadow-blue" {...indexProps}>
               {index}
             </YHeading>
             <YHeading
               {...orderedArticleProps}
               as="h4"
               fontWeight={FontWeight.SemiBold}
+              className="text-white"
             >
-              {article.heading}
+              {heading}
             </YHeading>
             <YText className="text-gray-400" {...orderedArticleProps} as="p">
-              {article.text}
+              {text}
             </YText>
           </li>
         ))}
       </ol>
     ) : (
-      <div className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar text-left list-none mt-8 md:relative md:-left-7 md:overflow-visible">
-        {points.map((article, index) => (
+      <div className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar text-left list-none mt-8 lg:relative lg:-left-7 lg:overflow-visible">
+        {points.map(({ text, heading }, index) => (
           <article
-            key={article.text}
+            key={index}
             className={[
-              index == 0 ? '' : 'ml-6 md:ml-8',
+              index == 0 ? '' : 'ml-6 lg:ml-8',
               'w-65 h-52 p-7 bg-blue-100 bg-opacity-10 rounded-xl inline-block whitespace-normal align-text-top',
             ].join(' ')}
           >
-            <YHeading {...statsProps} className={statsShadows[index]}>
-              {article.stats}
+            <YHeading
+              {...statsProps}
+              className={['text-white', statsShadows[index]].join(' ')}
+            >
+              {heading}
             </YHeading>
             <YText {...statsTextProps} className="text-gray-300 mt-2">
-              {article.text}
+              {text}
             </YText>
           </article>
         ))}
       </div>
     );
+
+  const CoverImage = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/illustrations/${cover}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
 
   return (
     <section className={sectionClasses.join(' ')}>
@@ -88,20 +95,31 @@ const ServiceFourPoints: React.FC<Props> = ({
         className={[
           ...containerClasses,
           type == FourPoints.OrderedList
-            ? 'py-10 md:py-20'
-            : 'pt-5 pb-10 md:pt-25 md:pb-30',
+            ? 'py-10 lg:py-20'
+            : 'pt-5 pb-10 lg:pt-25 lg:pb-30',
         ].join(' ')}
       >
         <div className={getInnerContainerClasses(type)}>
-          <div className={getImageClasses(type)}>{cover}</div>
+          <div className={getImageClasses(type)}>
+            <CoverImage />
+          </div>
           <div className={getTextBoxClasses(type)}>
             <YHeading {...titleProps} className={titleClasses.join(' ')}>
               {title}
             </YHeading>
-            <YHeading {...subtitleProps[screenSize]}>{subtitle}</YHeading>
+            <YHeading
+              fontSize={FontSize.LG}
+              lineHeight={FontLineHeight.Relaxed}
+              className="text-white lg:text-xxl lg:leading-13"
+              as="h2"
+            >
+              {subtitle}
+            </YHeading>
             <YText
-              {...descriptionProps[screenSize]}
-              className="text-gray-400 mt-2 md:mt-4 md:w-100"
+              fontSize={FontSize.SM}
+              lineHeight={FontLineHeight.Relaxed}
+              className="text-gray-400 mt-2 mx-auto max-w-md lg:mx-0 lg:mt-4 lg:w-100 lg:text-base lg:leading-9"
+              as="p"
             >
               {description}
             </YText>
@@ -118,41 +136,41 @@ const ServiceFourPoints: React.FC<Props> = ({
  */
 const sectionClasses = ['w-full', 'overflow-hidden', 'border-soft', 'border-b'];
 
-const containerClasses = ['container', 'md:px-0'];
+const containerClasses = ['container', 'lg:px-0'];
 
-const titleClasses = ['hidden', 'md:block', 'text-gray-400', 'mb-3'];
+const titleClasses = ['hidden', 'lg:block', 'text-gray-400', 'mb-3'];
 
 // inner container / image container
 const getInnerContainerClasses = (type: FourPoints) =>
   ['relative', ...innerContainerClasses[type]].join(' ');
 
 const innerContainerClasses = {
-  [FourPoints.OrderedList]: ['md:ml-142.5'],
-  [FourPoints.Stats]: ['md:ml-115'],
+  [FourPoints.OrderedList]: ['lg:ml-142.5'],
+  [FourPoints.Stats]: ['lg:ml-115'],
 };
 
 // text box
 const getTextBoxClasses = (type: FourPoints) =>
   [
-    'text-center mt-7.5 md:mt-0 md:text-left md:absolute md:top-1/2 md:transform md:-translate-y-1/2',
+    'text-center mt-7.5 lg:mt-0 lg:text-left lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2',
     ...textBoxClasses[type],
   ].join(' ');
 
 const textBoxClasses = {
-  [FourPoints.OrderedList]: ['md:-left-142.5'],
-  [FourPoints.Stats]: ['md:-left-115', 'md:w-100'],
+  [FourPoints.OrderedList]: ['lg:-left-142.5'],
+  [FourPoints.Stats]: ['lg:-left-115', 'lg:w-100'],
 };
 
 // cover image
 const getImageClasses = (type: FourPoints) =>
   [
-    'relative left-1/2 transform -translate-x-1/2 md:transform-none md:static',
+    'relative left-1/2 transform -translate-x-1/2 lg:transform-none lg:static',
     ...imageClasses[type],
   ].join(' ');
 
 const imageClasses = {
-  [FourPoints.OrderedList]: ['w-100 h-70 md:w-237 md:h-173.6'],
-  [FourPoints.Stats]: ['w-126.5 h-90 md:w-162 md:h-119 md:mb-15'],
+  [FourPoints.OrderedList]: ['w-100 h-70 lg:w-237 lg:h-173.6'],
+  [FourPoints.Stats]: ['w-126.5 h-90 lg:w-162 lg:h-119 lg:mb-15'],
 };
 
 /**
@@ -164,30 +182,6 @@ const titleProps = {
   fontWeight: FontWeight.SemiBold,
   as: 'h1',
 } as Parameters<typeof YHeading>[0];
-
-const subtitleProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.LG,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'h2',
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize.XXL,
-    as: 'h2',
-  },
-} as Record<ScreenSize, Parameters<typeof YHeading>[0]>;
-
-const descriptionProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'p',
-  },
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'p',
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
 
 // Ordered articles
 const indexProps = {

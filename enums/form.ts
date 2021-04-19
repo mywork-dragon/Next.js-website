@@ -1,6 +1,6 @@
 export enum FormField {
   Name = 'name',
-  PhoneNumber = 'phoneNumber',
+  Phone = 'phone',
   Email = 'email',
   Comment = 'comment',
 }

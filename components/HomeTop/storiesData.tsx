@@ -1,39 +1,27 @@
-import Google from '@/assets/icons/companies/google.svg';
-import Segment from '@/assets/icons/companies/segment.svg';
-import Boldking from '@/assets/icons/companies/boldking.svg';
-import Nike from '@/assets/icons/companies/nike.svg';
-import Deloitte from '@/assets/icons/companies/deloitte.svg';
-
-import Cart from '@/assets/icons/cart.svg';
-import Carousel from '@/assets/icons/carousel.svg';
-import Content from '@/assets/icons/content.svg';
-import Email from '@/assets/icons/email.svg';
-import Directions from '@/assets/icons/directions.svg';
-
 // default data from spec, to be used with stories
-const companies = [
+const partners = [
   {
-    logo: <Google />,
+    logo: 'companies/google',
     link: 'https://google.com',
     title: 'google',
   },
   {
-    logo: <Segment />,
+    logo: 'companies/segment',
     link: 'https://segment.com',
     title: 'segment',
   },
   {
-    logo: <Boldking />,
+    logo: 'companies/boldking',
     link: 'https://boldking.com',
     title: 'boldking',
   },
   {
-    logo: <Nike />,
+    logo: 'companies/nike',
     link: 'https://nike.com',
     title: 'nike',
   },
   {
-    logo: <Deloitte />,
+    logo: 'companies/deloitte',
     link: 'https://deloitte.com',
     title: 'deloitte',
   },
@@ -45,35 +33,35 @@ export const defaultProps = {
     "Join 20000+ businesses that use Segment's software and APIs to collect, clean, and control their customer data.",
   buttonProps: {
     text: 'Learn More',
-    link: '#',
+    link: '/',
   },
-  companies,
+  partners,
 };
 
 export const cards = [
   {
     title: 'Structure',
     description: 'Another client - another story',
-    Icon: <Content />,
+    icon: 'content',
   },
   {
     title: 'Cart Upsell',
     description: 'Personalized Suggestion',
-    Icon: <Cart />,
+    icon: 'cart',
   },
   {
     title: 'Navigation',
     description: 'Custom navigation patterns',
-    Icon: <Directions />,
+    icon: 'directions',
   },
   {
     title: 'Email',
     description: 'Personalized follow up email',
-    Icon: <Email />,
+    icon: 'email',
   },
   {
     title: 'Content',
     description: 'Adaptive content per user',
-    Icon: <Carousel />,
+    icon: 'carousel',
   },
 ];

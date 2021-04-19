@@ -1,16 +1,17 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
+import dynamic from 'next/dynamic';
 
-import { ButtonSize, Service } from '@/enums/components';
+import { Service } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 
-import heroImages from './heroImages';
+const ImageComponent = dynamic(() => import('./ImageComponent'), {
+  ssr: false,
+});
 
 interface ButtonProps {
   text: string;
@@ -32,45 +33,42 @@ const ServiceTop: React.FC<Props> = ({
   serviceLabel,
   service,
 }) => {
-  const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
-
-  const hero = heroImages[service];
-
-  const illustration = hero[screenSize] || hero;
-
   return (
     <section className="relative overflow-hidden w-full border-b border-soft">
-      <div className="container md:px-0">
-        <div className="relative w-full mb-10 pt-80 md:pt-0 md:my-37.5 md:w-150 md:h-125 md:ml-auto md:mr-0">
-          <div className="absolute top-11.5 w-105 h-80 md:static md:h-full md:w-full">
-            {illustration}
+      <div className="container lg:px-0">
+        <div className="relative w-full mb-10 pt-80 lg:pt-0 lg:my-37.5 lg:w-150 lg:h-125 lg:ml-auto lg:mr-0">
+          <div className="absolute top-11.5 w-105 h-80 sm:right-0 lg:static lg:h-full lg:w-full">
+            <ImageComponent service={service} />
           </div>
-          <div className="md:w-100 md:absolute md:top-1/2 md:transform md:-translate-x-120 md:-translate-y-1/2">
+          <div className="max-w-md lg:max-w-none lg:w-100 lg:absolute lg:top-1/2 lg:transform lg:-translate-x-120 lg:-translate-y-1/2">
             <YHeading
-              className="text-primary mb-2 md:mb-3"
-              {...serviceLabelProps[screenSize]}
+              fontSize={FontSize.XS}
+              fontWeight={FontWeight.Regular}
+              className="text-primary mb-2 lg:mb-3 lg:text-base"
+              as="h2"
             >
               {serviceLabel}
             </YHeading>
             <YHeading
-              className="w-37.5 mb-2 md:mb-3 md:w-full"
-              {...titleProps[screenSize]}
+              fontSize={FontSize.XL}
+              lineHeight={FontLineHeight.Relaxed}
+              className="text-white w-37.5 mb-2 lg:mb-3 lg:w-full lg:text-4xl lg:leading-21"
+              as="h1"
             >
               {title}
             </YHeading>
             <YText
-              className="text-gray-300 mb-5 md:mb-6 md:w-94.6"
-              {...descriptionProps[screenSize]}
+              fontSize={FontSize.SM}
+              lineHeight={FontLineHeight.Relaxed}
+              className="text-gray-300 mb-5 lg:mb-6 lg:w-94.6 lg:text-base lg:leading-11"
+              as="p"
             >
               {description}
             </YText>
             <YLink href={buttonProps.link}>
               <YButton
                 shadow
-                buttonSize={
-                  screenSize == ScreenSize.SM ? ButtonSize.MD : ButtonSize.LG
-                }
+                className="px-5 py-3 text-sm leading-6 lg:text-md lg:leading-7"
               >
                 {buttonProps.text}
               </YButton>
@@ -81,43 +79,5 @@ const ServiceTop: React.FC<Props> = ({
     </section>
   );
 };
-
-const serviceLabelProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.XS,
-    fontWeight: FontWeight.Regular,
-    as: 'h2',
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize.MD,
-    fontWeight: FontWeight.Regular,
-    as: 'h2',
-  },
-} as Record<ScreenSize, Parameters<typeof YHeading>[0]>;
-
-const titleProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.XL,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'h1',
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize['4XL'],
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'h1',
-  },
-} as Record<ScreenSize, Parameters<typeof YHeading>[0]>;
-
-const descriptionProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'p',
-  },
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Loose,
-    as: 'p',
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
 
 export default ServiceTop;

@@ -1,15 +1,39 @@
 import Head from '../components/Head';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
-import { HTMLAttributes } from 'react';
 
-const Layout = ({ children }: HTMLAttributes<HTMLElement>): JSX.Element => (
-  <div className="bg-gray-300">
-    <Head title="test" description="description" />
-    <Navigation settings={{}} />
-    {children}
-    <Footer />
-  </div>
-);
+import SbEditable from 'storyblok-react';
+import DynamicComponent from './DynamicComponent';
+import { PostComponent } from '@/types/storyblok';
+
+interface Props {
+  headerContent?: PostComponent | undefined;
+  footerContent?: PostComponent | undefined;
+}
+const Layout: React.FC<Props> = ({
+  children,
+  headerContent,
+  footerContent,
+}) => {
+  return (
+    <div className="bg-blue-300 text-white">
+      <Head title="test" description="description" />
+
+      {headerContent && (
+        <SbEditable content={headerContent}>
+          <header>{<DynamicComponent blok={headerContent} />}</header>
+        </SbEditable>
+      )}
+
+      {children}
+
+      {footerContent && (
+        <SbEditable content={footerContent}>
+          <footer>
+            <DynamicComponent blok={footerContent} />
+          </footer>
+        </SbEditable>
+      )}
+    </div>
+  );
+};
 
 export default Layout;

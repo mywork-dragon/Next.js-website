@@ -1,48 +1,80 @@
-import React, { HTMLAttributes } from 'react';
+import React, { useMemo } from 'react';
 import { m as motion } from 'framer-motion';
 
-import { ScreenSize } from '@/enums/screenSize';
-
 interface BackgroundProps {
-  screenSize: ScreenSize;
   className?: string;
   open?: boolean;
+  openClasses?: string;
+  closedClasses?: string;
   children: React.ReactNode;
 }
 
 const AnimateBackground = React.forwardRef<HTMLElement, BackgroundProps>(
-  ({ screenSize, children, className, open }, ref) => {
-    const openVariant =
-      screenSize == ScreenSize.SM
-        ? {
-            backgroundColor: '#041925',
-          }
-        : {
-            backgroundColor: 'rgba(32, 56, 118, 0.68)',
-            backdropFilter: 'blur(60px)',
-            boxShadow: '0px 0px 120px rgba(6, 29, 51, 0.7)',
-          };
-
-    const headerMotionProps = {
-      animate: open ? 'open' : 'closed',
-      initial: {
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-      },
-      variants: {
-        open: openVariant,
-        closed: {
-          backgroundColor: 'rgba(0, 0, 0, 0)',
-          transition: { duration: 0.4 },
-        },
-      },
-    };
+  (
+    { children, open, className = '', openClasses = '', closedClasses = '' },
+    ref
+  ) => {
+    const openProps = useMemo(() => getProps(openClasses), [openClasses]);
+    const closedProps = useMemo(() => getProps(closedClasses), [closedClasses]);
 
     return (
-      <motion.section ref={ref} {...headerMotionProps} className={className}>
+      <motion.section ref={ref} className={className}>
+        <motion.div {...openProps} animate={open ? 'show' : 'hide'} />
+        <motion.div {...closedProps} animate={open ? 'hide' : 'show'} />
         {children}
       </motion.section>
     );
   }
 );
+
+// const sizeClasses = ['h-', 'w-', 'max-w-', 'max-h-'];
+const positionClasses = [
+  'absolute',
+  'relative',
+  'static',
+  'fixed',
+  'top-',
+  'left-',
+  'right-',
+  'bottom-',
+];
+const transformClasses = ['transform', 'translate', 'scale', 'rotate', 'skew'];
+// const marginClasses = ['m-', 'mx-', 'my-', 'mt-', 'mb-', 'ml-', 'mr-'];
+// const paddingClasses = ['p-', 'px-', 'py-', 'pt-', 'pb-', 'pl-', 'pr-'];
+
+const filterClasses = (classes: string, forbiddenClasses: string[]) => {
+  if (!classes) return [''];
+  let result = classes.split(' ');
+
+  forbiddenClasses.forEach((forbiddenClass) => {
+    result = result.filter((className) => !className.includes(forbiddenClass));
+  });
+
+  return result;
+};
+
+const bgProps = {
+  className: 'absolute top-0 left-0 right-0 bottom-0',
+  initial: false,
+  variants: {
+    show: { opacity: 1 },
+    hide: { opacity: 0 },
+  },
+  transition: { duration: 0.4 },
+};
+
+const getProps = (classes: string) => ({
+  ...bgProps,
+  className: [
+    bgProps.className,
+    ...filterClasses(classes, [
+      // ...sizeClasses,
+      ...positionClasses,
+      ...transformClasses,
+      // ...marginClasses,
+      // ...paddingClasses,
+    ]),
+  ].join(' '),
+});
 
 export default AnimateBackground;

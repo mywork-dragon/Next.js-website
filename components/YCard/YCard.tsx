@@ -1,10 +1,9 @@
-import React, { createElement, useRef } from 'react';
+import React, { createElement, useMemo, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { AriaButtonProps } from '@react-types/button';
 import { useButton } from '@react-aria/button';
 import { useHover, HoverProps } from '@react-aria/interactions';
 import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
-
-import IconPlaceholder from '@/assets/icons/icon.svg';
 
 import YLink from '@/components/YLink';
 
@@ -12,7 +11,7 @@ type CardProps = AriaButtonProps &
   HoverProps & {
     title?: string;
     description?: string;
-    Icon?: JSX.Element;
+    icon?: string;
     className?: string;
     onHover?: () => void;
     hovered?: boolean;
@@ -40,7 +39,7 @@ const YCard: React.FC<Props> = ({
   className: classes,
   cardClasses,
   children,
-  Icon,
+  icon,
   title,
   description,
   hovered,
@@ -98,8 +97,14 @@ const YCard: React.FC<Props> = ({
       ]
     ) : (
       <>
-        <div className="placeholder placeholder-title" />
-        <div className="placeholder placeholder-subtitle" />
+        <div
+          key="placeholder-title"
+          className="placeholder placeholder-title"
+        />
+        <div
+          key="placeholder-subtitle"
+          className="placeholder placeholder-subtitle"
+        />
       </>
     );
 
@@ -110,14 +115,22 @@ const YCard: React.FC<Props> = ({
     ? getHoverProps(hovered, AnimateSection.Icon)
     : {};
 
-  const icon = createElement(
+  const NewIcon = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/icons/${icon}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
+
+  const iconElement = createElement(
     iconTag,
     {
       key: 'icon',
       className: 'icon fill-current flex items-stretch',
       ...iconHoverProps,
     },
-    Icon || <IconPlaceholder />
+    <NewIcon />
   );
 
   // topface section
@@ -125,7 +138,7 @@ const YCard: React.FC<Props> = ({
     ? motion[assignedCustomTag]
     : assignedCustomTag;
 
-  const className = filterDefaultCard(baseClasses, cardClasses);
+  const className = [...baseClasses, cardClasses].join(' ');
 
   const cardHoverProps = Boolean(onHover)
     ? getHoverProps(hovered, AnimateSection.Topface)
@@ -140,7 +153,7 @@ const YCard: React.FC<Props> = ({
       ...buttonProps,
       ...cardHoverProps,
     },
-    [icon, text]
+    [iconElement, text]
   );
 
   // container element section
@@ -155,15 +168,6 @@ const YCard: React.FC<Props> = ({
   );
 };
 
-// local utils
-export const filterDefaultCard = (baseClasses: string[], classes: string) =>
-  classes?.split(' ').includes('card')
-    ? [
-        ...baseClasses.filter((className) => className != 'card-white'),
-        classes,
-      ].join(' ')
-    : [...baseClasses, classes].join(' ') || baseClasses.join(' ');
-
 const baseClasses = [
   'rounded',
   'mt-2',
@@ -173,7 +177,6 @@ const baseClasses = [
   'w-40',
   'h-50',
   'pt-6.5',
-  'card-white',
 ];
 
 // framer motion props
@@ -189,11 +192,8 @@ const animateVariants = {
       backgroundColor: '#FFFFFF',
       boxShadow: [
         '-1px 1px #D5DFE9,',
-        '-2px 2px #D5DFE9,',
         '-3px 3px #D5DFE9,',
-        '-4px 4px #D5DFE9,',
         '-5px 5px #D5DFE9,',
-        '-6px 6px #D5DFE9,',
         '-7px 7px #D5DFE9',
       ].join(' '),
     },
@@ -201,11 +201,8 @@ const animateVariants = {
       backgroundColor: '#305EED',
       boxShadow: [
         '-1px 1px #143DB0,',
-        '-2px 2px #143DB0,',
         '-3px 3px #143DB0,',
-        '-4px 4px #143DB0,',
         '-5px 5px #143DB0,',
-        '-6px 6px #143DB0,',
         '-7px 7px #143DB0',
       ].join(' '),
     },

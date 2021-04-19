@@ -58,9 +58,9 @@ export enum Service {
   AffiliateMarketing = 'affiliate_marketing',
   Personalization = 'personalization',
   ConversionOptimization = 'conversion_optimization',
-  DataAnalytics = 'data_and_analytics',
+  DataAnalytics = 'data_analytics',
   MarketingAutomation = 'marketing_automation',
-  EmailMarketing = 'eamil_marketing',
+  EmailMarketing = 'email_marketing',
 }
 
 export enum TextPosition {
@@ -76,5 +76,16 @@ export enum ThreePoints {
 export enum FourPoints {
   Stats = 'stats',
   OrderedList = 'ordered_list',
+}
+//endregion
+
+//region marketing automations
+export enum Elapsed {
+  '0h' = 0,
+  '12h' = 1,
+  '24h' = 2,
+  '48h' = 3,
+  '72h' = 4,
+  '96h' = 5,
 }
 //endregion

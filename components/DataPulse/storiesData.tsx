@@ -1,9 +1,3 @@
-import Content from '@/assets/icons/content.svg';
-import Cart from '@/assets/icons/cart.svg';
-import Carousel from '@/assets/icons/carousel.svg';
-import Email from '@/assets/icons/email.svg';
-import Directions from '@/assets/icons/directions.svg';
-
 const title = 'The leading Customer Data';
 
 const description =
@@ -11,42 +5,42 @@ const description =
 
 const buttonProps = {
   text: 'Contact us',
-  link: '',
+  link: '/contact',
 };
 
 const cards = [
   {
-    Icon: <Content />,
+    icon: 'content',
     title: 'Structure',
     description: 'Another client - another story',
   },
   {
-    Icon: <Cart />,
+    icon: 'cart',
     title: 'Cart Upsell',
     description: 'Personalised suggestion',
   },
   {
-    Icon: <Carousel />,
+    icon: 'carousel',
     title: 'Content',
     description: 'Adaptive content per user',
   },
   {
-    Icon: <Email />,
+    icon: 'email',
     title: 'Email',
     description: 'Personalized follow-up email',
   },
   {
-    Icon: <Carousel />,
+    icon: 'carousel',
     title: 'Content',
     description: 'Adaptive content per user',
   },
   {
-    Icon: <Carousel />,
+    icon: 'carousel',
     title: 'Content',
     description: 'Adaptive content per user',
   },
   {
-    Icon: <Directions />,
+    icon: 'directions',
     title: 'Navigation',
     description: 'Custom navigation patterns',
   },

@@ -12,28 +12,39 @@ import useClickOutside from '@/hooks/useClickOutside';
 import ArrowDown from '@/assets/icons/chevron-down.svg';
 
 import flags from './flags';
+import { useRouter } from 'next/dist/client/router';
 
 interface Props {
-  onChange?: (lang: Language) => any;
   className?: string;
-  current?: Language;
+  locales?: Language[];
 }
 
-const OSelect: React.FC<Props> = ({
-  className,
-  onChange = () => {},
-  current = Language.UK,
-}) => {
+const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
+
   useClickOutside(ref, () => setOpen(false));
+
+  const {
+    query: { lang, page },
+    push: routerPush,
+  } = useRouter();
+
+  const current =
+    !lang || typeof lang != 'string' || lang == 'en' ? 'uk' : lang;
 
   const onLangClick = (lang: Language) => {
     setOpen(!open);
-    onChange(lang);
+
+    const pageURI =
+      typeof page == 'string' ? page : Boolean(page) ? page.join('/') : '';
+
+    const newPath = `${lang != 'uk' ? `/${lang}` : '/en'}/${pageURI}`;
+
+    routerPush(newPath);
   };
 
-  const keysToShow = Object.keys(flags).filter((lang) => lang != current);
+  const flagsToShow = [...locales, 'uk'].filter((lang) => lang != current);
 
   return (
     <div
@@ -41,11 +52,14 @@ const OSelect: React.FC<Props> = ({
       className={[...containerClasses, className].join(' ')}
       onClick={() => {
         setOpen(!open);
-        console.log('click');
       }}
     >
-      <div className="w-7 mx-1">{flags[current]}</div>
-      <YText {...textProps}>{current}</YText>
+      <div className="w-7 mx-1">
+        <img src={flags[current]} />
+      </div>
+      <YText className="text-white" {...textProps}>
+        {current}
+      </YText>
       <div className="h-3 w-3 mx-1 flex items-center">
         <ArrowDown />
       </div>
@@ -53,14 +67,16 @@ const OSelect: React.FC<Props> = ({
         className="absolute top-full z-50 bg-blue-400 border-blue-300"
         open={open}
       >
-        {keysToShow.map((lang) => (
+        {flagsToShow.map((lang) => (
           <YAnimateItem
             key={lang}
             onClick={() => onLangClick(lang as Language)}
             className={[...containerClasses, 'm-1'].join(' ')}
           >
-            <div className="w-7 m-1">{flags[lang]}</div>
-            <YText {...textProps} className="m-1">
+            <div className="w-7 m-1">
+              <img src={flags[lang]} />
+            </div>
+            <YText {...textProps} className="text-white m-1">
               {lang}
             </YText>
           </YAnimateItem>
@@ -86,4 +102,4 @@ const textProps = {
   as: 'p',
 } as Parameters<typeof YText>[0];
 
-export default OSelect;
+export default YSelect;

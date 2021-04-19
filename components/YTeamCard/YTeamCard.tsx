@@ -9,16 +9,16 @@ import {
   AnimateSharedLayout,
   AnimateLayoutFeature,
 } from 'framer-motion';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import filterPosition from '@/libs/utils/filterPosition';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import useBreakpoint from '@/hooks/useBreakpoint';
+
+import { ScreenSize } from '@/enums/screenSize';
 import { FontSize, FontWeight } from '@/enums/font';
 
 import YToggleRound from '@/components/YToggleRound';
 import YText from '@/components/YText';
-import YHeading from '@/components/YHeading';
 
 export interface TeamMember {
   name: string;
@@ -49,10 +49,9 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
     setFirstRender(false);
   }, []);
 
-  const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize, screenReady } = useBreakpoint();
 
-  const imageElement = (screenSize == ScreenSize.MD || !open) && (
+  const imageElement = screenReady && (screenSize == ScreenSize.MD || !open) && (
     <motion.div
       key={Segment.Image}
       layout
@@ -61,10 +60,10 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
         'absolute rounded-full overflow-hidden',
         open
           ? 'top-5 left-5 w-20 h-20'
-          : 'h-50 w-50 left-6.5 top-13.6 sm:w-55 sm:h-55 sm:left-13.6 md:top-13.6 md:left-16.1',
+          : 'h-50 w-50 top-13.6 left-10 xs:left-12.5 xs:w-55 xs:h-55 md:top-13.6 md:left-16.1',
       ].join(' ')}
     >
-      <Image src={image} layout="fill" className="object-cover" />
+      <Image layout="fill" className="object-contain" src={image} />
     </motion.div>
   );
 
@@ -74,24 +73,20 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
       key={Segment.Name}
       className={[
         'absolute',
-        open ? 'top-6 left-6 md:left-31 md:top-8.5' : 'bottom-5 left-5',
+        open ? 'top-6 left-6 lg:left-31 lg:top-8.5' : 'bottom-5 left-5',
       ].join(' ')}
     >
-      {!open && screenSize == ScreenSize.SM ? (
-        <YText
-          className={getTextColor(open)}
-          {...getNameTextProps(open, screenSize)}
-        >
-          {name}
-        </YText>
-      ) : (
-        <YHeading
-          className={getTextColor(open)}
-          {...getNameTextProps(open, screenSize)}
-        >
-          {name}
-        </YHeading>
-      )}
+      <YText
+        fontWeight={FontWeight.SemiBold}
+        fontSize={open ? FontSize.LG : FontSize.MD}
+        className={[
+          'md:text-lg md:leading-9 md:font-serif',
+          open ? 'text-lg text-white leading-9' : 'text-current',
+        ].join(' ')}
+        as="h2"
+      >
+        {name}
+      </YText>
     </motion.div>
   );
 
@@ -101,7 +96,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
       key={Segment.Role}
       className={[
         'absolute',
-        open ? 'top-13 left-6 md:top-15.5 md:left-31' : 'top-4 right-4',
+        open ? 'top-13 left-6 lg:top-15.5 lg:left-31' : 'top-4 right-4',
       ].join(' ')}
     >
       <YText className="text-gray-300">{role}</YText>
@@ -118,11 +113,20 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
     </motion.div>
   );
 
+  const handleCardClick = () => {
+    if (!open) setOpen(true);
+  };
+
+  const containerClassName = [
+    filterPosition(containerClasses, className),
+    open ? 'cursor-default' : 'cursor-pointer',
+  ].join(' ');
+
   return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
-      <div className={filterPosition(containerClasses, className)}>
+      <div onClick={handleCardClick} className={containerClassName}>
         <AnimateSharedLayout>
           <AnimatePresence>
             {imageElement}
@@ -146,7 +150,6 @@ const containerClasses = [
   'text-gray-400',
   'duration-200',
   'transition',
-  'cursor-pointer',
   'rounded-sm',
   'md:rounded',
   'border',
@@ -155,20 +158,6 @@ const containerClasses = [
   'hover:border-opacity-100',
   'hover:text-white',
 ];
-
-// name segmet utils
-const getTextColor = (open: boolean) => (open ? 'text-white' : 'text-current');
-
-const getNameTextProps = (open: boolean, screenSize: ScreenSize) => {
-  const props: Parameters<typeof YText>[0] = {
-    fontWeight: FontWeight.SemiBold,
-    as: 'h2',
-  };
-  if (open || screenSize == ScreenSize.MD) {
-    props.fontSize = FontSize.LG;
-  }
-  return props;
-};
 
 // text / image fade
 const getImageFadeProps = (initialRender: boolean) => {

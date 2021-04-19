@@ -1,4 +1,5 @@
 import Header from './Header';
+import { Default as HomeTop } from '@/components/HomeTop/HomeTop.stories';
 
 import { props } from './storiesData';
 
@@ -7,14 +8,11 @@ export default {
   component: Header,
 };
 
-export const Default = (): JSX.Element => (
-  <div className="absolute top-0 right-0 left-0">
-    <Header {...props} />
-  </div>
-);
+export const Default = (): JSX.Element => <Header {...props} />;
 
-export const WithIcons = (): JSX.Element => (
-  <div className="absolute top-0 right-0 left-0">
-    <Header showIcons {...props} />
-  </div>
+export const WithContent = (): JSX.Element => (
+  <>
+    <Header {...props} />
+    <HomeTop />
+  </>
 );

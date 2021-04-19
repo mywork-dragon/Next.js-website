@@ -1,4 +1,6 @@
+import { useMemo } from 'react';
 import { m as motion, MotionProps } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
 import { FontSize } from '@/enums/font';
 import { ButtonShape, ButtonSize } from '@/enums/components';
@@ -7,25 +9,16 @@ import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 import YButton from '@/components/YButton';
 import YLink from '@/components/YLink';
-import { useWindowWidth } from '@react-hook/window-size';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 
-enum TextSection {
-  Heading = 'heading',
-  Text = 'text',
-}
-
-interface Button {
-  text: string;
-  link: string;
-}
+import styles from './YServiceCard.module.css';
 
 export interface Service {
-  icon: JSX.Element;
+  icon: string;
   title: string;
   subtitle: string;
   description: string;
-  button: Button;
+  buttonLink: string;
+  buttonText: string;
 }
 
 type Props = Service &
@@ -33,65 +26,82 @@ type Props = Service &
     className?: string;
   };
 
-const ServiceCard: React.FC<Props> = ({
+const YServiceCard: React.FC<Props> = ({
   icon,
   title,
   subtitle,
   description,
-  button,
+  buttonLink,
+  buttonText,
   className,
   ...props
 }) => {
-  const windowWidth = useWindowWidth();
-  const screenSize =
-    windowWidth < BreakPoint.SM
-      ? ScreenSize.XS
-      : windowWidth < BreakPoint.MD
-      ? ScreenSize.SM
-      : ScreenSize.MD;
+  const Icon = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/icons/${icon}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
 
   // title, subtitle, logo
   const topSection = (
-    <div className="flex w-full justify-between items-center border-soft-white border-b pb-3 px-4 sm:pb-5 sm:px-7.5 md:px-8 md:pb-6">
+    <div className="flex w-full justify-between items-center border-soft-white border-b pb-3 px-4 sm:pb-5 sm:px-7.5 lg:px-8 lg:pb-6">
       <div>
-        <YHeading {...getTextProps(TextSection.Heading, screenSize)} as="h2">
+        <YHeading
+          fontSize={FontSize.XS}
+          className="text-white lg:text-base lg:leading-7"
+          as="h2"
+        >
           {title}
         </YHeading>
-        <YText {...getTextProps(TextSection.Text, screenSize)} as="p">
+        <YText
+          fontSize={FontSize.XXS}
+          className="text-white lg:text-xs lg:leading-5"
+          as="p"
+        >
           {subtitle}
         </YText>
       </div>
       <div className="w-8 h-8 sm:w-10 sm:h-10 flex flex-shrink-0 items-center justify-center">
-        {icon}
+        <Icon />
       </div>
     </div>
   );
 
-  const points = createPoints(description, screenSize);
+  const descriptionPoints = useMemo(() => {
+    const points = description.split(',').map((point) => point.trim());
 
-  const descriptionPoints = (
-    <ul className="px-4 pt-3 sm:px-7.5 sm:pt-5 md:px-8 md:pt-6">
-      {points.map((line) => (
-        <YText
-          {...getTextProps(TextSection.Text, screenSize)}
-          className="py-1 text-white opacity-50"
-          as="li"
-        >
-          {line.trim()}
-        </YText>
-      ))}
-    </ul>
-  );
+    return (
+      <ul
+        className={[
+          'px-4 pt-3 sm:px-7.5 sm:pt-5 lg:px-8 lg:pt-6',
+          styles.points,
+        ].join(' ')}
+      >
+        {points.map((point) => (
+          <YText
+            fontSize={FontSize.XXS}
+            key={point}
+            className="py-1 text-white opacity-50 lg:text-xs lg:leading-5"
+            as="li"
+          >
+            {`- ${point}`}
+          </YText>
+        ))}
+      </ul>
+    );
+  }, []);
 
   const buttonElement = (
-    <YLink href={button.link}>
+    <YLink href={buttonLink}>
       <YButton
-        className="absolute bottom-6 left-7.5 md:bottom-8 md:left-8"
         buttonSize={ButtonSize.XS}
         shape={ButtonShape.Round}
+        className="absolute bottom-6 left-7.5 lg:bottom-8 lg:left-8"
         shadow
       >
-        {button.text}
+        {buttonText}
       </YButton>
     </YLink>
   );
@@ -109,45 +119,6 @@ const ServiceCard: React.FC<Props> = ({
   );
 };
 
-const getTextProps = (textSection: TextSection, screenSize: ScreenSize) => {
-  // filter small screen since props for SM and MD are the same
-  const size = screenSize == ScreenSize.XS ? ScreenSize.XS : ScreenSize.MD;
-
-  return textProps[textSection][size];
-};
-
-const textProps = {
-  [TextSection.Heading]: {
-    [ScreenSize.MD]: {
-      fontSize: FontSize.MD,
-    },
-    [ScreenSize.XS]: {
-      fontSize: FontSize.XS,
-    },
-  },
-  [TextSection.Text]: {
-    [ScreenSize.MD]: {
-      fontSize: FontSize.XS,
-    },
-    [ScreenSize.XS]: {
-      fontSize: FontSize.XXS,
-    },
-  },
-} as Record<TextSection, Record<ScreenSize, Parameters<typeof YText>[0]>>;
-
-// splits description and creates bullet points
-/**
- * @TODO review this in case it will be passed differently,
- * or needs to be shortened for smaller breakpoints */
-const createPoints = (string: string, screenSize: ScreenSize) => {
-  // split points
-  const points = string.split(',').map((subStr) => `- ${subStr.trim()}`);
-
-  // filter according to size
-  const displayItems = screenSize == ScreenSize.XS ? 4 : 6;
-  return points.slice(0, displayItems);
-};
-
 const containerClasses = [
   'flex',
   'flex-col',
@@ -155,7 +126,7 @@ const containerClasses = [
   'overflow-hidden',
   'py-5',
   'sm:py-6',
-  'md:py-8',
+  'lg:py-8',
 ];
 
-export default ServiceCard;
+export default YServiceCard;

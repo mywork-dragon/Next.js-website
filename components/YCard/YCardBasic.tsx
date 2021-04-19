@@ -1,11 +1,8 @@
-import React from 'react';
-
-import IconPlaceholder from '@/assets/icons/icon.svg';
-
-import { filterDefaultCard } from './YCard';
+import dynamic from 'next/dynamic';
+import React, { useMemo } from 'react';
 
 interface Props {
-  Icon?: JSX.Element;
+  icon?: string;
   empty?: boolean;
   className?: string;
   cardClasses?: string;
@@ -19,14 +16,17 @@ const YCardBasic: React.FC<Props> = ({
   cardClasses,
   title,
   description,
-  Icon,
+  icon,
   children,
 }) => {
-  const isTransparent = cardClasses?.includes('transparent');
+  const Icon = useMemo(
+    () => dynamic(() => import(`@/assets/icons/${icon}.svg`)),
+    []
+  );
 
-  const icon = (
+  const iconElement = (
     <div className="icon fill-current flex items-stretch">
-      {!isTransparent && (Icon || <IconPlaceholder />)}
+      <Icon />
     </div>
   );
 
@@ -48,7 +48,7 @@ const YCardBasic: React.FC<Props> = ({
       <div className={filterDefaultCard(baseClasses, cardClasses)}>
         {!empty && (
           <>
-            {icon}
+            {iconElement}
             {text}
           </>
         )}
@@ -57,6 +57,15 @@ const YCardBasic: React.FC<Props> = ({
     </div>
   );
 };
+
+// local utils
+const filterDefaultCard = (baseClasses: string[], classes: string) =>
+  classes?.split(' ').includes('card')
+    ? [
+        ...baseClasses.filter((className) => className != 'card-white'),
+        classes,
+      ].join(' ')
+    : [...baseClasses, classes].join(' ') || baseClasses.join(' ');
 
 const baseClasses = [
   'rounded',

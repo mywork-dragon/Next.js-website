@@ -51,10 +51,13 @@ export default async function preview(
       }
 
       locale = loc;
-      newSlug = (typeof slug === 'string' ? slug : slug.join('')).replace(
-        matchingValue,
-        ''
-      );
+      newSlug = typeof slug === 'string' ? slug : slug.join('');
+      // .replace(
+      //   matchingValue,
+      //   ''
+      // );
+      /**@Note Why would you do this?? */
+      /** Additional @NOTE Wouldn't slug always be a string in this case(preview)? */
       return;
     });
   }

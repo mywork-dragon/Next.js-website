@@ -1,185 +1,143 @@
-import React, { useState } from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
+import React, { useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
 
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+import { ScreenSize } from '@/enums/screenSize';
 import { FormField } from '@/enums/form';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
-import { InputStyle, InputType } from '@/enums/components';
 
-import YContactForm from '@/components/YContactForm';
+import { FormElementProps, InputField, SubmitHandler } from './FormElementSM';
+
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
-import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import ExpandableRegion from '../AnimateComponents/YExpandableRegion';
 import YButton from '../YButton';
 import {
   AnimateLayoutFeature,
-  AnimateSharedLayout,
   AnimationFeature,
   ExitFeature,
   MotionConfig,
 } from 'framer-motion';
-import YAnimateItem from '../AnimateComponents/YAnimateItem';
 
-interface InputField {
-  label: string;
-  placeholder: string;
-  errorMessage?: string;
-  info?: string;
-}
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 interface ContactInfo {
-  icon: JSX.Element;
+  icon: string;
   info: string;
 }
 
-interface Props {
+interface Props extends FormElementProps {
   title: string;
   description: string;
-  onFormSubmit: (values: Record<string, string>) => void;
   buttonText: string;
-  formButtonText: string;
-  formTitle: string;
-  fields: Record<FormField, InputField>;
   contactInfo: ContactInfo[];
 }
 
 const ContactSection: React.FC<Props> = ({
   title,
   description,
-  onFormSubmit,
   buttonText,
-  formButtonText,
-  formTitle,
-  fields,
   contactInfo,
+  ...props
 }) => {
-  const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize, screenReady } = useBreakpoint();
 
-  const [openForm, setOpenForm] = useState(
-    screenSize == ScreenSize.MD ? true : false
+  const [openForm, setOpenForm] = useState(false);
+
+  const FormElement = useMemo(
+    () =>
+      dynamic(
+        () =>
+          screenSize == ScreenSize.SM
+            ? import('./FormElementSM')
+            : import('./FormElementLG'),
+        { ssr: false }
+      ) as React.FC<
+        FormElementProps & {
+          openForm?: boolean;
+          setOpenForm?: (open: boolean) => void;
+          onFormSubmit: SubmitHandler;
+        }
+      >,
+    [screenSize]
   );
 
-  // handles closing of modal on mobile on submit
-  const handleSubmit: typeof onFormSubmit = (values) => {
-    setOpenForm(false);
-    onFormSubmit(values);
-  };
-
-  const formProps = {
-    fields: {
-      ...fields,
-      [FormField.Comment]: {
-        ...fields[FormField.Comment],
-        type: InputType.TextArea,
-      },
-    },
-    onSubmit: handleSubmit,
-    onClose: () => setOpenForm(false),
-    title: formTitle,
-    style: screenSize == ScreenSize.SM ? InputStyle.Dark : InputStyle.Light,
-    buttonText: formButtonText,
-  };
-
   const infoSection = (
-    <div className="w-full md:w-109.5 md:absolute md:-left-119.5 md:top-1/2 md:transform md:-translate-y-1/2">
+    <div className="w-full lg:w-109.5 lg:absolute lg:-left-120 lg:top-1/2 lg:transform lg:-translate-y-1/2">
       <YHeading
-        {...titleProps[screenSize]}
-        className="mb-1 md:mb-2 md:leading-22"
+        fontSize={FontSize['XXL']}
+        lineHeight={FontLineHeight.Relaxed}
+        className="text-white mb-1 lg:mb-2 lg:leading-22 lg:text-4xl"
+        as="h1"
       >
         {title}
       </YHeading>
-      <YText {...textProps[screenSize]} className="text-gray-300 mb-6 md:mb-15">
+      <YText
+        fontSize={FontSize.SM}
+        lineHeight={FontLineHeight.Loose}
+        className="text-gray-300 mb-6 lg:mb-15 lg:text-lg lg:leading-12"
+        as="p"
+      >
         {description}
       </YText>
-      {contactInfo.map((contact) => (
-        <div className="flex items-center h-10.5 mb-5 md:h-13 md:mb-8">
-          <div className="flex rounded-lg p-2 items-center justify-center fill-current text-white text-opacity-60 bg-white bg-opacity-15 w-10.5 h-full mr-4 md:w-13 md:mr-5">
-            {contact.icon}
+      {contactInfo.map(({ icon, info }, index) => {
+        const Icon = dynamic(() => import(`@/assets/icons/${icon}.svg`));
+
+        return (
+          <div
+            key={index}
+            className="flex items-center h-10.5 mb-5 lg:h-13 lg:mb-8"
+          >
+            <div className="flex rounded-lg p-2 items-center justify-center fill-current text-white text-opacity-60 bg-white bg-opacity-15 w-10.5 h-full mr-4 lg:w-13 lg:mr-5">
+              <Icon />
+            </div>
+            <div>
+              <YText
+                fontSize={FontSize.SM}
+                fontWeight={FontWeight.SemiBold}
+                className="text-white lg:text-base lg:leading-9"
+                as="p"
+              >
+                {info}
+              </YText>
+            </div>
           </div>
-          <div>
-            <YText {...contactTextProps[screenSize]}>{contact.info}</YText>
-          </div>
-        </div>
-      ))}
-      {screenSize == ScreenSize.SM && (
-        <YButton className="mt-3" shadow onPress={() => setOpenForm(true)}>
-          {buttonText}
-        </YButton>
-      )}
+        );
+      })}
+      <YButton
+        className="mt-3 lg:hidden"
+        shadow
+        onPress={() => setOpenForm(true)}
+      >
+        {buttonText}
+      </YButton>
     </div>
   );
 
-  const contactForm =
-    screenSize == ScreenSize.MD ? (
-      <YContactForm {...formProps} />
-    ) : (
-      <AnimateSharedLayout>
-        <ExpandableRegion
-          className="fixed top-0 left-0 right-0 bottom-0 whitespace-normal z-50"
-          open={openForm}
-        >
-          <YAnimateItem layout className="h-full w-full">
-            <YContactForm
-              {...formProps}
-              onClose={() => setOpenForm(false)}
-              className="h-full w-full"
-            />
-          </YAnimateItem>
-        </ExpandableRegion>
-      </AnimateSharedLayout>
-    );
+  const handleSubmit: SubmitHandler = (values) => {
+    /**@TODO connect to segment */
+    console.log(values);
+  };
 
   return (
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
-      <section className="container pt-30.5 pb-15 md:pt-53.5 md:px-23.5 md:pb-42">
-        <div className="relative mr-0 md:w-110 md:ml-auto">
-          {infoSection}
-          {contactForm}
+      <section className="container pt-30.5 pb-15 lg:pt-53.5 lg:px-23.5 lg:pb-42">
+        <div className="relative max-w-lg mx-auto lg:max-w-none lg:mx-0 lg:w-110 lg:ml-auto">
+          {screenReady && (
+            <>
+              <div className="lg:">{infoSection}</div>
+              <FormElement
+                {...props}
+                openForm={openForm}
+                setOpenForm={setOpenForm}
+                onFormSubmit={handleSubmit}
+              />
+            </>
+          )}
         </div>
       </section>
     </MotionConfig>
   );
 };
-
-const titleProps = {
-  [ScreenSize.MD]: {
-    fontSize: FontSize['4XL'],
-    as: 'h1',
-  },
-  [ScreenSize.SM]: {
-    fontSize: FontSize['XXL'],
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'h1',
-  },
-} as Record<ScreenSize, Parameters<typeof YHeading>[0]>;
-
-const textProps = {
-  [ScreenSize.MD]: {
-    fontSize: FontSize.LG,
-    lineHeight: FontLineHeight.Loose,
-    as: 'p',
-  },
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Loose,
-    as: 'p',
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
-
-const contactTextProps = {
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Relaxed,
-    fontWeight: FontWeight.SemiBold,
-    as: 'p',
-  },
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    fontWeight: FontWeight.SemiBold,
-    as: 'p',
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
 
 export default ContactSection;

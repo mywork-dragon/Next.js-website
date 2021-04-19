@@ -59,12 +59,24 @@ export type LanguageCodesResponse = {
 
 export type PostItems = Collection<PostItem>;
 
-type Space = {
-  domain: string;
-  id: number;
-  languageCodes: string[];
-  name: string;
-  version: number;
+export type Blok = {
+  [key: string]: any;
+};
+
+export type PageComponent = {
+  _editable: string;
+  _uid: string;
+  body: string;
+  component: string;
+};
+
+export type PostComponent = {
+  _editable: string;
+  _uid: string;
+  component: string;
+  intro: string;
+  long_text: { [key: string]: any };
+  title: string;
 };
 //endregion
 
@@ -86,25 +98,17 @@ type Alternate = {
   slug: string;
 };
 
-export type PageComponent = {
-  _editable: string;
-  _uid: string;
-  body: string;
-  component: string;
-};
-
-export type PostComponent = {
-  _editable: string;
-  _uid: string;
-  component: string;
-  intro: string;
-  long_text: { [key: string]: any };
-  title: string;
-};
-
 type TranslatedSlug = {
   lang: string;
   name: string;
   path: string;
+};
+
+type Space = {
+  domain: string;
+  id: number;
+  languageCodes: string[];
+  name: string;
+  version: number;
 };
 //endregion

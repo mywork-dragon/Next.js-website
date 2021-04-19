@@ -1,4 +1,9 @@
-import { PageItem, PostItem } from '@/types/storyblok';
+import { PageItem, PostItem, Blok } from '@/types/storyblok';
+
+import { FormField } from '@/enums/form';
+
+import { NavItemInterface } from '@/components/YHeaderItem/YHeaderItem';
+import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
 
 export function initEditor([story, setStory]: [
   PageItem | PostItem,
@@ -24,7 +29,6 @@ export function initEditor([story, setStory]: [
             event.story,
             ['featured-articles.articles'],
             () => {
-              console.log(story);
               setStory(event.story);
             }
           );
@@ -33,3 +37,153 @@ export function initEditor([story, setStory]: [
     );
   }
 }
+
+export const mapStoryblokProps = (props: Blok): Blok => {
+  let newProps = { ...props };
+  const propKeys = Object.keys(newProps);
+
+  if (propKeys.includes('locales')) {
+    newProps.locales = props.locales.data.Space.languageCodes;
+  }
+
+  if (propKeys.includes('buttonText')) {
+    const { buttonText, buttonLink, ...tempProps } = newProps;
+    newProps = {
+      ...tempProps,
+      buttonProps: {
+        text: props.buttonText,
+        link: props.buttonLink?.cached_url || '',
+      },
+    };
+  }
+
+  if (propKeys.includes('logoLink')) {
+    const { logoIcon, logoLink, ...tempProps } = newProps;
+    newProps = {
+      ...tempProps,
+      logo: {
+        icon: props.logoIcon,
+        link: props.logoLink.cached_url || '',
+      },
+    };
+  }
+
+  if (propKeys.includes('partners')) {
+    newProps.partners = props.partners.map(({ link, ...props }) => ({
+      ...props,
+      link: link.url,
+    }));
+  }
+
+  if (propKeys.includes('nameLabel')) {
+    const fields = Object.values(FormField).reduce(
+      (acc, curr) => ((acc[curr] = processFormField(curr, props)), acc),
+      {}
+    );
+    newProps.fields = fields;
+  }
+
+  if (propKeys.includes('articlesFrames')) {
+    newProps.frames = [];
+    newProps.frames[0] = processReviewsFrame(props);
+    newProps.frames = [
+      newProps.frames[0],
+      ...props.articlesFrames.map((article) => processArticlesFrame(article)),
+    ];
+  }
+
+  if (propKeys.includes('navItems')) {
+    newProps.navItems = processNavItems(props.navItems);
+  }
+
+  if (propKeys.includes('linksFirst')) {
+    newProps = processFooterProps(props);
+  }
+
+  if (propKeys.includes('services')) {
+    newProps.services = props.services.map((service) => ({
+      ...service,
+      buttonLink: service.buttonLink.cached_url,
+    }));
+  }
+
+  return newProps;
+};
+
+const processReviewsFrame = (props) => ({
+  reviews: props.reviews,
+  buttonSM: props.reviewsButtonSm,
+  buttonMD: props.reviewsButtonMd,
+});
+
+const processArticlesFrame = (article) => ({
+  articles: article.articles,
+  buttonSM: article.buttonSm,
+  buttonMD: article.buttonMd,
+});
+
+const processFormField = (field: FormField, props: any) => {
+  return {
+    label: props[`${field}Label`],
+    placeholder: props[`${field}Placeholder`],
+    errorMessage: props[`${field}ErrorMessage`],
+  };
+};
+
+interface LinkObject {
+  cached_url: string;
+}
+
+const processNavItems = (
+  navItems: Array<
+    NavItemInterface & {
+      link: LinkObject;
+      subItems: Array<SubItemInterface & { link: LinkObject }>;
+    }
+  >
+) =>
+  navItems.map((navItem) => {
+    const link = navItem.link.cached_url;
+    return navItem.subItems?.length
+      ? {
+          ...navItem,
+          link,
+          subItems: navItem.subItems.map((subItem) => ({
+            ...subItem,
+            link: (subItem.link as any).cached_url,
+          })),
+        }
+      : { link, text: navItem.text };
+  });
+
+const processFooterProps = (props) => ({
+  links: {
+    first: props.linksFirst.map(({ text, link }) => ({
+      link: link.cached_url || link.cachedUrl,
+      text,
+    })),
+    second: props.linksSecond.map(({ text, link }) => ({
+      link: link.cached_url || link.cachedUrl,
+      text,
+    })),
+  },
+  content: {
+    heading: props.contentHeading,
+    description: props.contentDescription,
+  },
+  contactDetails: {
+    street: props.street,
+    postalCode: props.postalCode,
+    city: props.city,
+    email: props.email,
+    phoneNumber: {
+      label: props.phoneLabel,
+      value: props.phoneValue,
+    },
+  },
+  contactButton: props.contactButton,
+  socialMedia: props.socialMedia.map(({ link, icon }) => ({
+    icon,
+    link: link.cached_url || link.cachedUrl,
+  })),
+});

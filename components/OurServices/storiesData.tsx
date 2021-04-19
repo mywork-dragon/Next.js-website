@@ -1,21 +1,9 @@
-import User from '@/assets/icons/user.svg';
-import Analytics from '@/assets/icons/analytics.svg';
-import Email from '@/assets/icons/email.svg';
-import UserVoice from '@/assets/icons/user-voice.svg';
-import Analise from '@/assets/icons/analise.svg';
-import Chip from '@/assets/icons/chip.svg';
-import Megaphone from '@/assets/icons/megaphone.svg';
-import Code from '@/assets/icons/code.svg';
-
-import CustomerIO from '@/assets/icons/companies/customer-io.svg';
-import Segment from '@/assets/icons/companies/segment.svg';
-import Mixpanel from '@/assets/icons/companies/mixpanel.svg';
-
 const description =
   'Data & Analitics, Conversion Optimization, E-mail marketing, Social Media Advertising, Affiliate Marketing, Integration & Implementation, Something Else';
+
 const button = {
-  text: 'Contact us',
-  link: '',
+  buttonText: 'Contact us',
+  buttonLink: '/contact',
 };
 
 const services = [
@@ -23,71 +11,74 @@ const services = [
     title: 'Personalization',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <User />,
+    ...button,
+    icon: 'user',
   },
   {
     title: 'Data & Analicits',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <Analytics />,
+    ...button,
+    icon: 'analytics',
   },
   {
     title: 'E-mail marketing',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <Email />,
+    ...button,
+    icon: 'email',
   },
   {
     title: 'Affiliate marketing',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <UserVoice />,
+    ...button,
+    icon: 'user-voice',
   },
   {
     title: 'Conversion optimization',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <Analise />,
+    ...button,
+    icon: 'analise',
   },
   {
     title: 'Marketing automation',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <Chip />,
+    ...button,
+    icon: 'chip',
   },
   {
     title: 'Social media advertising',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <Megaphone />,
+    ...button,
+    icon: 'megaphone',
   },
   {
     title: 'Integration & Implementation',
     subtitle: 'PHP, Node.js',
     description,
-    button,
-    icon: <Code />,
+    ...button,
+    icon: 'code',
   },
 ];
 
 const partners = [
   {
-    logo: <Mixpanel />,
+    title: 'mixpanel',
+    logo: 'companies/mixpanel',
     link: 'https://mixpanel.com',
   },
   {
-    logo: <CustomerIO />,
+    title: 'customer IO',
+    logo: 'companies/customer-io',
     link: 'https://customer.io',
   },
   {
-    logo: <Segment />,
+    title: 'segment',
+    logo: 'companies/segment',
     link: 'https://segment.com',
   },
 ];

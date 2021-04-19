@@ -3,9 +3,9 @@ import { useTextField } from '@react-aria/textfield';
 import { AriaTextFieldProps } from '@react-types/textfield';
 
 import { InputStyle, InputType } from '@/enums/components';
+import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 import YText from '@/components/YText';
-import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 interface Props extends AriaTextFieldProps {
   style?: InputStyle;
