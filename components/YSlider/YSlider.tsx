@@ -8,6 +8,8 @@ import filterPosition from '@/libs/utils/filterPosition';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 import YArrowButton from '@/components/YArrowButton';
 
+import style from './YSlider.module.css';
+
 interface ScrollProps {
   className?: string;
   showMoreLabel?: string;
@@ -18,7 +20,7 @@ export const YSlider: React.FC<ScrollProps> = ({
   children,
   showMoreLabel,
 }) => {
-  const [position, setPosition] = useState<'left' | 'right'>('left');
+  const [position, setPosition] = useState<ArrowType>(ArrowType.Left);
   const [diff, setDiff] = useState(0);
 
   const sliderContainer = useRef<HTMLDivElement>(null);
@@ -30,7 +32,6 @@ export const YSlider: React.FC<ScrollProps> = ({
           sliderContainer.current.clientWidth
       );
     }
-    console.log('hook ran');
   }, [sliderContainer.current]);
 
   const motionProps = {
@@ -49,7 +50,22 @@ export const YSlider: React.FC<ScrollProps> = ({
     },
   } as MotionProps;
 
-  const arrowClasses = ['absolute', 'transform', 'top-1/2', '-translate-y-1/2'];
+  const createArrowElement = (direction: ArrowType) => (
+    <YArrowButton
+      key={`arrow-${direction}`}
+      onClick={() => setPosition(direction)}
+      className={[
+        `absolute h-full top-0 w-40 ${direction}-0`,
+        style[`arrow${direction}`],
+      ].join(' ')}
+      showMore={showMoreLabel}
+      type={direction}
+    />
+  );
+
+  const arrowDirection = Object.values(ArrowType).find(
+    (key) => key != position
+  );
 
   return (
     <YAnimateItem className={filterPosition([], className)}>
@@ -57,21 +73,7 @@ export const YSlider: React.FC<ScrollProps> = ({
         {children}
       </motion.div>
       <AnimatePresence exitBeforeEnter>
-        {position == 'left' ? (
-          <YArrowButton
-            key="arrow-right"
-            onClick={() => setPosition('right')}
-            className={[...arrowClasses, 'right-12.5'].join(' ')}
-            showMore={showMoreLabel}
-          />
-        ) : (
-          <YArrowButton
-            key="arrow-left"
-            type={ArrowType.Left}
-            onClick={() => setPosition('left')}
-            className={[...arrowClasses, 'left-12.5'].join(' ')}
-          />
-        )}
+        {createArrowElement(arrowDirection)}
       </AnimatePresence>
     </YAnimateItem>
   );

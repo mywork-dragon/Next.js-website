@@ -42,11 +42,11 @@ const YHeaderItem: React.FC<Props> = ({
 
   const itemText = (
     <YText
-      onClick={() => (subItems ? setOpenItems(!openItems) : null)}
+      onClick={() => (subItems ? setOpenItems(!openItems) : onClick())}
       fontSize={FontSize.XS}
       lineHeight={FontLineHeight.Relaxed}
       fontWeight={FontWeight.SemiBold}
-      className="relative top-1/2 transform -translate-y-1/2 text-gray-300 md:text-gray-200 md:transform-none md:top-0 md:leading-5"
+      className="absolute top-1/2 transform -translate-y-1/2 text-gray-300 lg:relative lg:text-gray-200 lg:transform-none lg:top-0 lg:leading-5"
       as="span"
     >
       {text}
@@ -58,16 +58,16 @@ const YHeaderItem: React.FC<Props> = ({
     'h-14.1',
     'border-blue-300',
     'cursor-pointer',
-    'md:mr-11',
-    'md:flex',
-    'md:items-center',
+    'lg:mr-11',
+    'lg:flex',
+    'lg:items-center',
   ];
 
   return (
     <>
       <YAnimateItem
-        className={[...itemClasses, className].join(' ')}
         onClick={onClick}
+        className={[...itemClasses, className].join(' ')}
         disableMount={disableMount}
       >
         {!subItems ? (

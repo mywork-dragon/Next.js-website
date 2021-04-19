@@ -8,6 +8,7 @@ const rem = (value) => {
 
 const colors = {
   blue: {
+    header: '#203876',
     500: '#193751',
     400: '#041925',
     350: '#11305A',
@@ -408,6 +409,12 @@ module.exports = {
         },
         '.blur-5': {
           filter: 'blur(5px)',
+        },
+        '.backdrop-blur-20': {
+          backdropFilter: 'blur(20px)',
+        },
+        '.backdrop-blur-60': {
+          backdropFilter: 'blur(60px)',
         },
         '.text-shadow-blue': {
           textShadow: '-4px -4px 0px #305EED',

@@ -82,6 +82,7 @@ const HeaderLG: React.FC<Props> = ({
       >
         {subItems?.map((subItem, index) => (
           <YHeaderSubItem
+            onClick={() => setSubItems(null)}
             {...subItem}
             key={subItem.text}
             className={index < subItems.length - 1 ? 'mr-5' : ''}
@@ -103,15 +104,11 @@ const HeaderLG: React.FC<Props> = ({
   return (
     <YAnimateBackground
       ref={headerRef}
-      className="fixed w-full left-0 top-0 z-40 md:absolute"
+      className="absolute w-full left-0 top-0 z-40 hidden lg:block"
       open={open}
+      openClasses="bg-blue-header backdrop-blur-60 bg-opacity-70"
     >
-      <div
-        className={[
-          'container px-0 h-23.5 border-soft',
-          open ? 'border-b' : '',
-        ].join(' ')}
-      >
+      <div className="container px-0 h-23.5 border-soft">
         <div className="relative w-full h-8.5 top-1/2 flex items-center">
           <div
             className={[
@@ -145,6 +142,7 @@ const HeaderLG: React.FC<Props> = ({
         <YExpandableRegion
           className="flex flex-col items-stretch container"
           open={open}
+          height={181}
         >
           {hiddenRegion}
         </YExpandableRegion>

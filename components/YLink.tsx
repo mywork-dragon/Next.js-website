@@ -11,14 +11,14 @@ export default function YLink({
 }: Props): JSX.Element {
   const { lang } = useRouter().query as { lang: string };
 
-  const processedHref =
-    typeof href != 'string'
-      ? href
-      : href.includes(lang)
-      ? href
-      : href.includes('[lang]')
-      ? href.replace('[lang]', lang)
-      : `/${lang}/${href.replace(/^\/|\/$/g, '')}`;
+  const stringHref = typeof href == 'string' ? href : href.pathname;
+  const pathname = stringHref.replace('home', '');
+
+  const processedHref = pathname.includes(lang)
+    ? pathname
+    : pathname.includes('[lang]')
+    ? pathname.replace('[lang]', lang)
+    : `/${lang}/${pathname.replace(/^\/|\/$/g, '')}`;
 
   return (
     <Link href={processedHref} {...props} passHref>
