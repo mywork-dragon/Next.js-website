@@ -1,4 +1,5 @@
-import { PageItem, PostItem } from '@/types/storyblok';
+import { PageItem, PostItem, Blok } from '@/types/storyblok';
+import { Company } from '@/components/HomeTop/HomeTop';
 
 export function initEditor([story, setStory]: [
   PageItem | PostItem,
@@ -33,3 +34,43 @@ export function initEditor([story, setStory]: [
     );
   }
 }
+
+export const mapStoryblokProps = (props: Blok): Blok => {
+  const newProps = { ...props };
+  const propKeys = Object.keys(newProps);
+
+  if (propKeys.includes('buttonText')) {
+    newProps.buttonProps = {
+      text: props.buttonText,
+      link: props.buttonLink.cached_url,
+    };
+  }
+
+  if (propKeys.includes('companies')) {
+    newProps.companies = Object.keys(newProps.companies).reduce(
+      (companies, companyKey) => {
+        const company = newProps.companies[companyKey];
+        const newCompany = {} as Company;
+
+        newCompany.title = company.title;
+        newCompany.link = company.link.url;
+        newCompany.logo = company.logo.filename;
+
+        return [...companies, newCompany];
+      },
+      []
+    );
+  }
+
+  if (propKeys.includes('cards')) {
+    newProps.cards = newProps.cards.map((card) => {
+      const newCard = { ...card };
+
+      newCard.Icon = card.icon;
+
+      return newCard;
+    });
+  }
+
+  return newProps;
+};

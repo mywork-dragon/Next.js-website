@@ -7,6 +7,4 @@ export default {
   component: Header,
 };
 
-export const Default = (): JSX.Element => (
-    <Header {...props} />
-);
+export const Default = (): JSX.Element => <Header {...props} />;

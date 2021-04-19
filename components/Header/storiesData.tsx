@@ -1,58 +1,56 @@
-import LogoMain from '@/assets/icons/logo-main.svg';
-
 const logo = {
-  Icon: <LogoMain />,
-  link: '#',
+  icon: 'logo-main',
+  link: '/home',
 };
 
 const button = {
   text: 'Contact us',
-  link: '#',
+  link: '/contact',
 };
 
 const subItems = [
   {
     text: 'Personalization',
-    link: '#',
+    link: '/',
     icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/personalization.png',
   },
   {
     text: 'Data & Analitics',
-    link: '',
+    link: '/',
     icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/data-analytics.png',
   },
   {
     text: 'Email Marketing',
-    link: '',
+    link: '/',
     icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/email-marketing.png',
   },
   {
     text: 'Affiliate Marketing',
-    link: '',
+    link: '/services/affiliate',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/affiliate-marketing.png',
   },
   {
     text: 'Conversion Optimization',
-    link: '',
+    link: '/',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/conversion-optimization.png',
   },
   {
     text: 'Marketing Automatization',
-    link: '',
+    link: '/',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/marketing-automation.png',
   },
   {
     text: 'Online Advertising',
-    link: '',
+    link: '/',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/online-advertising.png',
   },
   {
     text: 'Integration/Implementation',
-    link: '',
+    link: '/services/integration',
     icon:
       'https://yeaimages.s3.eu-central-1.amazonaws.com/integration-implementation.png',
   },
@@ -61,32 +59,32 @@ const subItems = [
 const navItems = [
   {
     text: 'Home',
-    link: '#',
+    link: '/home',
   },
   {
     text: 'Services',
-    link: '#',
+    link: '/',
     subItems,
   },
   {
     text: 'About',
-    link: '#',
+    link: '/about',
   },
   {
     text: 'Cases',
-    link: '#',
+    link: '/',
   },
   {
     text: 'Partners',
-    link: '#',
+    link: '/',
   },
   {
     text: 'Blog',
-    link: '#',
+    link: '/',
   },
   {
     text: 'Contact',
-    link: '#',
+    link: '/contact',
   },
 ];
 

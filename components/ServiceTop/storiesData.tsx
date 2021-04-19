@@ -5,7 +5,7 @@ const props = {
   description:
     'The integration & implementation part of our services is where we help companies integrate the tools we offer.',
   buttonProps: {
-    link: '',
+    link: '/',
     text: 'Learn More',
   },
 };

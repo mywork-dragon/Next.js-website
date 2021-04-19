@@ -1,5 +1,5 @@
 import Link, { LinkProps } from 'next/link';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, forwardRef } from 'react';
 
 type Props = LinkProps & HTMLAttributes<HTMLAnchorElement>;
 
@@ -10,7 +10,7 @@ export default function YLink({
 }: Props): JSX.Element {
   // TODO: Fix Localization
   return (
-    <Link href={href} {...props}>
+    <Link href={href} {...props} passHref>
       {children}
     </Link>
   );

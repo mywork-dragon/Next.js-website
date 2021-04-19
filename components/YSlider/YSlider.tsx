@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, m as motion, MotionProps } from 'framer-motion';
 
 import { ArrowType } from '@/enums/components';
@@ -19,10 +19,19 @@ export const YSlider: React.FC<ScrollProps> = ({
   showMoreLabel,
 }) => {
   const [position, setPosition] = useState<'left' | 'right'>('left');
+  const [diff, setDiff] = useState(0);
 
   const sliderContainer = useRef<HTMLDivElement>(null);
-  const diff =
-    sliderContainer.current?.scrollWidth - sliderContainer.current?.clientWidth;
+
+  useEffect(() => {
+    if (sliderContainer.current) {
+      setDiff(
+        sliderContainer.current.scrollWidth -
+          sliderContainer.current.clientWidth
+      );
+    }
+    console.log('hook ran');
+  }, [sliderContainer.current]);
 
   const motionProps = {
     animate: position,
@@ -31,7 +40,7 @@ export const YSlider: React.FC<ScrollProps> = ({
         x: 0,
       },
       right: {
-        x: -diff || 0,
+        x: -diff,
       },
     },
     transition: {
@@ -43,30 +52,28 @@ export const YSlider: React.FC<ScrollProps> = ({
   const arrowClasses = ['absolute', 'transform', 'top-1/2', '-translate-y-1/2'];
 
   return (
-    <AnimatePresence>
-      <YAnimateItem className={filterPosition([], className)}>
-        <motion.div {...motionProps} ref={sliderContainer}>
-          {children}
-        </motion.div>
-        <AnimatePresence exitBeforeEnter>
-          {position == 'left' ? (
-            <YArrowButton
-              key="arrow-right"
-              onClick={() => setPosition('right')}
-              className={[...arrowClasses, 'right-12.5'].join(' ')}
-              showMore={showMoreLabel}
-            />
-          ) : (
-            <YArrowButton
-              key="arrow-left"
-              type={ArrowType.Left}
-              onClick={() => setPosition('left')}
-              className={[...arrowClasses, 'left-12.5'].join(' ')}
-            />
-          )}
-        </AnimatePresence>
-      </YAnimateItem>
-    </AnimatePresence>
+    <YAnimateItem className={filterPosition([], className)}>
+      <motion.div {...motionProps} ref={sliderContainer}>
+        {children}
+      </motion.div>
+      <AnimatePresence exitBeforeEnter>
+        {position == 'left' ? (
+          <YArrowButton
+            key="arrow-right"
+            onClick={() => setPosition('right')}
+            className={[...arrowClasses, 'right-12.5'].join(' ')}
+            showMore={showMoreLabel}
+          />
+        ) : (
+          <YArrowButton
+            key="arrow-left"
+            type={ArrowType.Left}
+            onClick={() => setPosition('left')}
+            className={[...arrowClasses, 'left-12.5'].join(' ')}
+          />
+        )}
+      </AnimatePresence>
+    </YAnimateItem>
   );
 };
 

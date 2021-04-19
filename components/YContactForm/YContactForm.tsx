@@ -1,9 +1,11 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { InputStyle, InputType, ToggleType } from '@/enums/components';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize } from '@/enums/font';
+
+import useBreakpoint from '@/hooks/useBreakpoint';
+import useValidate from '@/hooks/useValidate';
 
 import YFormElement from '@/components/YFormElement';
 import YButton from '@/components/YButton';
@@ -13,8 +15,6 @@ import YMenuToggle from '@/components/YMenuToggle';
 import styles from './YContactForm.module.css';
 
 import filterPosition from '@/libs/utils/filterPosition';
-
-import useValidate from '@/hooks/useValidate';
 
 enum Field {
   Name = 'name',
@@ -50,8 +50,7 @@ const YContactForm: React.FC<Props> = ({
   fields,
   onClose,
 }) => {
-  const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize } = useBreakpoint([ScreenSize.MD]);
 
   const fieldNames = Object.keys(fields);
 
@@ -64,10 +63,11 @@ const YContactForm: React.FC<Props> = ({
   } = useValidate(fieldNames, onSubmit, validationRegex);
 
   // form title displayed on mobile
-  const heading = screenSize == ScreenSize.SM && (
+  const heading = screenSize != ScreenSize.LG && (
     <YHeading
       fontSize={FontSize.XL}
       lineHeight={FontLineHeight.Relaxed}
+      className="text-white"
       as="h2"
     >
       {title}
@@ -75,7 +75,7 @@ const YContactForm: React.FC<Props> = ({
   );
 
   // menu toggle on small screen
-  const toggle = screenSize == ScreenSize.SM && (
+  const toggle = screenSize != ScreenSize.LG && (
     <YMenuToggle
       onClick={() => onClose()}
       open={false}
@@ -105,7 +105,7 @@ const YContactForm: React.FC<Props> = ({
   );
 
   // fade overlay above button on mobile
-  const fade = screenSize == ScreenSize.SM && (
+  const fade = screenSize != ScreenSize.LG && (
     <div
       className={['absolute bottom-22.5 h-15 w-full', styles.fade].join(' ')}
     />
@@ -114,7 +114,7 @@ const YContactForm: React.FC<Props> = ({
   // submit button
   const button = (
     <YButton
-      className="absolute bottom-8 w-full md:static md:w-43.6 md:mt-3"
+      className="absolute bottom-8 w-full lg:static lg:w-43.6 lg:mt-3"
       type="submit"
       isDisabled={disabled}
       shadow
@@ -142,7 +142,7 @@ const YContactForm: React.FC<Props> = ({
 };
 
 // outer container
-const containerClasses = ['md:px-15', 'md:py-12', 'md:rounded-lg'];
+const containerClasses = ['lg:px-15', 'lg:py-12', 'lg:rounded-lg'];
 
 // form element
 const formClasses = [
@@ -151,8 +151,12 @@ const formClasses = [
   'left-10',
   'right-10',
   'bottom-8',
-  'md:static',
-  'md:w-full',
+  'max-w-xl',
+  'mx-auto',
+  'lg:max-w-none',
+  'lg:mx-0',
+  'lg:static',
+  'lg:w-full',
 ];
 
 // inner form -> input fields container (to enable scrolling)
@@ -163,7 +167,7 @@ const formInnerClasses = [
   'top-15',
   'w-full',
   'bottom-22.5',
-  'md:static',
+  'lg:static',
 ];
 
 const color = {
@@ -174,7 +178,7 @@ const color = {
 const getFieldClasses = (type: InputType, screenSize: ScreenSize) =>
   [
     'mb-5',
-    screenSize == ScreenSize.MD && type == InputType.TextArea
+    screenSize == ScreenSize.LG && type == InputType.TextArea
       ? 'w-73.6'
       : 'w-full',
   ].join(' ');

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-import YCard from '@/components/YCard';
-import style from './BackgroundGrid.module.css';
-import { useWindowWidth } from '@react-hook/window-size';
-
 import { ScreenSize, BreakPoint } from '@/enums/screenSize';
+
+import style from './BackgroundGrid.module.css';
+
+import useBreakpoint from '@/hooks/useBreakpoint';
+
 import { cardAppearances, cardBaseClasses } from './gridElements';
+
+import YCard from '@/components/YCard';
 
 export interface Card {
   icon?: string;
@@ -19,8 +22,9 @@ interface Props {
 
 const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   // screen size section
-  const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
+  const { screenSize, screenReady } = useBreakpoint();
+
+  console.log('screenSize', screenSize);
 
   const cardsForDisplay = {
     [ScreenSize.SM]: mirrorForMobile(cards),
@@ -43,6 +47,7 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
       return (
         <div
           className={[baseGridClasses, fadeGridline(i, screenSize)].join(' ')}
+          key={`card-${i}`}
         >
           {gridElement == 'interactiveCard' ? (
             <YCard
@@ -60,11 +65,11 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   };
 
   // return grid
-  return (
+  return screenReady ? (
     <div className={['absolute top-0 bg-blue-100', style.bgGrid].join(' ')}>
       {populateGrid(screenSize, cardsForDisplay[screenSize])}
     </div>
-  );
+  ) : null;
 };
 
 /** utils and helper constants */
@@ -84,7 +89,7 @@ const createGridArr = (
     (curr, prev) => curr * prev
   );
 
-  let returnArray = Array(numItemsInGrid).fill(null);
+  const returnArray = Array(numItemsInGrid).fill(null);
 
   cardAppearances.forEach((card) => {
     card.appearances[screenSize]?.forEach(

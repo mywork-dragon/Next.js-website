@@ -1,9 +1,7 @@
 import React from 'react';
-import { useWindowWidth } from '@react-hook/window-size';
 
 import { ButtonSize } from '@/enums/components';
 import { FontLineHeight, FontSize } from '@/enums/font';
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
@@ -27,26 +25,28 @@ const AboutContact: React.FC<Props> = ({
   description,
   buttonProps: { link, text: buttonText },
 }) => {
-  const screenSize =
-    useWindowWidth() < BreakPoint.MD ? ScreenSize.SM : ScreenSize.MD;
-
   const content = (
-    <div className="w-full text-center mt-111.1 mb-15 md:text-left md:mt-60 md:w-100 md:mb-75">
-      <YHeading className="mb-3 w-full" {...titleProps[screenSize]}>
+    <div className="w-full text-center pt-111.1 pb-15 md:text-left md:pt-60 md:w-100 md:pb-75 text-white">
+      <YHeading
+        fontSize={FontSize.XL}
+        lineHeight={FontLineHeight.Relaxed}
+        className="pb-3 w-full md:text-xxl md:leading-15"
+        as="h1"
+      >
         {title}
       </YHeading>
       <YText
-        className="mb-5 w-full text-gray-300 md:text-gray-200"
-        {...descriptionProps[screenSize]}
+        fontSize={FontSize.SM}
+        lineHeight={FontLineHeight.Loose}
+        className="pb-5 w-full text-gray-300 md:text-gray-200 md:text-base md:leading-11"
+        as="p"
       >
         {description}
       </YText>
       <YLink href={link}>
         <YButton
           shadow
-          buttonSize={
-            screenSize == ScreenSize.SM ? ButtonSize.MD : ButtonSize.LG
-          }
+          className="px-5 py-3 text-sm leading-6 md:text-md md:leading-7"
         >
           {buttonText}
         </YButton>
@@ -63,30 +63,5 @@ const AboutContact: React.FC<Props> = ({
     </section>
   );
 };
-
-const titleProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.XL,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'h1',
-  },
-  [ScreenSize.MD]: {
-    fontSize: FontSize.XXL,
-    lineHeight: FontLineHeight.Relaxed,
-    as: 'h1',
-  },
-} as Record<string, Parameters<typeof YHeading>[0]>;
-
-const descriptionProps = {
-  [ScreenSize.SM]: {
-    fontSize: FontSize.SM,
-    lineHeight: FontLineHeight.Loose,
-    as: 'p',
-  },
-  [ScreenSize.MD]: {
-    lineHeight: FontLineHeight.Loose,
-    as: 'p',
-  },
-} as Record<ScreenSize, Parameters<typeof YText>[0]>;
 
 export default AboutContact;
