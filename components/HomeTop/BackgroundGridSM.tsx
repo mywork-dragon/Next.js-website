@@ -1,12 +1,11 @@
 import React, { useMemo, useState } from 'react';
-
-import { ScreenSize } from '@/enums/screenSize';
+import Image from 'next/image';
 
 import style from './BackgroundGrid.module.css';
 
-import { cardAppearances, cardBaseClasses } from './gridElements';
-
 import YCard from '@/components/YCard';
+
+import Gridlines from '@/assets/other/HomeTopGridlineSM.svg';
 
 export interface Card {
   icon?: string;
@@ -25,23 +24,6 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
 
   // shared hover control section
   const [hoveredCard, setHoveredCard] = useState(4);
-
-  const populateGrid = useMemo(() => {
-    const grid = createGridArr();
-
-    return grid.map((gridElement, i) => (
-      <div
-        key={`trans-card-${i}`}
-        className={[
-          baseGridClasses,
-          fadeGridline(i),
-          grid[i - 1] == 'interactiveCard' ? 'drop-shadow' : '',
-        ].join(' ')}
-      >
-        {gridElement == 'interactiveCard' ? null : gridElement}
-      </div>
-    ));
-  }, []);
 
   // calculates absolute coordinates for interactive cards
   const cardCoordinates = useMemo(() => {
@@ -85,42 +67,24 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
 
   // return grid
   return (
-    <div
-      className={[
-        'absolute top-0 bg-blue-100 bg-opacity-50 md:right-0',
-        style.bgGrid,
-      ].join(' ')}
-    >
-      {populateGrid}
+    <div className={['absolute top-0 md:right-0', style.bgGrid].join(' ')}>
+      <div className="absolute top-6.5 left-5.5 w-503.25 h-385.5">
+        <Gridlines />
+      </div>
+      <div className="absolute top-6.5 left-5.5 w-503.25 h-385.5">
+        <Image
+          src="https://yeaimages.s3.eu-central-1.amazonaws.com/HomeTopGridSM.png"
+          className="object-contain"
+          layout="fill"
+        />
+      </div>
       {interactiveCards}
     </div>
   );
 };
 
-/** utils and helper constants */
-const baseGridClasses = 'relative bg-secondary opacity-50';
-
-// rows, columns dimensions for grid
-const gridDimensions = [6, 9];
-
-// creates array of items to be rendered to grid
-const createGridArr = (): Array<null | JSX.Element | 'interactiveCard'> => {
-  const numItemsInGrid = gridDimensions.reduce((curr, prev) => curr * prev);
-
-  const returnArray = Array(numItemsInGrid).fill(null);
-
-  cardAppearances.forEach((card) => {
-    card.appearances[ScreenSize.SM]?.forEach(
-      (index) => (returnArray[index] = card.component)
-    );
-  });
-
-  return returnArray;
-};
-
-// adds no-x-gridline class to appropriate elements which creates shadows in both ways to cover grid spacing
-const fadeGridline = (index: number) =>
-  index < 9 || index % 9 < 3 ? 'no-x-gridline' : '';
+const cardBaseClasses =
+  'relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
 
 // adds mirrored first three cards to the end of cards for mobile display
 const mirrorForMobile = (cards: Card[]) =>

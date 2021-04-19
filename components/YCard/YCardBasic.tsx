@@ -69,6 +69,8 @@ const filterDefaultCard = (baseClasses: string[], classes: string) =>
 
 const baseClasses = [
   'rounded',
+  'cursor-default',
+  'select-none',
   'mt-2',
   'ml-3',
   'px-2.5',
