@@ -1,14 +1,13 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { AnimateSharedLayout } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
-// dynamic
 import YHeaderItem, {
   NavItemInterface,
 } from '@/components/YHeaderItem/YHeaderItem';
 import YHeaderSubItem, {
   SubItemInterface,
 } from '@/components/YHeaderSubItem/YHeaderSubItem';
-// dynamic
 
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateBackground from '@/components/AnimateComponents/YAnimateBackground';
@@ -21,7 +20,6 @@ import useClickOutside from '@/hooks/useClickOutside';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { Language } from '@/enums/language';
-import dynamic from 'next/dynamic';
 
 interface Logo {
   icon: string;
@@ -36,17 +34,17 @@ interface Button {
 interface Props {
   logo: Logo;
   navItems: NavItemInterface[];
-  button: Button;
-  onLangChange?: (lang: Language) => any;
+  buttonProps: Button;
   showMoreLabel?: string;
+  locales?: Language[];
 }
 
 const HeaderLG: React.FC<Props> = ({
   logo,
   navItems,
-  button,
-  onLangChange,
+  buttonProps,
   showMoreLabel,
+  locales,
 }) => {
   // control opening and closing of header
   const [subItems, setSubItems] = useState<SubItemInterface[] | null>(null);
@@ -71,7 +69,7 @@ const HeaderLG: React.FC<Props> = ({
           />
         ))}
       </div>
-      <YSelect className="mr-6" onChange={onLangChange} />
+      <YSelect className="mr-6" locales={locales} />
     </>
   );
 
@@ -84,6 +82,7 @@ const HeaderLG: React.FC<Props> = ({
       >
         {subItems?.map((subItem, index) => (
           <YHeaderSubItem
+            onClick={() => setSubItems(null)}
             {...subItem}
             key={subItem.text}
             className={index < subItems.length - 1 ? 'mr-5' : ''}
@@ -105,15 +104,11 @@ const HeaderLG: React.FC<Props> = ({
   return (
     <YAnimateBackground
       ref={headerRef}
-      className="fixed w-full left-0 top-0 z-40 md:absolute"
+      className="absolute w-full left-0 top-0 z-40 hidden lg:block"
       open={open}
+      openClasses="bg-blue-header backdrop-blur-60 bg-opacity-70"
     >
-      <div
-        className={[
-          'container px-0 h-23.5 border-soft',
-          open ? 'border-b' : '',
-        ].join(' ')}
-      >
+      <div className="container px-0 h-23.5 border-soft">
         <div className="relative w-full h-8.5 top-1/2 flex items-center">
           <div
             className={[
@@ -128,7 +123,7 @@ const HeaderLG: React.FC<Props> = ({
             </YLink>
           </div>
           {additionalComponents}
-          <YLink href={button.link}>
+          <YLink href={buttonProps.link}>
             <YButton
               buttonSize={ButtonSize.XS}
               shape={ButtonShape.Round}
@@ -138,7 +133,7 @@ const HeaderLG: React.FC<Props> = ({
                 'whitespace-nowrap',
               ].join(' ')}
             >
-              {button.text}
+              {buttonProps.text}
             </YButton>
           </YLink>
         </div>
@@ -147,6 +142,7 @@ const HeaderLG: React.FC<Props> = ({
         <YExpandableRegion
           className="flex flex-col items-stretch container"
           open={open}
+          height={181}
         >
           {hiddenRegion}
         </YExpandableRegion>

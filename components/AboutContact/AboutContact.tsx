@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ButtonSize } from '@/enums/components';
 import { FontLineHeight, FontSize } from '@/enums/font';
 
 import YButton from '@/components/YButton';
@@ -55,7 +54,7 @@ const AboutContact: React.FC<Props> = ({
   );
 
   return (
-    <section className="w-full overflow-hidden">
+    <section className="w-full overflow-hidden border-soft border-b">
       <div className="container border border-transparent relative md:p-0">
         <Cloud />
         {content}

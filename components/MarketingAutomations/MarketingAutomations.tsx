@@ -9,7 +9,7 @@ import YText from '@/components/YText';
 import Pipeline, { Action } from './Pipeline';
 import dynamic from 'next/dynamic';
 
-interface Company {
+interface PartnerCompany {
   logo: string;
   link: string;
   title: string;
@@ -19,7 +19,7 @@ interface Props {
   title: string;
   description: string;
   partnersLabel: string;
-  partners: Company[];
+  partners: PartnerCompany[];
   actions: Action[];
 }
 
@@ -42,7 +42,7 @@ const MarketingAutomations: React.FC<Props> = ({
       <div className="relative h-7 w-full overflow-x-auto no-scrollbar">
         <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex lg:transform-none">
           {partners.map(({ logo, title, link }) => {
-            const Icon = dynamic(() => import(`@/assets/icons/${logo}.svg`), {
+            const Logo = dynamic(() => import(`@/assets/icons/${logo}.svg`), {
               ssr: false,
             });
 
@@ -51,8 +51,9 @@ const MarketingAutomations: React.FC<Props> = ({
                 key={title}
                 className="outline-none mr-7.5 inline-block"
                 href={link}
+                aria-label={`${title} website`}
               >
-                <Icon />
+                <Logo />
               </YOutLink>
             );
           })}

@@ -5,7 +5,7 @@ export default {
   component: AboutContact,
 };
 
-const title = 'Benefits of personalization';
+const title = 'Benefits of Personalization';
 const description =
   "Join 20000+ businesses that use Segment's software and APIs to collect, clean, and control their customer data.";
 const buttonProps = {

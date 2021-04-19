@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
 import { FourPoints } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -7,9 +8,8 @@ import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 
 interface Article {
-  heading?: string;
+  heading: string;
   text: string;
-  stats?: string;
 }
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
   subtitle: string;
   description: string;
   points: [Article, Article, Article, Article];
-  cover: JSX.Element;
+  cover: string;
   type?: FourPoints;
 }
 
@@ -59,7 +59,7 @@ const ServiceFourPoints: React.FC<Props> = ({
       </ol>
     ) : (
       <div className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar text-left list-none mt-8 lg:relative lg:-left-7 lg:overflow-visible">
-        {points.map(({ text, stats }, index) => (
+        {points.map(({ text, heading }, index) => (
           <article
             key={index}
             className={[
@@ -71,7 +71,7 @@ const ServiceFourPoints: React.FC<Props> = ({
               {...statsProps}
               className={['text-white', statsShadows[index]].join(' ')}
             >
-              {stats}
+              {heading}
             </YHeading>
             <YText {...statsTextProps} className="text-gray-300 mt-2">
               {text}
@@ -80,6 +80,14 @@ const ServiceFourPoints: React.FC<Props> = ({
         ))}
       </div>
     );
+
+  const CoverImage = useMemo(
+    () =>
+      dynamic(() => import(`@/assets/illustrations/${cover}.svg`), {
+        ssr: false,
+      }),
+    []
+  );
 
   return (
     <section className={sectionClasses.join(' ')}>
@@ -92,7 +100,9 @@ const ServiceFourPoints: React.FC<Props> = ({
         ].join(' ')}
       >
         <div className={getInnerContainerClasses(type)}>
-          <div className={getImageClasses(type)}>{cover}</div>
+          <div className={getImageClasses(type)}>
+            <CoverImage />
+          </div>
           <div className={getTextBoxClasses(type)}>
             <YHeading {...titleProps} className={titleClasses.join(' ')}>
               {title}

@@ -167,7 +167,7 @@ const Reviews: React.FC<Props> = ({
    * Reviewer info with name, role and company
    */
   const ReviewerLogo = dynamic(() => {
-    return import(`@/assets/icons/${review.logo}`);
+    return import(`@/assets/icons/${review.logo}.svg`);
   });
 
   const reviewCredentials = (

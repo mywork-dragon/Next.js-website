@@ -1,12 +1,5 @@
 import ServiceSimpleImage from './ServiceSimpleImage';
 
-import Affiliate2 from '@/assets/services-body-images/affiliate-marketing-2.svg';
-import Affiliate3 from '@/assets/services-body-images/affiliate-marketing-3.svg';
-import Online3 from '@/assets/services-body-images/online-advertising-3.svg';
-import Email3 from '@/assets/services-body-images/email-marketing-3.svg';
-import Personalization3 from '@/assets/services-body-images/personalization-3.svg';
-import ConversionOptimization1 from '@/assets/services-body-images/conversion-optimization-1.svg';
-
 import { TextPosition } from '@/enums/components';
 
 export default {
@@ -24,31 +17,31 @@ const props = {
 export const AffiliateMarketingSection2 = (): JSX.Element => (
   <ServiceSimpleImage
     textPosition={TextPosition.Left}
-    image={<Affiliate2 />}
+    image="affiliate-marketing-2"
     {...props}
   />
 );
 
 export const AffiliateMarketingSection3 = (): JSX.Element => (
-  <ServiceSimpleImage image={<Affiliate3 />} {...props} />
+  <ServiceSimpleImage image="affiliate-marketing-3" {...props} />
 );
 
 export const OnlineAdvertisingSection3 = (): JSX.Element => (
-  <ServiceSimpleImage image={<Online3 />} {...props} />
+  <ServiceSimpleImage image="social-media-advertising-2" {...props} />
 );
 
 export const EmailMarketingSection3 = (): JSX.Element => (
-  <ServiceSimpleImage image={<Email3 />} {...props} />
+  <ServiceSimpleImage image="email-marketing-3" {...props} />
 );
 
 export const PersonalizationSection3 = (): JSX.Element => (
-  <ServiceSimpleImage image={<Personalization3 />} {...props} />
+  <ServiceSimpleImage image="personalization-2" {...props} />
 );
 
 export const ConversionOptimizationSection1 = (): JSX.Element => (
   <ServiceSimpleImage
     textPosition={TextPosition.Left}
-    image={<ConversionOptimization1 />}
+    image="conversion-optimization-1"
     {...props}
   />
 );

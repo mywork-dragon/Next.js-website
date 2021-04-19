@@ -1,5 +1,5 @@
 // TODO: Finish Footer component
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useMemo } from 'react';
 
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
@@ -9,10 +9,10 @@ import MainLogo from '@/assets/icons/logo-main.svg';
 
 import { ButtonShape, ButtonSize } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
-import content from '*.svg';
+import dynamic from 'next/dynamic';
 
 type SocialPlatform = {
-  icon: JSX.Element;
+  icon: string;
   link: string;
 };
 
@@ -132,13 +132,26 @@ function Footer({
               {contactDetails.phoneNumber.label}
             </YText>
             <div className="flex mb-10 md:mb-0">
-              {socialMedia.map((platform) => (
-                <div key={platform.link} className="mr-5">
-                  <a href={platform.link} target="_blank" rel="noreferrer">
-                    {platform.icon}
-                  </a>
-                </div>
-              ))}
+              {socialMedia.map((platform) => {
+                const Icon = useMemo(
+                  () =>
+                    dynamic(
+                      () => import(`@/assets/icons/${platform.icon}.svg`),
+                      {
+                        ssr: false,
+                      }
+                    ),
+                  []
+                );
+
+                return (
+                  <div key={platform.link} className="mr-5">
+                    <a href={platform.link} target="_blank" rel="noreferrer">
+                      <Icon />
+                    </a>
+                  </div>
+                );
+              })}
             </div>
             <YButton
               buttonSize={ButtonSize.XS}

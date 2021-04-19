@@ -19,7 +19,6 @@ import { FontSize, FontWeight } from '@/enums/font';
 
 import YToggleRound from '@/components/YToggleRound';
 import YText from '@/components/YText';
-import YHeading from '@/components/YHeading';
 
 export interface TeamMember {
   name: string;
@@ -74,7 +73,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
       key={Segment.Name}
       className={[
         'absolute',
-        open ? 'top-6 left-6 md:left-31 md:top-8.5' : 'bottom-5 left-5',
+        open ? 'top-6 left-6 lg:left-31 lg:top-8.5' : 'bottom-5 left-5',
       ].join(' ')}
     >
       <YText
@@ -97,7 +96,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
       key={Segment.Role}
       className={[
         'absolute',
-        open ? 'top-13 left-6 md:top-15.5 md:left-31' : 'top-4 right-4',
+        open ? 'top-13 left-6 lg:top-15.5 lg:left-31' : 'top-4 right-4',
       ].join(' ')}
     >
       <YText className="text-gray-300">{role}</YText>

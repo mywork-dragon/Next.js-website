@@ -1,8 +1,4 @@
 import Footer from './Footer';
-import Facebook from '@/assets/icons/facebook.svg';
-import LinkedIn from '@/assets/icons/linkedin.svg';
-import Instagram from '@/assets/icons/instagram.svg';
-import Twitter from '@/assets/icons/twitter.svg';
 
 export default {
   title: 'Footer',
@@ -50,12 +46,12 @@ const contactDetails = {
 
 const socialMedia = [
   {
-    icon: <LinkedIn />,
+    icon: 'linkedin',
     link: 'https://www.linkedin.com/company/yeapersonalize',
   },
-  { icon: <Facebook />, link: 'https://facebook.com/yeapersonalize' },
-  { icon: <Instagram />, link: 'https://instagram.com/yeapersonalize' },
-  { icon: <Twitter />, link: 'https://twitter.com/yeapersonalize' },
+  { icon: 'facebook', link: 'https://facebook.com/yeapersonalize' },
+  { icon: 'instagram', link: 'https://instagram.com/yeapersonalize' },
+  { icon: 'twitter', link: 'https://twitter.com/yeapersonalize' },
 ];
 
 const contactButton = 'Contact us';

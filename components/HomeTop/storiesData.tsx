@@ -1,5 +1,5 @@
 // default data from spec, to be used with stories
-const companies = [
+const partners = [
   {
     logo: 'companies/google',
     link: 'https://google.com',
@@ -35,7 +35,7 @@ export const defaultProps = {
     text: 'Learn More',
     link: '/',
   },
-  companies,
+  partners,
 };
 
 export const cards = [

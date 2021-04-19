@@ -37,10 +37,10 @@ const ServiceTop: React.FC<Props> = ({
     <section className="relative overflow-hidden w-full border-b border-soft">
       <div className="container lg:px-0">
         <div className="relative w-full mb-10 pt-80 lg:pt-0 lg:my-37.5 lg:w-150 lg:h-125 lg:ml-auto lg:mr-0">
-          <div className="absolute top-11.5 w-105 h-80 lg:static lg:h-full lg:w-full">
+          <div className="absolute top-11.5 w-105 h-80 sm:right-0 lg:static lg:h-full lg:w-full">
             <ImageComponent service={service} />
           </div>
-          <div className="lg:w-100 lg:absolute lg:top-1/2 lg:transform lg:-translate-x-120 lg:-translate-y-1/2">
+          <div className="max-w-md lg:max-w-none lg:w-100 lg:absolute lg:top-1/2 lg:transform lg:-translate-x-120 lg:-translate-y-1/2">
             <YHeading
               fontSize={FontSize.XS}
               fontWeight={FontWeight.Regular}

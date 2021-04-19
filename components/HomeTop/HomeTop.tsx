@@ -21,7 +21,7 @@ type ButtonProps = AriaAttributes & {
   link: string;
 };
 
-export interface Company {
+export interface PartnerCompany {
   logo: string;
   link: string;
   title: string;
@@ -32,7 +32,7 @@ interface Props extends HTMLAttributes<HTMLElement> {
   description: string;
   buttonProps: ButtonProps;
   showCompanies?: boolean;
-  companies?: Company[];
+  partners?: PartnerCompany[];
   cards?: Card[];
 }
 
@@ -41,48 +41,28 @@ const HomeTop: React.FC<Props> = ({
   description,
   buttonProps,
   showCompanies = false,
-  companies,
+  partners,
   cards,
   ...props
 }) => {
   const { screenSize, screenReady } = useBreakpoint();
 
-  const renderCompanies = showCompanies && companies && (
-    <div
-      className={[
-        'relative',
-        'z-20',
-        'w-full',
-        'h-6.5',
-        'lg:mx-auto mb-20.1',
-        'overflow-y-hidden',
-        'overflow-x-auto',
-        'whitespace-nowrap',
-        'lg:flex',
-        'lg:justify-center',
-        'lg:overflow-hidden',
-        'no-scrollbar',
-      ].join(' ')}
-    >
-      {companies.map(({ logo, title, link }) => {
-        const CompanyLogo = useMemo(
-          () =>
-            dynamic(() => import(`@/assets/icons/${logo}.svg`), { ssr: false }),
-          []
-        );
-        return (
-          <YOutLink
-            key={title}
-            href={link}
-            className="outline-none mr-15 inline-block"
-            aria-label={`${title} website`}
-          >
-            <CompanyLogo />
-          </YOutLink>
-        );
-      })}
-    </div>
-  );
+  const renderCompanies = partners.map(({ logo, title, link }) => {
+    const PartnerLogo = useMemo(
+      () => dynamic(() => import(`@/assets/icons/${logo}.svg`), { ssr: false }),
+      []
+    );
+    return (
+      <YOutLink
+        key={title}
+        href={link}
+        className="outline-none mr-15 inline-block"
+        aria-label={`${title} website`}
+      >
+        <PartnerLogo />
+      </YOutLink>
+    );
+  });
 
   const renderButton =
     screenSize == ScreenSize.SM ? (
@@ -133,7 +113,24 @@ const HomeTop: React.FC<Props> = ({
           </YText>
           {screenReady && renderButton}
         </div>
-        {renderCompanies}
+        <div
+          className={[
+            'relative',
+            'z-20',
+            'w-full',
+            'h-6.5',
+            'lg:mx-auto mb-20.1',
+            'overflow-y-hidden',
+            'overflow-x-auto',
+            'whitespace-nowrap',
+            'lg:flex',
+            'lg:justify-center',
+            'lg:overflow-hidden',
+            'no-scrollbar',
+          ].join(' ')}
+        >
+          {showCompanies && partners && renderCompanies}
+        </div>
       </div>
       <br />
     </section>

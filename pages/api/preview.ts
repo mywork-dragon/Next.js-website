@@ -51,17 +51,19 @@ export default async function preview(
       }
 
       locale = loc;
-      newSlug = (typeof slug === 'string' ? slug : slug.join('')).replace(
-        matchingValue,
-        ''
-      );
+      newSlug = typeof slug === 'string' ? slug : slug.join('');
+      // .replace(
+      //   matchingValue,
+      //   ''
+      // );
+      /**@Note Why would you do this?? */
+      /** Additional @NOTE Wouldn't slug always be a string in this case(preview)? */
       return;
     });
   }
 
   const isHomepage = slug === `${locale}/home` || slug === 'home';
   const Location = `/${isHomepage ? locale || 'en' : newSlug}`;
-  console.log(Location);
 
   // Redirect to the path from the fetched post
   // We don't redirect to slug as that might lead to open redirect vulnerabilities

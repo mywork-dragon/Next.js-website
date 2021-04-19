@@ -1,18 +1,11 @@
 import BenefitsOfPersonalization from './BenefitsOfPersonalization';
 
-import { ScreenSize } from '@/enums/screenSize';
-
 import style from './waveAnimations.module.scss';
 import Wave from '@/assets/other/wave-md.svg';
 
 export default {
   title: 'Benefits Of Personalization',
   component: BenefitsOfPersonalization,
-};
-
-const buttons = {
-  [ScreenSize.MD]: ['Websites & Apps', 'Social Ads', 'Email Marketing'],
-  [ScreenSize.SM]: ['Website', 'Mobile', 'Email'],
 };
 
 const title = 'Benefits of Personalization';
@@ -60,10 +53,25 @@ const articles = [
   },
 ];
 
-const frames = [{ reviews }, { articles }, { articles }];
+const frames = [
+  {
+    reviews,
+    buttonMD: 'Websites & Apps',
+    buttonSM: 'Website',
+  },
+  {
+    articles,
+    buttonsMD: 'Social Ads',
+    buttonSM: 'Mobile',
+  },
+  {
+    articles,
+    buttonMD: 'Email Marketing',
+    buttonSM: 'Email',
+  },
+];
 
 const props = {
-  buttons,
   title,
   description,
   frames,

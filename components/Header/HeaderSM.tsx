@@ -1,12 +1,11 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { AnimateSharedLayout } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
-// dynamic
 import YHeaderItem, {
   NavItemInterface,
 } from '@/components/YHeaderItem/YHeaderItem';
 import YHeaderSubItem from '@/components/YHeaderSubItem/YHeaderSubItem';
-// dynamic
 
 import YMenuToggle from '@/components/YMenuToggle';
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
@@ -18,7 +17,6 @@ import useClickOutside from '@/hooks/useClickOutside';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { Language } from '@/enums/language';
-import dynamic from 'next/dynamic';
 
 interface Logo {
   icon: string;
@@ -30,15 +28,15 @@ interface Button {
   link: string;
 }
 
-interface Props {
+export interface HeaderProps {
   logo: Logo;
   navItems: NavItemInterface[];
-  button: Button;
-  onLangChange?: (lang: Language) => any;
+  buttonProps: Button;
   showMoreLabel?: string;
+  locales?: Language[];
 }
 
-const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
+const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
   // control opening and closing of header
   const [showItems, setShowItems] = useState(false);
 
@@ -63,12 +61,14 @@ const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
   // expandable region
   const hiddenRegion = navItems.map((item, index) => (
     <YHeaderItem
+      onClick={item.subItems ? undefined : () => setShowItems(false)}
       key={item.text}
       {...item}
       className={index != 0 ? 'border-t' : ''}
     >
       {item.subItems?.map((subItem, index) => (
         <YHeaderSubItem
+          onClick={() => setShowItems(false)}
           {...subItem}
           key={subItem.text}
           className={index == 0 ? 'pt-1' : ''}
@@ -88,8 +88,10 @@ const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
   return (
     <YAnimateBackground
       ref={headerRef}
-      className="fixed w-full left-0 top-0 z-40"
+      className="fixed w-full left-0 top-0 z-40 backdrop-blur-20"
       open={open}
+      openClasses="bg-blue-400"
+      closedClasses="bg-blue-300 bg-opacity-80"
     >
       <div className="h-15.5 container px-0 border-soft">
         <div className="relative w-full h-full">
@@ -105,7 +107,7 @@ const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
             </YLink>
           </div>
           {additionalComponents}
-          <YLink href={button.link}>
+          <YLink href={buttonProps.link}>
             <YButton
               buttonSize={ButtonSize.XS}
               shape={ButtonShape.Round}
@@ -115,7 +117,7 @@ const HeaderSM: React.FC<Props> = ({ logo, navItems, button }) => {
                 'whitespace-nowrap',
               ].join(' ')}
             >
-              {button.text.split(' ')[0]}
+              {buttonProps.text.split(' ')[0]}
             </YButton>
           </YLink>
         </div>

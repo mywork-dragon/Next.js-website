@@ -1,9 +1,11 @@
+import { Language } from '@/enums/language';
+
 const logo = {
   icon: 'logo-main',
   link: '/home',
 };
 
-const button = {
+const buttonProps = {
   text: 'Contact us',
   link: '/contact',
 };
@@ -91,5 +93,6 @@ const navItems = [
 export const props = {
   logo,
   navItems,
-  button,
+  buttonProps,
+  locales: Object.values(Language),
 };

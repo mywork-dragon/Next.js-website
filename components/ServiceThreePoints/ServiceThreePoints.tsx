@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
 import { ThreePoints } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -9,7 +10,7 @@ import YText from '@/components/YText';
 interface Article {
   heading: string;
   text: string;
-  image: JSX.Element;
+  image: string;
 }
 
 interface ListItem {
@@ -22,15 +23,15 @@ interface Props {
 }
 
 export interface ArticlesProps extends Props {
-  points: [Article, Article, Article];
   type: ThreePoints.Articles;
+  points: [Article, Article, Article];
 }
 
 export interface OrderedProps extends Props {
-  points: [ListItem, ListItem, ListItem];
   type: ThreePoints.OrderedList;
+  points: [ListItem, ListItem, ListItem];
   description: string;
-  cover: JSX.Element;
+  cover: string;
 }
 
 const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
@@ -53,25 +54,35 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
           </YHeading>
           <YHeading {...subtitleProps}>{subtitle}</YHeading>
           <div className="grid grid-cols-1 mt-10 mb-25 gap-10 lg:grid-cols-3 lg:gap-42.5">
-            {points.map(({ text, image, heading }, index) => (
-              <article key={index} className="w-full relative px-1 lg:px-0">
-                <div className="relative left-1/2 transform -translate-x-1/2 w-67.5 h-47.5 mb-8 lg:w-80 lg:h-60 lg:mb-10">
-                  {image}
-                </div>
-                <YHeading
-                  className="text-white lg:w-3/4 lg:mx-auto"
-                  {...pointsProps}
-                >
-                  {heading}
-                </YHeading>
-                <YText
-                  className="text-gray-400 mt-2 max-w-md mx-auto lg:mx-0"
-                  {...articleTextProps}
-                >
-                  {text}
-                </YText>
-              </article>
-            ))}
+            {points.map(({ text, image, heading }, index) => {
+              const Image = useMemo(
+                () =>
+                  dynamic(() => import(`@/assets/illustrations/${image}.svg`), {
+                    ssr: false,
+                  }),
+                []
+              );
+
+              return (
+                <article key={index} className="w-full relative px-1 lg:px-0">
+                  <div className="relative left-1/2 transform -translate-x-1/2 w-67.5 h-47.5 mb-8 lg:w-80 lg:h-60 lg:mb-10">
+                    <Image />
+                  </div>
+                  <YHeading
+                    className="text-white lg:w-3/4 lg:mx-auto"
+                    {...pointsProps}
+                  >
+                    {heading}
+                  </YHeading>
+                  <YText
+                    className="text-gray-400 mt-2 max-w-md mx-auto lg:mx-0"
+                    {...articleTextProps}
+                  >
+                    {text}
+                  </YText>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -82,11 +93,19 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
      */
     const { description, cover, points } = props as OrderedProps;
 
+    const CoverImage = useMemo(
+      () =>
+        dynamic(() => import(`@/assets/illustrations/${cover}.svg`), {
+          ssr: false,
+        }),
+      []
+    );
+
     return (
       <section className={sectionClasses.join(' ')}>
         <div className={containerClasses.join(' ')}>
           <div className="relative left-1/2 transform -translate-x-1/2 w-103 h-72.5 mb-7.5 lg:w-153 lg:h-112.5 lg:mb-15">
-            {cover}
+            <CoverImage />
           </div>
           <YHeading {...titleProps[type]} className={titleClasses.join(' ')}>
             {title}

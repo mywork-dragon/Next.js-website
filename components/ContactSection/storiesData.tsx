@@ -1,9 +1,5 @@
 import { FormField } from '@/enums/form';
 
-import Phone from '@/assets/icons/contact/phone.svg';
-import Map from '@/assets/icons/contact/map.svg';
-import Envelope from '@/assets/icons/contact/envelope.svg';
-
 const title = 'Get in touch!';
 const description = 'Contact us for a quote, help or to join the team.';
 
@@ -21,7 +17,7 @@ const fields = {
     placeholder: 'Your Name',
     errorMessage: 'This field is required',
   },
-  [FormField.PhoneNumber]: {
+  [FormField.Phone]: {
     label: 'Phone number',
     placeholder: 'Your phone number',
     errorMessage: 'please enter a valid phone number',
