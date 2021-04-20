@@ -11,7 +11,7 @@ interface Props {
 
 const ServiceSimple: React.FC<Props> = ({ heading, description }) => {
   return (
-    <section className="w-full border-soft border-b py-15 md:py-40">
+    <section className="relative w-full border-soft border-b py-15 md:py-40">
       <div className="container md:flex md:justify-between">
         <YHeading
           fontSize={FontSize.XL}

@@ -145,6 +145,7 @@ const formClasses = [
   'left-10',
   'right-10',
   'bottom-8',
+  'z-top',
   'max-w-xl',
   'mx-auto',
   'lg:max-w-none',

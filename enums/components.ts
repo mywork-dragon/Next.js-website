@@ -89,3 +89,12 @@ export enum Elapsed {
   '96h' = 5,
 }
 //endregion
+
+//region background gradient
+export enum PageBackground {
+  Home = 'home',
+  About = 'about',
+  Contact = 'contact',
+  Service = 'service',
+}
+//endregion

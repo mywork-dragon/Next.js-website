@@ -57,7 +57,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
   ];
 
   const desktopFrame1 = (
-    <div className="w-124.1 h-70 absolute top-0 left-0">
+    <div className="w-124.1 h-70 absolute top-0 left-0 z-10">
       <div className="w-full h-full">
         <img
           className="object-contain"

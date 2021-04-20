@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
@@ -11,8 +12,15 @@ interface Props {
 
 const AboutTop: React.FC<Props> = ({ title, description }) => {
   return (
-    <section className="w-full overflow-hidden">
-      <div className="container md:px-0">
+    <section className="relative w-full overflow-hidden">
+      <div className="absolute left-1/2 w-full max-w-8xl h-full transform -translate-x-1/2">
+        <Image
+          src="https://yeaimages.s3.eu-central-1.amazonaws.com/about-cover.jpg"
+          className="object-cover"
+          layout="fill"
+        />
+      </div>
+      <div className="relative container md:px-0 z-10">
         <YHeading
           fontSize={FontSize.XS}
           fontWeight={FontWeight.Regular}

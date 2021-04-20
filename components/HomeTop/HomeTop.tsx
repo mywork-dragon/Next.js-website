@@ -92,17 +92,7 @@ const HomeTop: React.FC<Props> = ({
   );
 
   return (
-    <section
-      {...props}
-      // style={{
-      //   background:
-      //     'radial-gradient(25.68% 40.94% at 65.12% 31.82%, #1B5172 0%, #164764 20.86%, #123D57 33.71%, #0C2F45 54.9%, #08283B 78.86%, #062233 100%)',
-      // }}
-      className={[
-        'relative overflow-hidden',
-        // , style.gradient
-      ].join(' ')}
-    >
+    <section {...props} className="relative overflow-hidden">
       <div className="container relative pt-88.1 lg:px-0 lg:pt-48.5">
         {screenReady && <BackgroundGrid cards={cards} />}
         <div className="relative z-20 max-w-md lg:w-100">

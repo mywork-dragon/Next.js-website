@@ -20,7 +20,7 @@ const Wave: React.FC = () => {
   return (
     <div
       className={[
-        'absolute bottom-0 w-full md:top-0 md:h-full',
+        'absolute w-full bottom-20 md:top-0 md:h-full lg:bottom-0',
         screenSize == ScreenSize.SM ? waveAnimation.wave : waveAnimation.waveMD,
       ].join(' ')}
     >

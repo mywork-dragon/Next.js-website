@@ -202,18 +202,6 @@ const Reviews: React.FC<Props> = ({
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
       <section className="relative w-full overflow-hidden border-b border-soft">
-        <div
-          className="absolute"
-          style={{
-            height: 262,
-            width: 400,
-            right: -200,
-            top: -500,
-            background: '#104262',
-            filter: 'blur(250px)',
-            transform: 'matrix(-0.05, -1, -1, 0.05, 0, 0)',
-          }}
-        />
         <div className="container pt-12.5 pb-23 lg:pt-35 lg:pb-48 lg:px-0">
           <div className="lg:ml-103">
             <div className="relative lg:w-156">

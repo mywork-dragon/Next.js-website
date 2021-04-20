@@ -152,7 +152,13 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
 /**
  * Base classNames for each region
  */
-const sectionClasses = ['w-full', 'overflow-hidden', 'border-soft', 'border-b'];
+const sectionClasses = [
+  'relative',
+  'w-full',
+  'overflow-hidden',
+  'border-soft',
+  'border-b',
+];
 
 const containerClasses = ['container', 'pt-10', 'lg:py-30', 'text-center'];
 
