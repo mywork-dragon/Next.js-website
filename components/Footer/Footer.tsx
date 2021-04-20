@@ -73,7 +73,7 @@ function Footer({
   );
 
   return (
-    <footer className="py-20 pb-18" {...props}>
+    <footer className="relative py-20 pb-18 z-10" {...props}>
       <div className="container flex flex-wrap">
         <div className="w-full mb-4 md:hidden">
           <MainLogo />

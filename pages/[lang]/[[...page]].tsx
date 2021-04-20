@@ -4,6 +4,7 @@ import {
   LanguageCodesResponse,
   PageItem,
   PageSlugsResponse,
+  PostComponent,
   PostItem,
 } from '@/types/storyblok';
 import { ApolloQueryResult } from '@apollo/client';
@@ -20,6 +21,9 @@ import {
 
 import Layout from '@/components/Layout';
 import Page from '@/components/Page';
+
+import { PageBackground } from '@/enums/components';
+
 import { GET_LANGUAGES } from '@/libs/api/app';
 
 function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
@@ -47,7 +51,7 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     setTimeout(() => initEditor([story, setStory]), 200);
   }, []);
 
-  const trasnsitionProps = {
+  const transitionProps = {
     initial: {
       opacity: 0,
       y: -50,
@@ -69,7 +73,7 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
       />
       <Layout headerContent={headerContent} footerContent={footerContent}>
         <AnimatePresence exitBeforeEnter>
-          <motion.main key={contentOfStory._uid} {...trasnsitionProps}>
+          <motion.main key={contentOfStory._uid} {...transitionProps}>
             <Page content={contentOfStory} />
           </motion.main>
         </AnimatePresence>
@@ -84,6 +88,8 @@ type PageItemWithLayout = PageItem & {
   content: PageItem['content'] & {
     header?: PostItem;
     footer?: PostItem;
+    backgroundGradient?: PageBackground;
+    body: PostComponent[];
   };
 };
 
@@ -92,7 +98,7 @@ type DefaultProps<T> = {
 };
 
 interface StaticPropsResult {
-  props: DefaultProps<{ PageItem: PageItem }> & {
+  props: DefaultProps<{ PageItem: PageItemWithLayout }> & {
     locales: ApolloQueryResult<LanguageCodesResponse>;
   };
 }
@@ -110,7 +116,7 @@ export const getStaticProps = async ({
   const id = lang === 'en' ? page : `${lang}/${page}`;
 
   const pageDataPromise: Promise<
-    ApolloQueryResult<{ PageItem: PageItem }>
+    ApolloQueryResult<{ PageItem: PageItemWithLayout }>
   > = graphqlClient({
     preview,
   }).query({

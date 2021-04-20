@@ -29,13 +29,10 @@ $threeKScreen: 3072px;
 }
 
 .waveMD path:first-of-type {
-  // animation: wavePath $duration infinite linear;
-  // animation-delay: $duration / 2;
-
-  @media screen and (min-width: $xxlScreen) {
+  @screen 2xl {
     transform: matrix(1.82, 0, 0, 1, 0, 0);
   }
-  @media screen and (min-width: $threeKScreen) {
+  @screen 3k {
     transform: matrix(3.08, 0, 0, 1, 0, 0);
   }
 }

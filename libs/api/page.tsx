@@ -15,6 +15,7 @@ export const GET_PAGE: DocumentNode = gql`
         footer {
           content
         }
+        backgroundGradient
         component
       }
     }

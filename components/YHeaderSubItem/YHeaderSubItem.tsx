@@ -20,6 +20,7 @@ export interface SubItemInterface {
 interface Props extends SubItemInterface {
   className?: string;
   onClick?: (e: React.SyntheticEvent) => void;
+  fade?: boolean;
 }
 
 const SubItem: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const SubItem: React.FC<Props> = ({
   text,
   link,
   className,
+  fade,
   onClick = () => {},
 }) => {
   const { screenSize } = useBreakpoint();
@@ -37,9 +39,19 @@ const SubItem: React.FC<Props> = ({
     </div>
   );
 
+  const motionProps = {
+    animate: fade ? 'fade' : 'regular',
+    variants: {
+      regular: { opacity: 1 },
+      fade: {
+        opacity: 0.1,
+      },
+    },
+  };
+
   return (
     <YLink href={link}>
-      <YAnimateItem as="a">
+      <YAnimateItem {...motionProps} as="a">
         <div
           onClick={onClick}
           className={[...containerClasses, className].join(' ')}
