@@ -116,18 +116,6 @@ const OurServices: React.FC<Props> = ({
 
   return (
     <section className="relative w-full overflow-hidden border-soft border-b">
-      <div
-        className="absolute -z-20"
-        style={{
-          height: 1452,
-          width: 1477,
-          right: 800,
-          top: 37,
-          background: '#104262',
-          filter: 'blur(250px)',
-          transform: 'rotate(111.91deg)',
-        }}
-      />
       <div className="pb-10 container lg:px-0 lg:h-195 lg:py-35 lg:w-full lg:flex lg:justify-between">
         {leftSection}
         {rightSection}

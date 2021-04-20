@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
-import graphqlClient from '@/utils/graphql';
-import Page from '@/components/Page';
-import { initEditor } from '@/utils/storyblok';
 import { GET_PAGE, GET_PAGE_SLUGS } from '@/libs/api/page';
 import {
   LanguageCodesResponse,
   PageItem,
   PageSlugsResponse,
+  PostComponent,
   PostItem,
 } from '@/types/storyblok';
 import { ApolloQueryResult } from '@apollo/client';
 import { NextApiRequest } from 'next';
+
+import { PageBackground } from '@/enums/components';
+
+import Layout from '@/components/Layout';
+import Page from '@/components/Page';
+
 import { GET_LANGUAGES } from '@/libs/api/app';
+import { initEditor } from '@/utils/storyblok';
+import graphqlClient from '@/utils/graphql';
 
 function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
   const [story, setStory] = useState<PageItemWithLayout>(res.data.PageItem);
@@ -57,6 +62,8 @@ type PageItemWithLayout = PageItem & {
   content: PageItem['content'] & {
     header?: PostItem;
     footer?: PostItem;
+    backgroundGradient?: PageBackground;
+    body: PostComponent[];
   };
 };
 
@@ -65,7 +72,7 @@ type DefaultProps<T> = {
 };
 
 interface StaticPropsResult {
-  props: DefaultProps<{ PageItem: PageItem }> & {
+  props: DefaultProps<{ PageItem: PageItemWithLayout }> & {
     locales: ApolloQueryResult<LanguageCodesResponse>;
   };
 }
@@ -83,7 +90,7 @@ export const getStaticProps = async ({
   const id = lang === 'en' ? page : `${lang}/${page}`;
 
   const pageDataPromise: Promise<
-    ApolloQueryResult<{ PageItem: PageItem }>
+    ApolloQueryResult<{ PageItem: PageItemWithLayout }>
   > = graphqlClient({
     preview,
   }).query({

@@ -14,7 +14,7 @@ const Layout: React.FC<Props> = ({
   footerContent,
 }) => {
   return (
-    <div className="bg-blue-300 text-white">
+    <div className="relative bg-blue-300 text-white w-full overflow-hidden">
       <Head title="test" description="description" />
 
       {headerContent && (

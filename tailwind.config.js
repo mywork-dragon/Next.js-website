@@ -333,6 +333,16 @@ const screens = {
   lg: '1080px',
   xl: '1280px',
   '2xl': '1536px',
+  '3xl': '2400px',
+  '3k': '3072px',
+};
+
+const maxWidth = {
+  '8xl': rem(1680),
+};
+
+const zIndex = {
+  top: 999,
 };
 
 module.exports = {
@@ -356,7 +366,9 @@ module.exports = {
       opacity,
       scale,
       minHeight,
+      maxWidth,
       inset,
+      zIndex,
     },
     screens,
     cards,

@@ -5,6 +5,8 @@ import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 
+import style from './AboutDifferent.module.css';
+
 interface Article {
   title: string;
   subtitle: string;
@@ -18,9 +20,14 @@ interface Props {
 
 const AboutDifferent: React.FC<Props> = ({ title, articles }) => {
   return (
-    <section className="w-full overflow-hidden">
-      <div className="container relative mb-15 md:mb-26 text-left">
-        <div className="relative ml-80"></div>
+    <section className="relative w-full overflow-hidden">
+      <div
+        className={[
+          'absolute top-0 left-1/2 transform -translate-x-1/2 w-full max-w-8xl h-115 md:h-100 -z-10',
+          style.gradient,
+        ].join(' ')}
+      />
+      <div className="container relative mb-15 md:mb-26 text-left z-20">
         <YHeading
           fontSize={FontSize.XL}
           lineHeight={FontLineHeight.Relaxed}
