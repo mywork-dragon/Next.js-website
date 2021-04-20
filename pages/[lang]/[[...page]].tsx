@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
 import graphqlClient from '@/utils/graphql';
-import Page from '@/components/Page';
-import { initEditor } from '@/utils/storyblok';
-import { GET_PAGE, GET_PAGE_SLUGS } from '@/libs/api/page';
 import {
   LanguageCodesResponse,
   PageItem,
@@ -12,6 +8,18 @@ import {
 } from '@/types/storyblok';
 import { ApolloQueryResult } from '@apollo/client';
 import { NextApiRequest } from 'next';
+import { initEditor } from '@/utils/storyblok';
+import { GET_PAGE, GET_PAGE_SLUGS } from '@/libs/api/page';
+import {
+  m as motion,
+  MotionConfig,
+  AnimationFeature,
+  ExitFeature,
+  AnimatePresence,
+} from 'framer-motion';
+
+import Layout from '@/components/Layout';
+import Page from '@/components/Page';
 import { GET_LANGUAGES } from '@/libs/api/app';
 
 function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
@@ -39,15 +47,34 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     setTimeout(() => initEditor([story, setStory]), 200);
   }, []);
 
+  const trasnsitionProps = {
+    initial: {
+      opacity: 0,
+      y: -50,
+    },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0 },
+    transition: {
+      duration: 0.4,
+      type: 'tween',
+    },
+  };
+
   return (
-    <Layout headerContent={headerContent} footerContent={footerContent}>
-      <Page content={contentOfStory} />
+    <MotionConfig features={[AnimationFeature, ExitFeature]}>
       <script
         src={
           '//app.storyblok.com/f/storyblok-latest.js?t=BKFRTWedKaTnP3sHlkRQBQtt'
         }
       />
-    </Layout>
+      <Layout headerContent={headerContent} footerContent={footerContent}>
+        <AnimatePresence exitBeforeEnter>
+          <motion.main key={contentOfStory._uid} {...trasnsitionProps}>
+            <Page content={contentOfStory} />
+          </motion.main>
+        </AnimatePresence>
+      </Layout>
+    </MotionConfig>
   );
 }
 

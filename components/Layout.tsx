@@ -1,8 +1,8 @@
-import Head from '../components/Head';
-
 import SbEditable from 'storyblok-react';
 import DynamicComponent from './DynamicComponent';
 import { PostComponent } from '@/types/storyblok';
+
+import Head from '@/components/Head';
 
 interface Props {
   headerContent?: PostComponent | undefined;
