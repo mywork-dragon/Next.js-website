@@ -18,7 +18,7 @@ import YSelect from '@/components/YSelect';
 
 import useClickOutside from '@/hooks/useClickOutside';
 
-import { ButtonSize, ButtonShape } from '@/enums/components';
+import { ButtonSize, ButtonShape, ArrowType } from '@/enums/components';
 import { Language } from '@/enums/language';
 
 interface Logo {
@@ -80,14 +80,23 @@ const HeaderLG: React.FC<Props> = ({
         className="relative whitespace-nowrap overflow-hidden"
         showMoreLabel={showMoreLabel}
       >
-        {subItems?.map((subItem, index) => (
-          <YHeaderSubItem
-            onClick={() => setSubItems(null)}
-            {...subItem}
-            key={subItem.text}
-            className={index < subItems.length - 1 ? 'mr-5' : ''}
-          />
-        ))}
+        {({ position }) => (
+          <>
+            {subItems?.map((subItem, index) => (
+              <YHeaderSubItem
+                onClick={() => setSubItems(null)}
+                {...subItem}
+                key={subItem.text}
+                className={index < subItems.length - 1 ? 'mr-5' : ''}
+                fade={
+                  (position == ArrowType.Right &&
+                    index < subItems.length - 5) ||
+                  (position == ArrowType.Left && index > 4)
+                }
+              />
+            ))}
+          </>
+        )}
       </YSlider>
       <div className="absolute top-full width-full h-0 border-soft border-b" />
     </>

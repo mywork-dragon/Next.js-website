@@ -13,6 +13,7 @@ import style from './YSlider.module.css';
 interface ScrollProps {
   className?: string;
   showMoreLabel?: string;
+  children: ({ position }: { position: ArrowType }) => JSX.Element;
 }
 
 export const YSlider: React.FC<ScrollProps> = ({
@@ -70,7 +71,7 @@ export const YSlider: React.FC<ScrollProps> = ({
   return (
     <YAnimateItem className={filterPosition([], className)}>
       <motion.div {...motionProps} ref={sliderContainer}>
-        {children}
+        {children({ position })}
       </motion.div>
       <AnimatePresence exitBeforeEnter>
         {createArrowElement(arrowDirection)}
