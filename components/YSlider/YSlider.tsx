@@ -8,8 +8,6 @@ import filterPosition from '@/libs/utils/filterPosition';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 import YArrowButton from '@/components/YArrowButton';
 
-import style from './YSlider.module.css';
-
 interface ScrollProps {
   className?: string;
   showMoreLabel?: string;
@@ -55,10 +53,7 @@ export const YSlider: React.FC<ScrollProps> = ({
     <YArrowButton
       key={`arrow-${direction}`}
       onClick={() => setPosition(direction)}
-      className={[
-        `absolute h-full top-0 w-40 ${direction}-0`,
-        style[`arrow${direction}`],
-      ].join(' ')}
+      className={[`absolute h-full top-0 w-40 ${direction}-0`].join(' ')}
       showMore={showMoreLabel}
       type={direction}
     />
