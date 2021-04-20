@@ -68,7 +68,7 @@ const YHeaderItem: React.FC<Props> = ({
       <YAnimateItem
         onClick={onClick}
         className={[...itemClasses, className].join(' ')}
-        disableMount={disableMount}
+        initial={false}
       >
         {!subItems ? (
           <YLink href={link}>
