@@ -1,17 +1,29 @@
 import { useEffect, useState } from 'react';
-import Layout from '@/components/Layout';
 import graphqlClient from '@/utils/graphql';
-import Page from '@/components/Page';
-import { initEditor } from '@/utils/storyblok';
-import { GET_PAGE, GET_PAGE_SLUGS } from '@/libs/api/page';
 import {
   LanguageCodesResponse,
   PageItem,
   PageSlugsResponse,
+  PostComponent,
   PostItem,
 } from '@/types/storyblok';
 import { ApolloQueryResult } from '@apollo/client';
 import { NextApiRequest } from 'next';
+import { initEditor } from '@/utils/storyblok';
+import { GET_PAGE, GET_PAGE_SLUGS } from '@/libs/api/page';
+import {
+  m as motion,
+  MotionConfig,
+  AnimationFeature,
+  ExitFeature,
+  AnimatePresence,
+} from 'framer-motion';
+
+import Layout from '@/components/Layout';
+import Page from '@/components/Page';
+
+import { PageBackground } from '@/enums/components';
+
 import { GET_LANGUAGES } from '@/libs/api/app';
 
 function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
@@ -39,15 +51,34 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     setTimeout(() => initEditor([story, setStory]), 200);
   }, []);
 
+  const transitionProps = {
+    initial: {
+      opacity: 0,
+      y: -50,
+    },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0 },
+    transition: {
+      duration: 0.4,
+      type: 'tween',
+    },
+  };
+
   return (
-    <Layout headerContent={headerContent} footerContent={footerContent}>
-      <Page content={contentOfStory} />
+    <MotionConfig features={[AnimationFeature, ExitFeature]}>
       <script
         src={
           '//app.storyblok.com/f/storyblok-latest.js?t=BKFRTWedKaTnP3sHlkRQBQtt'
         }
       />
-    </Layout>
+      <Layout headerContent={headerContent} footerContent={footerContent}>
+        <AnimatePresence exitBeforeEnter>
+          <motion.main key={contentOfStory._uid} {...transitionProps}>
+            <Page content={contentOfStory} />
+          </motion.main>
+        </AnimatePresence>
+      </Layout>
+    </MotionConfig>
   );
 }
 
@@ -57,6 +88,8 @@ type PageItemWithLayout = PageItem & {
   content: PageItem['content'] & {
     header?: PostItem;
     footer?: PostItem;
+    backgroundGradient?: PageBackground;
+    body: PostComponent[];
   };
 };
 
@@ -65,7 +98,7 @@ type DefaultProps<T> = {
 };
 
 interface StaticPropsResult {
-  props: DefaultProps<{ PageItem: PageItem }> & {
+  props: DefaultProps<{ PageItem: PageItemWithLayout }> & {
     locales: ApolloQueryResult<LanguageCodesResponse>;
   };
 }
@@ -84,7 +117,7 @@ export const getStaticProps = async ({
   const id = locale === 'en' ? page : `${locale}/${page}`;
 
   const pageDataPromise: Promise<
-    ApolloQueryResult<{ PageItem: PageItem }>
+    ApolloQueryResult<{ PageItem: PageItemWithLayout }>
   > = graphqlClient({
     preview,
   }).query({

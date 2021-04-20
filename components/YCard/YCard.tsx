@@ -1,21 +1,17 @@
 import React, { createElement, useMemo, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { AriaButtonProps } from '@react-types/button';
-import { useButton } from '@react-aria/button';
 import { useHover, HoverProps } from '@react-aria/interactions';
-import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
 
 import YLink from '@/components/YLink';
 
-type CardProps = AriaButtonProps &
-  HoverProps & {
-    title?: string;
-    description?: string;
-    icon?: string;
-    className?: string;
-    onHover?: () => void;
-    hovered?: boolean;
-  };
+type CardProps = HoverProps & {
+  title?: string;
+  description?: string;
+  icon?: string;
+  className?: string;
+  onHover?: () => void;
+  hovered?: boolean;
+};
 
 interface Props extends CardProps {
   as?: keyof JSX.IntrinsicElements;
@@ -23,13 +19,7 @@ interface Props extends CardProps {
   children?: React.ReactNode;
   cardClasses?: string;
   link?: string;
-}
-
-enum AnimateSection {
-  Topface = 'topface',
-  Icon = 'icon',
-  Title = 'title',
-  Subtitle = 'subtitle',
+  style?: React.CSSProperties;
 }
 
 // wrapper component
@@ -44,51 +34,27 @@ const YCard: React.FC<Props> = ({
   hovered,
   onHover,
   link,
+  style,
   ...props
 }) => {
-  const assignedCustomTag = as ? as : 'div';
+  const customTag = as ? as : 'div';
 
   const ref = useRef();
 
-  const { buttonProps } = useButton(
-    {
-      ...(props as AriaButtonProps),
-      elementType: assignedCustomTag,
-    },
-    ref
-  );
   const { hoverProps } = useHover({ onHoverStart: onHover });
 
   // text section
 
-  const titleTag = Boolean(onHover) ? motion.h6 : 'h6';
-  const subtitleTag = Boolean(onHover) ? motion.p : 'p';
-
-  const titleHoverProps = Boolean(onHover)
-    ? getHoverProps(hovered, AnimateSection.Title)
-    : {};
-  const subtitleHoverProps = Boolean(onHover)
-    ? getHoverProps(hovered, AnimateSection.Subtitle)
-    : {};
-
   const text =
     title && description ? (
-      [
-        createElement(
-          titleTag,
-          { key: 'title', className: 'text title serif', ...titleHoverProps },
-          title
-        ),
-        createElement(
-          subtitleTag,
-          {
-            key: 'subtitle',
-            className: 'text subtitle sans',
-            ...subtitleHoverProps,
-          },
-          description
-        ),
-      ]
+      <>
+        <div key="title" className="text title serif">
+          {title}
+        </div>
+        <div key="subtitle" className="text subtitle sans">
+          {description}
+        </div>
+      </>
     ) : (
       <>
         <div
@@ -103,12 +69,6 @@ const YCard: React.FC<Props> = ({
     );
 
   // icon section
-  const iconTag = Boolean(onHover) ? motion.div : 'div';
-
-  const iconHoverProps = Boolean(onHover)
-    ? getHoverProps(hovered, AnimateSection.Icon)
-    : {};
-
   const NewIcon = useMemo(
     () =>
       dynamic(() => import(`@/assets/icons/${icon}.svg`), {
@@ -117,60 +77,41 @@ const YCard: React.FC<Props> = ({
     []
   );
 
-  const iconElement = createElement(
-    iconTag,
-    {
-      key: 'icon',
-      className: 'icon fill-current flex items-stretch',
-      ...iconHoverProps,
-    },
-    <NewIcon />
+  const iconElement = (
+    <div key="icon" className="icon fill-current flex items-stretch">
+      <NewIcon />
+    </div>
   );
 
   // topface section
-  const CustomTag = Boolean(onHover)
-    ? motion[assignedCustomTag]
-    : assignedCustomTag;
-
-  const className = filterDefaultCard(baseClasses, cardClasses);
-
-  const cardHoverProps = Boolean(onHover)
-    ? getHoverProps(hovered, AnimateSection.Topface)
-    : {};
+  const className = [
+    ...baseClasses,
+    cardClasses,
+    hovered ? 'card-blue' : 'card-white',
+  ].join(' ');
 
   const Card = createElement(
-    CustomTag,
+    customTag,
     {
       ref,
-      key: 'card',
       className,
       ...hoverProps,
-      ...buttonProps,
-      ...cardHoverProps,
+      // ...cardHoverProps,
     },
     [iconElement, text]
   );
 
   // container element section
-  const containerClasses = ['w-43.6 h-53.6', classes].join(' ');
+  const containerClasses = ['w-43.6 h-53.6 cursor-pointer', classes].join(' ');
   return (
-    <YLink href={link || ''}>
-      <div className={containerClasses}>
-        <MotionConfig features={[AnimationFeature]}>{Card}</MotionConfig>
+    <YLink href={link}>
+      <div style={style} className={containerClasses}>
+        {Card}
         {children}
       </div>
     </YLink>
   );
 };
-
-// local utils
-export const filterDefaultCard = (baseClasses: string[], classes: string) =>
-  classes?.split(' ').includes('card')
-    ? [
-        ...baseClasses.filter((className) => className != 'card-white'),
-        classes,
-      ].join(' ')
-    : [...baseClasses, classes].join(' ') || baseClasses.join(' ');
 
 const baseClasses = [
   'rounded',
@@ -182,59 +123,5 @@ const baseClasses = [
   'h-50',
   'pt-6.5',
 ];
-
-// framer motion props
-const getHoverProps = (isHovered: boolean, section: AnimateSection) => ({
-  animate: isHovered ? 'hovered' : 'initial',
-  variants: animateVariants[section],
-  transition: { duration: 0.03, delay: 0 },
-});
-
-const animateVariants = {
-  [AnimateSection.Topface]: {
-    initial: {
-      backgroundColor: '#FFFFFF',
-      boxShadow: [
-        '-1px 1px #D5DFE9,',
-        '-3px 3px #D5DFE9,',
-        '-5px 5px #D5DFE9,',
-        '-7px 7px #D5DFE9',
-      ].join(' '),
-    },
-    hovered: {
-      backgroundColor: '#305EED',
-      boxShadow: [
-        '-1px 1px #143DB0,',
-        '-3px 3px #143DB0,',
-        '-5px 5px #143DB0,',
-        '-7px 7px #143DB0',
-      ].join(' '),
-    },
-  },
-  [AnimateSection.Title]: {
-    initial: {
-      color: '#305EED',
-    },
-    hovered: {
-      color: '#FFFFFF',
-    },
-  },
-  [AnimateSection.Subtitle]: {
-    initial: {
-      color: '#80B0C8',
-    },
-    hovered: {
-      color: '#FFFFFF',
-    },
-  },
-  [AnimateSection.Icon]: {
-    initial: {
-      color: '#BFD8E4',
-    },
-    hovered: {
-      color: '#FFFFFF',
-    },
-  },
-};
 
 export default YCard;

@@ -47,7 +47,7 @@ const OurServices: React.FC<Props> = ({
   );
 
   const leftSection = (
-    <div className="text-center lg:w-148 lg:h-full lg:text-left">
+    <div className="relative z-10 text-center lg:w-148 lg:h-full lg:text-left">
       <div className="max-w-md mx-auto lg:mx-0 lg:pr-12.5">
         <YHeading
           className="text-white mt-10 mb-3 lg:mt-0 lg:text-3xl lg:leading-18"
@@ -115,7 +115,7 @@ const OurServices: React.FC<Props> = ({
   );
 
   return (
-    <section className="w-full overflow-hidden border-soft border-b">
+    <section className="relative w-full overflow-hidden border-soft border-b">
       <div className="pb-10 container lg:px-0 lg:h-195 lg:py-35 lg:w-full lg:flex lg:justify-between">
         {leftSection}
         {rightSection}

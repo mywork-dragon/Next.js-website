@@ -1,15 +1,11 @@
 import React, { useMemo } from 'react';
-
-import { ScreenSize } from '@/enums/screenSize';
+import Image from 'next/image';
 
 import PulseBackground from './PulseBackground';
 import YCardStack from '@/components/YCardStack';
 
 import Pulse7 from '@/assets/pulse/pulse-7.svg';
 import Pulse3 from '@/assets/pulse/pulse-3.svg';
-
-import PhonePerspective from '@/assets/other/phone-perspective.svg';
-import PhonePerspectiveSM from '@/assets/other/phone-perspective-sm.svg';
 
 import style from './DataPulse.module.css';
 
@@ -29,14 +25,15 @@ const Background: React.FC<BackgroundProps> = ({ cards }) => {
   const { screenSize, screenReady } = useBreakpoint();
 
   return (
-    <div className="absolute -mx-5 overflow-hidden -z-10 top-0 bottom-0 w-full lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:w-420 lg:rounded-2.5xl">
-      <div className="absolute top-0 z-10 right-0">
-        {screenReady &&
-          (screenSize == ScreenSize.SM ? (
-            <PhonePerspectiveSM />
-          ) : (
-            <PhonePerspective />
-          ))}
+    <div className="bg-secondary absolute -mx-5 overflow-hidden -z-10 top-0 bottom-0 w-full lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:w-420 lg:rounded-2.5xl">
+      <div className="absolute top-0 z-10 right-0 h-59.6 w-68 lg:h-121.6 lg:w-146.6">
+        {screenReady && (
+          <Image
+            src={`https://yeaimages.s3.eu-central-1.amazonaws.com/phone-perspective-${screenSize}.png`}
+            className="object-contain"
+            layout="fill"
+          />
+        )}
       </div>
       <div
         className={[

@@ -8,6 +8,7 @@ const rem = (value) => {
 
 const colors = {
   blue: {
+    header: '#203876',
     500: '#193751',
     400: '#041925',
     350: '#11305A',
@@ -168,11 +169,13 @@ const spacing = {
   56.1: rem(225),
   57: rem(228),
   58.5: rem(234),
+  59.6: rem(239),
   61.6: rem(247),
   62: rem(250),
   63: rem(254),
   65: rem(260),
   67.5: rem(270),
+  68: rem(272),
   68.5: rem(274),
   68.6: rem(275),
   70: rem(280),
@@ -213,6 +216,7 @@ const spacing = {
   115: rem(460),
   119: rem(476),
   120: rem(480),
+  121.6: rem(487),
   124.1: rem(497),
   125: rem(500),
   126.5: rem(506),
@@ -223,6 +227,7 @@ const spacing = {
   142.5: rem(570),
   143.6: rem(575),
   145: rem(580),
+  146.6: rem(587),
   148: rem(592),
   150: rem(600),
   153: rem(612),
@@ -247,9 +252,13 @@ const spacing = {
   237: rem(948),
   250: rem(1000),
   291.5: rem(1166),
+  303.25: rem(1213),
   377.5: rem(1510),
+  385.5: rem(1542),
+  404: rem(1616),
   420: rem(1680),
   500: rem(2000),
+  503.25: rem(2013),
   535: rem(2140),
   625: rem(2500),
   lg: rem(1024),
@@ -324,6 +333,16 @@ const screens = {
   lg: '1080px',
   xl: '1280px',
   '2xl': '1536px',
+  '3xl': '2400px',
+  '3k': '3072px',
+};
+
+const maxWidth = {
+  '8xl': rem(1680),
+};
+
+const zIndex = {
+  top: 999,
 };
 
 module.exports = {
@@ -347,7 +366,9 @@ module.exports = {
       opacity,
       scale,
       minHeight,
+      maxWidth,
       inset,
+      zIndex,
     },
     screens,
     cards,
@@ -408,6 +429,12 @@ module.exports = {
         },
         '.blur-5': {
           filter: 'blur(5px)',
+        },
+        '.backdrop-blur-20': {
+          backdropFilter: 'blur(20px)',
+        },
+        '.backdrop-blur-60': {
+          backdropFilter: 'blur(60px)',
         },
         '.text-shadow-blue': {
           textShadow: '-4px -4px 0px #305EED',

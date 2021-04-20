@@ -5,11 +5,13 @@ interface Props {
   className?: string;
   open?: boolean;
   disableMount?: boolean;
+  height?: number | 'auto';
 }
 
 const ExpandableRegion: React.FC<Props> = ({
   children,
   className,
+  height = 'auto',
   open = true,
   disableMount = false,
 }) => {
@@ -18,8 +20,7 @@ const ExpandableRegion: React.FC<Props> = ({
     initial: disableMount ? false : { height: 0 },
     variants: {
       open: {
-        // height: 181,
-        height: 'auto',
+        height,
       },
       closed: {
         height: 0,

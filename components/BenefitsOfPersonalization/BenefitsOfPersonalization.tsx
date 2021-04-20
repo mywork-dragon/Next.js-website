@@ -91,7 +91,7 @@ const BenefitsOfPersonalization: React.FC<Props> = ({
 
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
-      <section className="relative w-full overflow-hidden md:border-b border-soft">
+      <section className="relative z-10 w-full overflow-hidden pb-20 lg:pb-0 md:border-b border-soft">
         <Wave />
         <div className="container pt-10 pb-70 lg:pt-30 lg:px-0 sm:h-250">
           <div className="w-full text-center lg:px-0 lg:text-left z-10">

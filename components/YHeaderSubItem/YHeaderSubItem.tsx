@@ -19,9 +19,18 @@ export interface SubItemInterface {
 
 interface Props extends SubItemInterface {
   className?: string;
+  onClick?: (e: React.SyntheticEvent) => void;
+  fade?: boolean;
 }
 
-const SubItem: React.FC<Props> = ({ icon, text, link, className }) => {
+const SubItem: React.FC<Props> = ({
+  icon,
+  text,
+  link,
+  className,
+  fade,
+  onClick = () => {},
+}) => {
   const { screenSize } = useBreakpoint();
 
   const iconBox = (
@@ -30,29 +39,41 @@ const SubItem: React.FC<Props> = ({ icon, text, link, className }) => {
     </div>
   );
 
+  const motionProps = {
+    animate: fade ? 'fade' : 'regular',
+    variants: {
+      regular: { opacity: 1 },
+      fade: {
+        opacity: 0.1,
+      },
+    },
+  };
+
   return (
     <YLink href={link}>
-      <YAnimateItem
-        className={[...containerClasses, className].join(' ')}
-        as="a"
-      >
-        {screenSize == ScreenSize.SM ? (
-          <YMenuToggle
-            type={ToggleType.Plus}
-            className="inline-block transform translate-y-0.5"
-          />
-        ) : (
-          iconBox
-        )}
-        <YText
-          className={textClasses.join(' ')}
-          fontSize={FontSize.XS}
-          lineHeight={FontLineHeight.Relaxed}
-          fontWeight={FontWeight.SemiBold}
-          as="p"
+      <YAnimateItem {...motionProps} as="a">
+        <div
+          onClick={onClick}
+          className={[...containerClasses, className].join(' ')}
         >
-          {text}
-        </YText>
+          {screenSize == ScreenSize.LG ? (
+            iconBox
+          ) : (
+            <YMenuToggle
+              type={ToggleType.Plus}
+              className="inline-block transform translate-y-0.5"
+            />
+          )}
+          <YText
+            className={textClasses.join(' ')}
+            fontSize={FontSize.XS}
+            lineHeight={FontLineHeight.Relaxed}
+            fontWeight={FontWeight.SemiBold}
+            as="p"
+          >
+            {text}
+          </YText>
+        </div>
       </YAnimateItem>
     </YLink>
   );
@@ -62,23 +83,23 @@ const containerClasses = [
   'relative',
   'cursor-pointer',
   'pb-5',
-  'md:h-32.5',
-  'md:w-40',
-  'md:mt-7',
-  'md:mb-5.5',
-  'md:inline-block',
+  'lg:h-32.5',
+  'lg:w-40',
+  'lg:mt-7',
+  'lg:mb-5.5',
+  'lg:inline-block',
 ];
 const textClasses = [
   'text-gray-300',
   'inline-block',
   'ml-4',
-  'md:absolute',
-  'md:ml-0',
-  'md:bottom-0',
-  'md:left-1/2',
-  'md:transform',
-  'md:-translate-x-1/2',
-  'md:text-xxs',
-  'md:leading-4',
+  'lg:absolute',
+  'lg:ml-0',
+  'lg:bottom-0',
+  'lg:left-1/2',
+  'lg:transform',
+  'lg:-translate-x-1/2',
+  'lg:text-xxs',
+  'lg:leading-4',
 ];
 export default SubItem;

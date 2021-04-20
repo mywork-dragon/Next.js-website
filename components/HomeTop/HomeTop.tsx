@@ -16,6 +16,8 @@ import YButton from '@/components/YButton';
 import YInputButton from '@/components/YInputButton';
 import YOutLink from '@/components/YOutLink';
 
+import style from './BackgroundGrid.module.css';
+
 type ButtonProps = AriaAttributes & {
   text: string;
   link: string;
@@ -90,7 +92,7 @@ const HomeTop: React.FC<Props> = ({
   );
 
   return (
-    <section {...props} className="overflow-hidden">
+    <section {...props} className="relative overflow-hidden">
       <div className="container relative pt-88.1 lg:px-0 lg:pt-48.5">
         {screenReady && <BackgroundGrid cards={cards} />}
         <div className="relative z-20 max-w-md lg:w-100">
@@ -106,7 +108,7 @@ const HomeTop: React.FC<Props> = ({
           <YText
             fontSize={FontSize.SM}
             lineHeight={FontLineHeight.Relaxed}
-            className="text-gray-300 mb-5 bg-secondary bg-opacity-80 text-shadow rounded-20 lg:mb-8 lg:text-md lg:leading-11"
+            className="text-gray-300 mb-5 lg:mb-8 lg:text-md lg:leading-11"
             as="p"
           >
             {description} <br />

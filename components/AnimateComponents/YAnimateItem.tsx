@@ -1,18 +1,20 @@
 import { createElement, forwardRef, MutableRefObject } from 'react';
-import { m as motion } from 'framer-motion';
+import { m as motion, MotionProps } from 'framer-motion';
 
-interface Props {
+interface Props extends MotionProps {
   className?: string;
-  open?: boolean;
   onClick?: (e: React.MouseEvent) => void;
-  disableMount?: boolean;
   layout?: boolean;
   as?: keyof JSX.IntrinsicElements;
 }
 
+/**
+ * Wrapper around Item with default of entry, exit animations (opacity) and transition (0.4s)
+ * Any motion prop can be overriden by passing different value as component prop
+ */
 const AnimateItem: React.FC<Props> = forwardRef(
   (
-    { className, children, onClick = () => {}, disableMount, as },
+    { className, children, onClick = () => {}, as, ...props },
     ref?: MutableRefObject<HTMLElement>
   ) => {
     const handleClick = (e: React.MouseEvent) => {
@@ -21,10 +23,11 @@ const AnimateItem: React.FC<Props> = forwardRef(
     };
 
     const itemMotionProps = {
-      initial: disableMount ? false : { opacity: 0 },
+      initial: { opacity: 0 },
       animate: { opacity: 1 },
       exit: { opacity: 0 },
       transition: { duration: 0.4 },
+      ...(props as MotionProps),
     };
 
     const CustomTag = as ? motion[as] : motion.div;

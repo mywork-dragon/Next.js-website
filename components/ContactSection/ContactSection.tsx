@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { ScreenSize } from '@/enums/screenSize';
-import { FormField } from '@/enums/form';
 
-import { FormElementProps, InputField, SubmitHandler } from './FormElementSM';
+import { FormElementProps, SubmitHandler } from './FormElementSM';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
@@ -61,7 +61,7 @@ const ContactSection: React.FC<Props> = ({
   );
 
   const infoSection = (
-    <div className="w-full lg:w-109.5 lg:absolute lg:-left-120 lg:top-1/2 lg:transform lg:-translate-y-1/2">
+    <div className="relative w-full lg:w-109.5 lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2 z-10">
       <YHeading
         fontSize={FontSize['XXL']}
         lineHeight={FontLineHeight.Relaxed}
@@ -121,20 +121,29 @@ const ContactSection: React.FC<Props> = ({
     <MotionConfig
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
-      <section className="container pt-30.5 pb-15 lg:pt-53.5 lg:px-23.5 lg:pb-42">
-        <div className="relative max-w-lg mx-auto lg:max-w-none lg:mx-0 lg:w-110 lg:ml-auto">
-          {screenReady && (
-            <>
-              <div className="lg:">{infoSection}</div>
-              <FormElement
-                {...props}
-                openForm={openForm}
-                setOpenForm={setOpenForm}
-                onFormSubmit={handleSubmit}
-              />
-            </>
-          )}
+      <section className="relative pt-30.5 pb-15 lg:pt-53.5 lg:pb-42 lg:px-23.5">
+        <div className="absolute top-0 left-1/2 w-full h-full max-w-8xl transform -translate-x-1/2">
+          <Image
+            src="https://yeaimages.s3.eu-central-1.amazonaws.com/contact-cover.jpg"
+            className="object-cover"
+            layout="fill"
+          />
         </div>
+        <section className="container">
+          {infoSection}
+          <div className="relative max-w-lg mx-auto lg:max-w-none lg:mx-0 lg:w-110 lg:ml-auto z-10">
+            {screenReady && (
+              <>
+                <FormElement
+                  {...props}
+                  openForm={openForm}
+                  setOpenForm={setOpenForm}
+                  onFormSubmit={handleSubmit}
+                />
+              </>
+            )}
+          </div>
+        </section>
       </section>
     </MotionConfig>
   );

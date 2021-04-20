@@ -29,15 +29,14 @@ const YArrowButton: React.FC<ArrowProps> = ({
     'h-7',
     'w-7',
     'absolute',
-    'top-0',
-    'left-1/2',
+    'top-1/2',
+    type == ArrowType.Right ? 'right-1/4' : 'left-1/4',
     'transform',
-    '-translate-x-1/2',
+    '-translate-y-1/2',
     'rounded-full',
     'bg-blue-50',
     'flex',
     'justify-center',
-    'scroll-shadow',
     'items-center',
     'cursor-pointer',
   ];
@@ -56,22 +55,23 @@ const YArrowButton: React.FC<ArrowProps> = ({
         ].join(' ')}
       >
         <ArrowSvg />
+        <YText
+          fontWeight={FontWeight.SemiBold}
+          className={[
+            'absolute',
+            '-bottom-1',
+            'left-1/2',
+            'transform',
+            '-translate-x-1/2',
+            'translate-y-full',
+            type == ArrowType.Left ? 'hidden' : '',
+          ].join(' ')}
+          fontSize={FontSize.XXS}
+          as="p"
+        >
+          {more}
+        </YText>
       </div>
-      <YText
-        fontWeight={FontWeight.SemiBold}
-        className={[
-          'absolute',
-          'bottom-0',
-          'left-1/2',
-          'transform',
-          '-translate-x-1/2',
-          type == ArrowType.Left ? 'hidden' : '',
-        ].join(' ')}
-        fontSize={FontSize.XXS}
-        as="p"
-      >
-        {more}
-      </YText>
     </YAnimateItem>
   );
 };

@@ -1,106 +1,80 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { m as motion } from 'framer-motion';
-
-import { ScreenSize } from '@/enums/screenSize';
-
-import useBreakpoint from '@/hooks/useBreakpoint';
 
 interface BackgroundProps {
   className?: string;
   open?: boolean;
+  openClasses?: string;
+  closedClasses?: string;
   children: React.ReactNode;
 }
 
 const AnimateBackground = React.forwardRef<HTMLElement, BackgroundProps>(
-  ({ children, className, open }, ref) => {
-    const { screenSize, screenReady } = useBreakpoint();
+  (
+    { children, open, className = '', openClasses = '', closedClasses = '' },
+    ref
+  ) => {
+    const openProps = useMemo(() => getProps(openClasses), [openClasses]);
+    const closedProps = useMemo(() => getProps(closedClasses), [closedClasses]);
 
     return (
-      <motion.section
-        {...getProps(screenReady, screenSize, open)}
-        ref={ref}
-        className={className}
-      >
-        <motion.div
-          className="absolute top-0 left-0 right-0 bottom-0"
-          style={{
-            backdropFilter: 'blur(60px)',
-          }}
-          animate={open ? 'open' : 'closed'}
-          variants={{
-            open: {
-              opacity: 1,
-            },
-            closed: { opacity: 0 },
-          }}
-          transition={{ duration: 0.4 }}
-        />
+      <motion.section ref={ref} className={className}>
+        <motion.div {...openProps} animate={open ? 'show' : 'hide'} />
+        <motion.div {...closedProps} animate={open ? 'hide' : 'show'} />
         {children}
       </motion.section>
     );
   }
 );
 
-const getProps = (
-  screenReady: boolean,
-  screenSize: ScreenSize,
-  isOpen: boolean
-) => {
-  if (!screenReady) {
-    return {};
-  } else {
-    const style = backdropStyles[screenSize];
-    const { open, closed } = motionProps[screenSize];
+// const sizeClasses = ['h-', 'w-', 'max-w-', 'max-h-'];
+const positionClasses = [
+  'absolute',
+  'relative',
+  'static',
+  'fixed',
+  'top-',
+  'left-',
+  'right-',
+  'bottom-',
+];
+const transformClasses = ['transform', 'translate', 'scale', 'rotate', 'skew'];
+// const marginClasses = ['m-', 'mx-', 'my-', 'mt-', 'mb-', 'ml-', 'mr-'];
+// const paddingClasses = ['p-', 'px-', 'py-', 'pt-', 'pb-', 'pl-', 'pr-'];
 
-    const variant = isOpen ? 'open' : 'closed';
+const filterClasses = (classes: string, forbiddenClasses: string[]) => {
+  if (!classes) return [''];
+  let result = classes.split(' ');
 
-    return {
-      open,
-      closed,
-      animate: variant,
-    };
-  }
+  forbiddenClasses.forEach((forbiddenClass) => {
+    result = result.filter((className) => !className.includes(forbiddenClass));
+  });
+
+  return result;
 };
 
-const backdropStyles = {
-  [ScreenSize.SM]: {
-    open: {
-      backdropFilter: 'blur(20px)',
-    },
-    closed: {
-      backdropFilter: 'blur(20px)',
-    },
+const bgProps = {
+  className: 'absolute top-0 left-0 right-0 bottom-0',
+  initial: false,
+  variants: {
+    show: { opacity: 1 },
+    hide: { opacity: 0 },
   },
-  [ScreenSize.LG]: {
-    open: {
-      backdropFilter: 'blur(60px)',
-    },
-    closed: {
-      backdropFilter: '',
-    },
-  },
+  transition: { duration: 0.4 },
 };
 
-const motionProps = {
-  [ScreenSize.SM]: {
-    open: {
-      backgroundColor: '#041925',
-    },
-    closed: {
-      backgroundColor: `rgba(6, 34, 51, 0.8)`,
-      transition: { duration: 0.4 },
-    },
-  },
-  [ScreenSize.LG]: {
-    open: {
-      backgroundColor: 'rgba(32, 56, 118, 0.68)',
-      boxShadow: '0px 0px 120px rgba(6, 29, 51, 0.7)',
-    },
-    closed: {
-      backgroundColor: 'rgba(0, 0, 0, 0)',
-      transition: { duration: 0.4 },
-    },
-  },
-};
+const getProps = (classes: string) => ({
+  ...bgProps,
+  className: [
+    bgProps.className,
+    ...filterClasses(classes, [
+      // ...sizeClasses,
+      ...positionClasses,
+      ...transformClasses,
+      // ...marginClasses,
+      // ...paddingClasses,
+    ]),
+  ].join(' '),
+});
 
 export default AnimateBackground;

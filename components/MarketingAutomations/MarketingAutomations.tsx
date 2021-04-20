@@ -85,7 +85,7 @@ const MarketingAutomations: React.FC<Props> = ({
   );
 
   return (
-    <section className="relative w-full overflow-hidden border-soft border-b">
+    <section className="relative w-full lg:overflow-hidden border-soft border-b">
       <div className="relative container pt-80 pb-10 lg:pt-65 lg:pb-50 lg:px-0">
         <Pipeline actions={actions} />
         {textBox}
