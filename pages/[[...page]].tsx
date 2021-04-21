@@ -113,7 +113,6 @@ export const getStaticProps = async ({
   locale: string;
 }): Promise<StaticPropsResult> => {
   const page = params.page ? params.page.join('/') : 'home';
-
   const id = locale === 'en' ? page : `${locale}/${page}`;
 
   const pageDataPromise: Promise<
@@ -143,8 +142,15 @@ export const getStaticProps = async ({
   };
 };
 
+interface PathInterface {
+  params: {
+    page: string[];
+  };
+  locale: string;
+}
+
 interface StaticPathResults {
-  paths: string[];
+  paths: PathInterface[];
   fallback: boolean;
 }
 
@@ -152,7 +158,7 @@ export const getStaticPaths = async ({
   preview = false,
 }: NextApiRequest): Promise<StaticPathResults> => {
   const result: {
-    paths: string[];
+    paths: PathInterface[];
     fallback: boolean;
   } = {
     paths: [],
@@ -182,9 +188,12 @@ export const getStaticPaths = async ({
 
   [...response2.data?.Space.languageCodes, 'en'].forEach((lang: string) => {
     response.data?.PageItems.items.forEach((item) => {
-      const path = `/${lang}/${
-        item.full_slug === 'home' ? '' : item.full_slug
-      }`;
+      const path = {
+        params: {
+          page: item.full_slug === 'home' ? [''] : [item.full_slug],
+        },
+        locale: lang,
+      };
 
       result.paths.push(path);
     });

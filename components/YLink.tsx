@@ -14,16 +14,10 @@ export default function YLink({
   const processedHref =
     typeof href != 'string'
       ? href
-      : href.includes(locale)
-      ? href
-      : href.includes('[lang]')
-      ? href.replace('[lang]', locale)
-      : href === 'home'
-      ? `/${locale}`
-      : `/${locale}/${href.replace(/^\/|\/$/g, '')}`;
+      : href.replace('home', '').replace('[lang]/', '');
 
   return (
-    <Link href={processedHref} {...props} passHref>
+    <Link href={processedHref} locale={locale} {...props} passHref>
       {children}
     </Link>
   );
