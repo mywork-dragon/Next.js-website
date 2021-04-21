@@ -77,6 +77,11 @@ export enum FourPoints {
   Stats = 'stats',
   OrderedList = 'ordered_list',
 }
+
+export enum ServiceButton {
+  Input = 'input',
+  Button = 'button',
+}
 //endregion
 
 //region marketing automations

@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import dynamic from 'next/dynamic';
 
-import { Service } from '@/enums/components';
+import { Service, ServiceButton } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
+import YInputButton from '@/components/YInputButton';
+
+import useBreakpoint from '@/hooks/useBreakpoint';
+import { ScreenSize } from '@/enums/screenSize';
 
 const ImageComponent = dynamic(() => import('./ImageComponent'), {
   ssr: false,
@@ -16,6 +20,8 @@ const ImageComponent = dynamic(() => import('./ImageComponent'), {
 interface ButtonProps {
   text: string;
   link: string;
+  type?: ServiceButton;
+  placeholder?: string;
 }
 
 interface Props {
@@ -33,8 +39,63 @@ const ServiceTop: React.FC<Props> = ({
   serviceLabel,
   service,
 }) => {
+  const { screenSize } = useBreakpoint();
+
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // handles submit of ServiceButton.Input
+  const handleSubmit = (value: string) => {
+    /**@TODO integrate with segment */
+    console.log(value);
+  };
+
+  // scrolls to next section if no link is present in ServiceButton.Button
+  const handleScroll = () => {
+    const { height } = sectionRef.current.getBoundingClientRect();
+    const smHeaderHeight = 62;
+
+    // on smaller screens, offset scroll to by fixed header
+    const top = screenSize == ScreenSize.LG ? height : height - smHeaderHeight;
+    window.scrollTo({ top, behavior: 'smooth' });
+  };
+
+  // applied only if there's no link present for ServiceButton.Button
+  const additinalButtonProps = buttonProps.link
+    ? {}
+    : {
+        onPress: handleScroll,
+      };
+
+  const button =
+    buttonProps.type == ServiceButton.Input ? (
+      <YInputButton
+        buttonText={buttonProps.text}
+        placeholder={buttonProps.placeholder}
+        className="max-w-full"
+        onSubmit={handleSubmit}
+      />
+    ) : (
+      <YButton
+        shadow
+        className="px-5 py-3 text-sm leading-6 lg:text-md lg:leading-7"
+        {...additinalButtonProps}
+      >
+        {buttonProps.text}
+      </YButton>
+    );
+
+  const buttonElement =
+    buttonProps.type != ServiceButton.Input && buttonProps.link ? (
+      <YLink href={buttonProps.link}>{button}</YLink>
+    ) : (
+      button
+    );
+
   return (
-    <section className="relative overflow-hidden w-full border-b border-soft">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden w-full border-b border-soft"
+    >
       <div className="container lg:px-0">
         <div className="relative w-full mb-10 pt-80 lg:pt-0 lg:my-37.5 lg:w-150 lg:h-125 lg:ml-auto lg:mr-0">
           <div className="absolute top-11.5 w-105 h-80 sm:right-0 lg:static lg:h-full lg:w-full">
@@ -65,14 +126,7 @@ const ServiceTop: React.FC<Props> = ({
             >
               {description}
             </YText>
-            <YLink href={buttonProps.link}>
-              <YButton
-                shadow
-                className="px-5 py-3 text-sm leading-6 lg:text-md lg:leading-7"
-              >
-                {buttonProps.text}
-              </YButton>
-            </YLink>
+            {buttonElement}
           </div>
         </div>
       </div>

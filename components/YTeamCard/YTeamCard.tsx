@@ -51,7 +51,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
 
   const { screenSize, screenReady } = useBreakpoint();
 
-  const imageElement = screenReady && (screenSize == ScreenSize.MD || !open) && (
+  const imageElement = screenReady && (screenSize != ScreenSize.SM || !open) && (
     <motion.div
       key={Segment.Image}
       layout
@@ -167,10 +167,13 @@ const getImageFadeProps = (initialRender: boolean) => {
   const animate = {
     ...fadeInProps.animate,
     scale: 1,
+    transition: {
+      duration: 0.3,
+    },
   };
   const exit = {
     ...fadeInProps.exit,
-    scale: 0.8,
+    scale: 0.6,
   };
   return { initial, animate, exit };
 };
