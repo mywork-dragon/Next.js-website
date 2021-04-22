@@ -21,7 +21,7 @@ const YFormElement: React.FC<Props> = ({
   style = InputStyle.Light,
   element = InputElement.Input,
   inputType = InputType.Text,
-  className = '',
+  className: classes = '',
   info,
   error,
   errorMessage,
@@ -41,6 +41,8 @@ const YFormElement: React.FC<Props> = ({
     className: getInputClasses(element, style),
   });
 
+  const className = ['relative', ...classes.split(' ')].join(' ');
+
   return (
     <div className={addBasicWidth(className)}>
       <label {...labelProps}>
@@ -54,13 +56,19 @@ const YFormElement: React.FC<Props> = ({
       </label>
       {inputElement}
       {info && (
-        <YText className="text-gray-400" {...messageProps}>
+        <YText
+          className="text-gray-400 absolute bottom-0 transform translate-y-full"
+          {...messageProps}
+        >
           {info}
         </YText>
       )}
       {error && (
-        <YText className="text-red-300" {...messageProps}>
-          {errorMessage}
+        <YText
+          className="text-red-300 absolute bottom-0 transform translate-y-full"
+          {...messageProps}
+        >
+          {`* ${errorMessage}`}
         </YText>
       )}
     </div>
@@ -74,7 +82,7 @@ const messageProps = {
 } as Parameters<typeof YText>[0];
 
 const addBasicWidth = (className: string) =>
-  className.includes(' w') ? className : `${className} w-65`;
+  className.includes(' w-') ? className : `${className} w-65`;
 
 const getInputClasses = (element: InputElement, style: InputStyle) =>
   [...baseClasses, sizeClasses[element], colorClasses[style]].join(' ');

@@ -20,13 +20,14 @@ interface FormElementProps {
   formTitle: string;
   formButtonText: string;
   fields: Record<FormField, InputField>;
+  className?: string;
 }
 
 const FormElement: React.FC<
   FormElementProps & {
     onFormSubmit: SubmitHandler;
   }
-> = ({ fields, formTitle, formButtonText, onFormSubmit }) => {
+> = ({ fields, onFormSubmit, formTitle, formButtonText, className }) => {
   // handles closing of modal on mobile on submit
   const handleSubmit: typeof onFormSubmit = (values) => {
     onFormSubmit(values);
@@ -46,13 +47,7 @@ const FormElement: React.FC<
   ) as typeof fields;
 
   const formProps = {
-    // fields: {
-    //   ...fields,
-    //   [FormField.Comment]: {
-    //     ...fields[FormField.Comment],
-    //     type: InputElements[],
-    //   },
-    // },
+    className,
     fields: formFields,
     onSubmit: handleSubmit,
     title: formTitle,

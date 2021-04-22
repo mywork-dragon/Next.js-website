@@ -1,6 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import {
+  AnimateLayoutFeature,
+  AnimationFeature,
+  ExitFeature,
+  MotionConfig,
+} from 'framer-motion';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { ScreenSize } from '@/enums/screenSize';
@@ -9,13 +15,7 @@ import { FormElementProps, SubmitHandler } from './FormElementSM';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
-import YButton from '../YButton';
-import {
-  AnimateLayoutFeature,
-  AnimationFeature,
-  ExitFeature,
-  MotionConfig,
-} from 'framer-motion';
+import YButton from '@/components/YButton';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
 
@@ -38,6 +38,10 @@ const ContactSection: React.FC<Props> = ({
   contactInfo,
   ...props
 }) => {
+  useEffect(() => {
+    console.log('botton text', buttonText);
+  }, []);
+
   const { screenSize, screenReady } = useBreakpoint();
 
   const [openForm, setOpenForm] = useState(false);
@@ -61,7 +65,8 @@ const ContactSection: React.FC<Props> = ({
   );
 
   const infoSection = (
-    <div className="relative w-full lg:w-109.5 lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2 z-10">
+    <>
+      {' '}
       <YHeading
         fontSize={FontSize['XXL']}
         lineHeight={FontLineHeight.Relaxed}
@@ -109,7 +114,7 @@ const ContactSection: React.FC<Props> = ({
       >
         {buttonText}
       </YButton>
-    </div>
+    </>
   );
 
   const handleSubmit: SubmitHandler = (values) => {
@@ -129,21 +134,21 @@ const ContactSection: React.FC<Props> = ({
             layout="fill"
           />
         </div>
-        <section className="container">
-          {infoSection}
-          <div className="relative max-w-lg mx-auto lg:max-w-none lg:mx-0 lg:w-110 lg:ml-auto z-10">
-            {screenReady && (
-              <>
-                <FormElement
-                  {...props}
-                  openForm={openForm}
-                  setOpenForm={setOpenForm}
-                  onFormSubmit={handleSubmit}
-                />
-              </>
-            )}
+        <div style={{ height: 660 }} className="relative container">
+          <div className="relative w-full lg:w-109.5 lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2 z-10">
+            {infoSection}
           </div>
-        </section>
+
+          {screenReady && (
+            <FormElement
+              {...props}
+              className="relative max-w-lg mx-auto lg:max-w-none lg:mx-0 lg:w-110 lg:ml-auto z-10"
+              openForm={openForm}
+              setOpenForm={setOpenForm}
+              onFormSubmit={handleSubmit}
+            />
+          )}
+        </div>
       </section>
     </MotionConfig>
   );

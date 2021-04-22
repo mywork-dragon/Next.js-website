@@ -23,6 +23,7 @@ export interface FormElementProps {
   formTitle: string;
   formButtonText: string;
   fields: Record<FormField, InputField>;
+  className?: string;
 }
 
 const FormElement: React.FC<
@@ -38,6 +39,7 @@ const FormElement: React.FC<
   openForm,
   onFormSubmit,
   setOpenForm,
+  className,
 }) => {
   // handles closing of modal on mobile on submit
   const handleSubmit: typeof onFormSubmit = (values) => {
@@ -65,6 +67,7 @@ const FormElement: React.FC<
     title: formTitle,
     style: InputStyle.Dark,
     buttonText: formButtonText,
+    className,
   };
 
   return (

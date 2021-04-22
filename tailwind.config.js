@@ -341,10 +341,6 @@ const maxWidth = {
   '8xl': rem(1680),
 };
 
-const zIndex = {
-  top: 999,
-};
-
 module.exports = {
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -368,7 +364,6 @@ module.exports = {
       minHeight,
       maxWidth,
       inset,
-      zIndex,
     },
     screens,
     cards,

@@ -88,10 +88,10 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
   return (
     <YAnimateBackground
       ref={headerRef}
-      className="fixed w-full left-0 top-0 z-40 backdrop-blur-20 lg:hidden"
+      className="fixed w-full left-0 top-0 max-h-screen z-40 overflow-y-scroll lg:hidden"
       open={open}
       openClasses="bg-blue-400"
-      closedClasses="bg-blue-300 bg-opacity-80"
+      closedClasses="bg-blue-300 bg-opacity-80 backdrop-blur-20"
     >
       <div className="h-15.5 container px-0 border-soft">
         <div className="relative w-full h-full">

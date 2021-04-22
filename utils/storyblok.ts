@@ -47,7 +47,7 @@ export const mapStoryblokProps = (props: Blok): Blok => {
     newProps.locales = props.locales.data.Space.languageCodes;
   }
 
-  if (propKeys.includes('buttonText')) {
+  if (propKeys.includes('buttonText') && !propKeys.includes('formButtonText')) {
     const {
       buttonText,
       buttonLink,
