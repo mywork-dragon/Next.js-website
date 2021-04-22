@@ -397,13 +397,6 @@ module.exports = {
         '.drop-shadow': {
           filter: 'drop-shadow(0 1.25rem 5rem rgba(0, 0, 0, 0.8))',
         },
-        '.no-x-gridline': {
-          boxShadow: '2px 0 #062233, -2px 0 #062233',
-        },
-        '.text-shadow': {
-          boxShadow:
-            '-12.5rem -8.125rem 2.5rem 1.25rem rgba(6, 34, 51, 0.8), -1.25rem -0.625rem 1.25rem 2.5rem rgba(6, 34, 51, 0.8)',
-        },
         '.scroll-shadow': {
           boxShadow:
             '3.5rem 0 50px 125px rgba(6, 34, 51, 0.3), 3.5rem 0 50px 125px rgba(32, 56, 118, 1)',
@@ -431,19 +424,19 @@ module.exports = {
           filter: 'blur(5px)',
         },
         '.backdrop-blur-20': {
-          backdropFilter: 'blur(20px)',
+          backdropFilter: 'blur(1.25rem)',
         },
         '.backdrop-blur-60': {
-          backdropFilter: 'blur(60px)',
+          backdropFilter: 'blur(3.75)',
         },
         '.text-shadow-blue': {
-          textShadow: '-4px -4px 0px #305EED',
+          textShadow: '-0.25rem -0.25rem 0 #305EED',
         },
         '.text-shadow-green': {
-          textShadow: '-4px -4px 0px #1F7E44',
+          textShadow: '-0.25rem -0.25rem 0 #1F7E44',
         },
         '.text-shadow-red': {
-          textShadow: '-4px -4px 0px #7E1F1F',
+          textShadow: '-0.25rem -0.25rem 0 #7E1F1F',
         },
       });
     },

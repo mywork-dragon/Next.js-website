@@ -77,7 +77,7 @@ const OurServices: React.FC<Props> = ({
   // card deck and partners
   const rightSection = (
     <div className="relative max-w-xs mx-auto px-4 lg:max-w-none lg:w-101.5 lg:h-full lg:px-0">
-      <div className="h-80 sm:h-103.1 lg:h-100 border border-primary">
+      <div className="h-80 sm:h-103.1 lg:h-100">
         <CardDeck
           className="relative h-full w-full"
           services={rotate([...services].reverse())}
