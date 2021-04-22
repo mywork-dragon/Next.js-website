@@ -424,10 +424,10 @@ module.exports = {
           filter: 'blur(5px)',
         },
         '.backdrop-blur-20': {
-          backdropFilter: 'blur(1.25rem)',
+          backdropFilter: `blur(${rem(20)})`,
         },
         '.backdrop-blur-60': {
-          backdropFilter: 'blur(3.75)',
+          backdropFilter: `blur(${rem(60)})`,
         },
         '.text-shadow-blue': {
           textShadow: '-0.25rem -0.25rem 0 #305EED',
