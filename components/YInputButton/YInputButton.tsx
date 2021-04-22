@@ -7,7 +7,7 @@ import { ButtonSize } from '@/enums/components';
 import YButton from '@/components/YButton';
 
 interface Props extends AriaTextFieldProps {
-  buttonText: string;
+  buttonText?: string;
   placeholder?: string;
   className?: string;
   onSubmit?: (text: string) => unknown;

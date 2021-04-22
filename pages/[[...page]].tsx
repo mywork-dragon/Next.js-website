@@ -38,11 +38,6 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     ? contentOfStory.footer.content
     : undefined;
 
-  /**
-   * @NOTE This seems unnecessary as res is passed as prop,
-   * causing component to remount on each change
-   * and initialize story state with the same value as here
-   * */
   useEffect(() => {
     setStory(res.data.PageItem);
   }, [res]);
@@ -64,6 +59,8 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     },
   };
 
+  const animationKey = Date.now().toString().slice(-6);
+
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
       <script
@@ -73,7 +70,7 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
       />
       <Layout headerContent={headerContent} footerContent={footerContent}>
         <AnimatePresence exitBeforeEnter>
-          <motion.main key={contentOfStory._uid} {...transitionProps}>
+          <motion.main key={animationKey} {...transitionProps}>
             <Page content={contentOfStory} />
           </motion.main>
         </AnimatePresence>

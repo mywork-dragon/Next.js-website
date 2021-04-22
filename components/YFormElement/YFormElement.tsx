@@ -2,14 +2,15 @@ import React, { useRef, createElement } from 'react';
 import { useTextField } from '@react-aria/textfield';
 import { AriaTextFieldProps } from '@react-types/textfield';
 
-import { InputStyle, InputType } from '@/enums/components';
+import { InputElement, InputStyle, InputType } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 import YText from '@/components/YText';
 
 interface Props extends AriaTextFieldProps {
   style?: InputStyle;
-  type?: InputType;
+  element?: InputElement;
+  inputType?: InputType;
   className?: string;
   info?: string;
   error?: boolean;
@@ -18,7 +19,8 @@ interface Props extends AriaTextFieldProps {
 
 const YFormElement: React.FC<Props> = ({
   style = InputStyle.Light,
-  type = InputType.Input,
+  element = InputElement.Input,
+  inputType = InputType.Text,
   className = '',
   info,
   error,
@@ -29,14 +31,14 @@ const YFormElement: React.FC<Props> = ({
   const ref = useRef();
 
   const { labelProps, inputProps } = useTextField(
-    props as AriaTextFieldProps,
+    { ...props, type: inputType } as AriaTextFieldProps,
     ref
   );
 
-  const inputElement = createElement(type, {
+  const inputElement = createElement(element, {
     ref,
     ...inputProps,
-    className: getInputClasses(type, style),
+    className: getInputClasses(element, style),
   });
 
   return (
@@ -74,8 +76,8 @@ const messageProps = {
 const addBasicWidth = (className: string) =>
   className.includes(' w') ? className : `${className} w-65`;
 
-const getInputClasses = (type: InputType, style: InputStyle) =>
-  [...baseClasses, sizeClasses[type], colorClasses[style]].join(' ');
+const getInputClasses = (element: InputElement, style: InputStyle) =>
+  [...baseClasses, sizeClasses[element], colorClasses[style]].join(' ');
 
 const baseClasses = [
   'w-full',
@@ -93,8 +95,8 @@ const baseClasses = [
 ];
 
 const sizeClasses = {
-  [InputType.Input]: 'h-13',
-  [InputType.TextArea]: 'h-25 resize-none no-scrollbar',
+  [InputElement.Input]: 'h-13',
+  [InputElement.TextArea]: 'h-25 resize-none no-scrollbar',
 };
 
 const colorClasses = {
