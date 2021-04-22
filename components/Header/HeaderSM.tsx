@@ -71,7 +71,7 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
           onClick={() => setShowItems(false)}
           {...subItem}
           key={subItem.text}
-          className={index == 0 ? 'pt-1' : ''}
+          className={index == 0 ? 'pt-1 pb-2.5' : 'py-2.5'}
         />
       ))}
     </YHeaderItem>
@@ -88,7 +88,7 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
   return (
     <YAnimateBackground
       ref={headerRef}
-      className="fixed w-full left-0 top-0 z-40 backdrop-blur-20"
+      className="fixed w-full left-0 top-0 z-40 backdrop-blur-20 lg:hidden"
       open={open}
       openClasses="bg-blue-400"
       closedClasses="bg-blue-300 bg-opacity-80"

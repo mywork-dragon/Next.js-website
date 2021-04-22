@@ -59,18 +59,23 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     },
   };
 
-  const animationKey = Date.now().toString().slice(-6);
+  const metaContent = (({
+    title,
+    description,
+    keywords,
+  }: typeof contentOfStory) => ({ title, description, keywords }))(
+    contentOfStory
+  );
 
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
-      <script
-        src={
-          '//app.storyblok.com/f/storyblok-latest.js?t=BKFRTWedKaTnP3sHlkRQBQtt'
-        }
-      />
-      <Layout headerContent={headerContent} footerContent={footerContent}>
+      <Layout
+        {...metaContent}
+        headerContent={headerContent}
+        footerContent={footerContent}
+      >
         <AnimatePresence exitBeforeEnter>
-          <motion.main key={animationKey} {...transitionProps}>
+          <motion.main key={story.id} {...transitionProps}>
             <Page content={contentOfStory} />
           </motion.main>
         </AnimatePresence>
@@ -87,6 +92,9 @@ type PageItemWithLayout = PageItem & {
     footer?: PostItem;
     backgroundGradient?: PageBackground;
     body: PostComponent[];
+    title: string;
+    description?: string;
+    keywords?: string;
   };
 };
 

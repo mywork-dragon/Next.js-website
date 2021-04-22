@@ -21,12 +21,10 @@ const Page = ({
 }: Props): JSX.Element => {
   return (
     <SbEditable content={content}>
-      <main>
-        {backgroundGradient && <Background page={backgroundGradient} />}
-        {content.body.map((blok) => (
-          <DynamicComponent blok={blok} key={blok._uid} />
-        ))}
-      </main>
+      {backgroundGradient && <Background page={backgroundGradient} />}
+      {content.body.map((blok) => (
+        <DynamicComponent blok={blok} key={blok._uid} />
+      ))}
     </SbEditable>
   );
 };

@@ -59,7 +59,7 @@ const HeaderLG: React.FC<Props> = ({
   // top bar region
   const additionalComponents = (
     <>
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full mx-20 flex items-center justify-start">
         {navItems.map((item) => (
           <YHeaderItem
             key={item.text}
