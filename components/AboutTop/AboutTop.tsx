@@ -1,25 +1,28 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 import YHeading from '@/components/YHeading';
+import YImage from '@/components/YImage';
 
 interface Props {
   title: string;
   description: string;
+  cover?: {
+    filename: string;
+    alt?: string;
+  };
 }
 
-const AboutTop: React.FC<Props> = ({ title, description }) => {
+const AboutTop: React.FC<Props> = ({ title, description, cover }) => {
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="absolute left-1/2 w-full max-w-8xl h-full transform -translate-x-1/2">
-        <Image
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/about-cover.jpg"
-          className="object-cover"
-          layout="fill"
-        />
-      </div>
+      <YImage
+        className="absolute left-1/2 w-full max-w-8xl h-full transform -translate-x-1/2"
+        {...cover}
+        width={1680}
+        height={1100}
+      />
       <div className="relative container md:px-0 z-10">
         <YHeading
           fontSize={FontSize.XS}

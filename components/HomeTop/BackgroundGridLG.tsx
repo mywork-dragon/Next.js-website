@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react';
-import Image from 'next/image';
 
 import style from './BackgroundGrid.module.css';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
 
 import YCard from '@/components/YCard';
+import YImage from '@/components/YImage';
 
 import Gridlines from '@/assets/other/HomeTopGridlineLG.svg';
 
@@ -70,13 +70,13 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
       className="absolute"
       style={cardCoordinates[index]}
     >
-      <YCard
+      {/* <YCard
         className={cardBaseClasses}
         cardClasses="ml-4"
         {...card}
         hovered={hoveredCard == index}
         onHover={() => setHoveredCard(index)}
-      />
+      /> */}
     </div>
   ));
 
@@ -86,13 +86,13 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
       <div className="absolute top-6.5 left-1.5">
         <Gridlines />
       </div>
-      <div className="absolute w-404 h-385.5 top-6.5 left-1.5">
-        <Image
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/HomeTopGridLG.png"
-          className="object-contain"
-          layout="fill"
-        />
-      </div>
+      <YImage
+        className="absolute top-6.5 left-1.5"
+        filename="https://a.storyblok.com/f/98632/1616x1542/154b45d9c1/hometop-grid-lg.png"
+        width={1616}
+        height={1542}
+        alt="transparent cards on grid in background"
+      />
       {interactiveCards}
     </div>
   ) : null;

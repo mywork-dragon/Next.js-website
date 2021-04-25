@@ -14,47 +14,74 @@ const subItems = [
   {
     text: 'Personalization',
     link: '/',
-    icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/personalization.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x92/59d7f41d58/personalization.png',
+      alt: '',
+    },
   },
   {
     text: 'Data & Analitics',
     link: '/',
-    icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/data-analytics.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x90/007721f1b1/data-analytics.png',
+      alt: '',
+    },
   },
   {
     text: 'Email Marketing',
     link: '/',
-    icon: 'https://yeaimages.s3.eu-central-1.amazonaws.com/email-marketing.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x90/6d339d373c/email-marketing.png',
+      alt: '',
+    },
   },
   {
     text: 'Affiliate Marketing',
     link: '/services/affiliate',
-    icon:
-      'https://yeaimages.s3.eu-central-1.amazonaws.com/affiliate-marketing.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x90/69ea0d4a27/affiliate-marketing.png',
+      alt: '',
+    },
   },
   {
     text: 'Conversion Optimization',
     link: '/',
-    icon:
-      'https://yeaimages.s3.eu-central-1.amazonaws.com/conversion-optimization.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x90/c630d47b95/conversion-optimization.png',
+      alt: '',
+    },
   },
   {
     text: 'Marketing Automatization',
     link: '/',
-    icon:
-      'https://yeaimages.s3.eu-central-1.amazonaws.com/marketing-automation.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x90/28be580929/marketing-automation.png',
+      alt: '',
+    },
   },
   {
     text: 'Online Advertising',
     link: '/',
-    icon:
-      'https://yeaimages.s3.eu-central-1.amazonaws.com/online-advertising.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x90/045e4aef2a/online-advertising.png',
+      alt: '',
+    },
   },
   {
     text: 'Integration/Implementation',
     link: '/services/integration',
-    icon:
-      'https://yeaimages.s3.eu-central-1.amazonaws.com/integration-implementation.png',
+    icon: {
+      filename:
+        'https://a.storyblok.com/f/98632/145x90/66bb0ea695/integration-implementation.png',
+      alt: '',
+    },
   },
 ];
 

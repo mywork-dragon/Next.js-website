@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import {
   m as motion,
   AnimationFeature,
@@ -19,12 +18,16 @@ import { FontSize, FontWeight } from '@/enums/font';
 
 import YToggleRound from '@/components/YToggleRound';
 import YText from '@/components/YText';
+import YImage from '@/components/YImage';
 
 export interface TeamMember {
   name: string;
   role: string;
   text: string;
-  image: string;
+  image: {
+    filename: string;
+    alt?: string;
+  };
 }
 
 enum Segment {
@@ -63,7 +66,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
           : 'h-50 w-50 top-13.6 left-10 xs:left-12.5 xs:w-55 xs:h-55 md:top-13.6 md:left-16.1',
       ].join(' ')}
     >
-      <Image layout="fill" className="object-contain" src={image} />
+      <YImage {...image} width={220} height={220} />
     </motion.div>
   );
 

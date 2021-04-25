@@ -1,64 +1,47 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { BreakPoint, ScreenSize } from '@/enums/screenSize';
-import { useWindowWidth } from '@react-hook/window-size';
+import { ImageFormatContext } from '@/context/ImgFormatContext';
 
-export type ResponsiveImages = {
-  [index in ScreenSize]: string[];
-};
+import { createSrcSet } from '@/components/YImage';
 
 interface PrefetchHook {
-  (images: ResponsiveImages | string[]);
+  (images: string[] | { filename: string; height: number; width: number }[]);
 }
 
 /**
- * Hook for prefetching of images, fetches, either all images, on mount, or images with respect to screenSize
- * @param images array of image sources if fetching all on mount, or object with keys of screen size and corresponding array of image sources
+ * Hook for prefetching of images, fetches  images on mount
+ * @param images array of image sources if fetching all on mount
  */
 const usePrefetch: PrefetchHook = (images) => {
-  // check for responsive and assign screen sizes
-  const keys = Object.keys(images);
-  const responsive = Object.values(ScreenSize).includes(keys[0] as any);
+  // start prefetching on idle time when context ready
+  const format = useContext(ImageFormatContext);
+  const [ready, setReady] = useState(false);
 
-  // create initial state for fetched checks based on responsive variant
-  const initialState = responsive
-    ? (keys.reduce((acc, curr) => ((acc[curr] = false), acc), {}) as {
-        [index in ScreenSize]: boolean;
-      })
-    : false;
+  const setReadyOnLoad = () => setReady(true);
+  window.addEventListener('load', setReadyOnLoad);
 
-  /**
-   * Contains boolean checks if images are fetched, or record of screen size, boolean pair checks for each size
-   */
-  const [fetched, setFetched] = useState<
-    boolean | { [index in ScreenSize]: boolean }
-  >(initialState);
-
-  const screenSize =
-    useWindowWidth() < BreakPoint.LG ? ScreenSize.MD : ScreenSize.LG;
+  // Contains boolean checks if images are fetched
+  const [fetched, setFetched] = useState<boolean>(false);
 
   useEffect(() => {
-    if (responsive) {
-      if (!fetched[screenSize]) {
-        (images as { [index in ScreenSize]: string[] })[screenSize].forEach(
-          (src) => {
-            new Image().src = src;
-          }
-        );
-        setFetched({
-          ...(fetched as { [index in ScreenSize] }),
-          [screenSize]: true,
-        });
-      }
-    } else {
+    // check if window loaded
+    if (ready && format) {
+      // check if images already fetched
       if (!fetched) {
-        (images as string[]).forEach((src) => {
+        images.forEach((image) => {
+          // check to fetch original or request img2
+          const src =
+            typeof image == 'string'
+              ? image
+              : createSrcSet(format, image.width, image.height, image.filename);
+
           new Image().src = src;
         });
         setFetched(true);
+        window.removeEventListener('load', setReadyOnLoad);
       }
     }
-  }, [screenSize]);
+  }, [ready, format]);
 };
 
 export default usePrefetch;

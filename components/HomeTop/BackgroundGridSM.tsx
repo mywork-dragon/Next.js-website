@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import Image from 'next/image';
 
 import style from './BackgroundGrid.module.css';
 
 import YCard from '@/components/YCard';
+import YImage from '@/components/YImage';
 
 import Gridlines from '@/assets/other/HomeTopGridlineSM.svg';
 
@@ -71,13 +71,13 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
       <div className="absolute top-6.5 left-5.5 w-503.25 h-385.5">
         <Gridlines />
       </div>
-      <div className="absolute top-6.5 left-5.5 w-503.25 h-385.5">
-        <Image
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/HomeTopGridSM.png"
-          className="object-contain"
-          layout="fill"
-        />
-      </div>
+      <YImage
+        className="absolute top-6.5 left-5.5"
+        filename="https://a.storyblok.com/f/98632/2013x1542/3fc365e9cf/hometop-grid-sm.png"
+        height={2013}
+        width={1542}
+        alt="transparent cards on grid in background"
+      />
       {interactiveCards}
     </div>
   );

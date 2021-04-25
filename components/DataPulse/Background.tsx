@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import Image from 'next/image';
 
 import PulseBackground from './PulseBackground';
 import YCardStack from '@/components/YCardStack';
+import YImage from '@/components/YImage';
 
 import Pulse7 from '@/assets/pulse/pulse-7.svg';
 import Pulse3 from '@/assets/pulse/pulse-3.svg';
@@ -10,6 +10,7 @@ import Pulse3 from '@/assets/pulse/pulse-3.svg';
 import style from './DataPulse.module.css';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
+import { ScreenSize } from '@/enums/screenSize';
 
 interface Card {
   icon: string;
@@ -24,16 +25,29 @@ export interface BackgroundProps {
 const Background: React.FC<BackgroundProps> = ({ cards }) => {
   const { screenSize, screenReady } = useBreakpoint();
 
+  const mobileAltText = 'mobile pane on top of data pulse';
+
+  const mobilePerspective =
+    screenSize == ScreenSize.SM ? (
+      <YImage
+        filename="https://a.storyblok.com/f/98632/272x239/f62e35e2d4/phone-perspective-sm.png"
+        width={272}
+        height={239}
+        alt={mobileAltText}
+      />
+    ) : (
+      <YImage
+        filename="https://a.storyblok.com/f/98632/587x487/a88281559e/phone-perspective-lg.png"
+        width={587}
+        height={487}
+        alt={mobileAltText}
+      />
+    );
+
   return (
     <div className="bg-secondary absolute -mx-5 overflow-hidden -z-10 top-0 bottom-0 w-full lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:w-420 lg:rounded-2.5xl">
       <div className="absolute top-0 z-10 right-0 h-59.6 w-68 lg:h-121.6 lg:w-146.6">
-        {screenReady && (
-          <Image
-            src={`https://yeaimages.s3.eu-central-1.amazonaws.com/phone-perspective-${screenSize}.png`}
-            className="object-contain"
-            layout="fill"
-          />
-        )}
+        {screenReady && mobilePerspective}
       </div>
       <div
         className={[

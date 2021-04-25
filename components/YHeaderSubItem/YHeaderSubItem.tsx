@@ -4,6 +4,7 @@ import YMenuToggle from '@/components/YMenuToggle';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
+import YImage from '@/components/YImage';
 
 import { ToggleType } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
@@ -12,7 +13,11 @@ import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import useBreakpoint from '@/hooks/useBreakpoint';
 
 export interface SubItemInterface {
-  icon: string;
+  icon: {
+    filename: string;
+    alt?: string;
+    title?: string;
+  };
   text: string;
   link: string;
 }
@@ -35,7 +40,7 @@ const SubItem: React.FC<Props> = ({
 
   const iconBox = (
     <div className="h-25 w-full bg-blue-250 bg-opacity-40 rounded-lg flex items-center justify-center">
-      <img src={icon} className="object-cover" />
+      <YImage {...icon} width={145} height={90} />
     </div>
   );
 

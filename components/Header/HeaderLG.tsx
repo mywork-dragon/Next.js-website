@@ -17,6 +17,7 @@ import YButton from '@/components/YButton';
 import YSelect from '@/components/YSelect';
 
 import useClickOutside from '@/hooks/useClickOutside';
+import usePrefetch from '@/hooks/usePrefetch';
 
 import { ButtonSize, ButtonShape, ArrowType } from '@/enums/components';
 import { Language } from '@/enums/language';
@@ -55,6 +56,30 @@ const HeaderLG: React.FC<Props> = ({
   useClickOutside(headerRef, () => {
     setSubItems(null);
   });
+
+  // prefetch icons in hidden region (sub items)
+  const iconWidth = 145;
+  const iconHeight = 90;
+
+  const iconsToPrefetch = navItems.reduce(
+    (
+      acc: { filename: string; width: number; height: number }[],
+      { subItems }: NavItemInterface
+    ) => {
+      const curr = subItems
+        ? subItems.map(({ icon: { filename } }) => ({
+            filename,
+            width: iconWidth,
+            height: iconHeight,
+          }))
+        : [];
+      acc = [...acc, ...curr];
+      return acc;
+    },
+    []
+  );
+
+  usePrefetch(iconsToPrefetch);
 
   // top bar region
   const additionalComponents = (

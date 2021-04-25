@@ -1,6 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
+import {
+  AnimateLayoutFeature,
+  AnimationFeature,
+  ExitFeature,
+  MotionConfig,
+} from 'framer-motion';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { ScreenSize } from '@/enums/screenSize';
@@ -10,12 +15,7 @@ import { FormElementProps, SubmitHandler } from './FormElementSM';
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 import YButton from '../YButton';
-import {
-  AnimateLayoutFeature,
-  AnimationFeature,
-  ExitFeature,
-  MotionConfig,
-} from 'framer-motion';
+import YImage from '@/components/YImage';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
 
@@ -29,6 +29,10 @@ interface Props extends FormElementProps {
   description: string;
   buttonText: string;
   contactInfo: ContactInfo[];
+  backgroundImage?: {
+    filename: string;
+    alt?: string;
+  };
 }
 
 const ContactSection: React.FC<Props> = ({
@@ -36,6 +40,7 @@ const ContactSection: React.FC<Props> = ({
   description,
   buttonText,
   contactInfo,
+  backgroundImage,
   ...props
 }) => {
   const { screenSize, screenReady } = useBreakpoint();
@@ -122,13 +127,12 @@ const ContactSection: React.FC<Props> = ({
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
       <section className="relative pt-30.5 pb-15 lg:pt-53.5 lg:pb-42 lg:px-23.5">
-        <div className="absolute top-0 left-1/2 w-full h-full max-w-8xl transform -translate-x-1/2">
-          <Image
-            src="https://yeaimages.s3.eu-central-1.amazonaws.com/contact-cover.jpg"
-            className="object-cover"
-            layout="fill"
-          />
-        </div>
+        <YImage
+          className="absolute top-0 right-0 opacity-50"
+          {...backgroundImage}
+          width={1680}
+          height={1000}
+        />
         <section className="container">
           {infoSection}
           <div className="relative max-w-lg mx-auto lg:max-w-none lg:mx-0 lg:w-110 lg:ml-auto z-10">
