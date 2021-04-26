@@ -1,17 +1,11 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 
-import { Service } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
-
-const ImageComponent = dynamic(() => import('./ImageComponent'), {
-  ssr: false,
-});
 
 interface ButtonProps {
   text: string;
@@ -23,23 +17,34 @@ interface Props {
   description: string;
   buttonProps: ButtonProps;
   serviceLabel: string;
-  service: Service;
+  heroImage: {
+    filename: string;
+    srcSet?: Partial<Record<ScreenSize, string>>;
+    alt?: string;
+  };
 }
+
+import YImage from '../YImage';
+
+/**@TEMP */
+import { ScreenSize } from '@/enums/screenSize';
 
 const ServiceTop: React.FC<Props> = ({
   title,
   description,
   buttonProps,
   serviceLabel,
-  service,
+  heroImage,
 }) => {
   return (
     <section className="relative overflow-hidden w-full border-b border-soft">
       <div className="container lg:px-0">
         <div className="relative w-full mb-10 pt-80 lg:pt-0 lg:my-37.5 lg:w-150 lg:h-125 lg:ml-auto lg:mr-0">
-          <div className="absolute top-11.5 w-105 h-80 sm:right-0 lg:static lg:h-full lg:w-full">
-            <ImageComponent service={service} />
-          </div>
+          <YImage
+            {...heroImage}
+            {...imageProps}
+            className="absolute top-11.5 w-105 sm:left-1/2 sm:transform sm:-translate-x-1/2 md:transform-none lg:transform lg:left-0 lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2  lg:w-full"
+          />
           <div className="max-w-md lg:max-w-none lg:w-100 lg:absolute lg:top-1/2 lg:transform lg:-translate-x-120 lg:-translate-y-1/2">
             <YHeading
               fontSize={FontSize.XS}
@@ -78,6 +83,15 @@ const ServiceTop: React.FC<Props> = ({
       </div>
     </section>
   );
+};
+
+const imageProps = {
+  width: 384,
+  responsive: {
+    [ScreenSize.LG]: {
+      width: 600,
+    },
+  },
 };
 
 export default ServiceTop;

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize } from '@/enums/font';
+import { ScreenSize } from '@/enums/screenSize';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
-import Cloud from './Cloud';
 
 interface ButtonProps {
   text: string;
@@ -53,10 +54,43 @@ const AboutContact: React.FC<Props> = ({
     </div>
   );
 
+  const YImage = useMemo(
+    () => dynamic(() => import('@/components/YImage'), { ssr: false }),
+    []
+  );
+
+  const backgroundImageClasses = [
+    'absolute',
+    'w-120',
+    'h-84.5',
+    'top-10',
+    'left-1/2',
+    'transform',
+    '-translate-x-1/2',
+    'lg:h-130.1',
+    'lg:w-185.1',
+    'md:left-100',
+    'md:top-1/2',
+    'md:-translate-y-1/2',
+    'md:translate-x-0',
+  ];
+
+  const backgroundImageProps = {
+    className: backgroundImageClasses.join(' '),
+    responsive: {
+      [ScreenSize.LG]: { width: 741, height: 521 },
+    },
+    width: 480,
+    height: 338,
+    filename:
+      'https://a.storyblok.com/f/98632/1080x759/846d294d5a/cloud-lg.png',
+    alt: 'service icons',
+  };
+
   return (
     <section className="w-full overflow-hidden border-soft border-b">
       <div className="container border border-transparent relative md:p-0">
-        <Cloud />
+        <YImage {...backgroundImageProps} />
         {content}
       </div>
     </section>

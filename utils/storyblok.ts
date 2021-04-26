@@ -1,6 +1,7 @@
 import { PageItem, PostItem, Blok } from '@/types/storyblok';
 
 import { FormField } from '@/enums/form';
+import { ScreenSize } from '@/enums/screenSize';
 
 import { NavItemInterface } from '@/components/YHeaderItem/YHeaderItem';
 import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
@@ -112,6 +113,15 @@ export const mapStoryblokProps = (props: Blok): Blok => {
       ...card,
       link: link ? link.cached_url : '',
     }));
+  }
+
+  if (propKeys.includes('heroImageLG')) {
+    const newHero = { ...props.heroImageLG };
+    if (props.heroImageSM && props.heroImageSM.filename) {
+      newHero.filename = props.heroImageSM.filename;
+      newHero.srcSet = { [ScreenSize.LG]: props.heroImageLG.filename };
+    }
+    newProps.heroImage = newHero;
   }
 
   return newProps;
