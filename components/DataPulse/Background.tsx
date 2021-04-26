@@ -113,8 +113,10 @@ const blueCard = { cardClasses: 'card-blue' };
 
 const getStackProps = (topCard: Card, index: number) => {
   const className = classesByStack[index];
-  let cards = stackCards[index];
-  cards.push({ ...topCard, cardClasses: topCardClasses[index] });
+  let cards = [
+    ...stackCards[index],
+    { ...topCard, cardClasses: topCardClasses[index] },
+  ];
 
   return { className, cards };
 };

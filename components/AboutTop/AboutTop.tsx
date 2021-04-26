@@ -18,7 +18,7 @@ const AboutTop: React.FC<Props> = ({ title, description, cover }) => {
   return (
     <section className="relative w-full overflow-hidden">
       <YImage
-        className="absolute left-1/2 w-full max-w-8xl h-full transform -translate-x-1/2"
+        className="absolute left-1/2 w-420 h-275 transform -translate-x-1/2"
         {...cover}
         width={1680}
         height={1100}
