@@ -84,7 +84,7 @@ export default {
     },
     frame3: {
       filename:
-        'https://a.storyblok.com/f/98632/1024x732/3b447b6df2/frame-3-md.png',
+        'https://a.storyblok.com/f/98632/1080x802/12c95ad503/frame-3-lg.png',
       alt: 'personalized email collection',
       width: 1080,
       height: 768,

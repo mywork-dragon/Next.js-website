@@ -1,7 +1,7 @@
+import React, { useMemo } from 'react';
 import { __SbImageBaseURL__, __SbImageServer__ } from '@/libs/constants';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
-import { useMemo } from 'react';
 
 type SrcSet = Partial<
   {
@@ -60,20 +60,10 @@ const YImage: React.FC<Props> = ({
         const png = original ? createSrcSet('png', width, height, src) : '';
 
         return (
-          <>
-            <source
-              key={`${media || ''}-webp`}
-              srcSet={webp}
-              type="image/webp"
-              media={media}
-            />
-            <source
-              key={`${media || ''}-png`}
-              srcSet={png}
-              type="image/png"
-              media={media}
-            />
-          </>
+          <React.Fragment key={`${media || ''}-image`}>
+            <source srcSet={webp} type="image/webp" media={media} />
+            <source srcSet={png} type="image/png" media={media} />
+          </React.Fragment>
         );
       })}
       <img alt={alt} srcSet={fallback} />

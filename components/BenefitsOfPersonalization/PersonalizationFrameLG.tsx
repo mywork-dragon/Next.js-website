@@ -61,7 +61,7 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
     <div className="w-124.1 h-70 absolute top-0 left-0 z-10">
       <YImage {...images[ScreenSize.LG].mobilePane} />
       <YImage
-        className="absolute -top-32.5 -right-5 transform translate-x-full"
+        className="absolute -top-32.5 -right-5 transform translate-x-full h-120 w-207.6"
         {...images[ScreenSize.LG].websitePane}
       />
       {reviews.map(({ image, name, text }, index) => (
@@ -105,7 +105,9 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
 
   const frame2Cover = <YImage {...images[ScreenSize.LG].frame2} />;
 
-  const frame3Cover = <YImage {...images[ScreenSize.LG].frame3} />;
+  const frame3Cover = (
+    <YImage {...images[ScreenSize.LG].frame3} className="w-lg" />
+  );
 
   const desktopFrame2 = (
     <div className="absolute top-5 left-0 w-130.5">

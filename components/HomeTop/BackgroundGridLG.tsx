@@ -70,13 +70,13 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
       className="absolute"
       style={cardCoordinates[index]}
     >
-      {/* <YCard
+      <YCard
         className={cardBaseClasses}
         cardClasses="ml-4"
         {...card}
         hovered={hoveredCard == index}
         onHover={() => setHoveredCard(index)}
-      /> */}
+      />
     </div>
   ));
 

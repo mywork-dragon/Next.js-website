@@ -134,7 +134,13 @@ const ServiceFourPoints: React.FC<Props> = ({
 /**
  * Base classNames for each region
  */
-const sectionClasses = ['w-full', 'overflow-hidden', 'border-soft', 'border-b'];
+const sectionClasses = [
+  'relative',
+  'w-full',
+  'overflow-hidden',
+  'border-soft',
+  'border-b',
+];
 
 const containerClasses = ['container', 'lg:px-0'];
 
