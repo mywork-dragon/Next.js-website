@@ -4,6 +4,7 @@ import { FormField } from '@/enums/form';
 
 import { NavItemInterface } from '@/components/YHeaderItem/YHeaderItem';
 import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
+import { ServiceButton } from '@/enums/components';
 
 export function initEditor([story, setStory]: [
   PageItem | PostItem,
@@ -46,13 +47,29 @@ export const mapStoryblokProps = (props: Blok): Blok => {
     newProps.locales = props.locales.data.Space.languageCodes;
   }
 
-  if (propKeys.includes('buttonText')) {
-    const { buttonText, buttonLink, ...tempProps } = newProps;
+  if (propKeys.includes('buttonText') && !propKeys.includes('formButtonText')) {
+    const {
+      buttonText,
+      buttonLink,
+      buttonType,
+      buttonPlaceholder,
+      ...tempProps
+    } = newProps;
+
+    let additionalButtonProps =
+      buttonType == ServiceButton.Input
+        ? {
+            type: buttonType,
+            placeholder: buttonPlaceholder,
+          }
+        : {};
+
     newProps = {
       ...tempProps,
       buttonProps: {
         text: props.buttonText,
         link: props.buttonLink?.cached_url || '',
+        ...additionalButtonProps,
       },
     };
   }

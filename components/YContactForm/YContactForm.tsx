@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { InputStyle, InputType, ToggleType } from '@/enums/components';
+import {
+  InputStyle,
+  InputElement,
+  ToggleType,
+  InputType,
+} from '@/enums/components';
 import { FormField } from '@/enums/form';
 import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize } from '@/enums/font';
@@ -22,7 +27,8 @@ interface InputField {
   placeholder: string;
   errorMessage?: string;
   info?: string;
-  type?: InputType;
+  inputType?: InputType;
+  element?: InputElement;
 }
 
 interface Props {
@@ -86,7 +92,7 @@ const YContactForm: React.FC<Props> = ({
         return (
           <YFormElement
             key={field}
-            className={getFieldClasses(formField.type, screenSize)}
+            className={getFieldClasses(formField.element, screenSize)}
             onChange={(value) => handleChange(value, field)}
             value={formValues[field]}
             {...formField}
@@ -170,10 +176,10 @@ const color = {
   [InputStyle.Dark]: ['bg-blue-200'],
 };
 
-const getFieldClasses = (type: InputType, screenSize: ScreenSize) =>
+const getFieldClasses = (type: InputElement, screenSize: ScreenSize) =>
   [
     'mb-5',
-    screenSize == ScreenSize.LG && type == InputType.TextArea
+    screenSize == ScreenSize.LG && type == InputElement.TextArea
       ? 'w-73.6'
       : 'w-full',
   ].join(' ');

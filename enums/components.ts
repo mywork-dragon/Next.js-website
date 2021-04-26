@@ -45,9 +45,15 @@ export enum InputStyle {
   Dark = 'dark',
 }
 
-export enum InputType {
+export enum InputElement {
   Input = 'input',
   TextArea = 'textarea',
+}
+
+export enum InputType {
+  Text = 'text',
+  Tel = 'tel',
+  Email = 'email',
 }
 //endregion
 
@@ -76,6 +82,11 @@ export enum ThreePoints {
 export enum FourPoints {
   Stats = 'stats',
   OrderedList = 'ordered_list',
+}
+
+export enum ServiceButton {
+  Input = 'input',
+  Button = 'button',
 }
 //endregion
 

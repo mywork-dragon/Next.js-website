@@ -38,11 +38,6 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     ? contentOfStory.footer.content
     : undefined;
 
-  /**
-   * @NOTE This seems unnecessary as res is passed as prop,
-   * causing component to remount on each change
-   * and initialize story state with the same value as here
-   * */
   useEffect(() => {
     setStory(res.data.PageItem);
   }, [res]);
@@ -64,16 +59,23 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     },
   };
 
+  const metaContent = (({
+    title,
+    description,
+    keywords,
+  }: typeof contentOfStory) => ({ title, description, keywords }))(
+    contentOfStory
+  );
+
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
-      <script
-        src={
-          '//app.storyblok.com/f/storyblok-latest.js?t=BKFRTWedKaTnP3sHlkRQBQtt'
-        }
-      />
-      <Layout headerContent={headerContent} footerContent={footerContent}>
+      <Layout
+        {...metaContent}
+        headerContent={headerContent}
+        footerContent={footerContent}
+      >
         <AnimatePresence exitBeforeEnter>
-          <motion.main key={contentOfStory._uid} {...transitionProps}>
+          <motion.main key={story.id} {...transitionProps}>
             <Page content={contentOfStory} />
           </motion.main>
         </AnimatePresence>
@@ -90,6 +92,9 @@ type PageItemWithLayout = PageItem & {
     footer?: PostItem;
     backgroundGradient?: PageBackground;
     body: PostComponent[];
+    title: string;
+    description?: string;
+    keywords?: string;
   };
 };
 

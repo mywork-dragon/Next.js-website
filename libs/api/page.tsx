@@ -6,6 +6,7 @@ import { DocumentNode, gql } from '@apollo/client';
 export const GET_PAGE: DocumentNode = gql`
   query PageItem($id: ID!) {
     PageItem(id: $id, resolve_relations: "page.header,page.footer") {
+      id
       content {
         _uid
         body
@@ -15,6 +16,9 @@ export const GET_PAGE: DocumentNode = gql`
         footer {
           content
         }
+        title
+        description
+        keywords
         backgroundGradient
         component
       }

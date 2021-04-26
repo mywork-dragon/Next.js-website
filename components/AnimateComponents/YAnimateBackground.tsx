@@ -19,9 +19,11 @@ const AnimateBackground = React.forwardRef<HTMLElement, BackgroundProps>(
 
     return (
       <motion.section ref={ref} className={className}>
-        <motion.div {...openProps} animate={open ? 'show' : 'hide'} />
-        <motion.div {...closedProps} animate={open ? 'hide' : 'show'} />
-        {children}
+        <div className="relative">
+          <motion.div {...openProps} animate={open ? 'show' : 'hide'} />
+          <motion.div {...closedProps} animate={open ? 'hide' : 'show'} />
+          {children}
+        </div>
       </motion.section>
     );
   }

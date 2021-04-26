@@ -12,11 +12,11 @@
 
 .bgGradient {
   background: radial-gradient(
-      22.65% 27.39% at 63.15% 42.49%,
+      22% 27% at 63% 42%,
       #061b28 0%,
       rgba(6, 34, 51, 0) 100%
     ),
-    linear-gradient(68.04deg, #0e344b 29.03%, #062131 62.49%);
+    linear-gradient(68deg, #0e344b 29%, #062131 62%);
 }
 
 .sideWall {

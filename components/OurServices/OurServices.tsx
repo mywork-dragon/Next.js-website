@@ -77,11 +77,13 @@ const OurServices: React.FC<Props> = ({
   // card deck and partners
   const rightSection = (
     <div className="relative max-w-xs mx-auto px-4 lg:max-w-none lg:w-101.5 lg:h-full lg:px-0">
-      <CardDeck
-        className="relative h-80 sm:h-103.1 lg:h-100"
-        services={rotate([...services].reverse())}
-        active={active}
-      />
+      <div className="h-80 sm:h-103.1 lg:h-100">
+        <CardDeck
+          className="relative h-full w-full"
+          services={rotate([...services].reverse())}
+          active={active}
+        />
+      </div>
       <div className="mt-10 w-full text-center lg:text-left lg:mt-8">
         <YText fontSize={FontSize.XS} className="text-white opacity-40" as="p">
           {partnersLabel}
