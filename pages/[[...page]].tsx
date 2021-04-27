@@ -38,11 +38,6 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     ? contentOfStory.footer.content
     : undefined;
 
-  /**
-   * @NOTE This seems unnecessary as res is passed as prop,
-   * causing component to remount on each change
-   * and initialize story state with the same value as here
-   * */
   useEffect(() => {
     setStory(res.data.PageItem);
   }, [res]);
@@ -64,16 +59,23 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
     },
   };
 
+  const metaContent = (({
+    title,
+    description,
+    keywords,
+  }: typeof contentOfStory) => ({ title, description, keywords }))(
+    contentOfStory
+  );
+
   return (
     <MotionConfig features={[AnimationFeature, ExitFeature]}>
-      <script
-        src={
-          '//app.storyblok.com/f/storyblok-latest.js?t=BKFRTWedKaTnP3sHlkRQBQtt'
-        }
-      />
-      <Layout headerContent={headerContent} footerContent={footerContent}>
+      <Layout
+        {...metaContent}
+        headerContent={headerContent}
+        footerContent={footerContent}
+      >
         <AnimatePresence exitBeforeEnter>
-          <motion.main key={contentOfStory._uid} {...transitionProps}>
+          <motion.main key={story.id} {...transitionProps}>
             <Page content={contentOfStory} />
           </motion.main>
         </AnimatePresence>
@@ -90,6 +92,9 @@ type PageItemWithLayout = PageItem & {
     footer?: PostItem;
     backgroundGradient?: PageBackground;
     body: PostComponent[];
+    title: string;
+    description?: string;
+    keywords?: string;
   };
 };
 
@@ -104,16 +109,16 @@ interface StaticPropsResult {
 }
 
 export const getStaticProps = async ({
-  preview = true,
+  preview = false,
   params,
+  locale,
 }: {
   preview: boolean;
   params?: { lang: string; page: string[] };
+  locale: string;
 }): Promise<StaticPropsResult> => {
-  const { lang } = params;
   const page = params.page ? params.page.join('/') : 'home';
-
-  const id = lang === 'en' ? page : `${lang}/${page}`;
+  const id = locale === 'en' ? page : `${locale}/${page}`;
 
   const pageDataPromise: Promise<
     ApolloQueryResult<{ PageItem: PageItemWithLayout }>
@@ -142,16 +147,23 @@ export const getStaticProps = async ({
   };
 };
 
+interface PathInterface {
+  params: {
+    page: string[];
+  };
+  locale: string;
+}
+
 interface StaticPathResults {
-  paths: string[];
+  paths: PathInterface[];
   fallback: boolean;
 }
 
 export const getStaticPaths = async ({
-  preview = true,
+  preview = false,
 }: NextApiRequest): Promise<StaticPathResults> => {
   const result: {
-    paths: string[];
+    paths: PathInterface[];
     fallback: boolean;
   } = {
     paths: [],
@@ -181,9 +193,12 @@ export const getStaticPaths = async ({
 
   [...response2.data?.Space.languageCodes, 'en'].forEach((lang: string) => {
     response.data?.PageItems.items.forEach((item) => {
-      const path = `/${lang}/${
-        item.full_slug === 'home' ? '' : item.full_slug
-      }`;
+      const path = {
+        params: {
+          page: item.full_slug === 'home' ? [''] : [item.full_slug],
+        },
+        locale: lang,
+      };
 
       result.paths.push(path);
     });

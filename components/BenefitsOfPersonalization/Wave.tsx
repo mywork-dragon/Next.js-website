@@ -6,7 +6,7 @@ import { BreakPoint, ScreenSize } from '@/enums/screenSize';
 import WaveMD from '@/assets/other/wave-md.svg';
 import WaveSM from '@/assets/other/wave-sm.svg';
 
-import waveAnimation from './waveAnimations.module.scss';
+import waveAnimation from './waveAnimations.module.css';
 
 const background = {
   [ScreenSize.SM]: <WaveSM />,

@@ -1,8 +1,9 @@
-import { InputStyle, InputType } from '@/enums/components';
 import YContactForm from './YContactForm';
 
-import { useWindowWidth } from '@react-hook/window-size';
+import { InputStyle, InputType } from '@/enums/components';
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+
+import { useWindowWidth } from '@react-hook/window-size';
 
 export default {
   title: 'Contact Form',
@@ -28,7 +29,6 @@ const fields = {
   comment: {
     label: 'Comment (optional)',
     placeholder: 'Comment',
-    type: InputType.TextArea,
   },
 };
 

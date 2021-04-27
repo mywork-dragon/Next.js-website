@@ -24,7 +24,10 @@ const YInputButton: React.FC<Props> = ({
 
   const ref = useRef();
 
-  const { inputProps } = useTextField(props as AriaTextFieldProps, ref) as {
+  const { inputProps } = useTextField(
+    { ...props, 'aria-label': 'Email input' } as AriaTextFieldProps,
+    ref
+  ) as {
     inputProps: InputHTMLAttributes<HTMLInputElement>;
   };
 

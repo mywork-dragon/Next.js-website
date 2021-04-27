@@ -87,7 +87,6 @@ const SubItem: React.FC<Props> = ({
 const containerClasses = [
   'relative',
   'cursor-pointer',
-  'pb-5',
   'lg:h-32.5',
   'lg:w-40',
   'lg:mt-7',

@@ -1,6 +1,6 @@
 import YFormElement from './YFormElement';
 
-import { InputStyle, InputType } from '@/enums/components';
+import { InputElement, InputStyle } from '@/enums/components';
 
 export default {
   title: 'Form Element',
@@ -28,7 +28,7 @@ export const Types = (): JSX.Element => (
     <YFormElement
       label="TextArea"
       placeholder="Placeholder"
-      type={InputType.TextArea}
+      element={InputElement.TextArea}
     />
   </>
 );

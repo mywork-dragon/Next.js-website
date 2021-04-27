@@ -2,7 +2,7 @@ import React from 'react';
 import { AnimateSharedLayout } from 'framer-motion';
 
 import { FormField } from '@/enums/form';
-import { InputType, InputStyle } from '@/enums/components';
+import { InputElement, InputStyle, InputType } from '@/enums/components';
 
 import YContactForm from '@/components/YContactForm';
 import ExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
@@ -23,6 +23,7 @@ export interface FormElementProps {
   formTitle: string;
   formButtonText: string;
   fields: Record<FormField, InputField>;
+  className?: string;
 }
 
 const FormElement: React.FC<
@@ -38,6 +39,7 @@ const FormElement: React.FC<
   openForm,
   onFormSubmit,
   setOpenForm,
+  className,
 }) => {
   // handles closing of modal on mobile on submit
   const handleSubmit: typeof onFormSubmit = (values) => {
@@ -45,19 +47,27 @@ const FormElement: React.FC<
     onFormSubmit(values);
   };
 
+  const formFields = Object.keys(fields).reduce(
+    (acc, key) => (
+      (acc[key] = {
+        ...fields[key],
+        inputType: inputTypes[key],
+        element:
+          key == FormField.Comment ? InputElement.TextArea : InputElement.Input,
+      }),
+      acc
+    ),
+    {}
+  ) as typeof fields;
+
   const formProps = {
-    fields: {
-      ...fields,
-      [FormField.Comment]: {
-        ...fields[FormField.Comment],
-        type: InputType.TextArea,
-      },
-    },
+    fields: formFields,
     onSubmit: handleSubmit,
     onClose: () => setOpenForm(false),
     title: formTitle,
     style: InputStyle.Dark,
     buttonText: formButtonText,
+    className,
   };
 
   return (
@@ -76,6 +86,13 @@ const FormElement: React.FC<
       </ExpandableRegion>
     </AnimateSharedLayout>
   );
+};
+
+const inputTypes = {
+  [FormField.Name]: InputType.Text,
+  [FormField.Phone]: InputType.Tel,
+  [FormField.Email]: InputType.Email,
+  [FormField.Comment]: InputType.Text,
 };
 
 export default FormElement;

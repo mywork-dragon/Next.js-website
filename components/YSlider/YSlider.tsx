@@ -53,7 +53,7 @@ export const YSlider: React.FC<ScrollProps> = ({
     <YArrowButton
       key={`arrow-${direction}`}
       onClick={() => setPosition(direction)}
-      className={[`absolute h-full top-0 w-40 ${direction}-0`].join(' ')}
+      className={`absolute h-full top-0 w-40 ${direction}-0`}
       showMore={showMoreLabel}
       type={direction}
     />

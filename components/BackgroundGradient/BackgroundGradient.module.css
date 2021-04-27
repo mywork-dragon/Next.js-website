@@ -14,54 +14,54 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 1680px;
-    height: 1213px;
+    width: 105rem;
+    height: 75.75rem;
   }
 }
 .home1 {
   position: absolute;
 
   background: #104262;
-  filter: blur(250px);
+  filter: blur(16.625rem);
   transform: rotate(111deg);
 
   @screen lg {
-    height: 1452px;
-    left: -402px;
-    right: 904px;
-    top: 1311px;
+    height: 90.75rem;
+    left: -25rem;
+    right: 56.25rem;
+    top: 82rem;
   }
 
   @screen 3xl {
-    left: -602px;
-    right: 1104px;
-    top: 950px;
+    left: -37.5rem;
+    right: 69rem;
+    top: 59.5rem;
   }
 
   @screen 3k {
-    left: -1002px;
-    right: 1504px;
-    top: -200px;
+    left: -62.625rem;
+    right: 94rem;
+    top: -12.5rem;
   }
 }
 .home2 {
   position: absolute;
 
   background: rgba(83, 208, 132, 0.24);
-  filter: blur(250px);
+  filter: blur(15.625rem);
   transform: rotate(105deg);
 
   @screen lg {
-    height: 1195px;
-    left: 1207px;
-    right: -686px;
-    top: 659px;
+    height: 74.5rem;
+    left: 75.5rem;
+    right: -42.875rem;
+    top: 41.125rem;
   }
 
   @screen 3k {
-    height: 595px;
-    top: -459px;
-    right: -886px;
+    height: 37rem;
+    top: -28.6rem;
+    right: -55.325rem;
   }
 }
 
@@ -69,21 +69,21 @@
   position: absolute;
   background: #104262;
 
-  height: 1662px;
-  left: 78px;
-  right: 124px;
-  top: 3662px;
+  height: 103.875rem;
+  left: 4.875rem;
+  right: 7.75rem;
+  top: 28.875rem;
 
-  filter: blur(250px);
+  filter: blur(16.625rem);
   transform: matrix(-0.05, -1, -1, 0.05, 0, 0);
 
   @screen lg {
-    left: 678px;
-    right: -476px;
-    top: 4662px;
+    left: 42.375rem;
+    right: -29.75rem;
+    top: 291.375rem;
   }
   @screen 3k {
-    top: 5662px;
+    top: 353.875rem;
   }
 }
 
@@ -92,21 +92,21 @@
 
   background: #104262;
   opacity: 0.5;
-  filter: blur(250px);
+  filter: blur(15.652rem);
   transform: rotate(-59deg);
 
   @screen lg {
-    width: 1265px;
-    height: 1263px;
-    right: -241px;
-    top: 424px;
+    width: 79rem;
+    height: 79rem;
+    right: -15rem;
+    top: 26.5rem;
     z-index: 2;
   }
 
   @screen 3xl {
-    right: 359px;
-    width: 1865px;
-    height: 1463px;
+    right: 22.5rem;
+    width: 116.5rem;
+    height: 91.5rem;
   }
 }
 
@@ -114,24 +114,24 @@
   position: absolute;
   background: #104262;
   opacity: 0.5;
-  filter: blur(250px);
+  filter: blur(15.652rem);
   transform: rotate(-39deg);
 
   @screen lg {
-    width: 1311px;
-    left: -822px;
-    height: 1228px;
-    top: 1243px;
+    width: 82rem;
+    left: -51.375rem;
+    height: 76.75rem;
+    top: 77.5rem;
     z-index: 2;
   }
 
   @screen 3xl {
-    top: 1043px;
+    top: 65.175rem;
   }
 
   @screen 3k {
-    width: 1311px;
-    left: 378px;
+    width: 82rem;
+    left: 23.625rem;
   }
 }
 
@@ -140,84 +140,84 @@
 
   background: #104262;
   opacity: 0.5;
-  filter: blur(250px);
+  filter: blur(15.652rem);
 
   @screen lg {
-    width: 628.88px;
-    height: 1197.91px;
-    left: 0px;
-    top: 81.11px;
+    width: 39.25rem;
+    height: 74.825rem;
+    left: 0rem;
+    top: 5rem;
     z-index: 1;
   }
 
   @screen 3xl {
-    left: 400px;
+    left: 12.5rem;
   }
 
   @screen 3xl {
-    left: 1200px;
+    left: 75rem;
   }
 }
 
 .service1 {
   position: absolute;
-  width: 668px;
-  height: 656px;
-  left: -414px;
-  top: 325px;
+  width: 41.75rem;
+  height: 41rem;
+  left: -25.875rem;
+  top: 20.25rem;
 
   background: #104262;
-  filter: blur(113px);
+  filter: blur(7rem);
   transform: rotate(-146deg);
 
   @screen lg {
-    height: 1452px;
-    left: -539px;
-    right: 941px;
-    top: -114px;
+    height: 90.75rem;
+    left: -33.5rem;
+    right: 58.825rem;
+    top: -7.125rem;
     transform: rotate(-91.17deg);
   }
 
   @screen 2xl {
-    left: -339px;
-    right: 541px;
+    left: -21.125rem;
+    right: 33.75rem;
   }
 
   @screen 3xl {
-    left: 61px;
-    filter: blur(183px);
+    left: 3.825rem;
+    filter: blur(11.5rem);
   }
 }
 
 .service2 {
   position: absolute;
-  width: 668px;
-  height: 656px;
-  left: 313px;
-  top: 1298px;
+  width: 41.75rem;
+  height: 41rem;
+  left: 19.5rem;
+  top: 81.125rem;
 
   background: #104262;
-  filter: blur(113px);
+  filter: blur(7rem);
   transform: rotate(-117deg);
 
   @screen lg {
-    width: 1265px;
-    height: 1263px;
+    width: 79rem;
+    height: 79rem;
     left: auto;
-    right: -560px;
-    top: 1861px;
+    right: -35rem;
+    top: 116.25rem;
 
     transform: rotate(-59.21deg);
   }
 
   @screen 3xl {
-    height: 1863px;
-    filter: blur(183px);
+    height: 116.5rem;
+    filter: blur(11.5rem);
   }
 
   @screen 3k {
-    right: -360px;
-    height: 2063px;
-    width: 868px;
+    right: -22.5rem;
+    height: 129rem;
+    width: 54.25rem;
   }
 }

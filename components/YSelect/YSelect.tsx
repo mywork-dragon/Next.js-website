@@ -27,12 +27,12 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
   useClickOutside(ref, () => setOpen(false));
 
   const {
-    query: { lang, page },
+    query: { page },
+    locale,
     push: routerPush,
   } = useRouter();
 
-  const current =
-    !lang || typeof lang != 'string' || lang == 'en' ? 'uk' : lang;
+  const current = locale == 'en' ? 'uk' : locale;
 
   const onLangClick = (lang: Language) => {
     setOpen(!open);
@@ -40,9 +40,9 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
     const pageURI =
       typeof page == 'string' ? page : Boolean(page) ? page.join('/') : '';
 
-    const newPath = `${lang != 'uk' ? `/${lang}` : '/en'}/${pageURI}`;
+    const locale = lang == 'uk' ? 'en' : lang;
 
-    routerPush(newPath);
+    routerPush(pageURI, pageURI, { locale });
   };
 
   const flagsToShow = [...locales, 'uk'].filter((lang) => lang != current);
