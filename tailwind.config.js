@@ -223,7 +223,9 @@ const spacing = {
   128.5: rem(514),
   130.1: rem(521),
   130.5: rem(522),
+  132: rem(528),
   138.6: rem(555),
+  139.5: rem(558),
   142.5: rem(570),
   143.6: rem(575),
   145: rem(580),
@@ -236,6 +238,7 @@ const spacing = {
   157.6: rem(631),
   162: rem(648),
   164.5: rem(658),
+  165: rem(660),
   165.5: rem(662),
   173.6: rem(695),
   185.1: rem(741),
@@ -387,6 +390,10 @@ module.exports = {
             maxWidth: rem(1080),
             margin: '0 auto',
           },
+        },
+        '.svg-fit svg': {
+          height: '100%',
+          width: '100%',
         },
         '.fill-current path': {
           fill: 'currentColor',

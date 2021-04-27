@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 
 import { ServiceButton } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+import { ScreenSize } from '@/enums/screenSize';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
@@ -31,9 +32,6 @@ interface Props {
 }
 
 import YImage from '../YImage';
-
-/**@TEMP */
-import { ScreenSize } from '@/enums/screenSize';
 
 const ServiceTop: React.FC<Props> = ({
   title,

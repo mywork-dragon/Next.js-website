@@ -76,7 +76,7 @@ export default {
     },
     frame2: {
       filename:
-        'https://a.storyblok.com/f/98632/575x658/32d2766375/frame-2-md.png',
+        'https://a.storyblok.com/f/98632/1080x1236/7f97d6d178/frame-2-md.png',
       alt:
         'mobile pane with analytics, shopping analysis, marketing automation steps',
       width: 575,

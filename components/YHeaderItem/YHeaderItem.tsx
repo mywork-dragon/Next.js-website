@@ -56,7 +56,7 @@ const YHeaderItem: React.FC<Props> = ({
         className="absolute right-1 top-1/2 transform -translate-y-1/2"
       />
     ) : (
-      <div className="fill-current text-gray-200 h-3 w-3 ml-1 flex items-center">
+      <div className="svg-fit fill-current text-gray-200 h-3 w-3 ml-1 flex items-center">
         <DownArrow />
       </div>
     );

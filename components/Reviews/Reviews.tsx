@@ -133,7 +133,7 @@ const Reviews: React.FC<Props> = ({
       <DialogBox />
       <div
         onClick={setNextReview}
-        className="absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 xs:-translate-y-full xs:translate-x-1/4 xs:w-15 xs:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 lg:w-20 lg:h-20 lg:p-6 lg:-translate-y-1/2"
+        className="svg-fit absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 xs:-translate-y-full xs:translate-x-1/4 xs:w-15 xs:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 lg:w-20 lg:h-20 lg:p-6 lg:-translate-y-1/2"
       >
         <Arrow />
       </div>

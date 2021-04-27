@@ -61,7 +61,7 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
       <YText className="text-white" {...textProps}>
         {current}
       </YText>
-      <div className="h-3 w-3 mx-1 flex items-center">
+      <div className="svg-fit h-3 w-3 mx-1 flex items-center">
         <ArrowDown />
       </div>
       <YExpandableRegion

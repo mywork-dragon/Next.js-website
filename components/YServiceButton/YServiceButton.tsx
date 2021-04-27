@@ -67,7 +67,14 @@ const ServiceButton: React.FC<Props> = ({
     </>
   );
 
-  const baseClasses = ['border', 'rounded-lg', 'flex', 'items-center', 'h-15'];
+  const baseClasses = [
+    'svg-fit',
+    'border',
+    'rounded-lg',
+    'flex',
+    'items-center',
+    'h-15',
+  ];
 
   const activeClasses = active
     ? 'border-primary text-primary'
