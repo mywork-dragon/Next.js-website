@@ -48,7 +48,11 @@ const BenefitsOfPersonalization: React.FC<Props> = ({
   description,
   frames,
 }) => {
-  const { screenSize, screenReady } = useBreakpoint([ScreenSize.MD]);
+  const { screenSize, screenReady } = useBreakpoint([
+    ScreenSize.SM,
+    ScreenSize.MD,
+    ScreenSize.LG,
+  ]);
 
   const [activeFrame, setActiveFrame] = useState(0);
   const [firstRender, setFirstRender] = useState(true);

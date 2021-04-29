@@ -47,6 +47,8 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
   useEffect(() => {
     setTimeout(() => initEditor([story, setStory]), 200);
     setFirstRender(false);
+    const body = document.querySelector('body');
+    body.className = 'bg-secondary';
   }, []);
 
   const transitionProps = {

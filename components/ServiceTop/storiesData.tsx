@@ -1,3 +1,4 @@
+import { Service } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
 
 const props = {
@@ -13,87 +14,40 @@ const props = {
 export const integrationImplementation = {
   ...props,
   title: 'Integration/ Implementation',
-  heroImage: {
-    filename: '',
-    alt: 'alt-text',
-  },
+  service: Service.IntegrationImplementation,
 };
 export const affiliateMarketing = {
   ...props,
   title: 'Affiliate Marketing',
-  heroImage: {
-    filename:
-      'https://a.storyblok.com/f/98632/1080x897/a00d768b1f/affiliate-marketing.png',
-    alt: 'alt-text',
-  },
+  service: Service.AffiliateMarketing,
 };
 export const onlineAdvertising = {
   ...props,
   title: 'Online Advertising',
-  heroImage: {
-    filename:
-      'https://a.storyblok.com/f/98632/1080x977/9ca280aba5/online-advertising.png',
-    alt: 'alt-text',
-  },
+  service: Service.OnlineAdvertising,
 };
 export const emailMarketing = {
   ...props,
   title: 'Email Marketing',
-  heroImage: {
-    filename:
-      'https://a.storyblok.com/f/98632/1080x824/97f3fe3821/email-marketing-mobile.png',
-    alt: 'alt-text',
-    srcSet: {
-      [ScreenSize.LG]:
-        'https://a.storyblok.com/f/98632/1080x904/6cd98fb903/email-marketing.png',
-    },
-  },
+  service: Service.EmailMarketing,
 };
 export const personalization = {
   ...props,
   title: 'Personalization',
-  heroImage: {
-    filename:
-      'https://a.storyblok.com/f/98632/1080x746/bce904fd07/personalization-mobile.png',
-    alt: 'alt-text',
-    srcSet: {
-      [ScreenSize.LG]:
-        'https://a.storyblok.com/f/98632/1080x1065/2e920eb87f/personalization.png',
-    },
-  },
+  service: Service.Personalization,
 };
 export const marketingAutomation = {
   ...props,
   title: 'Marketing Automation',
-  heroImage: {
-    filename:
-      'https://a.storyblok.com/f/98632/1080x1067/d3b82ada8c/marketing-automation.png',
-    alt: 'alt-text',
-    srcSet: {
-      [ScreenSize.LG]:
-        'https://a.storyblok.com/f/98632/1080x1030/cfc42e8f24/marketing-automation-mobile.png',
-    },
-  },
+  service: Service.MarketingAutomation,
 };
 export const dataAnalytics = {
   ...props,
   title: 'Data & Analytics',
-  heroImage: {
-    filename:
-      'https://a.storyblok.com/f/98632/1080x821/d179f3801c/data-analytics-mobile.png',
-    alt: 'alt-text',
-  },
-  srcSet: {
-    [ScreenSize.LG]:
-      'https://a.storyblok.com/f/98632/1080x985/a1e9e7f8e0/data-analytics.png',
-  },
+  service: Service.DataAnalytics,
 };
 export const conversionOptimization = {
   ...props,
   title: 'Conversion Optimization',
-  heroImage: {
-    filename:
-      'https://a.storyblok.com/f/98632/1080x894/8fa5e6db6e/conversion-optimization.png',
-    alt: 'alt-text',
-  },
+  service: Service.ConversionOptimization,
 };

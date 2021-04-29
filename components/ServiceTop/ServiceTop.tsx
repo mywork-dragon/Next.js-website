@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { ServiceButton } from '@/enums/components';
+import { Service, ServiceButton } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { ScreenSize } from '@/enums/screenSize';
 
@@ -24,21 +24,17 @@ interface Props {
   description: string;
   buttonProps: ButtonProps;
   serviceLabel: string;
-  heroImage: {
-    filename: string;
-    srcSet?: Partial<Record<ScreenSize, string>>;
-    alt?: string;
-  };
+  service: Service;
 }
 
-import YImage from '../YImage';
+import HeroImage from './HeroImage';
 
 const ServiceTop: React.FC<Props> = ({
   title,
   description,
   buttonProps,
   serviceLabel,
-  heroImage,
+  service,
 }) => {
   const { screenSize } = useBreakpoint();
 
@@ -92,6 +88,12 @@ const ServiceTop: React.FC<Props> = ({
       button
     );
 
+  const [showSVG, setShowSVG] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShowSVG(true), 300);
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -99,11 +101,7 @@ const ServiceTop: React.FC<Props> = ({
     >
       <div className="container lg:px-0">
         <div className="relative w-full mb-10 pt-80 lg:pt-0 lg:my-37.5 lg:w-150 lg:h-125 lg:ml-auto lg:mr-0">
-          <YImage
-            {...heroImage}
-            {...imageProps}
-            className="absolute top-11.5 w-105 sm:left-1/2 sm:transform sm:-translate-x-1/2 md:transform-none lg:transform lg:left-0 lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2  lg:w-full"
-          />
+          <HeroImage service={service} />
           <div className="max-w-md lg:max-w-none lg:w-100 lg:absolute lg:top-1/2 lg:transform lg:-translate-x-120 lg:-translate-y-1/2">
             <YHeading
               fontSize={FontSize.XS}

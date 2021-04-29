@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import style from './BackgroundGrid.module.css';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
+import useSharedHover from '@/hooks/useSharedHover';
 
 import YCard from '@/components/YCard';
 import YImage from '@/components/YImage';
@@ -26,7 +27,7 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   const cardsForDisplay = rearrangeForDesktop(cards);
 
   // shared hover control section
-  const [hoveredCard, setHoveredCard] = useState(2);
+  const { onHoverStart, onHoverEnd, hoveredCard } = useSharedHover(2);
 
   // calculates absolute coordinates for interactive cards
   const cardCoordinates = useMemo(() => {
@@ -75,7 +76,8 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
         cardClasses="ml-4"
         {...card}
         hovered={hoveredCard == index}
-        onHover={() => setHoveredCard(index)}
+        onHoverStart={() => onHoverStart(index)}
+        onHoverEnd={() => onHoverEnd()}
       />
     </div>
   ));

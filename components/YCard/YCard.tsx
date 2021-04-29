@@ -32,16 +32,17 @@ const YCard: React.FC<Props> = ({
   title,
   description,
   hovered,
-  onHover,
   link,
   style,
+  onHoverStart,
+  onHoverEnd,
   ...props
 }) => {
   const customTag = as ? as : 'div';
 
   const ref = useRef();
 
-  const { hoverProps } = useHover({ onHoverStart: onHover });
+  const { hoverProps } = useHover({ onHoverStart, onHoverEnd });
 
   // text section
 
@@ -102,10 +103,16 @@ const YCard: React.FC<Props> = ({
   );
 
   // container element section
-  const containerClasses = ['w-43.6 h-53.6 cursor-pointer', classes].join(' ');
+  const containerClasses = ['w-43.6 h-53.6 select-none', classes].join(' ');
   return (
     <YLink href={link}>
-      <div style={style} className={containerClasses}>
+      <div
+        style={style}
+        className={[
+          containerClasses,
+          link ? 'cursor-pointer' : 'cursor-normal',
+        ].join(' ')}
+      >
         {Card}
         {children}
       </div>

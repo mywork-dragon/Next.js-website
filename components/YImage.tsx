@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { __SbImageBaseURL__, __SbImageServer__ } from '@/libs/constants';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 type SrcSet = Partial<
   {
@@ -53,6 +54,22 @@ const YImage: React.FC<Props> = ({
   ]);
   // const jitClasses = useMemo(() => createJitClasses(responsiveParams), [original]);
 
+  const breakpoints = useMemo(
+    () => Object.keys(responsiveParams).filter((key) => key != 'base'),
+    []
+  );
+
+  const { screenSize } = useBreakpoint(breakpoints as ScreenSize[]);
+
+  const explicitDimensions = {
+    width: responsiveParams[screenSize]
+      ? responsiveParams[screenSize].width
+      : responsiveParams.base.width,
+    height: responsiveParams[screenSize]
+      ? responsiveParams[screenSize].height
+      : responsiveParams.base.height,
+  };
+
   const pictureComponent = (
     <picture className={['block', className].join(' ')}>
       {withBreakpoints?.map(({ src, width, height, media }) => {
@@ -66,7 +83,7 @@ const YImage: React.FC<Props> = ({
           </React.Fragment>
         );
       })}
-      <img alt={alt} srcSet={fallback} />
+      <img alt={alt} {...explicitDimensions} srcSet={fallback} />
     </picture>
   );
 
@@ -89,9 +106,9 @@ export const createSrcSet = (
 ) => {
   const filename = original.replace(__SbImageBaseURL__, '');
 
-  const sizeArgs = `/${width}x${height}`;
+  const sizeArgs = `/fit-in/${width}x${height}`;
 
-  const filters = `/filters:format(${format})`;
+  const filters = `/filters:fill(transparent):format(${format})`;
 
   return [__SbImageServer__, sizeArgs, filters, filename].join('');
 };

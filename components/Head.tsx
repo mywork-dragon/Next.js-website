@@ -15,6 +15,7 @@ const Head = ({ title, description, keywords }: MetaContent): JSX.Element => (
     <meta name="keywords" content={keywords || ''} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script
+      defer
       src={
         '//app.storyblok.com/f/storyblok-latest.js?t=BKFRTWedKaTnP3sHlkRQBQtt'
       }

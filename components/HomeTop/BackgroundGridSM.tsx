@@ -22,9 +22,6 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
 
   const cardsForDisplay = mirrorForMobile(cards);
 
-  // shared hover control section
-  const [hoveredCard, setHoveredCard] = useState(4);
-
   // calculates absolute coordinates for interactive cards
   const cardCoordinates = useMemo(() => {
     const baseStyles = {
@@ -59,8 +56,7 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
         className={cardBaseClasses}
         cardClasses="ml-4"
         {...card}
-        hovered={hoveredCard == index}
-        onHover={() => setHoveredCard(index)}
+        hovered={index === 4}
       />
     </div>
   ));
