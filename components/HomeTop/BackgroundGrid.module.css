@@ -15,3 +15,16 @@
     transform: matrix(0.64, -0.37, 0.62, 0.39, 44, -476);
   }
 }
+
+.scrollContainer {
+  scroll-snap-type: x mandatory;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  scroll-snap-type: x mandatory;
+  display: none;
+}
+
+.scrollItem {
+  scroll-snap-align: start;
+}

@@ -58,7 +58,9 @@ const HomeTop: React.FC<Props> = ({
       <YOutLink
         key={title}
         href={link}
-        className="outline-none mr-15 inline-block"
+        className={['outline-none mr-15 inline-block', style.scrollItem].join(
+          ' '
+        )}
         aria-label={`${title} website`}
       >
         <PartnerLogo />
@@ -120,7 +122,7 @@ const HomeTop: React.FC<Props> = ({
             'relative',
             'z-20',
             'w-full',
-            'h-6.5',
+            'h-13',
             'mb-20.1',
             'lg:mx-auto',
             'overflow-y-hidden',
@@ -129,7 +131,8 @@ const HomeTop: React.FC<Props> = ({
             'lg:flex',
             'lg:justify-center',
             'lg:overflow-hidden',
-            'no-scrollbar',
+            // 'no-scrollbar',
+            style.scrollContainer,
           ].join(' ')}
         >
           {showCompanies && partners && renderCompanies}
