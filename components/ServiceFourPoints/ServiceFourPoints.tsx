@@ -31,13 +31,13 @@ const ServiceFourPoints: React.FC<Props> = ({
 }) => {
   const pointsSection =
     type == FourPoints.OrderedList ? (
-      <ol className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar text-left list-none mt-8 lg:grid lg:grid-cols-2 lg:gap-6">
+      <ol className="whitespace-nowrap overflow-y-hidden scroll-x-container text-left list-none mt-8 lg:grid lg:grid-cols-2 lg:gap-6">
         {points.map(({ heading, text }, index) => (
           <li
             key={index}
             className={[
               index == 0 ? '' : 'ml-6',
-              'w-60 h-42 p-4 border border-blue-100 rounded-xl inline-block whitespace-normal align-text-top lg:block lg:m-0',
+              'w-60 h-42 p-4 border border-blue-100 rounded-xl inline-block whitespace-normal align-text-top scroll-x-item lg:block lg:m-0',
             ].join(' ')}
           >
             <YHeading className="text-white text-shadow-blue" {...indexProps}>
@@ -58,13 +58,16 @@ const ServiceFourPoints: React.FC<Props> = ({
         ))}
       </ol>
     ) : (
-      <div className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar text-left list-none mt-8 lg:relative lg:-left-7 lg:overflow-visible">
+      <div
+        className="whitespace-nowrap overflow-y-hidden scroll-x-container
+       text-left list-none mt-8 lg:relative lg:-left-7 lg:overflow-visible"
+      >
         {points.map(({ text, heading }, index) => (
           <article
             key={index}
             className={[
               index == 0 ? '' : 'ml-6 lg:ml-8',
-              'w-65 h-52 p-7 bg-blue-100 bg-opacity-10 rounded-xl inline-block whitespace-normal align-text-top',
+              'w-65 h-52 p-7 bg-blue-100 bg-opacity-10 rounded-xl inline-block whitespace-normal align-text-top scroll-x-item',
             ].join(' ')}
           >
             <YHeading

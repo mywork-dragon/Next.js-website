@@ -119,13 +119,13 @@ const ServiceThreePoints: React.FC<ArticlesProps | OrderedProps> = ({
           >
             {description}
           </YText>
-          <ol className="whitespace-nowrap overflow-y-hidden overflow-x-auto no-scrollbar list-none my-8 mb-16 pb-5 lg:mb-25 lg:mt-15">
+          <ol className="whitespace-nowrap overflow-y-hidden scroll-x-container list-none my-8 mb-16 pb-5 lg:mb-25 lg:mt-15">
             {points.map(({ text }, index) => (
               <li
                 key={index}
                 className={[
                   index == 0 ? '' : 'ml-6 lg:ml-8',
-                  'w-70 h-47 p-7 border border-blue-100 rounded-xl inline-block text-left align-text-top',
+                  'w-70 h-47 p-7 border border-blue-100 rounded-xl inline-block text-left align-text-top scroll-x-item',
                 ].join(' ')}
               >
                 <YHeading
