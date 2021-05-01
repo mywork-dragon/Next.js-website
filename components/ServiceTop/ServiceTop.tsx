@@ -88,12 +88,6 @@ const ServiceTop: React.FC<Props> = ({
       button
     );
 
-  const [showSVG, setShowSVG] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setShowSVG(true), 300);
-  }, []);
-
   return (
     <section
       ref={sectionRef}

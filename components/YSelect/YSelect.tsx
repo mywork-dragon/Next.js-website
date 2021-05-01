@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useRouter } from 'next/dist/client/router';
 
 import { Language } from '@/enums/language';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -6,14 +7,12 @@ import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import YText from '@/components/YText';
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
-import YImage from '@/components/YImage';
 
 import useClickOutside from '@/hooks/useClickOutside';
 
 import ArrowDown from '@/assets/icons/chevron-down.svg';
 
 import flags from './flags';
-import { useRouter } from 'next/dist/client/router';
 
 interface Props {
   className?: string;
@@ -55,9 +54,7 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
         setOpen(!open);
       }}
     >
-      <div className="w-7 mx-1">
-        <YImage {...flags[current]} />
-      </div>
+      <div className="w-7 mx-1">{flags[current]}</div>
       <YText className="text-white" {...textProps}>
         {current}
       </YText>
@@ -74,9 +71,7 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
             onClick={() => onLangClick(lang as Language)}
             className={[...containerClasses, 'm-1'].join(' ')}
           >
-            <div className="w-7 m-1">
-              <YImage {...flags[lang]} />
-            </div>
+            <div className="w-7 m-1">{flags[lang]}</div>
             <YText {...textProps} className="text-white m-1">
               {lang}
             </YText>

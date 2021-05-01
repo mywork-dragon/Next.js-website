@@ -152,11 +152,11 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
   ));
 
   const mobileArticles = (
-    <div className="absolute w-full px-4 overflow-x-auto overflow-y-hidden -bottom-6.5 transform translate-y-full whitespace-nowrap align-middle no-scrollbar">
+    <div className="absolute w-full px-4 scroll-x-container overflow-y-hidden -bottom-6.5 transform translate-y-full whitespace-nowrap align-middle">
       {articles?.map(({ title, description }, index) => (
         <article
           key={`${title}-${index}`}
-          className="h-34 w-60 p-5 inline-block whitespace-normal"
+          className="h-34 w-60 p-5 inline-block whitespace-normal scroll-x-item"
         >
           <YHeading
             fontWeight={FontWeight.SemiBold}

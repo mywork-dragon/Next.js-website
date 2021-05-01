@@ -27,7 +27,7 @@ const HeroImage: React.FC<Props> = ({ service }) => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setReady(true), 700);
+    setTimeout(() => setReady(true), 800);
   });
 
   const displayGraphic: ServiceGraphic = graphics[service];
