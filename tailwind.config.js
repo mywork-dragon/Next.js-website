@@ -412,9 +412,15 @@ module.exports = {
         '.scale-left-65': {
           transform: 'translate(-17.5%, -17.5%) scale(0.65)',
         },
-        '.no-scrollbar::-webkit-scrollbar': {
-          height: 0,
-          width: 0,
+        '.scroll-x-container': {
+          overflowX: 'auto',
+          scrollSnapType: 'x mandatory',
+        },
+        '.scroll-x-container::-webkit-scrollbar': {
+          display: 'none',
+        },
+        '.scroll-x-item': {
+          scrollSnapAlign: 'start',
         },
         '.button-shadow': {
           boxShadow: '0 -30px 10px 15px #0E284F',

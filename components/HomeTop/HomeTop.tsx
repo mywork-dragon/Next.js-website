@@ -16,8 +16,6 @@ import YButton from '@/components/YButton';
 import YInputButton from '@/components/YInputButton';
 import YOutLink from '@/components/YOutLink';
 
-import style from './BackgroundGrid.module.css';
-
 type ButtonProps = AriaAttributes & {
   text: string;
   link: string;
@@ -58,7 +56,7 @@ const HomeTop: React.FC<Props> = ({
       <YOutLink
         key={title}
         href={link}
-        className="outline-none mr-15 inline-block"
+        className="outline-none mr-15 inline-block scroll-x-item"
         aria-label={`${title} website`}
       >
         <PartnerLogo />
@@ -124,12 +122,11 @@ const HomeTop: React.FC<Props> = ({
             'mb-20.1',
             'lg:mx-auto',
             'overflow-y-hidden',
-            'overflow-x-auto',
             'whitespace-nowrap',
             'lg:flex',
             'lg:justify-center',
             'lg:overflow-hidden',
-            'no-scrollbar',
+            'scroll-x-container',
           ].join(' ')}
         >
           {showCompanies && partners && renderCompanies}

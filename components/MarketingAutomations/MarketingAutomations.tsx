@@ -39,7 +39,7 @@ const MarketingAutomations: React.FC<Props> = ({
       >
         {partnersLabel}
       </YText>
-      <div className="relative h-7 w-full overflow-x-auto no-scrollbar">
+      <div className="relative h-7 w-full scroll-x-container">
         <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex lg:transform-none">
           {partners.map(({ logo, title, link }) => {
             const Logo = dynamic(() => import(`@/assets/icons/${logo}.svg`), {
@@ -49,7 +49,7 @@ const MarketingAutomations: React.FC<Props> = ({
             return (
               <YOutLink
                 key={title}
-                className="outline-none mr-7.5 inline-block"
+                className="outline-none mr-7.5 inline-block scroll-x-item"
                 href={link}
                 aria-label={`${title} website`}
               >

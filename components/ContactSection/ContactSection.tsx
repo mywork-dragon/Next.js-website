@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 import {
   AnimateLayoutFeature,
   AnimationFeature,
@@ -91,6 +90,14 @@ const ContactSection: React.FC<Props> = ({
       {contactInfo.map(({ icon, info }, index) => {
         const Icon = dynamic(() => import(`@/assets/icons/${icon}.svg`));
 
+        const href = isPhone(info)
+          ? { href: `tel:${info.replace(' ', '')}` }
+          : isEmail(info)
+          ? { href: `mailto:${info}` }
+          : isAdress(info)
+          ? { href: `https://maps.google.com/?q=${info}` }
+          : {};
+
         return (
           <div
             key={index}
@@ -103,8 +110,13 @@ const ContactSection: React.FC<Props> = ({
               <YText
                 fontSize={FontSize.SM}
                 fontWeight={FontWeight.SemiBold}
-                className="text-white lg:text-base lg:leading-9"
-                as="p"
+                className={[
+                  'block text-white lg:text-base lg:leading-9',
+                  href.href ? 'cursor-pointer' : 'cursor-normal',
+                ].join(' ')}
+                {...href}
+                target="_blank"
+                as="a"
               >
                 {info}
               </YText>
@@ -156,5 +168,10 @@ const ContactSection: React.FC<Props> = ({
     </MotionConfig>
   );
 };
+
+const isPhone = (string: string) => /^\+[0-9]*/.test(string);
+const isEmail = (string: string) =>
+  /^[a-zA-Z]*@[a-zA-Z]*\.[a-zA-Z]*/.test(string);
+const isAdress = (string: string) => /^[a-zA-Z]*\s[0-9]*/.test(string);
 
 export default ContactSection;

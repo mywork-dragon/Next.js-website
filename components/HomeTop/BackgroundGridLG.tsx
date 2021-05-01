@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import style from './BackgroundGrid.module.css';
 
@@ -13,6 +13,7 @@ import Gridlines from '@/assets/other/HomeTopGridlineLG.svg';
 export interface Card {
   icon?: string;
   title: string;
+  link?: string;
   description: string;
 }
 

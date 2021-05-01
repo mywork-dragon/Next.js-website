@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import style from './BackgroundGrid.module.css';
 
@@ -11,6 +11,7 @@ export interface Card {
   icon?: string;
   title: string;
   description: string;
+  link?: string;
 }
 
 interface Props {
@@ -46,7 +47,7 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   }, []);
 
   // add interactive cards to the grid
-  const interactiveCards = cardsForDisplay.map((card, index) => (
+  const interactiveCards = cardsForDisplay.map(({ link, ...card }, index) => (
     <div
       key={`card-${index}`}
       className="absolute"

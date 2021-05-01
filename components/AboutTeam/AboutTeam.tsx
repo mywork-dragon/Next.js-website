@@ -12,7 +12,7 @@ interface Props {
 
 const AboutTeam: React.FC<Props> = ({ title, team }) => {
   return (
-    <section className="w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden z-20">
       <div className="container relative md:mb-26 text-left">
         <YHeading
           fontSize={FontSize.XL}

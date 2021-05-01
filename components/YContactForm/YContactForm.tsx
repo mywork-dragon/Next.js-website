@@ -50,7 +50,11 @@ const YContactForm: React.FC<Props> = ({
   fields,
   onClose,
 }) => {
-  const { screenSize } = useBreakpoint([ScreenSize.MD]);
+  const { screenSize } = useBreakpoint([
+    ScreenSize.SM,
+    ScreenSize.MD,
+    ScreenSize.LG,
+  ]);
 
   const fieldNames = Object.keys(fields);
 

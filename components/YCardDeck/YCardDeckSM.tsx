@@ -38,9 +38,9 @@ const CardDeck: React.FC<Props> = ({ services, className, active }) => {
   // utilize drag and drop control
   const handleDragEnd: MotionProps['onDragEnd'] = (_, info) => {
     const offsetX = info.offset.x;
-    if (offsetX > 200) {
+    if (offsetX > 100) {
       setDeck(rotate(deck));
-    } else if (offsetX < -200) {
+    } else if (offsetX < -100) {
       setDeck(rotate(deck, true));
     }
   };

@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { useHover, HoverProps } from '@react-aria/interactions';
 
 import YLink from '@/components/YLink';
+import YContitionalWrapper from '@/components/YConditionalWrapper';
 
 type CardProps = HoverProps & {
   title?: string;
@@ -36,7 +37,6 @@ const YCard: React.FC<Props> = ({
   style,
   onHoverStart,
   onHoverEnd,
-  ...props
 }) => {
   const customTag = as ? as : 'div';
 
@@ -102,10 +102,12 @@ const YCard: React.FC<Props> = ({
     [iconElement, text]
   );
 
+  const linkWrapper = ({ children }) => <YLink href={link}>{children}</YLink>;
+
   // container element section
   const containerClasses = ['w-43.6 h-53.6 select-none', classes].join(' ');
   return (
-    <YLink href={link}>
+    <YContitionalWrapper condition={Boolean(link)} wrapper={linkWrapper}>
       <div
         style={style}
         className={[
@@ -116,7 +118,7 @@ const YCard: React.FC<Props> = ({
         {Card}
         {children}
       </div>
-    </YLink>
+    </YContitionalWrapper>
   );
 };
 
