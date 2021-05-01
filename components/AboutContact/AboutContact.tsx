@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize } from '@/enums/font';
 
@@ -6,7 +7,6 @@ import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
-import Cloud from './Cloud';
 
 interface ButtonProps {
   text: string;
@@ -52,6 +52,29 @@ const AboutContact: React.FC<Props> = ({
       </YLink>
     </div>
   );
+
+  const YImage = useMemo(
+    () => dynamic(() => import('@/components/YImage'), { ssr: false }),
+    []
+  );
+
+  const backgroundImageClasses = [
+    'absolute',
+    'w-120',
+    'h-84.5',
+    'top-10',
+    'left-1/2',
+    'transform',
+    '-translate-x-1/2',
+    'lg:h-130.1',
+    'lg:w-185.1',
+    'md:left-100',
+    'md:top-1/2',
+    'md:-translate-y-1/2',
+    'md:translate-x-0',
+  ];
+
+  const Cloud = useMemo(() => dynamic(() => import('./Cloud')), []);
 
   return (
     <section className="w-full overflow-hidden border-soft border-b">

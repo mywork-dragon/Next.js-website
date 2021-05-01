@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Service, ServiceButton } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
+import { ScreenSize } from '@/enums/screenSize';
 
 import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
@@ -11,11 +11,6 @@ import YText from '@/components/YText';
 import YInputButton from '@/components/YInputButton';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
-import { ScreenSize } from '@/enums/screenSize';
-
-const ImageComponent = dynamic(() => import('./ImageComponent'), {
-  ssr: false,
-});
 
 interface ButtonProps {
   text: string;
@@ -31,6 +26,8 @@ interface Props {
   serviceLabel: string;
   service: Service;
 }
+
+import HeroImage from './HeroImage';
 
 const ServiceTop: React.FC<Props> = ({
   title,
@@ -91,6 +88,12 @@ const ServiceTop: React.FC<Props> = ({
       button
     );
 
+  const [showSVG, setShowSVG] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShowSVG(true), 300);
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -98,9 +101,7 @@ const ServiceTop: React.FC<Props> = ({
     >
       <div className="container lg:px-0">
         <div className="relative w-full mb-10 pt-80 lg:pt-0 lg:my-37.5 lg:w-150 lg:h-125 lg:ml-auto lg:mr-0">
-          <div className="absolute top-11.5 w-105 h-80 sm:right-0 lg:static lg:h-full lg:w-full">
-            <ImageComponent service={service} />
-          </div>
+          <HeroImage service={service} />
           <div className="max-w-md lg:max-w-none lg:w-100 lg:absolute lg:top-1/2 lg:transform lg:-translate-x-120 lg:-translate-y-1/2">
             <YHeading
               fontSize={FontSize.XS}
@@ -132,6 +133,15 @@ const ServiceTop: React.FC<Props> = ({
       </div>
     </section>
   );
+};
+
+const imageProps = {
+  width: 384,
+  responsive: {
+    [ScreenSize.LG]: {
+      width: 600,
+    },
+  },
 };
 
 export default ServiceTop;

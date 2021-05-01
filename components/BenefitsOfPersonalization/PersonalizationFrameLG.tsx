@@ -4,17 +4,16 @@ import dynamic from 'next/dynamic';
 import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import Frame2MD from '@/assets/benefits-of-personalization/frame-2-md.svg';
-
 import images from './images';
 
 import YText from '@/components/YText';
 import YHeading from '@/components/YHeading';
+import YImage from '@/components/YImage';
 
 import usePrefetch from '@/hooks/usePrefetch';
 
 interface Review {
-  image: string;
+  image: { filename: string; alt?: string };
   name: string;
   text: string;
 }
@@ -41,7 +40,9 @@ interface Props {
 }
 
 const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
-  usePrefetch(Object.values(images[ScreenSize.LG]));
+  const prefetchImages = Object.values(images[ScreenSize.LG]);
+
+  usePrefetch(prefetchImages);
 
   const { reviews } = frames[0];
   const { articles } = [1, 2].includes(activeFrame)
@@ -58,18 +59,11 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
 
   const desktopFrame1 = (
     <div className="w-124.1 h-70 absolute top-0 left-0 z-10">
-      <div className="w-full h-full">
-        <img
-          className="object-contain"
-          src={images[ScreenSize.LG].mobilePane}
-        />
-      </div>
-      <div className="absolute -top-32.5 -right-5 transform translate-x-full w-195 h-115">
-        <img
-          className="object-contain"
-          src={images[ScreenSize.LG].websitePane}
-        />
-      </div>
+      <YImage {...images[ScreenSize.LG].mobilePane} />
+      <YImage
+        className="absolute -top-32.5 -right-5 transform translate-x-full h-120 w-207.6"
+        {...images[ScreenSize.LG].websitePane}
+      />
       {reviews.map(({ image, name, text }, index) => (
         <article
           key={`${name}-${index}`}
@@ -78,14 +72,15 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
             desktopReviewsAdditionalClasses[index],
           ].join(' ')}
         >
-          <div
+          <YImage
             className={[
               'w-15 h-15 rounded-full border-4 overflow-hidden mb-3',
               index == 0 ? 'border-blue-100' : 'border-primary',
             ].join(' ')}
-          >
-            <img src={image} className="w-full h-full" />
-          </div>
+            {...image}
+            width={60}
+            height={60}
+          />
           <YHeading
             fontSize={FontSize.SM}
             lineHeight={FontLineHeight.Relaxed}
@@ -108,24 +103,10 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
     </div>
   );
 
-  const frame2Cover = (
-    <div className="relative w-143.6 h-164.5">
-      <div className="absolute top-0 w-full transform scale-105 z-10">
-        <img
-          src={images[ScreenSize.LG].frame2White}
-          className="object-contain"
-        />
-      </div>
-      <div className="absolute w-full bottom-0">
-        <Frame2MD />
-      </div>
-    </div>
-  );
+  const frame2Cover = <YImage {...images[ScreenSize.LG].frame2} />;
 
   const frame3Cover = (
-    <div className="w-lg">
-      <img src={images[ScreenSize.LG].frame3} className="object-contain" />
-    </div>
+    <YImage {...images[ScreenSize.LG].frame3} className="w-lg" />
   );
 
   const desktopFrame2 = (

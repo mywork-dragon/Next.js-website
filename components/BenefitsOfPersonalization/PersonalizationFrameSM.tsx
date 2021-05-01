@@ -3,8 +3,6 @@ import React from 'react';
 import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
-import Frame2Transparent from '@/assets/benefits-of-personalization/frame-2-transparent.svg';
-
 import Line1 from '@/assets/other/benefits-line-1.svg';
 import Line2 from '@/assets/other/benefits-line-2.svg';
 
@@ -14,11 +12,12 @@ import images from './images';
 
 import YText from '@/components/YText';
 import YHeading from '@/components/YHeading';
+import YImage from '@/components/YImage';
 
 import usePrefetch from '@/hooks/usePrefetch';
 
 interface Review {
-  image: string;
+  image: { filename: string; alt?: string };
   name: string;
   text: string;
 }
@@ -45,7 +44,9 @@ interface Props {
 }
 
 const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
-  usePrefetch(Object.values(images[ScreenSize.LG]));
+  const prefetchImages = Object.values(images[ScreenSize.SM]);
+
+  usePrefetch(prefetchImages);
 
   const { reviews } = frames[0];
   const { articles } = [1, 2].includes(activeFrame)
@@ -57,23 +58,14 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
    */
   const mobileCover1 = (
     <>
-      <div className="absolute top-0 right-0 w-70 h-86.6">
-        <img
-          className="object-contain"
-          src={images[ScreenSize.MD].websitePane}
-        />
-      </div>
-      <div
-        className={[
-          'absolute top-16 left-0 w-33 h-55 overflow-hidden',
-          style.mobilePane,
-        ].join(' ')}
-      >
-        <img
-          className="object-contain"
-          src={images[ScreenSize.MD].mobilePane}
-        />
-      </div>
+      <YImage
+        className="absolute top-0 right-0"
+        {...images[ScreenSize.SM].websitePane}
+      />
+      <YImage
+        className={['absolute top-16 left-0', style.mobilePane].join(' ')}
+        {...images[ScreenSize.SM].mobilePane}
+      />
       <div className="absolute left-3.5 -bottom-4">
         <Line1 />
       </div>
@@ -85,54 +77,41 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
 
   const mobileCover2 = (
     <>
-      <div className="absolute top-11.5 right-0 h-63 w-37.5">
-        <img
-          className="object-contain"
-          src={images[ScreenSize.MD].frame2Blue}
-        />
-      </div>
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
-        <Frame2Transparent />
-      </div>
-      <div className="absolute top-0 left-0 w-40 h-65">
-        <img
-          className="object-contain"
-          src={images[ScreenSize.MD].frame2White}
-        />
-      </div>
+      <YImage
+        className="absolute top-11.5 right-0"
+        {...images[ScreenSize.SM].frame2Blue}
+      />
+      <YImage
+        className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+        {...images[ScreenSize.SM].frame2Transparent}
+      />
+      <YImage
+        className="absolute top-0 left-0"
+        {...images[ScreenSize.SM].frame2White}
+      />
     </>
   );
 
   const mobileCover3 = (
     <>
-      <div className="absolute top-0 w-61.6 h-77.5 left-1/2 transform -translate-x-1/2">
-        <img
-          className="object-contain"
-          src={images[ScreenSize.MD].frame3White}
-        />
-      </div>
-      <div
+      <YImage
+        className="absolute top-0 left-1/2 transform -translate-x-1/2"
+        {...images[ScreenSize.SM].frame3White}
+      />
+      <YImage
         className={[
           'absolute top-20 -right-7.5 w-42 h-53',
           style.frame3Shadow,
         ].join(' ')}
-      >
-        <img
-          className="object-contain"
-          src={images[ScreenSize.MD].frame3Green}
-        />
-      </div>
-      <div
+        {...images[ScreenSize.SM].frame3Green}
+      />
+      <YImage
         className={[
           'absolute top-37.5 -left-5 w-42 h-53',
           style.frame3Shadow,
         ].join(' ')}
-      >
-        <img
-          className="object-contain"
-          src={images[ScreenSize.MD].frame3Blue}
-        />
-      </div>
+        {...images[ScreenSize.SM].frame3Blue}
+      />
     </>
   );
 

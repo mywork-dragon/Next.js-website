@@ -15,6 +15,7 @@ import { FormElementProps, SubmitHandler } from './FormElementSM';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
+import YImage from '@/components/YImage';
 import YButton from '@/components/YButton';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
@@ -29,6 +30,10 @@ interface Props extends FormElementProps {
   description: string;
   buttonText: string;
   contactInfo: ContactInfo[];
+  backgroundImage?: {
+    filename: string;
+    alt?: string;
+  };
 }
 
 const ContactSection: React.FC<Props> = ({
@@ -36,6 +41,7 @@ const ContactSection: React.FC<Props> = ({
   description,
   buttonText,
   contactInfo,
+  backgroundImage,
   ...props
 }) => {
   useEffect(() => {
@@ -66,7 +72,6 @@ const ContactSection: React.FC<Props> = ({
 
   const infoSection = (
     <>
-      {' '}
       <YHeading
         fontSize={FontSize['XXL']}
         lineHeight={FontLineHeight.Relaxed}
@@ -91,7 +96,7 @@ const ContactSection: React.FC<Props> = ({
             key={index}
             className="flex items-center h-10.5 mb-5 lg:h-13 lg:mb-8"
           >
-            <div className="flex rounded-lg p-2 items-center justify-center fill-current text-white text-opacity-60 bg-white bg-opacity-15 w-10.5 h-full mr-4 lg:w-13 lg:mr-5">
+            <div className="svg-fit flex rounded-lg p-2 items-center justify-center fill-current text-white text-opacity-60 bg-white bg-opacity-15 w-10.5 h-full mr-4 lg:w-13 lg:mr-5">
               <Icon />
             </div>
             <div>
@@ -127,18 +132,16 @@ const ContactSection: React.FC<Props> = ({
       features={[AnimationFeature, ExitFeature, AnimateLayoutFeature]}
     >
       <section className="relative pt-30.5 pb-15 lg:pt-53.5 lg:pb-42 lg:px-23.5">
-        <div className="absolute top-0 left-1/2 w-full h-full max-w-8xl transform -translate-x-1/2">
-          <Image
-            src="https://yeaimages.s3.eu-central-1.amazonaws.com/contact-cover.jpg"
-            className="object-cover"
-            layout="fill"
-          />
-        </div>
-        <div style={{ height: 660 }} className="relative container">
+        <YImage
+          className="absolute top-0 right-0 opacity-50"
+          {...backgroundImage}
+          width={1680}
+          height={1000}
+        />
+        <div className="relative container h-139.5 lg:h-165">
           <div className="relative w-full lg:w-109.5 lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2 z-10">
             {infoSection}
           </div>
-
           {screenReady && (
             <FormElement
               {...props}

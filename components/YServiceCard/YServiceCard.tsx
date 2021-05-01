@@ -63,7 +63,7 @@ const YServiceCard: React.FC<Props> = ({
           {subtitle}
         </YText>
       </div>
-      <div className="w-8 h-8 sm:w-10 sm:h-10 flex flex-shrink-0 items-center justify-center">
+      <div className="svg-fit w-8 h-8 sm:w-10 sm:h-10 flex flex-shrink-0 items-center justify-center">
         <Icon />
       </div>
     </div>

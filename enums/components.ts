@@ -64,7 +64,7 @@ export enum Service {
   AffiliateMarketing = 'affiliate_marketing',
   Personalization = 'personalization',
   ConversionOptimization = 'conversion_optimization',
-  DataAnalytics = 'data_analytics',
+  DataAnalytics = 'data_and_analytics',
   MarketingAutomation = 'marketing_automation',
   EmailMarketing = 'email_marketing',
 }

@@ -1,4 +1,5 @@
 import { Service } from '@/enums/components';
+import { ScreenSize } from '@/enums/screenSize';
 
 const props = {
   serviceLabel: 'SERVICE',

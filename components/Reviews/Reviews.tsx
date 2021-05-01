@@ -15,6 +15,7 @@ import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
 import YLink from '@/components/YLink';
 import YText from '@/components/YText';
+import YImage from '@/components/YImage';
 
 import Arrow from '@/assets/icons/arrow-lg.svg';
 
@@ -71,15 +72,19 @@ const Reviews: React.FC<Props> = ({
   const icon = (
     <div className="relative w-25 h-17.6 mx-auto mb-8 lg:absolute lg:h-53 lg:w-15 lg:-left-25 lg:-top-1">
       <div className="absolute left-0 top-0 h-full w-20.1 lg:w-12">
-        <img
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/left.png"
-          className="object-contain"
+        <YImage
+          filename="https://a.storyblok.com/f/98632/87x75/cdc8661d10/dialog-left.png"
+          width={87}
+          height={75}
+          alt="dialog left"
         />
       </div>
       <div className="absolute right-0 top-0 h-14 w-16 lg:h-10.5 lg:w-9">
-        <img
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/right.png"
-          className="object-contain"
+        <YImage
+          filename="https://a.storyblok.com/f/98632/69x60/fbd3af3e17/dialog-right.png"
+          width={69}
+          height={60}
+          alt="dialog right"
         />
       </div>
     </div>
@@ -128,7 +133,7 @@ const Reviews: React.FC<Props> = ({
       <DialogBox />
       <div
         onClick={setNextReview}
-        className="absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 xs:-translate-y-full xs:translate-x-1/4 xs:w-15 xs:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 lg:w-20 lg:h-20 lg:p-6 lg:-translate-y-1/2"
+        className="svg-fit absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 xs:-translate-y-full xs:translate-x-1/4 xs:w-15 xs:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 lg:w-20 lg:h-20 lg:p-6 lg:-translate-y-1/2"
       >
         <Arrow />
       </div>

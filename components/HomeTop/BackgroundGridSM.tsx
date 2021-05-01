@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import Image from 'next/image';
 
 import style from './BackgroundGrid.module.css';
 
 import YCard from '@/components/YCard';
+import YImage from '@/components/YImage';
 
 import Gridlines from '@/assets/other/HomeTopGridlineSM.svg';
 
@@ -21,9 +21,6 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
   // screen size section
 
   const cardsForDisplay = mirrorForMobile(cards);
-
-  // shared hover control section
-  const [hoveredCard, setHoveredCard] = useState(4);
 
   // calculates absolute coordinates for interactive cards
   const cardCoordinates = useMemo(() => {
@@ -59,8 +56,7 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
         className={cardBaseClasses}
         cardClasses="ml-4"
         {...card}
-        hovered={hoveredCard == index}
-        onHover={() => setHoveredCard(index)}
+        hovered={index === 4}
       />
     </div>
   ));
@@ -71,13 +67,13 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
       <div className="absolute top-6.5 left-5.5 w-503.25 h-385.5">
         <Gridlines />
       </div>
-      <div className="absolute top-6.5 left-5.5 w-503.25 h-385.5">
-        <Image
-          src="https://yeaimages.s3.eu-central-1.amazonaws.com/HomeTopGridSM.png"
-          className="object-contain"
-          layout="fill"
-        />
-      </div>
+      <YImage
+        className="absolute top-6.5 left-5.5 w-503.25 h-385.5"
+        filename="https://a.storyblok.com/f/98632/2013x1542/3fc365e9cf/hometop-grid-sm.png"
+        width={2013}
+        height={1542}
+        alt="transparent cards on grid in background"
+      />
       {interactiveCards}
     </div>
   );

@@ -6,6 +6,7 @@ import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import YText from '@/components/YText';
 import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion';
 import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
+import YImage from '@/components/YImage';
 
 import useClickOutside from '@/hooks/useClickOutside';
 
@@ -55,12 +56,12 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
       }}
     >
       <div className="w-7 mx-1">
-        <img src={flags[current]} />
+        <YImage {...flags[current]} />
       </div>
       <YText className="text-white" {...textProps}>
         {current}
       </YText>
-      <div className="h-3 w-3 mx-1 flex items-center">
+      <div className="svg-fit h-3 w-3 mx-1 flex items-center">
         <ArrowDown />
       </div>
       <YExpandableRegion
@@ -74,7 +75,7 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
             className={[...containerClasses, 'm-1'].join(' ')}
           >
             <div className="w-7 m-1">
-              <img src={flags[lang]} />
+              <YImage {...flags[lang]} />
             </div>
             <YText {...textProps} className="text-white m-1">
               {lang}

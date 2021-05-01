@@ -14,31 +14,31 @@ import Code from '@/assets/icons/code.svg';
 const Cloud: React.FC = () => {
   const boxes = (
     <>
-      <Box className="left-12.5 top-0 text-primary md:border-none md:text-blue-100 md:bg-blue-350">
+      <Box className="svg-fit left-12.5 top-0 text-primary md:border-none md:text-blue-100 md:bg-blue-350">
         <UserVoice />
       </Box>
-      <Box className="left-42.1 top-14.1">
+      <Box className="svg-fit left-42.1 top-14.1">
         <Code />
       </Box>
-      <Box className="left-76.6 top-5.5 md:bg-primary md:bg-opacity-30 md:border-none">
+      <Box className="svg-fit left-76.6 top-5.5 md:bg-primary md:bg-opacity-30 md:border-none">
         <Email />
       </Box>
-      <Box className="left-100 top-43 blur-3 text-primary">
+      <Box className="svg-fit left-100 top-43 blur-3 text-primary">
         <UserVoice />
       </Box>
-      <Box className="top-35 right-31.1 border-primary text-primary md:border-none md:bg-blue-350">
+      <Box className="svg-fit top-35 right-31.1 border-primary text-primary md:border-none md:bg-blue-350">
         <Sale />
       </Box>
-      <Box className="left-0 top-61.6 blur-5">
+      <Box className="svg-fit left-0 top-61.6 blur-5">
         <User />
       </Box>
-      <Box className="left-12 bottom-21.6 text-primary md:text-blue-100 md:border-none md:bg-blue-350">
+      <Box className="svg-fit left-12 bottom-21.6 text-primary md:text-blue-100 md:border-none md:bg-blue-350">
         <Mobile />
       </Box>
-      <Box className="bottom-26 right-20 blur-3 text-primary border-primary md:right-2.5">
+      <Box className="svg-fit bottom-26 right-20 blur-3 text-primary border-primary md:right-2.5">
         <Megaphone />
       </Box>
-      <Box className="bottom-5 right-28.5 text-primary md:bg-primary md:bg-opacity-30 md:border-none">
+      <Box className="svg-fit bottom-5 right-28.5 text-primary md:bg-primary md:bg-opacity-30 md:border-none">
         <Analise />
       </Box>
     </>
@@ -47,13 +47,13 @@ const Cloud: React.FC = () => {
   const servicesButtons = (
     <>
       <YServiceButton
-        className="absolute w-65 left-110 top-13 md:border-blue-100 md:text-blue-100"
+        className="svg-fit absolute w-65 left-110 top-13 md:border-blue-100 md:text-blue-100"
         icon="analytics"
         title="Data & Analitics"
         interactive={false}
       />
       <YServiceButton
-        className="absolute w-65 left-22.5 top-37.5 text-white border-primary"
+        className="svg-fit absolute w-65 left-22.5 top-37.5 text-white border-primary"
         icon="user"
         title="Personalization"
         interactive={false}
@@ -61,13 +61,13 @@ const Cloud: React.FC = () => {
         iconGreen
       />
       <YServiceButton
-        className="absolute w-65 left-37.5 bottom-48.5 blur-3"
+        className="svg-fit absolute w-65 left-37.5 bottom-48.5 blur-3"
         icon="email"
         title="E-mail marketing"
         interactive={false}
       />
       <YServiceButton
-        className="absolute w-65 top-58.5 right-0 md:border-primary md:text-white"
+        className="svg-fit absolute w-65 top-58.5 right-0 md:border-primary md:text-white"
         icon="user-voice"
         title="Affiliate Marketing"
         interactive={false}
@@ -75,20 +75,20 @@ const Cloud: React.FC = () => {
         iconGreen
       />
       <YServiceButton
-        className="absolute w-65 left-70 bottom-25 md:border-blue-100 md:text-blue-100"
+        className="svg-fit absolute w-65 left-70 bottom-25 md:border-blue-100 md:text-blue-100"
         icon="email"
         title="E-mail marketing"
         interactive={false}
       />
       <YServiceButton
-        className="absolute w-70 left-43.6 bottom-0 blur-3"
+        className="svg-fit absolute w-70 left-43.6 bottom-0 blur-3"
         icon="megaphone"
         title="Social media advertising"
         interactive={false}
         iconGreen
       />
       <YServiceButton
-        className="absolute w-70 -left-35 -bottom-20 blur-3 md:hidden"
+        className="svg-fit absolute w-70 -left-35 -bottom-20 blur-3 md:hidden"
         icon="megaphone"
         title="Social media advertising"
         interactive={false}

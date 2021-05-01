@@ -15,16 +15,15 @@ interface BreakPointHook {
  * @param extendScreensizes extend required screen sizes (default is ScreenSize.SM and ScreenSize.LG)
  * @returns object containing screenSize (a current screenSize) and screenReady (boolean set when screenSize is processed, on mount)
  */
-const useBreakpoint: BreakPointHook = (extendScreensizes = []) => {
-  const requiredScreenSizes = new Set([
+const useBreakpoint: BreakPointHook = (extendScreensizes) => {
+  const requiredScreenSizes = extendScreensizes || [
     ScreenSize.SM,
     ScreenSize.LG,
-    ...extendScreensizes,
-  ]);
+  ];
 
   const screenWidth = useWindowWidth();
 
-  const screenSize = determineBreakpoint(screenWidth, requiredScreenSizes);
+  const screenSize = findBreakpoint(screenWidth, requiredScreenSizes.reverse());
 
   const [screenReady, setScreenReady] = useState(false);
 
@@ -38,14 +37,16 @@ const useBreakpoint: BreakPointHook = (extendScreensizes = []) => {
   return { screenSize, screenReady };
 };
 
-const determineBreakpoint = (
-  screenWidth: number,
-  requiredScreenSizes: Set<ScreenSize>
-) =>
-  screenWidth > BreakPoint.LG
-    ? ScreenSize.LG
-    : screenWidth > BreakPoint.MD && requiredScreenSizes.has(ScreenSize.MD)
-    ? ScreenSize.MD
-    : ScreenSize.SM;
+/**
+ * Determine screen size by iterating through breakpoints
+ * Needs to go decending
+ * @param screenSizes
+ */
+const findBreakpoint = (screenWidth, screenSizes: ScreenSize[]) =>
+  screenSizes.find(
+    (scrSize, index) =>
+      index == screenSizes.length - 1 ||
+      Number(BreakPoint[scrSize.toUpperCase()]) < screenWidth
+  );
 
 export default useBreakpoint;

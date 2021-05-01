@@ -27,6 +27,8 @@ import { PageBackground } from '@/enums/components';
 import { GET_LANGUAGES } from '@/libs/api/app';
 
 function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
+  const [firstRender, setFirstRender] = useState(true);
+
   const [story, setStory] = useState<PageItemWithLayout>(res.data.PageItem);
   const contentOfStory = story.content;
 
@@ -44,13 +46,18 @@ function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
 
   useEffect(() => {
     setTimeout(() => initEditor([story, setStory]), 200);
+    setFirstRender(false);
+    const body = document.querySelector('body');
+    body.className = 'bg-secondary';
   }, []);
 
   const transitionProps = {
-    initial: {
-      opacity: 0,
-      y: -50,
-    },
+    initial: firstRender
+      ? false
+      : {
+          opacity: 0,
+          y: -50,
+        },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0 },
     transition: {

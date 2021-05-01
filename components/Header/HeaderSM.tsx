@@ -14,9 +14,12 @@ import YLink from '@/components/YLink';
 import YButton from '@/components/YButton';
 
 import useClickOutside from '@/hooks/useClickOutside';
+import usePrefetch from '@/hooks/usePrefetch';
 
 import { ButtonSize, ButtonShape } from '@/enums/components';
 import { Language } from '@/enums/language';
+
+import serviceImages from '@/components/ServiceTop/placeholderImages';
 
 interface Logo {
   icon: string;
@@ -84,6 +87,9 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
       }),
     []
   );
+
+  // prefetch service top icons for service pages
+  usePrefetch(Object.values(serviceImages));
 
   return (
     <YAnimateBackground
