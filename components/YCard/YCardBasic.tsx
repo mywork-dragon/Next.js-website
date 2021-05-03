@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import React, { useMemo } from 'react';
 
 interface Props {
@@ -20,7 +19,7 @@ const YCardBasic: React.FC<Props> = ({
   children,
 }) => {
   const Icon = useMemo(
-    () => dynamic(() => import(`@/assets/icons/${icon}.svg`)),
+    () => require(`@/assets/icons/${icon ? icon : 'content'}.svg`).default,
     []
   );
 
@@ -33,7 +32,7 @@ const YCardBasic: React.FC<Props> = ({
   const text =
     title && description ? (
       <>
-        <h6 className="text title serif">{title}</h6>
+        <p className="text title serif">{title}</p>
         <p className="text subtitle sans">{description}</p>
       </>
     ) : (

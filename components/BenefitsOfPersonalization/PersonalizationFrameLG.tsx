@@ -1,5 +1,4 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
+import React, { useMemo } from 'react';
 
 import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -121,9 +120,10 @@ const PersonalizationFrame: React.FC<Props> = ({ frames, activeFrame }) => {
       </div>
       <div className="grid grid-cols-2 gap-10">
         {articles?.map(({ icon, title, description }, index) => {
-          const Icon = dynamic(() => import(`@/assets/icons/${icon}.svg`), {
-            ssr: false,
-          });
+          const Icon = useMemo(
+            () => require(`@/assets/icons/${icon}.svg`).default,
+            []
+          );
 
           return (
             <article key={`${title}-${index}`}>

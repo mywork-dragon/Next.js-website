@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
@@ -7,7 +7,6 @@ import YOutLink from '@/components/YOutLink';
 import YText from '@/components/YText';
 
 import Pipeline, { Action } from './Pipeline';
-import dynamic from 'next/dynamic';
 
 interface PartnerCompany {
   logo: string;
@@ -42,9 +41,10 @@ const MarketingAutomations: React.FC<Props> = ({
       <div className="relative h-7 w-full scroll-x-container">
         <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex lg:transform-none">
           {partners.map(({ logo, title, link }) => {
-            const Logo = dynamic(() => import(`@/assets/icons/${logo}.svg`), {
-              ssr: false,
-            });
+            const Logo = useMemo(
+              () => require(`@/assets/icons/${logo}.svg`).default,
+              []
+            );
 
             return (
               <YOutLink

@@ -216,8 +216,9 @@ const processFooterProps = (props) => ({
     },
   },
   contactButton: props.contactButton,
-  socialMedia: props.socialMedia.map(({ link, icon }) => ({
+  socialMedia: props.socialMedia.map(({ link, icon, name }) => ({
     icon,
     link: link.cached_url || link.cachedUrl,
+    name,
   })),
 });

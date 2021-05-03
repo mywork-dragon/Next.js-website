@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { m as motion, MotionProps } from 'framer-motion';
-import dynamic from 'next/dynamic';
 
 import { FontSize } from '@/enums/font';
 import { ButtonShape, ButtonSize } from '@/enums/components';
@@ -9,8 +8,6 @@ import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
 import YButton from '@/components/YButton';
 import YLink from '@/components/YLink';
-
-import styles from './YServiceCard.module.css';
 
 export interface Service {
   icon: string;
@@ -36,13 +33,7 @@ const YServiceCard: React.FC<Props> = ({
   className,
   ...props
 }) => {
-  const Icon = useMemo(
-    () =>
-      dynamic(() => import(`@/assets/icons/${icon}.svg`), {
-        ssr: false,
-      }),
-    []
-  );
+  const Icon = useMemo(() => require(`@/assets/icons/${icon}.svg`).default, []);
 
   // title, subtitle, logo
   const topSection = (
@@ -73,12 +64,7 @@ const YServiceCard: React.FC<Props> = ({
     const points = description.split(',').map((point) => point.trim());
 
     return (
-      <ul
-        className={[
-          'px-4 pt-3 sm:px-7.5 sm:pt-5 lg:px-8 lg:pt-6',
-          styles.points,
-        ].join(' ')}
-      >
+      <ul className="px-4 pt-3 sm:px-7.5 sm:pt-5 lg:px-8 lg:pt-6 service-points">
         {points.map((point) => (
           <YText
             fontSize={FontSize.XXS}

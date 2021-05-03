@@ -85,19 +85,13 @@ const BackgroundGrid: React.FC<Props> = ({ cards }) => {
 
   // return grid
   return screenReady ? (
-    <div className={['absolute top-0', style.bgGrid, style.gradient].join(' ')}>
+    <>
       <div className="absolute top-6.5 left-1.5">
         <Gridlines />
       </div>
-      <YImage
-        className="absolute top-6.5 left-1.5 w-404 h-385.5"
-        filename="https://a.storyblok.com/f/98632/1616x1542/154b45d9c1/hometop-grid-lg.png"
-        width={1616}
-        height={1542}
-        alt="transparent cards on grid in background"
-      />
+
       {interactiveCards}
-    </div>
+    </>
   ) : null;
 };
 

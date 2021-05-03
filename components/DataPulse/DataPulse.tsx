@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -28,6 +28,12 @@ const DataPulse: React.FC<Props> = ({
   buttonProps,
   cards,
 }) => {
+  const [loadDynamic, setLoadDynamic] = useState(false);
+
+  useEffect(() => {
+    setLoadDynamic(true);
+  }, []);
+
   const Background = useMemo(
     () => dynamic(() => import('./Background'), { ssr: false }),
     []
@@ -37,7 +43,7 @@ const DataPulse: React.FC<Props> = ({
     <>
       <div className="relative w-full overflow-hidden lg:h-210">
         <div className="container relative h-full pb-10 pt-111.1 lg:pt-0 lg:px-0">
-          <Background cards={cards} />
+          {loadDynamic && <Background cards={cards} />}
           <div className="relative z-10 w-full text-center lg:text-left lg:top-45 lg:w-97.5">
             <YHeading
               className="text-white mb-3 lg:text-3xl lg:leading-18 lg:font-bold"

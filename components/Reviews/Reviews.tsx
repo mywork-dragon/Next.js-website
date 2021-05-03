@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   AnimatePresence,
@@ -130,7 +130,7 @@ const Reviews: React.FC<Props> = ({
    */
   const reviewBody = (
     <div className="relative left-1/2 transform -translate-x-1/2 w-100 xs:w-78.6 xs:h-72.6 lg:left-0 lg:transform-none lg:w-157.6 lg:h-80">
-      <DialogBox />
+      {!firstRender && <DialogBox />}
       <div
         onClick={setNextReview}
         className="svg-fit absolute cursor-pointer top-1/2 right-0 transform -translate-y-1/2 -translate-x-full w-12.5 h-12.5 xs:-translate-y-full xs:translate-x-1/4 xs:w-15 xs:h-15 rounded-full flex p-4 bg-gray-500 bg-opacity-60 lg:w-20 lg:h-20 lg:p-6 lg:-translate-y-1/2"
@@ -171,9 +171,10 @@ const Reviews: React.FC<Props> = ({
   /**
    * Reviewer info with name, role and company
    */
-  const ReviewerLogo = dynamic(() => {
-    return import(`@/assets/icons/${review.logo}.svg`);
-  });
+  const ReviewerLogo = useMemo(
+    () => require(`@/assets/icons/${review.logo}.svg`).default,
+    []
+  );
 
   const reviewCredentials = (
     <AnimatePresence exitBeforeEnter>

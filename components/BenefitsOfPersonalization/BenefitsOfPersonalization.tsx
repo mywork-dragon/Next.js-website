@@ -125,7 +125,7 @@ const BenefitsOfPersonalization: React.FC<Props> = ({
           </div>
           <AnimatePresence exitBeforeEnter>
             <motion.div {...motionProps}>
-              {screenReady && (
+              {!firstRender && (
                 <PersonalizationFrame
                   frames={frames}
                   activeFrame={activeFrame}

@@ -48,10 +48,23 @@ const socialMedia = [
   {
     icon: 'linkedin',
     link: 'https://www.linkedin.com/company/yeapersonalize',
+    name: 'linkedin',
   },
-  { icon: 'facebook', link: 'https://facebook.com/yeapersonalize' },
-  { icon: 'instagram', link: 'https://instagram.com/yeapersonalize' },
-  { icon: 'twitter', link: 'https://twitter.com/yeapersonalize' },
+  {
+    icon: 'facebook',
+    link: 'https://facebook.com/yeapersonalize',
+    name: 'facebook',
+  },
+  {
+    icon: 'instagram',
+    link: 'https://instagram.com/yeapersonalize',
+    name: 'instagram',
+  },
+  {
+    icon: 'twitter',
+    link: 'https://twitter.com/yeapersonalize',
+    name: 'twitter',
+  },
 ];
 
 const contactButton = 'Contact us';

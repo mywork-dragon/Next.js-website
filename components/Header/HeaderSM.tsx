@@ -107,7 +107,7 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
             )}
           >
             <YLink href={logo.link}>
-              <a className="cursor-pointer">
+              <a className="cursor-pointer" aria-label="YEA logo">
                 <LogoIcon />
               </a>
             </YLink>

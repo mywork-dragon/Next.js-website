@@ -1,5 +1,4 @@
 import React, { createElement, useMemo, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import { useHover, HoverProps } from '@react-aria/interactions';
 
 import YLink from '@/components/YLink';
@@ -49,12 +48,12 @@ const YCard: React.FC<Props> = ({
   const text =
     title && description ? (
       <>
-        <div key="title" className="text title serif">
+        <p key="title" className="text title serif">
           {title}
-        </div>
-        <div key="subtitle" className="text subtitle sans">
+        </p>
+        <p key="subtitle" className="text subtitle sans">
           {description}
-        </div>
+        </p>
       </>
     ) : (
       <>
@@ -71,10 +70,7 @@ const YCard: React.FC<Props> = ({
 
   // icon section
   const NewIcon = useMemo(
-    () =>
-      dynamic(() => import(`@/assets/icons/${icon}.svg`), {
-        ssr: false,
-      }),
+    () => require(`@/assets/icons/${icon}.svg`).default,
     []
   );
 

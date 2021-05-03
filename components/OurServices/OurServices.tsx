@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
@@ -39,6 +39,12 @@ const OurServices: React.FC<Props> = ({
   partners,
   partnersLabel = 'Proud to be official partners with',
 }) => {
+  const [loadDynamic, setLoadDynamic] = useState(false);
+
+  useEffect(() => {
+    setLoadDynamic(true);
+  }, []);
+
   const [active, setActive] = useState(services[0].title);
 
   const handleActiveChange = useCallback(
@@ -66,11 +72,13 @@ const OurServices: React.FC<Props> = ({
           {description}
         </YText>
       </div>
-      <ServicesButtons
-        services={services}
-        active={active}
-        onChange={handleActiveChange}
-      />
+      {loadDynamic && (
+        <ServicesButtons
+          services={services}
+          active={active}
+          onChange={handleActiveChange}
+        />
+      )}
     </div>
   );
 
@@ -78,11 +86,13 @@ const OurServices: React.FC<Props> = ({
   const rightSection = (
     <div className="relative max-w-xs mx-auto px-4 lg:max-w-none lg:w-101.5 lg:h-full lg:px-0">
       <div className="h-80 sm:h-103.1 lg:h-100">
-        <CardDeck
-          className="relative h-full w-full"
-          services={rotate([...services].reverse())}
-          active={active}
-        />
+        {loadDynamic && (
+          <CardDeck
+            className="relative h-full w-full"
+            services={rotate([...services].reverse())}
+            active={active}
+          />
+        )}
       </div>
       <div className="mt-10 w-full text-center lg:text-left lg:mt-8">
         <YText fontSize={FontSize.XS} className="text-white opacity-40" as="p">
@@ -92,10 +102,7 @@ const OurServices: React.FC<Props> = ({
           <div className="h-full absolute scale-left-75 top-0 left-0 pl-0 flex lg:transform-none">
             {partners.map(({ title, logo, link }) => {
               const Logo = useMemo(
-                () =>
-                  dynamic(() => import(`@/assets/icons/${logo}.svg`), {
-                    ssr: false,
-                  }),
+                () => require(`@/assets/icons/${logo}.svg`).default,
                 []
               );
 
