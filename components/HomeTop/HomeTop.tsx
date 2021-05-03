@@ -15,6 +15,9 @@ import YLink from '@/components/YLink';
 import YButton from '@/components/YButton';
 import YInputButton from '@/components/YInputButton';
 import YOutLink from '@/components/YOutLink';
+import YImage from '@/components/YImage';
+
+import style from './BackgroundGrid.module.css';
 
 type ButtonProps = AriaAttributes & {
   text: string;
@@ -49,7 +52,7 @@ const HomeTop: React.FC<Props> = ({
 
   const renderCompanies = partners.map(({ logo, title, link }) => {
     const PartnerLogo = useMemo(
-      () => dynamic(() => import(`@/assets/icons/${logo}.svg`), { ssr: false }),
+      () => require(`@/assets/icons/${logo}.svg`).default,
       []
     );
     return (
@@ -92,7 +95,35 @@ const HomeTop: React.FC<Props> = ({
   return (
     <section {...props} className="relative overflow-hidden">
       <div className="container relative pt-88.1 lg:px-0 lg:pt-48.5">
-        {screenReady && <BackgroundGrid cards={cards} />}
+        <div
+          className={[
+            'absolute top-0 md:right-0 lg:right-auto',
+            style.bgGrid,
+          ].join(' ')}
+        >
+          {screenReady && (
+            <>
+              <YImage
+                className="absolute top-6.5 left-5.5 w-503.25 h-385.5 lg:left-2 lg:top-5.5"
+                filename="https://a.storyblok.com/f/98632/2013x1542/3fc365e9cf/hometop-grid-sm.png"
+                width={2013}
+                height={1542}
+                srcSet={{
+                  [ScreenSize.LG]:
+                    'https://a.storyblok.com/f/98632/1616x1542/154b45d9c1/hometop-grid-lg.png',
+                }}
+                responsive={{
+                  [ScreenSize.LG]: {
+                    width: 1616,
+                    height: 1542,
+                  },
+                }}
+                alt="transparent cards on grid in background"
+              />
+              <BackgroundGrid cards={cards} />
+            </>
+          )}
+        </div>
         <div className="relative z-20 max-w-md lg:w-100">
           <YHeading
             fontSize={FontSize.XXL}

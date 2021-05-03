@@ -21,7 +21,7 @@ const AboutTop: React.FC<Props> = ({ title, description, cover }) => {
       <YImage
         className="absolute left-1/2 h-150 w-lg transform -translate-x-1/2 md:w-420 md:h-275"
         {...cover}
-        width={0}
+        width={940}
         height={600}
         responsive={{
           [ScreenSize.MD]: {

@@ -55,18 +55,21 @@ const YImage: React.FC<Props> = ({
   // const jitClasses = useMemo(() => createJitClasses(responsiveParams), [original]);
 
   const breakpoints = useMemo(
-    () => Object.keys(responsiveParams).filter((key) => key != 'base'),
+    () =>
+      Object.keys(responsiveParams).map((key) =>
+        key == 'base' ? ScreenSize.SM.toUpperCase() : key.toUpperCase()
+      ),
     []
   );
 
   const { screenSize } = useBreakpoint(breakpoints as ScreenSize[]);
 
   const explicitDimensions = {
-    width: responsiveParams[screenSize]
-      ? responsiveParams[screenSize].width
+    width: responsiveParams[ScreenSize[screenSize]]
+      ? responsiveParams[ScreenSize[screenSize]].width
       : responsiveParams.base.width,
-    height: responsiveParams[screenSize]
-      ? responsiveParams[screenSize].height
+    height: responsiveParams[ScreenSize[screenSize]]
+      ? responsiveParams[ScreenSize[screenSize]].height
       : responsiveParams.base.height,
   };
 

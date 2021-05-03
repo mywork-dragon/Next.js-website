@@ -449,6 +449,17 @@ module.exports = {
         '.text-shadow-red': {
           textShadow: '-0.25rem -0.25rem 0 #7E1F1F',
         },
+        '.service-points li:nth-child(n + 5)': {
+          display: 'none',
+          '@screen sm': {
+            display: 'block',
+          },
+        },
+        '.service-points li:nth-child(n + 7)': {
+          '@screen sm': {
+            display: 'none',
+          },
+        },
       });
     },
     createCards,

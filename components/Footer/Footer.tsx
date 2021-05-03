@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic';
 type SocialPlatform = {
   icon: string;
   link: string;
+  name: string;
 };
 
 type Link = {
@@ -116,6 +117,7 @@ function Footer({
               fontWeight={FontWeight.SemiBold}
               lineHeight={FontLineHeight.Relaxed}
               className="text-gray-300 mb-4 mt-2.5 md:mt-0"
+              aria-label="contact adress"
             >
               {contactDetails.street}
               <br />
@@ -128,25 +130,25 @@ function Footer({
               fontWeight={FontWeight.SemiBold}
               lineHeight={FontLineHeight.Tight}
               className="block text-white mb-10 md:mb-4"
+              aria-label="phone number"
             >
               {contactDetails.phoneNumber.label}
             </YText>
             <div className="flex mb-10 md:mb-0">
               {socialMedia.map((platform) => {
                 const Icon = useMemo(
-                  () =>
-                    dynamic(
-                      () => import(`@/assets/icons/${platform.icon}.svg`),
-                      {
-                        ssr: false,
-                      }
-                    ),
+                  () => require(`@/assets/icons/${platform.icon}.svg`).default,
                   []
                 );
 
                 return (
                   <div key={platform.link} className="mr-5">
-                    <a href={platform.link} target="_blank" rel="noreferrer">
+                    <a
+                      href={platform.link}
+                      aria-label={`${platform.name} page`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <Icon />
                     </a>
                   </div>

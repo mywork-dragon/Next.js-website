@@ -21,9 +21,14 @@ const useBreakpoint: BreakPointHook = (extendScreensizes) => {
     ScreenSize.LG,
   ];
 
+  const downSortedScreenSizes = [...requiredScreenSizes].sort(
+    (a, b) =>
+      Number(BreakPoint[b.toUpperCase()]) - Number(BreakPoint[a.toUpperCase()])
+  );
+
   const screenWidth = useWindowWidth();
 
-  const screenSize = findBreakpoint(screenWidth, requiredScreenSizes.reverse());
+  const screenSize = findBreakpoint(screenWidth, downSortedScreenSizes);
 
   const [screenReady, setScreenReady] = useState(false);
 
