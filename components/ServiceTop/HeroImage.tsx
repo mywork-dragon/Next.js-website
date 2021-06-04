@@ -32,7 +32,7 @@ const HeroImage: React.FC<Props> = ({ service }) => {
 
   const displayGraphic: ServiceGraphic = graphics[service];
   const svgImage =
-    displayGraphic.svg[screenSize] || displayGraphic.svg[ScreenSize.SM];
+    displayGraphic?.svg[screenSize] || displayGraphic?.svg[ScreenSize.SM];
 
   const SVGHero = useMemo(
     () => dynamic(() => import(`@/assets/services-hero/${svgImage}.svg`)),
