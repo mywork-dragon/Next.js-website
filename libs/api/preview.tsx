@@ -23,6 +23,8 @@ export const GET_HEADER: DocumentNode = gql`
           cachedUrl
         }
         buttonText
+        searchLabel
+        headerType
       }
     }
   }
@@ -50,6 +52,8 @@ export const GET_FOOTER: DocumentNode = gql`
         postalCode
         socialMedia
         street
+        searchLabel
+        footerType
       }
     }
   }

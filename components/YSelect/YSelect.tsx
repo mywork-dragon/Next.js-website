@@ -13,6 +13,7 @@ import useClickOutside from '@/hooks/useClickOutside';
 import ArrowDown from '@/assets/icons/chevron-down.svg';
 
 import flags from './flags';
+import { AnimationFeature, ExitFeature, MotionConfig } from 'framer-motion';
 
 interface Props {
   className?: string;
@@ -25,60 +26,53 @@ const YSelect: React.FC<Props> = ({ className, locales = [] }) => {
 
   useClickOutside(ref, () => setOpen(false));
 
-  const {
-    query: { page },
-    locale,
-    push: routerPush,
-  } = useRouter();
+  const { asPath, locale, push: routerPush } = useRouter();
 
   const current = locale == 'en' ? 'uk' : locale;
 
   const onLangClick = (lang: Language) => {
     setOpen(!open);
 
-    const pageURI =
-      typeof page == 'string' ? page : Boolean(page) ? page.join('/') : '';
-
     const locale = lang == 'uk' ? 'en' : lang;
 
-    routerPush(pageURI, pageURI, { locale });
+    routerPush(asPath, asPath, { locale });
   };
 
   const flagsToShow = [...locales, 'uk'].filter((lang) => lang != current);
 
   return (
-    <div
-      ref={ref}
-      className={[...containerClasses, className].join(' ')}
-      onClick={() => {
-        setOpen(!open);
-      }}
-    >
-      <div className="w-7 mx-1">{flags[current]}</div>
-      <YText className="text-white" {...textProps}>
-        {current}
-      </YText>
-      <div className="svg-fit h-3 w-3 mx-1 flex items-center">
-        <ArrowDown />
-      </div>
-      <YExpandableRegion
-        className="absolute top-full z-50 bg-blue-400 border-blue-300"
-        open={open}
+    <MotionConfig features={[AnimationFeature, ExitFeature]}>
+      <div
+        ref={ref}
+        className={[...containerClasses, className].join(' ')}
+        onClick={() => {
+          setOpen(!open);
+        }}
       >
-        {flagsToShow.map((lang) => (
-          <YAnimateItem
-            key={lang}
-            onClick={() => onLangClick(lang as Language)}
-            className={[...containerClasses, 'm-1'].join(' ')}
-          >
-            <div className="w-7 m-1">{flags[lang]}</div>
-            <YText {...textProps} className="text-white m-1">
-              {lang}
-            </YText>
-          </YAnimateItem>
-        ))}
-      </YExpandableRegion>
-    </div>
+        <div className="w-7 mx-1">{flags[current]}</div>
+        <YText {...textProps}>{current === 'uk' ? 'en' : current}</YText>
+        <div className="svg-fit fill-current h-3 w-3 mx-1 flex items-center">
+          <ArrowDown />
+        </div>
+        <YExpandableRegion
+          className="absolute top-full z-50 bg-blue-400 border-blue-300"
+          open={open}
+        >
+          {flagsToShow.map((lang) => (
+            <YAnimateItem
+              key={lang}
+              onClick={() => onLangClick(lang as Language)}
+              className={[...containerClasses, 'm-1'].join(' ')}
+            >
+              <div className="w-7 m-1">{flags[lang]}</div>
+              <YText {...textProps} className="text-white m-1">
+                {lang === 'uk' ? 'en' : lang}
+              </YText>
+            </YAnimateItem>
+          ))}
+        </YExpandableRegion>
+      </div>
+    </MotionConfig>
   );
 };
 
@@ -89,6 +83,7 @@ const containerClasses = [
   'justify-flex-start',
   'h-7',
   'cursor-pointer',
+  'select-none',
 ];
 
 const textProps = {

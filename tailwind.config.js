@@ -29,15 +29,27 @@ const colors = {
     150: '#D5DFE9',
     100: '#F2F2F2',
   },
+  'blog-gray': {
+    500: '#0A1536',
+    400: '#f2f2f2',
+    300: '#e6e6e6',
+    200: '#787878',
+    150: '#A8A8A8',
+    100: '#B2B2B2',
+    50: '#d8d8d8',
+  },
   green: {
+    500: '#138640',
     400: '#2B9C57',
     350: '#25A055',
     300: '#53D084',
+    100: '#9CFFC3',
   },
   red: {
     300: '#E15454',
   },
   white: '#FFFFFF',
+  black: '#000000',
   orange: {
     300: '#F2A143',
     100: '#CB7F27',
@@ -95,6 +107,7 @@ const lineHeight = {
 
 const spacing = {
   0.5: rem(2),
+  1.5: rem(6),
   1.9: rem(7),
   2.5: rem(10),
   3.5: rem(14),
@@ -107,7 +120,7 @@ const spacing = {
   8.5: rem(34),
   10.5: rem(42),
   11: rem(44),
-  11.5: rem(46),
+  11.1: rem(45),
   11.5: rem(46),
   12.5: rem(50),
   13: rem(52),
@@ -142,6 +155,7 @@ const spacing = {
   31.1: rem(125),
   31.5: rem(126),
   31.6: rem(127),
+  32: rem(128),
   32.5: rem(130),
   33: rem(132),
   34: rem(136),
@@ -159,6 +173,7 @@ const spacing = {
   48.5: rem(194),
   49: rem(196),
   50: rem(200),
+  51.5: rem(206),
   52.5: rem(210),
   53: rem(212),
   53.5: rem(214),
@@ -188,13 +203,16 @@ const spacing = {
   76.6: rem(307),
   77.5: rem(310),
   78.6: rem(315),
+  81: rem(324),
   81.1: rem(325),
   81.6: rem(327),
   82.5: rem(330),
   83.1: rem(333),
   83.5: rem(334),
   84.5: rem(338),
+  86: rem(344),
   86.6: rem(347),
+  87.5: rem(350),
   88.1: rem(353),
   90: rem(360),
   91.6: rem(367),
@@ -208,6 +226,8 @@ const spacing = {
   103: rem(412),
   103.1: rem(413),
   105: rem(420),
+  107: rem(428),
+  107.5: rem(430),
   109.5: rem(438),
   110: rem(440),
   111.1: rem(445),
@@ -218,6 +238,7 @@ const spacing = {
   119: rem(476),
   120: rem(480),
   121.6: rem(487),
+  122.5: rem(490),
   124.1: rem(497),
   125: rem(500),
   126.5: rem(506),
@@ -227,6 +248,7 @@ const spacing = {
   132: rem(528),
   138.6: rem(555),
   139.5: rem(558),
+  141: rem(564),
   142.5: rem(570),
   143.6: rem(575),
   145: rem(580),
@@ -234,22 +256,29 @@ const spacing = {
   148: rem(592),
   150: rem(600),
   153: rem(612),
+  154.5: rem(618),
   155: rem(620),
   156: rem(624),
+  157: rem(628),
   157.6: rem(631),
+  160: rem(640),
   162: rem(648),
   164.5: rem(658),
   165: rem(660),
+  168: rem(672),
   165.5: rem(662),
   173.6: rem(695),
+  180: rem(720),
   185.1: rem(741),
   185.5: rem(742),
   190: rem(760),
   195: rem(780),
   196.6: rem(787),
   200: rem(800),
+  204.5: rem(818),
   207.6: rem(831),
   210: rem(840),
+  213: rem(852),
   218.6: rem(875),
   223.6: rem(895),
   224.1: rem(897),
@@ -257,6 +286,7 @@ const spacing = {
   237: rem(948),
   250: rem(1000),
   275: rem(1100),
+  280: rem(1120),
   291.5: rem(1166),
   303.25: rem(1213),
   377.5: rem(1510),
@@ -267,25 +297,38 @@ const spacing = {
   503.25: rem(2013),
   535: rem(2140),
   625: rem(2500),
-  lg: rem(1024),
+  xs: rem(414),
+  sm: rem(640),
+  md: rem(768),
+  lg: rem(1080),
   xl: rem(1280),
 };
 
 const minHeight = {
   14.1: rem(57),
   15: rem(60),
+  22: rem(88),
+  51.5: rem(206),
+  64: rem(256),
+  93.6: rem(375),
+  205: rem(820),
 };
 
 const boxShadow = {
   'inset-light': 'inset 0px 2px 0px #233057',
   'inset-dark': 'inset 0px 2px 0px #1C1C1C',
   blue: '-4px 4px 0px 0px #1638A2',
+  'blog-header': '0px 0px 120px rgba(6, 29, 51, 0.7)',
+  'blog-sm': '0px 0px 80px rgba(0, 0, 0, 0.08)',
+  'blog-lg': '0px 0px 160px rgba(0, 0, 0, 0.08)',
+  'blog-blue': '0px 0px 160px rgba(0, 0, 0, 0.12)',
 };
 
 const borderRadius = {
   '2.5xl': rem(20),
   '4xl': rem(28),
   10: rem(40),
+  15: rem(60),
   20: rem(80),
 };
 
@@ -344,7 +387,17 @@ const screens = {
 };
 
 const maxWidth = {
+  7.5: rem(30),
+  15: rem(60),
+  83.5: rem(334),
+  189: rem(756),
+  203.6: rem(815),
+  213: rem(852),
   '8xl': rem(1680),
+};
+
+const zIndex = {
+  '-10': '-10',
 };
 
 module.exports = {
@@ -370,6 +423,7 @@ module.exports = {
       minHeight,
       maxWidth,
       inset,
+      zIndex,
     },
     screens,
     cards,
@@ -390,6 +444,22 @@ module.exports = {
           '@screen md': {
             maxWidth: rem(1080),
             margin: '0 auto',
+          },
+        },
+        '.home-top-grid': {
+          display: 'grid',
+          transform: 'matrix(0.59, -0.32, 0.59, 0.3, -673, -553)',
+          gridTemplateRows: 'repeat(6, 15.375rem)',
+          gridTemplateColumns: 'repeat(9, 12.875rem)',
+          gridGap: '2px',
+
+          '@screen md': {
+            transform: 'matrix(0.64, -0.37, 0.62, 0.39, 600, -516)',
+          },
+
+          '@screen lg': {
+            gridTemplateColumns: 'repeat(7, 12.875rem)',
+            transform: 'matrix(0.64, -0.37, 0.62, 0.39, 44, -476)',
           },
         },
         '.svg-fit svg': {
@@ -419,8 +489,17 @@ module.exports = {
         '.scroll-x-container::-webkit-scrollbar': {
           display: 'none',
         },
+        '.scroll-pl-5': {
+          scrollPadding: '0 0 0 20px',
+        },
+        '.scroll-pl-10': {
+          scrollPadding: '0 0 0 40px',
+        },
         '.scroll-x-item': {
           scrollSnapAlign: 'start',
+        },
+        '.scroll-x-item-center': {
+          scrollSnapAlign: 'center',
         },
         '.button-shadow': {
           boxShadow: '0 -30px 10px 15px #0E284F',
@@ -439,6 +518,9 @@ module.exports = {
         },
         '.backdrop-blur-60': {
           backdropFilter: `blur(${rem(60)})`,
+        },
+        '.backdrop-blur-80': {
+          backdropFilter: `blur(${rem(80)})`,
         },
         '.text-shadow-blue': {
           textShadow: '-0.25rem -0.25rem 0 #305EED',
@@ -459,6 +541,14 @@ module.exports = {
           '@screen sm': {
             display: 'none',
           },
+        },
+        '.image-container img': {
+          height: 'inherit',
+          width: 'inherit',
+          maxWidth: 'none',
+        },
+        '.article-card:hover .article-cover': {
+          boxShadow: '0px 0px 160px rgba(0, 0, 0, 0.1)',
         },
       });
     },

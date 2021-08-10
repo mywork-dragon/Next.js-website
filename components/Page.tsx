@@ -1,31 +1,66 @@
-import DynamicComponent from './DynamicComponent';
-import SbEditable from 'storyblok-react';
-import { PageItem, PostComponent } from '@/types/storyblok';
-
-import { PageBackground } from '@/enums/components';
+import React, { useContext, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
+import { PageItem } from '@/types/storyblok';
+
+import DynamicComponent from '@/components/DynamicComponent';
+
+import { initEditor } from '@/utils/storyblok';
+import { updatePageContext } from '@/utils/globalState';
+
+import { GlobalStateContext } from '@/store/GlobalStateContext';
+
 interface Props {
-  content: PageItem['content'] & {
-    backgroundGradient?: PageBackground;
-    body: PostComponent[];
-  };
+  PageItem: PageItem;
 }
 
-const Background = dynamic(() => import('@/components/BackgroundGradient'), {
-  ssr: false,
-});
+const Background = dynamic(() => import('@/components/BackgroundGradient'));
 
-const Page = ({
-  content: { backgroundGradient, ...content },
-}: Props): JSX.Element => {
+const Page: React.FC<Props> = ({ PageItem }) => {
+  const [story, setStory] = useState<PageItem>(PageItem);
+  const contentOfStory = story.content;
+
+  useEffect(() => {
+    setStory(PageItem);
+  }, [PageItem]);
+
+  useEffect(() => {
+    setTimeout(() => initEditor([story, setStory]), 200);
+    const body = document.querySelector('body');
+    body.className = 'bg-secondary';
+  }, []);
+
+  const {
+    header,
+    footer,
+    title,
+    description,
+    keywords,
+    backgroundGradient,
+  } = contentOfStory;
+
+  const pageContext = {
+    header,
+    footer,
+    metaContent: { title, description, keywords },
+    editableContent: contentOfStory,
+    isWebsite: true,
+  };
+
+  // update global state on each page/locale change
+  const { dispatch } = useContext(GlobalStateContext);
+
+  useEffect(() => {
+    updatePageContext(pageContext, dispatch);
+  }, [PageItem.id]);
+
   return (
-    <SbEditable content={content}>
+    <>
       {backgroundGradient && <Background page={backgroundGradient} />}
-      {content.body.map((blok) => (
+      {contentOfStory.body.map((blok) => (
         <DynamicComponent blok={blok} key={blok._uid} />
       ))}
-    </SbEditable>
+    </>
   );
 };
 

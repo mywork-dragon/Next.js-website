@@ -47,16 +47,16 @@ const YCard: React.FC<Props> = ({
 
   const text =
     title && description ? (
-      <>
+      <React.Fragment key="text">
         <p key="title" className="text title serif">
           {title}
         </p>
         <p key="subtitle" className="text subtitle sans">
           {description}
         </p>
-      </>
+      </React.Fragment>
     ) : (
-      <>
+      <React.Fragment key="text">
         <div
           key="placeholder-title"
           className="placeholder placeholder-title"
@@ -65,7 +65,7 @@ const YCard: React.FC<Props> = ({
           key="placeholder-subtitle"
           className="placeholder placeholder-subtitle"
         />
-      </>
+      </React.Fragment>
     );
 
   // icon section

@@ -1,6 +1,6 @@
 import BenefitsOfPersonalization from './BenefitsOfPersonalization';
 
-import style from './waveAnimations.module.scss';
+import style from './waveAnimations.module.css';
 import Wave from '@/assets/other/wave-md.svg';
 
 export default {

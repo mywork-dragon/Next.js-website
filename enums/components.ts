@@ -12,6 +12,18 @@ export enum ButtonShape {
 }
 //endregion
 
+//region Input Button
+export enum InputButtonStyle {
+  Default = 'default',
+  BlogGreen = 'blog_green',
+  BlogBlack = 'blog_black',
+}
+
+export enum InputButtonSize {
+  LG = 'lg',
+  SM = 'sm',
+}
+
 //region Card
 export enum CardType {
   Fill = 'fill',
@@ -27,10 +39,15 @@ export enum CardColor {
 }
 //endregion
 
-//region MenuButtons
+//region Menu Buttons
 export enum ToggleType {
   Hamburger = 'hamburger',
   Plus = 'plus',
+}
+
+export enum ToggleStyle {
+  Light = 'light',
+  Dark = 'dark',
 }
 
 export enum ArrowType {
@@ -39,7 +56,7 @@ export enum ArrowType {
 }
 //endregion
 
-//region input
+//region Input
 export enum InputStyle {
   Light = 'light',
   Dark = 'dark',
@@ -57,7 +74,7 @@ export enum InputType {
 }
 //endregion
 
-//region services
+//region Services
 export enum Service {
   IntegrationImplementation = 'integration-implementation',
   OnlineAdvertising = 'online-advertising',
@@ -90,7 +107,7 @@ export enum ServiceButton {
 }
 //endregion
 
-//region marketing automations
+//region Marketing Automations
 export enum Elapsed {
   '0h' = 0,
   '12h' = 1,
@@ -101,7 +118,14 @@ export enum Elapsed {
 }
 //endregion
 
-//region background gradient
+//region layout
+export enum LayoutType {
+  Website = 'website',
+  Blog = 'blog',
+}
+//endregion
+
+//region Background Gradient
 export enum PageBackground {
   Home = 'home',
   About = 'about',
@@ -109,3 +133,77 @@ export enum PageBackground {
   Service = 'service',
 }
 //endregion
+
+//region Blog Top
+export enum BlogTopType {
+  Home = 'home',
+  Category = 'category',
+}
+//endregion
+
+//region Blog Category
+export enum BlogCategorySize {
+  SM = 'sm',
+  MD = 'md',
+  LG = 'lg',
+}
+
+export enum BlogCategoryStyle {
+  Light = 'light',
+  Dark = 'dark',
+}
+//endregion
+
+//region Subscribe
+export enum SubscriptionStyle {
+  BlogHome = 'blog_home',
+  BlogPost = 'blog_post',
+}
+//endregion
+
+//region Search Field
+export enum SearchButtonSize {
+  SM = 'sm',
+  MD = 'md',
+  LG = 'lg',
+}
+//endregion
+
+//region featured posts
+export enum FeaturedPosts {
+  ServicePage = 'service',
+  BlogPost = 'blog_post',
+}
+//end region
+
+//region post content
+export enum MarkType {
+  Bold = 'bold',
+  Code = 'code',
+  Italic = 'italic',
+  StrikeThrough = 'strike',
+  Underline = 'underline',
+  Link = 'link',
+}
+
+export enum LinkType {
+  Story = 'story',
+  Url = 'url',
+}
+
+export enum PostContentType {
+  Paragraph = 'paragraph',
+  Image = 'image',
+  CodeBlock = 'code_block',
+  BlockQuote = 'blockquote',
+  Heading = 'heading',
+  Text = 'text',
+  Blok = 'blok',
+  HorizontalRule = 'horizontal_rule',
+}
+
+export enum ParagraphStyling {
+  Default = 'default',
+  BlockQuote = 'block_quote',
+}
+//end region

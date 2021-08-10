@@ -20,7 +20,7 @@ export default function YHeading({
   const CustomTag = as;
 
   const classes = getFontClasses({ fontSize, lineHeight, fontWeight });
-  classes.push('font-serif');
+  classes.push('font-serif select-none');
 
   return createElement(
     CustomTag,

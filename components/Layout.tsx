@@ -1,42 +1,94 @@
+import React, { useContext, useEffect, useState } from 'react';
 import SbEditable from 'storyblok-react';
-import DynamicComponent from './DynamicComponent';
-import { PostComponent } from '@/types/storyblok';
+import {
+  m as motion,
+  MotionConfig,
+  AnimationFeature,
+  ExitFeature,
+  AnimatePresence,
+} from 'framer-motion';
+
+import Head from '@/components/Head';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import YConditionalWrapper from '@/components/YConditionalWrapper';
+
+import { mapHeaderProps, mapFooterProps } from '@/utils/storyblok/layout';
 
 import { ImgFormatProvider } from '@/context/ImgFormatContext';
-import Head, { MetaContent } from '@/components/Head';
+import { GlobalStateContext } from '@/store/GlobalStateContext';
+import { useRouter } from 'next/router';
+import { init as initSegment } from '@/assets/js/segment';
 
-interface Props extends MetaContent {
-  headerContent?: PostComponent | undefined;
-  footerContent?: PostComponent | undefined;
-}
+const Layout: React.FC = ({ children }) => {
+  const {
+    header,
+    footer,
+    editableContent,
+    metaContent,
+    locales,
+    firstRender,
+  } = useContext(GlobalStateContext);
 
-const Layout: React.FC<Props> = ({
-  children,
-  headerContent,
-  footerContent,
-  ...metaContent
-}) => {
+  const sbEditableWrapper = ({ children }: { children?: React.ReactNode }) => (
+    <SbEditable content={editableContent}>{children}</SbEditable>
+  );
+
+  useEffect(() => {
+    if (!window?.analytics) {
+      initSegment(process.env.NEXT_PUBLIC_SEGMENT_WRITE_KEY);
+    }
+  }, []);
+
+  // control page transitions
+  const router = useRouter();
+
+  const path = router ? router.asPath.replace(/\?.*/, '') : '';
+  const locale = router ? router.locale : '';
+
+  const route = `${locale}${path}`;
+
+  useEffect(() => {
+    window?.analytics.page();
+  }, [route]);
+
+  const transitionProps = {
+    initial: firstRender
+      ? false
+      : {
+          opacity: 0,
+          y: -50,
+        },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0 },
+    transition: {
+      duration: 0.4,
+      type: 'tween',
+    },
+  };
+
   return (
-    <div className="relative bg-blue-300 text-white w-full overflow-hidden">
-      <Head {...metaContent} />
-      <ImgFormatProvider>
-        {headerContent && (
-          <SbEditable content={headerContent}>
-            <header>{<DynamicComponent blok={headerContent} />}</header>
-          </SbEditable>
-        )}
+    <MotionConfig features={[AnimationFeature, ExitFeature]}>
+      <div className="relative text-white w-full overflow-hidden">
+        <Head {...metaContent} />
+        <ImgFormatProvider>
+          <YConditionalWrapper
+            condition={Boolean(editableContent)}
+            wrapper={sbEditableWrapper}
+          >
+            {header && <Header {...mapHeaderProps(header, locales)} />}
 
-        {children}
+            <AnimatePresence exitBeforeEnter>
+              <motion.main key={route} {...transitionProps}>
+                {children}
+              </motion.main>
+            </AnimatePresence>
 
-        {footerContent && (
-          <SbEditable content={footerContent}>
-            <footer>
-              <DynamicComponent blok={footerContent} />
-            </footer>
-          </SbEditable>
-        )}
-      </ImgFormatProvider>
-    </div>
+            {footer && <Footer {...mapFooterProps(footer, locales)} />}
+          </YConditionalWrapper>
+        </ImgFormatProvider>
+      </div>
+    </MotionConfig>
   );
 };
 

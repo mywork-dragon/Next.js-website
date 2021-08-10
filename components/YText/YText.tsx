@@ -29,7 +29,7 @@ export default function YText({
   const CustomTag = as as keyof JSX.IntrinsicElements;
 
   const classes = getFontClasses({ fontSize, lineHeight, fontWeight });
-  classes.push('font-sans');
+  classes.push('font-sans select-none');
 
   return createElement(
     CustomTag,

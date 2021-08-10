@@ -20,7 +20,7 @@ interface Props {
 }
 
 const BackgroundGradient: React.FC<Props> = ({ page }) => {
-  let content = {} as Record<PageBackground, JSX.Element>;
+  const content = {} as Record<PageBackground, JSX.Element>;
 
   content[PageBackground.Home] = (
     <>
@@ -70,7 +70,11 @@ const BackgroundGradient: React.FC<Props> = ({ page }) => {
 
   useEffect(() => {
     setReady(false);
-    setTimeout(() => setReady(true), 300);
+    const bgTimeout = setTimeout(() => setReady(true), 300);
+
+    return () => {
+      clearTimeout(bgTimeout);
+    };
   }, [page]);
 
   return (

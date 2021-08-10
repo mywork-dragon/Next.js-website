@@ -3,9 +3,10 @@ import { ApolloQueryResult } from '@apollo/client';
 import { NextApiRequest } from 'next';
 import SbEditable from 'storyblok-react';
 
-import { LanguageCodesResponse, PostItem } from '@/types/storyblok';
+import { LanguageCodesResponse } from '@/types/i18n';
+import { FooterBlokProps, HeaderBlokProps } from '@/types/layout';
 
-import { GET_LANGUAGES } from '@/libs/api/app';
+import { GET_LANGUAGES } from '@/libs/api/i18n';
 
 import graphqlClient from '@/utils/graphql';
 import { initEditor } from '@/utils/storyblok';
@@ -22,7 +23,7 @@ const ComponentPreview = ({
   item,
   locales,
 }: StaticPropsResult): JSX.Element => {
-  const [story, setStory] = useState<PostItem>({ ...item });
+  const [story, setStory] = useState<HeaderBlokProps | FooterBlokProps>(item);
   const contentOfStory = { ...story.content, locales };
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const ComponentPreview = ({
         }
       />
       <SbEditable content={contentOfStory}>
-        <DynamicComponent blok={contentOfStory} />
+        <DynamicComponent blok={{ ...contentOfStory }} />
       </SbEditable>
     </div>
   );
@@ -46,7 +47,7 @@ const ComponentPreview = ({
 export default ComponentPreview;
 
 interface StaticPropsResult {
-  item: PostItem;
+  item: HeaderBlokProps | FooterBlokProps;
   locales: ApolloQueryResult<LanguageCodesResponse>;
 }
 
@@ -66,8 +67,8 @@ export const getStaticProps = async ({
   const query = id.includes('header') ? GET_HEADER : GET_FOOTER;
 
   const componentPromise: ApolloQueryResult<{
-    HeaderItem?: PostItem;
-    FooterItem?: PostItem;
+    HeaderItem?: HeaderBlokProps;
+    FooterItem?: FooterBlokProps;
   }> = await graphqlClient({
     preview,
   }).query({

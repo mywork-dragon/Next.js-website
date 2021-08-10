@@ -1,3 +1,5 @@
+import { LayoutType } from '@/enums/components';
+import { Language } from '@/enums/language';
 import Footer from './Footer';
 
 export default {
@@ -69,12 +71,24 @@ const socialMedia = [
 
 const contactButton = 'Contact us';
 
-export const Default = (): JSX.Element => (
-  <Footer
-    links={links}
-    contactDetails={contactDetails}
-    content={content}
-    socialMedia={socialMedia}
-    contactButton={contactButton}
-  />
+const searchLabel = 'Search';
+
+const locales = Object.values(Language.NL) as Language[];
+
+const props = {
+  links,
+  contactDetails,
+  content,
+  contactButton,
+  socialMedia,
+  searchLabel,
+  locales,
+};
+
+export const Website = (): JSX.Element => (
+  <Footer footerType={LayoutType.Website} {...props} />
+);
+
+export const Blog = (): JSX.Element => (
+  <Footer {...props} footerType={LayoutType.Blog} />
 );

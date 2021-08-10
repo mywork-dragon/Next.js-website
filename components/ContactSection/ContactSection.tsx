@@ -43,10 +43,6 @@ const ContactSection: React.FC<Props> = ({
   backgroundImage,
   ...props
 }) => {
-  useEffect(() => {
-    console.log('botton text', buttonText);
-  }, []);
-
   const { screenSize, screenReady } = useBreakpoint();
 
   const [openForm, setOpenForm] = useState(false);
@@ -135,8 +131,16 @@ const ContactSection: React.FC<Props> = ({
   );
 
   const handleSubmit: SubmitHandler = (values) => {
-    /**@TODO connect to segment */
-    console.log(values);
+    const properties = { ...values };
+    delete properties.email;
+
+    const traits: { [key: string]: string | Date } = { ...properties };
+    delete traits.comment;
+    traits.created_at = new Date();
+
+    window.analytics.identify(values.email, traits, {}, () => {
+      window.analytics.track('Contact Form Send', properties);
+    });
   };
 
   return (
@@ -149,6 +153,7 @@ const ContactSection: React.FC<Props> = ({
           {...backgroundImage}
           width={1680}
           height={1000}
+          preload
         />
         <div className="relative container h-139.5 lg:h-165">
           <div className="relative w-full lg:w-109.5 lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2 z-10">

@@ -29,6 +29,7 @@ const AboutTop: React.FC<Props> = ({ title, description, cover }) => {
             height: 1100,
           },
         }}
+        preload
       />
       <div className="relative container md:px-0 z-10">
         <YHeading

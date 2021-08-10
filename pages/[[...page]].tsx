@@ -1,118 +1,38 @@
-import { useEffect, useState } from 'react';
-import graphqlClient from '@/utils/graphql';
-import {
-  LanguageCodesResponse,
-  PageItem,
-  PageSlugsResponse,
-  PostComponent,
-  PostItem,
-} from '@/types/storyblok';
 import { ApolloQueryResult } from '@apollo/client';
 import { NextApiRequest } from 'next';
-import { initEditor } from '@/utils/storyblok';
-import { GET_PAGE, GET_PAGE_SLUGS } from '@/libs/api/page';
-import {
-  m as motion,
-  MotionConfig,
-  AnimationFeature,
-  ExitFeature,
-  AnimatePresence,
-} from 'framer-motion';
+import Error from 'next/error';
 
-import Layout from '@/components/Layout';
+import { PageItem, PageItemRes, PageSlugsResponse } from '@/types/storyblok';
+
 import Page from '@/components/Page';
 
-import { PageBackground } from '@/enums/components';
+import graphqlClient from '@/utils/graphql';
 
-import { GET_LANGUAGES } from '@/libs/api/app';
+import { GET_PAGE, GET_PAGE_SLUGS } from '@/libs/api/page';
+import { getLanguages } from '@/libs/api/i18n';
 
-function Home({ res, locales }: StaticPropsResult['props']): JSX.Element {
-  const [firstRender, setFirstRender] = useState(true);
-
-  const [story, setStory] = useState<PageItemWithLayout>(res.data.PageItem);
-  const contentOfStory = story.content;
-
-  const headerContent = contentOfStory.header
-    ? { ...contentOfStory.header.content, locales }
-    : undefined;
-
-  const footerContent = contentOfStory.footer
-    ? contentOfStory.footer.content
-    : undefined;
-
-  useEffect(() => {
-    setStory(res.data.PageItem);
-  }, [res]);
-
-  useEffect(() => {
-    setTimeout(() => initEditor([story, setStory]), 200);
-    setFirstRender(false);
-    const body = document.querySelector('body');
-    body.className = 'bg-secondary';
-  }, []);
-
-  const transitionProps = {
-    initial: firstRender
-      ? false
-      : {
-          opacity: 0,
-          y: -50,
-        },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0 },
-    transition: {
-      duration: 0.4,
-      type: 'tween',
-    },
-  };
-
-  const metaContent = (({
-    title,
-    description,
-    keywords,
-  }: typeof contentOfStory) => ({ title, description, keywords }))(
-    contentOfStory
-  );
-
-  return (
-    <MotionConfig features={[AnimationFeature, ExitFeature]}>
-      <Layout
-        {...metaContent}
-        headerContent={headerContent}
-        footerContent={footerContent}
-      >
-        <AnimatePresence exitBeforeEnter>
-          <motion.main key={story.id} {...transitionProps}>
-            <Page content={contentOfStory} />
-          </motion.main>
-        </AnimatePresence>
-      </Layout>
-    </MotionConfig>
-  );
+interface ErrorRes {
+  errorCode: number;
 }
+
+interface PageDataRes {
+  PageItem: PageItem;
+}
+
+type Props = Partial<ErrorRes & PageDataRes>;
+
+const Home: React.FC<Props> = ({ errorCode, ...props }) => {
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
+
+  return <Page {...(props as PageDataRes)} />;
+};
 
 export default Home;
 
-type PageItemWithLayout = PageItem & {
-  content: PageItem['content'] & {
-    header?: PostItem;
-    footer?: PostItem;
-    backgroundGradient?: PageBackground;
-    body: PostComponent[];
-    title: string;
-    description?: string;
-    keywords?: string;
-  };
-};
-
-type DefaultProps<T> = {
-  res: ApolloQueryResult<T>;
-};
-
 interface StaticPropsResult {
-  props: DefaultProps<{ PageItem: PageItemWithLayout }> & {
-    locales: ApolloQueryResult<LanguageCodesResponse>;
-  };
+  props: PageDataRes | ErrorRes;
 }
 
 export const getStaticProps = async ({
@@ -127,31 +47,19 @@ export const getStaticProps = async ({
   const page = params.page ? params.page.join('/') : 'home';
   const id = locale === 'en' ? page : `${locale}/${page}`;
 
-  const pageDataPromise: Promise<
-    ApolloQueryResult<{ PageItem: PageItemWithLayout }>
-  > = graphqlClient({
-    preview,
-  }).query({
-    query: GET_PAGE,
-    variables: {
-      id,
-    },
-  });
+  const {
+    data: { PageItem },
+  } = await getPageData({ preview, id });
 
-  const localesPromise: Promise<
-    ApolloQueryResult<LanguageCodesResponse>
-  > = graphqlClient({ preview }).query({
-    query: GET_LANGUAGES,
-  });
-
-  const [res, locales] = await Promise.all([pageDataPromise, localesPromise]);
-
-  return {
-    props: {
-      res,
-      locales,
-    },
-  };
+  if (PageItem) {
+    return {
+      props: {
+        PageItem,
+      },
+    };
+  } else {
+    return { props: { errorCode: 404 } };
+  }
 };
 
 interface PathInterface {
@@ -177,7 +85,6 @@ export const getStaticPaths = async ({
     fallback: false,
   };
 
-  // TODO: Refactor to use Promise.all
   const promise1: Promise<ApolloQueryResult<PageSlugsResponse>> = graphqlClient(
     {
       preview,
@@ -186,11 +93,7 @@ export const getStaticPaths = async ({
     query: GET_PAGE_SLUGS,
   });
 
-  const promise2: Promise<
-    ApolloQueryResult<LanguageCodesResponse>
-  > = graphqlClient({ preview }).query({
-    query: GET_LANGUAGES,
-  });
+  const promise2 = getLanguages({ preview });
 
   const [response, response2] = await Promise.all([promise1, promise2]);
 
@@ -213,3 +116,21 @@ export const getStaticPaths = async ({
 
   return result;
 };
+
+// gql queries
+
+const getPageData = ({
+  preview,
+  id,
+}: {
+  preview: boolean;
+  id: string;
+}): Promise<ApolloQueryResult<PageItemRes>> =>
+  graphqlClient({
+    preview,
+  }).query({
+    query: GET_PAGE,
+    variables: {
+      id,
+    },
+  });

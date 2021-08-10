@@ -1,83 +1,37 @@
-//region Exported Types
-export type PageItem = {
-  alternates: Alternate[];
-  content: PageComponent;
-  created_at: string;
-  first_published_at: string;
-  full_slug: string;
-  group_id: number;
-  id: number;
-  is_startpage: boolean;
-  lang: string;
-  meta_data: { [key: string]: any };
-  name: string;
-  parent_id: number;
-  path: string;
-  position: number;
-  published_at: string;
-  release_id: number;
-  slug: string;
-  sort_by_date: string;
-  tag_list: string[];
-  translated_slugs: TranslatedSlug[];
-  uuid: string;
-};
+import { PageBackground } from '@/enums/components';
+import { Language } from '@/enums/language';
 
-export type PostItem = {
-  alternates: [Alternate];
-  content: PostComponent;
-  created_at: string;
-  first_published_at: string;
-  full_slug: string;
-  group_id: number;
+import { FooterBlokProps, HeaderBlokProps } from '@/types/layout';
+
+//region Exported Types
+export interface PageItem {
   id: number;
-  is_startpage: boolean;
-  lang: string;
-  meta_data: { [key: string]: any };
-  name: string;
-  parent_id: number;
-  path: string;
-  position: number;
-  published_at: string;
-  release_id: number;
-  slug: string;
-  sort_by_date: string;
-  tag_list: [string];
-  translated_slugs: [TranslatedSlug];
-  uuid: string;
-};
+  content: Blok<{
+    body: Blok<Record<string, any>>[]; // maybe make this more detailed in the future
+    header: HeaderBlokProps;
+    footer: FooterBlokProps;
+    description: string;
+    title: string;
+    keywords: string;
+    backgroundGradient: PageBackground;
+  }>;
+}
+
+export interface PageItemRes {
+  PageItem: PageItem;
+}
 
 export type PageItems = Collection<PageItem>;
 
 export type PageSlugsResponse = {
-  PageItems: Collection<Pick<PageItem, 'full_slug'>>;
+  PageItems: Collection<{ full_slug: string }>;
 };
 
-export type LanguageCodesResponse = {
-  Space: Pick<Space, 'languageCodes'>;
-};
-
-export type PostItems = Collection<PostItem>;
-
-export type Blok = {
-  [key: string]: any;
-};
-
-export type PageComponent = {
-  _editable: string;
+export type Blok<P extends {} = {}> = {
   _uid: string;
-  body: string;
-  component: string;
-};
-
-export type PostComponent = {
   _editable: string;
-  _uid: string;
-  component: string;
-  intro: string;
-  long_text: { [key: string]: any };
-  title: string;
-};
+  component: any; // maybe add enum of all components in the future
+} & P;
 //endregion
 
 //region Mapped Types
@@ -98,17 +52,31 @@ type Alternate = {
   slug: string;
 };
 
-type TranslatedSlug = {
-  lang: string;
-  name: string;
-  path: string;
-};
-
-type Space = {
+export type Space = {
   domain: string;
   id: number;
-  languageCodes: string[];
+  languageCodes: Language[];
   name: string;
   version: number;
 };
+
+export interface SbImage {
+  id?: number;
+  alt?: string;
+  name?: string;
+  focus?: string;
+  title?: string;
+  filename: string;
+  copyright?: string;
+  fieldtype?: string;
+}
+
+export interface SbLink {
+  id: string;
+  url: string;
+  linktype: string;
+  fieldtype: string;
+  cached_url: string;
+  cachedUrl: string;
+}
 //endregion

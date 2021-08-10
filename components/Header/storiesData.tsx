@@ -122,4 +122,5 @@ export const props = {
   navItems,
   buttonProps,
   locales: Object.values(Language),
+  searchLabel: 'Search',
 };

@@ -66,7 +66,7 @@ const YTeamCard: React.FC<TeamMember & { className: string }> = ({
           : 'h-50 w-50 top-13.6 left-10 xs:left-12.5 xs:w-55 xs:h-55 md:top-13.6 md:left-16.1',
       ].join(' ')}
     >
-      <YImage {...image} width={220} height={220} />
+      <YImage className="w-full h-full" {...image} width={220} height={220} />
     </motion.div>
   );
 

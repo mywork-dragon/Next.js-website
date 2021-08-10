@@ -2,6 +2,7 @@
 /// <reference types="next/types/global" />
 
 declare interface Window {
+  analytics: any;
   storyblok: any;
 }
 

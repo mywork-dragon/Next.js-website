@@ -47,11 +47,11 @@ const useBreakpoint: BreakPointHook = (extendScreensizes) => {
  * Needs to go decending
  * @param screenSizes
  */
-const findBreakpoint = (screenWidth, screenSizes: ScreenSize[]) =>
+const findBreakpoint = (screenWidth: number, screenSizes: ScreenSize[]) =>
   screenSizes.find(
     (scrSize, index) =>
       index == screenSizes.length - 1 ||
-      Number(BreakPoint[scrSize.toUpperCase()]) < screenWidth
+      Number(BreakPoint[scrSize.toUpperCase()]) <= screenWidth
   );
 
 export default useBreakpoint;

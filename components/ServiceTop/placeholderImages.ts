@@ -10,7 +10,7 @@ export default {
   emailMarketingSM:
     'https://a.storyblok.com/f/98632/384x293/a72fc2be69/email-marketing-mobile.png',
   personalization:
-    'https://a.storyblok.com/f/98632/600x592/f434d82fe9/personalization.png',
+    'https://a.storyblok.com/f/98632/600x592/45612714ec/personalization.png',
   personalizationSM:
     'https://a.storyblok.com/f/98632/384x265/59391ea4d1/personalization-mobile.png',
   marketingAutomation:

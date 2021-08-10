@@ -5,6 +5,7 @@
 
 html,
 body {
+  scroll-behavior: smooth;
   @apply font-sans m-0 p-0;
 }
 

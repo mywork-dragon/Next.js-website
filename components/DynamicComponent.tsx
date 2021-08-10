@@ -1,6 +1,4 @@
-import Teaser from './Teaser';
-import Feature from './Feature';
-import Grid from './Grid';
+import { Blok, PageItem } from '@/types/storyblok';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -22,17 +20,15 @@ import ServiceSimple from '@/components/ServiceSimple';
 import ServiceSimpleImage from '@/components/ServiceSimpleImage';
 import ServiceThreePoints from '@/components/ServiceThreePoints';
 import ServiceFourPoints from '@/components/ServiceFourPoints';
+import ServiceLatestPosts from '@/components/ServiceLatestPosts';
 
 import ContactSection from '@/components/ContactSection';
 
 import Placeholder from './Placeholder';
-import { PageComponent, PostComponent } from '@/types/storyblok';
+
 import { mapStoryblokProps } from '@/utils/storyblok';
 
 const Components = {
-  teaser: Teaser,
-  grid: Grid,
-  feature: Feature,
   Header,
   HomeTop,
   DataPulse,
@@ -49,12 +45,13 @@ const Components = {
   ServiceSimpleImage,
   ServiceThreePoints,
   ServiceFourPoints,
+  ServiceLatestPosts,
   ContactSection,
   Footer,
 };
 
 interface Props {
-  blok: PostComponent | PageComponent;
+  blok: Blok<any>;
 }
 
 const DynamicComponent = ({ blok }: Props): JSX.Element => {

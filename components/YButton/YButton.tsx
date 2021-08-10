@@ -39,6 +39,8 @@ const YButton = forwardRef(
       'font-serif',
       'font-semibold',
       'text-white',
+      'select-none',
+      'cursor-pointer',
     ];
 
     const shapeClass = shape === ButtonShape.Square ? '' : 'rounded-4xl';
@@ -91,7 +93,9 @@ const filterColorClass = (classes: string, defaultClasses: string[]) => {
   let result: string[] = [...defaultClasses];
 
   result = classes.includes('bg')
-    ? result.filter((value) => !value.includes('bg'))
+    ? result.filter(
+        (value) => !value.includes('bg') && !value.includes('text-white')
+      )
     : result;
 
   return result;

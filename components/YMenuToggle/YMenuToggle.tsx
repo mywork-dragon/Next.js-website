@@ -1,7 +1,7 @@
 import React from 'react';
 import { m as motion, MotionConfig, AnimationFeature } from 'framer-motion';
 
-import { ToggleType } from '@/enums/components';
+import { ToggleStyle, ToggleType } from '@/enums/components';
 
 import filterPosition from '@/libs/utils/filterPosition';
 
@@ -10,6 +10,7 @@ interface Props {
   onClick?: () => void;
   className?: string;
   type?: ToggleType;
+  toggleStyle?: ToggleStyle;
 }
 
 enum Line {
@@ -23,8 +24,8 @@ const YMenuToggle: React.FC<Props> = ({
   onClick,
   open = true,
   type = ToggleType.Hamburger,
+  toggleStyle = ToggleStyle.Light,
 }) => {
-  // line region
   const lineClasses = [
     ...lineClassesForType[type],
     'bg-white',
@@ -32,26 +33,23 @@ const YMenuToggle: React.FC<Props> = ({
     'h-0.5',
   ].join(' ');
 
-  const getMotionProps = (line: Line, type: ToggleType) => {
+  const getMotionProps = (linePosition: Line) => {
     const animate = open ? 'open' : 'closed';
 
-    return type == ToggleType.Plus && line == Line.Top
+    return type == ToggleType.Plus && linePosition == Line.Top
       ? null
-      : { animate, ...lineProps[line] };
+      : { animate, ...getLineProps(linePosition, toggleStyle) };
   };
 
   const lines = (
     <>
-      <motion.div className={lineClasses} {...getMotionProps(Line.Top, type)} />
+      <motion.div className={lineClasses} {...getMotionProps(Line.Top)} />
       <motion.div
         className={[lineClasses, ...additionalLineClasses[type]].join(' ')}
-        {...getMotionProps(Line.Middle, type)}
+        {...getMotionProps(Line.Middle)}
       />
       {type == ToggleType.Hamburger && (
-        <motion.div
-          className={lineClasses}
-          {...getMotionProps(Line.Bottom, type)}
-        />
+        <motion.div className={lineClasses} {...getMotionProps(Line.Bottom)} />
       )}
     </>
   );
@@ -88,6 +86,52 @@ const additionalLineClasses = {
 };
 
 // motion options
+const lineColor = {
+  [ToggleStyle.Light]: {
+    closed: '#ffff',
+    open: '#ffff',
+  },
+  [ToggleStyle.Dark]: {
+    closed: '#B2B2B2',
+    open: '#000000',
+  },
+};
+
+const openProps = {
+  [Line.Top]: {
+    rotate: 45,
+    y: 10,
+  },
+  [Line.Middle]: {
+    opacity: 0,
+  },
+  [Line.Bottom]: {
+    rotate: -45,
+    y: 10,
+  },
+};
+
+const closedProps = {
+  [Line.Top]: { y: 4 },
+  [Line.Middle]: { opacity: 1 },
+  [Line.Bottom]: { y: 16 },
+};
+
+const getLineProps = (linePosition: Line, toggleStyle: ToggleStyle) => {
+  const colors = lineColor[toggleStyle];
+
+  const open = { ...openProps[linePosition], background: colors.open };
+  const closed = { ...closedProps[linePosition], background: colors.closed };
+
+  return {
+    variants: {
+      open,
+      closed,
+      initial: closed,
+    },
+  };
+};
+
 const lineProps = {
   [Line.Top]: {
     variants: {
@@ -97,7 +141,7 @@ const lineProps = {
       },
       closed: {
         y: 4,
-        rotate: 0,
+        // rotate: 0,
       },
     },
     initial: { y: 4 },
@@ -126,7 +170,7 @@ const lineProps = {
       },
       closed: {
         y: 16,
-        rotate: 0,
+        // rotate: 0,
       },
     },
     initial: { y: 16 },

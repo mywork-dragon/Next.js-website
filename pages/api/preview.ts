@@ -18,7 +18,7 @@ export default async function preview(
   const page = await graphqlClient({ preview: true }).query({
     query: gql`
         query {
-            PageItem(id: "${slug}") {
+            ContentNode(id: "${slug}") {
                 slug
                 path
             }

@@ -8,7 +8,7 @@ import YAnimateItem from '@/components/AnimateComponents/YAnimateItem';
 import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
 import YConditionalWrapper from '@/components/YConditionalWrapper';
 
-import { ToggleType } from '@/enums/components';
+import { LayoutType, ToggleType } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
@@ -26,6 +26,7 @@ interface Props extends NavItemInterface {
   onClick?: () => void;
   className?: string;
   disableMount?: boolean;
+  headerType?: LayoutType;
 }
 
 const YHeaderItem: React.FC<Props> = ({
@@ -36,6 +37,7 @@ const YHeaderItem: React.FC<Props> = ({
   children,
   onClick,
   disableMount,
+  headerType = LayoutType.Website,
 }) => {
   const { screenSize } = useBreakpoint();
 
@@ -56,7 +58,14 @@ const YHeaderItem: React.FC<Props> = ({
         className="absolute right-1 top-1/2 transform -translate-y-1/2"
       />
     ) : (
-      <div className="svg-fit fill-current text-gray-200 h-3 w-3 ml-1 flex items-center">
+      <div
+        className={[
+          'svg-fit fill-current h-3 w-3 ml-1 flex items-center',
+          headerType === LayoutType.Website
+            ? 'text-gray-200'
+            : 'text-blog-gray-200',
+        ].join(' ')}
+      >
         <DownArrow />
       </div>
     );
@@ -72,7 +81,7 @@ const YHeaderItem: React.FC<Props> = ({
   const animateItemProps = {
     ...mountProps,
     onClick: handleItemClick,
-    className: [...itemClasses, className].join(' '),
+    className: getItemClasses(className),
   };
 
   const itemElement = (
@@ -81,7 +90,7 @@ const YHeaderItem: React.FC<Props> = ({
         fontSize={FontSize.XS}
         lineHeight={FontLineHeight.Relaxed}
         fontWeight={FontWeight.SemiBold}
-        className="absolute top-1/2 transform -translate-y-1/2 text-gray-300 lg:relative lg:text-gray-200 lg:transform-none lg:top-0 lg:leading-5"
+        className={getTextClasses(headerType)}
         as="span"
       >
         {text}
@@ -104,14 +113,37 @@ const YHeaderItem: React.FC<Props> = ({
   );
 };
 
-const itemClasses = [
-  'relative',
-  'h-14.1',
-  'border-blue-300',
-  'cursor-pointer',
-  'lg:mr-11',
-  'lg:flex',
-  'lg:items-center',
+// main item classes
+const getItemClasses = (className: string) =>
+  [
+    'relative',
+    'h-14.1',
+    'border-blue-300',
+    'cursor-pointer',
+    'lg:mr-11',
+    'lg:flex',
+    'lg:items-center',
+    'select-none',
+    className,
+  ].join(' ');
+
+// text element classes
+const textBaseClasses = [
+  'absolute top-1/2',
+  'transform',
+  '-translate-y-1/2',
+  'text-gray-300',
+  'lg:relative',
+  'lg:text-gray-200',
+  'lg:transform-none',
+  'lg:top-0',
+  'lg:leading-5',
 ];
+
+const getTextClasses = (headerType: LayoutType) =>
+  [
+    ...textBaseClasses,
+    headerType === LayoutType.Blog ? 'lg:text-blog-gray-200' : '',
+  ].join(' ');
 
 export default YHeaderItem;

@@ -6,7 +6,7 @@ import YLink from '@/components/YLink';
 import YText from '@/components/YText';
 import YImage from '@/components/YImage';
 
-import { ToggleType } from '@/enums/components';
+import { LayoutType, ToggleType } from '@/enums/components';
 import { ScreenSize } from '@/enums/screenSize';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 
@@ -26,6 +26,7 @@ interface Props extends SubItemInterface {
   className?: string;
   onClick?: (e: React.SyntheticEvent) => void;
   fade?: boolean;
+  headerType?: LayoutType;
 }
 
 const SubItem: React.FC<Props> = ({
@@ -34,12 +35,13 @@ const SubItem: React.FC<Props> = ({
   link,
   className,
   fade,
+  headerType = LayoutType.Website,
   onClick = () => {},
 }) => {
   const { screenSize } = useBreakpoint();
 
   const iconBox = (
-    <div className="h-25 w-full bg-blue-250 bg-opacity-40 rounded-lg flex items-center justify-center">
+    <div className={getIconBoxClasses(headerType)}>
       <YImage {...icon} width={145} height={90} />
     </div>
   );
@@ -70,7 +72,7 @@ const SubItem: React.FC<Props> = ({
             />
           )}
           <YText
-            className={textClasses.join(' ')}
+            className={getTextClasses(headerType)}
             fontSize={FontSize.XS}
             lineHeight={FontLineHeight.Relaxed}
             fontWeight={FontWeight.SemiBold}
@@ -84,6 +86,7 @@ const SubItem: React.FC<Props> = ({
   );
 };
 
+// container classes
 const containerClasses = [
   'relative',
   'cursor-pointer',
@@ -92,8 +95,30 @@ const containerClasses = [
   'lg:mt-7',
   'lg:mb-5.5',
   'lg:inline-block',
+  'select-none',
 ];
-const textClasses = [
+
+// icon box classes
+const iconBoxBaseClasses = [
+  'w-full',
+  'h-25',
+  'bg-opacity-40',
+  'rounded-lg',
+  'flex',
+  'items-center',
+  'justify-center',
+];
+
+const iconBoxAdditionalClasses = {
+  [LayoutType.Website]: ['bg-blue-250'],
+  [LayoutType.Blog]: ['bg-black'],
+};
+
+const getIconBoxClasses = (headerType: LayoutType) =>
+  [...iconBoxBaseClasses, ...iconBoxAdditionalClasses[headerType]].join(' ');
+
+// text classes
+const textBaseClasses = [
   'text-gray-300',
   'inline-block',
   'ml-4',
@@ -106,4 +131,13 @@ const textClasses = [
   'lg:text-xxs',
   'lg:leading-4',
 ];
+
+const getTextClasses = (headerType: LayoutType) =>
+  [
+    ...textBaseClasses,
+    headerType === LayoutType.Blog ? 'lg:text-blog-gray-200' : '',
+  ]
+    .join(' ')
+    .trim();
+
 export default SubItem;

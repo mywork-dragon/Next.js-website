@@ -7,24 +7,37 @@ interface BackgroundProps {
   openClasses?: string;
   closedClasses?: string;
   children: React.ReactNode;
+  as?: keyof JSX.IntrinsicElements;
 }
 
 const AnimateBackground = React.forwardRef<HTMLElement, BackgroundProps>(
   (
-    { children, open, className = '', openClasses = '', closedClasses = '' },
+    {
+      children,
+      open,
+      className = '',
+      openClasses = '',
+      closedClasses = '',
+      as,
+    },
     ref
   ) => {
     const openProps = useMemo(() => getProps(openClasses), [openClasses]);
     const closedProps = useMemo(() => getProps(closedClasses), [closedClasses]);
 
-    return (
-      <motion.section ref={ref} className={className}>
-        <div className="relative">
-          <motion.div {...openProps} animate={open ? 'show' : 'hide'} />
-          <motion.div {...closedProps} animate={open ? 'hide' : 'show'} />
-          {children}
-        </div>
-      </motion.section>
+    const CustomTag = as || 'section';
+
+    return React.createElement(
+      motion[CustomTag],
+      {
+        ref,
+        className,
+      },
+      <div className="relative">
+        <motion.div {...openProps} animate={open ? 'show' : 'hide'} />
+        <motion.div {...closedProps} animate={open ? 'hide' : 'show'} />
+        {children}
+      </div>
     );
   }
 );

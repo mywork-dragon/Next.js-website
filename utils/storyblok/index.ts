@@ -1,14 +1,33 @@
-import { PageItem, PostItem, Blok } from '@/types/storyblok';
-
 import { FormField } from '@/enums/form';
 import { ScreenSize } from '@/enums/screenSize';
+import { ServiceButton } from '@/enums/components';
+
+import { PageItem, Blok } from '@/types/storyblok';
+import { PostItem } from '@/types/blogPost';
+import {
+  FooterBlokProps,
+  HeaderBlokProps,
+  PostLayoutRes,
+} from '@/types/layout';
+import { CategorypageItem } from '@/types/categoryPage';
+import { BloghomeItem } from '@/types/blog';
+import { SearchpageItem } from '@/types/search';
 
 import { NavItemInterface } from '@/components/YHeaderItem/YHeaderItem';
 import { SubItemInterface } from '@/components/YHeaderSubItem/YHeaderSubItem';
-import { ServiceButton } from '@/enums/components';
+import { FooterProps } from '@/components/Footer';
 
 export function initEditor([story, setStory]: [
-  PageItem | PostItem,
+  (
+    | PageItem
+    | PostItem
+    | PostLayoutRes['PostlayoutItem']
+    | CategorypageItem
+    | BloghomeItem
+    | SearchpageItem
+    | FooterBlokProps
+    | HeaderBlokProps
+  ),
   (story) => void
 ]): void {
   if (window?.storyblok) {
@@ -16,7 +35,6 @@ export function initEditor([story, setStory]: [
 
     // reload on Next.js page on save or publish event in Storyblok Visual Editor
     window.storyblok.on(['change', 'published'], () => location.reload(true));
-
     // Update state.story on input in Visual Editor
     // this will alter the state and replaces the current story with a current raw story object and resolve relations
     window.storyblok.on(
@@ -27,9 +45,26 @@ export function initEditor([story, setStory]: [
             event.story.content,
             event.story.id
           );
+          console.log('event story: ', event.story.content);
           window.storyblok.resolveRelations(
             event.story,
-            ['featured-articles.articles'],
+            [
+              'page.header',
+              'page.footer',
+              'post.header',
+              'post.footer',
+              'post.authors',
+              'post.tags',
+              'post_layout.header',
+              'post_layout.footer',
+              'category_page.header',
+              'category_page.footer',
+              'category_page.featuredCategories',
+              'blog_home.header',
+              'blog_home.footer',
+              'search_page.header',
+              'search_page.footer',
+            ],
             () => {
               setStory(event.story);
             }
@@ -40,7 +75,7 @@ export function initEditor([story, setStory]: [
   }
 }
 
-export const mapStoryblokProps = (props: Blok): Blok => {
+export const mapStoryblokProps = (props: Blok & any /**@TEMP */): Blok => {
   let newProps = { ...props };
   const propKeys = Object.keys(newProps);
 
@@ -69,7 +104,7 @@ export const mapStoryblokProps = (props: Blok): Blok => {
       ...tempProps,
       buttonProps: {
         text: props.buttonText,
-        link: props.buttonLink?.cached_url || '',
+        link: props.buttonLink?.url || '',
         ...additionalButtonProps,
       },
     };
@@ -81,7 +116,7 @@ export const mapStoryblokProps = (props: Blok): Blok => {
       ...tempProps,
       logo: {
         icon: props.logoIcon,
-        link: props.logoLink.cached_url || '',
+        link: props.logoLink.url || '',
       },
     };
   }
@@ -115,20 +150,20 @@ export const mapStoryblokProps = (props: Blok): Blok => {
   }
 
   if (propKeys.includes('linksFirst')) {
-    newProps = processFooterProps(props);
+    newProps = processFooterProps(newProps);
   }
 
   if (propKeys.includes('services')) {
     newProps.services = props.services.map((service) => ({
       ...service,
-      buttonLink: service.buttonLink.cached_url,
+      buttonLink: service.buttonLink.url,
     }));
   }
 
   if (propKeys.includes('cards')) {
     newProps.cards = props.cards.map(({ link, ...card }) => ({
       ...card,
-      link: link ? link.cached_url : '',
+      link: link ? link.url : '',
     }));
   }
 
@@ -165,7 +200,7 @@ const processFormField = (field: FormField, props: any) => {
 };
 
 interface LinkObject {
-  cached_url: string;
+  url: string;
 }
 
 const processNavItems = (
@@ -177,48 +212,61 @@ const processNavItems = (
   >
 ) =>
   navItems.map((navItem) => {
-    const link = navItem.link.cached_url;
+    const link = navItem.link.url;
     return navItem.subItems?.length
       ? {
           ...navItem,
           link,
           subItems: navItem.subItems.map((subItem) => ({
             ...subItem,
-            link: (subItem.link as any).cached_url,
+            link: (subItem.link as any).url,
           })),
         }
       : { link, text: navItem.text };
   });
 
-const processFooterProps = (props) => ({
+const processFooterProps = ({
+  linksFirst,
+  linksSecond,
+  socialMedia,
+  contentHeading,
+  contentDescription,
+  street,
+  postalCode,
+  city,
+  email,
+  phoneLabel,
+  phoneValue,
+  ...props
+}: FooterBlokProps['content']): FooterProps => ({
+  ...props,
   links: {
-    first: props.linksFirst.map(({ text, link }) => ({
-      link: link.cached_url || link.cachedUrl,
+    first: linksFirst.map(({ text, link }) => ({
+      link: link.url || link.cachedUrl,
       text,
     })),
-    second: props.linksSecond.map(({ text, link }) => ({
-      link: link.cached_url || link.cachedUrl,
+    second: linksSecond.map(({ text, link }) => ({
+      link: link.url || link.cachedUrl,
       text,
     })),
   },
   content: {
-    heading: props.contentHeading,
-    description: props.contentDescription,
+    heading: contentHeading,
+    description: contentDescription,
   },
   contactDetails: {
-    street: props.street,
-    postalCode: props.postalCode,
-    city: props.city,
-    email: props.email,
+    street: street,
+    postalCode: postalCode,
+    city: city,
+    email: email,
     phoneNumber: {
-      label: props.phoneLabel,
-      value: props.phoneValue,
+      label: phoneLabel,
+      value: phoneValue,
     },
   },
-  contactButton: props.contactButton,
-  socialMedia: props.socialMedia.map(({ link, icon, name }) => ({
+  socialMedia: socialMedia.map(({ link, icon, name }) => ({
     icon,
-    link: link.cached_url || link.cachedUrl,
+    link: link.url || link.cachedUrl,
     name,
   })),
 });

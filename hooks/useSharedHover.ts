@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface SharedHoverHook {
   (defaultCard: number): {
@@ -9,16 +9,18 @@ interface SharedHoverHook {
 }
 
 const useSharedHover: SharedHoverHook = (defaultCard) => {
-  const [hoveredCard, setHoveredCard] = useState(defaultCard);
-  const [timeout, newTimeout] = useState<NodeJS.Timeout>();
+  const [hoveredCard, setHoveredCard] = useState<number>(defaultCard);
+  const timeout = useRef<any>();
 
   const onHoverStart = (card: number) => {
-    if (timeout) clearTimeout(timeout);
+    if (timeout.current) clearTimeout(timeout.current);
     setHoveredCard(card);
   };
 
   const onHoverEnd = () => {
-    newTimeout(setTimeout(() => setHoveredCard(defaultCard), 100));
+    timeout.current = setTimeout(() => {
+      setHoveredCard(defaultCard);
+    }, 100);
   };
 
   return { onHoverStart, onHoverEnd, hoveredCard };

@@ -1,23 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-import { Service, ServiceButton } from '@/enums/components';
+import React, { useRef } from 'react';
+import { Service } from '@/enums/components';
 import { FontLineHeight, FontSize, FontWeight } from '@/enums/font';
 import { ScreenSize } from '@/enums/screenSize';
 
-import YButton from '@/components/YButton';
 import YHeading from '@/components/YHeading';
-import YLink from '@/components/YLink';
 import YText from '@/components/YText';
-import YInputButton from '@/components/YInputButton';
-
-import useBreakpoint from '@/hooks/useBreakpoint';
-
-interface ButtonProps {
-  text: string;
-  link: string;
-  type?: ServiceButton;
-  placeholder?: string;
-}
+import YConditionalButton, {
+  ButtonProps,
+} from '@/components/YConditionalButton/YConditionalButton';
 
 interface Props {
   title: string;
@@ -36,57 +26,7 @@ const ServiceTop: React.FC<Props> = ({
   serviceLabel,
   service,
 }) => {
-  const { screenSize } = useBreakpoint();
-
   const sectionRef = useRef<HTMLElement>(null);
-
-  // handles submit of ServiceButton.Input
-  const handleSubmit = (value: string) => {
-    /**@TODO integrate with segment */
-    console.log(value);
-  };
-
-  // scrolls to next section if no link is present in ServiceButton.Button
-  const handleScroll = () => {
-    const { height } = sectionRef.current.getBoundingClientRect();
-    const smHeaderHeight = 62;
-
-    // on smaller screens, offset scroll to by fixed header
-    const top = screenSize == ScreenSize.LG ? height : height - smHeaderHeight;
-    window.scrollTo({ top, behavior: 'smooth' });
-  };
-
-  // applied only if there's no link present for ServiceButton.Button
-  const additinalButtonProps = buttonProps.link
-    ? {}
-    : {
-        onPress: handleScroll,
-      };
-
-  const button =
-    buttonProps.type == ServiceButton.Input ? (
-      <YInputButton
-        buttonText={buttonProps.text}
-        placeholder={buttonProps.placeholder}
-        className="max-w-full"
-        onSubmit={handleSubmit}
-      />
-    ) : (
-      <YButton
-        shadow
-        className="px-5 py-3 text-sm leading-6 lg:text-md lg:leading-7"
-        {...additinalButtonProps}
-      >
-        {buttonProps.text}
-      </YButton>
-    );
-
-  const buttonElement =
-    buttonProps.type != ServiceButton.Input && buttonProps.link ? (
-      <YLink href={buttonProps.link}>{button}</YLink>
-    ) : (
-      button
-    );
 
   return (
     <section
@@ -95,7 +35,10 @@ const ServiceTop: React.FC<Props> = ({
     >
       <div className="container lg:px-0">
         <div className="relative w-full mb-10 pt-80 lg:pt-0 lg:my-37.5 lg:w-150 lg:h-125 lg:ml-auto lg:mr-0">
-          <HeroImage service={service} />
+          <HeroImage
+            className="absolute w-96 h-80 lg:h-125 lg:w-150 top-11.5 sm:left-1/2 sm:transform sm:-translate-x-1/2 md:transform-none lg:transform lg:left-0 lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2 lg:w-full"
+            service={service}
+          />
           <div className="max-w-md lg:max-w-none lg:w-100 lg:absolute lg:top-1/2 lg:transform lg:-translate-x-120 lg:-translate-y-1/2">
             <YHeading
               fontSize={FontSize.XS}
@@ -121,21 +64,12 @@ const ServiceTop: React.FC<Props> = ({
             >
               {description}
             </YText>
-            {buttonElement}
+            <YConditionalButton {...buttonProps} sectionRef={sectionRef} />
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-const imageProps = {
-  width: 384,
-  responsive: {
-    [ScreenSize.LG]: {
-      width: 600,
-    },
-  },
 };
 
 export default ServiceTop;

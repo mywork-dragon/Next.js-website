@@ -37,7 +37,7 @@ const ServiceFourPoints: React.FC<Props> = ({
             key={index}
             className={[
               index == 0 ? '' : 'ml-6',
-              'w-60 h-42 p-4 border border-blue-100 rounded-xl inline-block whitespace-normal align-text-top scroll-x-item lg:block lg:m-0',
+              'w-60 p-4 border border-blue-100 rounded-xl inline-block whitespace-normal align-text-top scroll-x-item lg:block lg:m-0',
             ].join(' ')}
           >
             <YHeading className="text-white text-shadow-blue" {...indexProps}>

@@ -12,11 +12,17 @@ import YExpandableRegion from '@/components/AnimateComponents/YExpandableRegion'
 import YAnimateBackground from '@/components/AnimateComponents/YAnimateBackground';
 import YLink from '@/components/YLink';
 import YButton from '@/components/YButton';
+import SearchButton from './SearchButton';
 
 import useClickOutside from '@/hooks/useClickOutside';
 import usePrefetch from '@/hooks/usePrefetch';
 
-import { ButtonSize, ButtonShape } from '@/enums/components';
+import {
+  ButtonSize,
+  ButtonShape,
+  LayoutType,
+  ToggleStyle,
+} from '@/enums/components';
 import { Language } from '@/enums/language';
 
 import serviceImages from '@/components/ServiceTop/placeholderImages';
@@ -36,10 +42,17 @@ export interface HeaderProps {
   navItems: NavItemInterface[];
   buttonProps: Button;
   showMoreLabel?: string;
+  searchLabel: string;
   locales?: Language[];
+  headerType: LayoutType;
 }
 
-const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
+const HeaderSM: React.FC<HeaderProps> = ({
+  logo,
+  navItems,
+  buttonProps,
+  headerType,
+}) => {
   // control opening and closing of header
   const [showItems, setShowItems] = useState(false);
 
@@ -58,6 +71,9 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
         setShowItems(!showItems);
       }}
       open={open}
+      toggleStyle={
+        headerType === LayoutType.Website ? ToggleStyle.Light : ToggleStyle.Dark
+      }
     />
   );
 
@@ -91,13 +107,40 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
   // prefetch service top icons for service pages
   usePrefetch(Object.values(serviceImages));
 
+  // button (contact us for website, search for blog)
+  const contactButton = (
+    <YLink href={buttonProps.link}>
+      <YButton
+        buttonSize={ButtonSize.XS}
+        shape={ButtonShape.Round}
+        className={[...menuItemClasses, 'right-4', 'whitespace-nowrap'].join(
+          ' '
+        )}
+      >
+        {buttonProps.text.split(' ')[0]}
+      </YButton>
+    </YLink>
+  );
+
+  const searchButton = (
+    <YLink href="blog/search">
+      <SearchButton
+        aria-label="search button"
+        className={[...menuItemClasses, 'w-6.5', 'h-6.5', 'right-5'].join(' ')}
+      ></SearchButton>
+    </YLink>
+  );
+
+  const button =
+    headerType === LayoutType.Website ? contactButton : searchButton;
+
   return (
     <YAnimateBackground
       ref={headerRef}
-      className="fixed w-full left-0 top-0 max-h-screen z-40 overflow-y-scroll lg:hidden"
+      className="fixed w-full left-0 top-0 max-h-screen z-40 overflow-y-auto lg:hidden"
       open={open}
-      openClasses="bg-blue-400"
-      closedClasses="bg-blue-300 bg-opacity-80 backdrop-blur-20"
+      {...getBackgroundClasses(headerType)}
+      as="header"
     >
       <div className="h-15.5 container px-0 border-soft">
         <div className="relative w-full h-full">
@@ -107,25 +150,21 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
             )}
           >
             <YLink href={logo.link}>
-              <a className="cursor-pointer" aria-label="YEA logo">
+              <a
+                className={[
+                  'cursor-pointer',
+                  headerType === LayoutType.Blog
+                    ? 'fill-current text-primary'
+                    : '',
+                ].join(' ')}
+                aria-label="YEA logo"
+              >
                 <LogoIcon />
               </a>
             </YLink>
           </div>
           {additionalComponents}
-          <YLink href={buttonProps.link}>
-            <YButton
-              buttonSize={ButtonSize.XS}
-              shape={ButtonShape.Round}
-              className={[
-                ...menuItemClasses,
-                'right-4',
-                'whitespace-nowrap',
-              ].join(' ')}
-            >
-              {buttonProps.text.split(' ')[0]}
-            </YButton>
-          </YLink>
+          {button}
         </div>
       </div>
       <AnimateSharedLayout>
@@ -139,7 +178,23 @@ const HeaderSM: React.FC<HeaderProps> = ({ logo, navItems, buttonProps }) => {
     </YAnimateBackground>
   );
 };
+// background classes (expandable region)
+const baseClosedClasses = ['bg-opacity-80 backdrop-blur-20'];
 
+const additionalClosedClasses = {
+  [LayoutType.Website]: ['bg-blue-300'],
+  [LayoutType.Blog]: ['bg-white'],
+};
+
+const getBackgroundClasses = (headerType: LayoutType) => ({
+  openClasses: 'bg-blue-400',
+  closedClasses: [
+    ...baseClosedClasses,
+    ...additionalClosedClasses[headerType],
+  ].join(' '),
+});
+
+// manu item classes
 const menuItemClasses = [
   'absolute',
   'top-1/2',

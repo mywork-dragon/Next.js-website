@@ -19,9 +19,10 @@ import useBreakpoint from '@/hooks/useBreakpoint';
 
 interface Props {
   service: Service;
+  className?: string;
 }
 
-const HeroImage: React.FC<Props> = ({ service }) => {
+const HeroImage: React.FC<Props> = ({ service, className }) => {
   const { screenSize } = useBreakpoint();
 
   const [ready, setReady] = useState(false);
@@ -40,7 +41,12 @@ const HeroImage: React.FC<Props> = ({ service }) => {
   );
 
   const graphic = !ready ? (
-    <YImage {...displayGraphic.placeholder} {...placeholderSizing} />
+    <YImage
+      className="w-full h-full"
+      {...displayGraphic.placeholder}
+      {...placeholderSizing}
+      preload
+    />
   ) : (
     <SVGHero />
   );
@@ -54,7 +60,7 @@ const HeroImage: React.FC<Props> = ({ service }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0.4 }}
           transition={{ type: 'tween', duration: 0.5 }}
-          className={graphicClasses.join(' ')}
+          className={[...baseClasses, className].join(' ')}
         >
           {graphic}
         </motion.div>
@@ -63,28 +69,7 @@ const HeroImage: React.FC<Props> = ({ service }) => {
   );
 };
 
-const graphicClasses = [
-  'absolute',
-  'svg-fit',
-  'top-11.5',
-  'w-96',
-  'h-80',
-  'flex',
-  'justify-center',
-  'items-center',
-  'sm:left-1/2',
-  'sm:transform',
-  'sm:-translate-x-1/2',
-  'md:transform-none',
-  'lg:h-125',
-  'lg:w-150',
-  'lg:transform',
-  'lg:left-0',
-  'lg:top-1/2',
-  'lg:translate-x-0',
-  'lg:-translate-y-1/2',
-  'lg:w-full',
-];
+const baseClasses = ['svg-fit', 'flex', 'justify-center', 'items-center'];
 
 const placeholderSizing = {
   width: 384,

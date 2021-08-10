@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { __SbImageBaseURL__, __SbImageServer__ } from '@/libs/constants';
+import Head from 'next/head';
 
 import { BreakPoint, ScreenSize } from '@/enums/screenSize';
-import useBreakpoint from '@/hooks/useBreakpoint';
+
+import { __SbImageBaseURL__, __SbImageServer__ } from '@/libs/constants';
 
 type SrcSet = Partial<
   {
@@ -28,6 +29,7 @@ type Props = {
   alt?: string;
   srcSet?: SrcSet;
   responsive?: BreakPointSet;
+  preload?: boolean;
 };
 
 /**
@@ -41,6 +43,7 @@ const YImage: React.FC<Props> = ({
   alt,
   srcSet,
   responsive,
+  preload = false,
 }) => {
   const fallback = original ? createSrcSet('png', width, height, original) : '';
 
@@ -54,33 +57,32 @@ const YImage: React.FC<Props> = ({
   ]);
   // const jitClasses = useMemo(() => createJitClasses(responsiveParams), [original]);
 
-  const breakpoints = useMemo(
-    () =>
-      Object.keys(responsiveParams).map((key) =>
-        key == 'base' ? ScreenSize.SM.toUpperCase() : key.toUpperCase()
-      ),
-    []
-  );
-
-  const { screenSize } = useBreakpoint(breakpoints as ScreenSize[]);
-
   const explicitDimensions = {
-    width: responsiveParams[ScreenSize[screenSize]]
-      ? responsiveParams[ScreenSize[screenSize]].width
-      : responsiveParams.base.width,
-    height: responsiveParams[ScreenSize[screenSize]]
-      ? responsiveParams[ScreenSize[screenSize]].height
-      : responsiveParams.base.height,
+    width: responsiveParams.base.width,
+    height: responsiveParams.base.height,
   };
 
   const pictureComponent = (
-    <picture className={['block', className].join(' ')}>
+    <picture
+      className={['block image-container select-none', className].join(' ')}
+    >
       {withBreakpoints?.map(({ src, width, height, media }) => {
         const webp = original ? createSrcSet('webp', width, height, src) : '';
         const png = original ? createSrcSet('png', width, height, src) : '';
 
+        // adds image to head preload tags
+        // adds only webp since most modern browsers support it
+        // this way, png preloading is avioded to avoid unnecessary files
+        // if the browser doesn't suport webp, it probably has bigger issues than image prefetch
+        const preloadTags = preload ? (
+          <Head>
+            <link rel="preload" href={webp} as="image" />
+          </Head>
+        ) : null;
+
         return (
           <React.Fragment key={`${media || ''}-image`}>
+            {preloadTags}
             <source srcSet={webp} type="image/webp" media={media} />
             <source srcSet={png} type="image/png" media={media} />
           </React.Fragment>
@@ -111,7 +113,7 @@ export const createSrcSet = (
 
   const sizeArgs = `/fit-in/${width}x${height}`;
 
-  const filters = `/filters:fill(transparent):format(${format})`;
+  const filters = `/filters:fill(transparent):format(${format}):quality(100)`;
 
   return [__SbImageServer__, sizeArgs, filters, filename].join('');
 };

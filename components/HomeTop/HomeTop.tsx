@@ -1,9 +1,8 @@
-import React, { AriaAttributes, HTMLAttributes, useMemo } from 'react';
+import React, { HTMLAttributes, useMemo, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 import { FontSize, FontWeight, FontLineHeight } from '@/enums/font';
 import { ScreenSize } from '@/enums/screenSize';
-import { ButtonSize } from '@/enums/components';
 
 import useBreakpoint from '@/hooks/useBreakpoint';
 
@@ -11,18 +10,11 @@ import { Card } from './BackgroundGridLG';
 
 import YHeading from '@/components/YHeading';
 import YText from '@/components/YText';
-import YLink from '@/components/YLink';
-import YButton from '@/components/YButton';
-import YInputButton from '@/components/YInputButton';
 import YOutLink from '@/components/YOutLink';
 import YImage from '@/components/YImage';
-
-import style from './BackgroundGrid.module.css';
-
-type ButtonProps = AriaAttributes & {
-  text: string;
-  link: string;
-};
+import YConditinoalButton, {
+  ButtonProps,
+} from '@/components/YConditionalButton/YConditionalButton';
 
 export interface PartnerCompany {
   logo: string;
@@ -50,6 +42,8 @@ const HomeTop: React.FC<Props> = ({
 }) => {
   const { screenSize, screenReady } = useBreakpoint();
 
+  const sectionRef = useRef<HTMLElement>();
+
   const renderCompanies = partners.map(({ logo, title, link }) => {
     const PartnerLogo = useMemo(
       () => require(`@/assets/icons/${logo}.svg`).default,
@@ -67,17 +61,6 @@ const HomeTop: React.FC<Props> = ({
     );
   });
 
-  const renderButton =
-    screenSize == ScreenSize.SM ? (
-      <YLink href={buttonProps.link}>
-        <YButton buttonSize={ButtonSize.LG} className="mb-10" shadow>
-          {buttonProps.text}
-        </YButton>
-      </YLink>
-    ) : (
-      <YInputButton className="mb-36" />
-    );
-
   const BackgroundGrid = useMemo(
     () =>
       dynamic(
@@ -93,18 +76,21 @@ const HomeTop: React.FC<Props> = ({
   );
 
   return (
-    <section {...props} className="relative overflow-hidden">
+    <section
+      {...props}
+      ref={sectionRef}
+      className="relative overflow-hidden select-none"
+    >
       <div className="container relative pt-88.1 lg:px-0 lg:pt-48.5">
         <div
           className={[
-            'absolute top-0 md:right-0 lg:right-auto',
-            style.bgGrid,
+            'absolute top-0 md:right-0 lg:right-auto home-top-grid',
           ].join(' ')}
         >
           {screenReady && (
             <>
               <YImage
-                className="absolute top-6.5 left-5.5 w-503.25 h-385.5 lg:left-2 lg:top-5.5"
+                className="absolute top-6.5 left-5.5 w-503.25 h-385.5 lg:w-404 lg:left-2"
                 filename="https://a.storyblok.com/f/98632/2013x1542/3fc365e9cf/hometop-grid-sm.png"
                 width={2013}
                 height={1542}
@@ -119,6 +105,7 @@ const HomeTop: React.FC<Props> = ({
                   },
                 }}
                 alt="transparent cards on grid in background"
+                preload
               />
               <BackgroundGrid cards={cards} />
             </>
@@ -142,7 +129,11 @@ const HomeTop: React.FC<Props> = ({
           >
             {description} <br />
           </YText>
-          {screenReady && renderButton}
+          <YConditinoalButton
+            className="mb-10 lg:mb-36"
+            {...buttonProps}
+            sectionRef={sectionRef}
+          />
         </div>
         <div
           className={[
